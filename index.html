@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MADAL</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:#080d18;color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:18px;
+ background:#101827;
+}
+.logo{font-size:27px;font-weight:bold;color:#34d399}
+header span{color:#aaa}
+.tabs{display:flex;justify-content:space-around;padding:15px}
+.tabs button{
+ background:none;border:0;color:#aaa;
+ font-size:16px;padding:8px;
+}
+.tabs .active{color:#34d399;border-bottom:2px solid}
+.story{
+ height:65vh;margin:12px;border-radius:18px;
+ background:linear-gradient(160deg,#174b45,#101827,#080d18);
+ display:flex;flex-direction:column;
+ justify-content:space-between;padding:20px;
+}
+.story h2{font-size:27px}
+.story p{color:#ddd;margin-top:10px}
+.info{display:flex;justify-content:space-between;align-items:end}
+.actions button{
+ display:block;background:#172536;
+ color:white;border:0;border-radius:12px;
+ padding:12px;margin:8px 0;font-size:17px;
+}
+.bottom{
+ position:fixed;bottom:0;left:0;right:0;
+ background:#101827;display:flex;
+ justify-content:space-around;padding:16px 5px;
+}
+.bottom button{
+ background:none;border:0;color:#ddd;font-size:13px;
+}
+.bottom button:focus{color:#34d399}
+.podcasts{padding:15px 20px 90px}
+.podcast{
+ background:#172536;padding:18px;
+ border-radius:14px;margin:12px 0;
+}
+.podcast button{
+ background:#34d399;border:0;
+ padding:9px 18px;border-radius:20px;margin-top:12px;
+}
+#upload{padding:30px;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">MADAL.</div>
+ <span>Qiso kasta waxay leedahay meel.</span>
+</header>
+
+<div class="tabs">
+ <button class="active" onclick="show('feed')">Qisooyin</button>
+ <button onclick="show('podcasts')">Podcast</button>
+</div>
+
+<main id="feed">
+ <div class="story">
+  <div>
+   <span>🔥 QISO CUSUB</span>
+   <h2>Sheekadii Nolosha</h2>
+   <p>Mararka qaar noloshu waxay ina bartaa casharro aynaan filayn...</p>
+  </div>
+  <div class="info">
+   <div>
+    <h3>@MADAL_STORIES</h3>
+    <p>Qisooyin Soomaali ah ❤️</p>
+   </div>
+   <div class="actions">
+    <button onclick="like(this)">♡ 0</button>
+    <button onclick="comment()">💬 Faallo</button>
+    <button onclick="share()">↗ Share</button>
+   </div>
+  </div>
+ </div>
+</main>
+
+<section id="podcasts" class="podcasts" hidden>
+ <h2>🎙️ Podcast-yada</h2>
+ <div class="podcast">
+  <h3>Sheeko iyo Sheeko</h3>
+  <p>Dhagayso qisooyin xiiso leh.</p>
+  <button onclick="alert('Podcast-kan weli lama soo gelin')">▶ Dhagayso</button>
+ </div>
+ <div class="podcast">
+  <h3>Codka MADAL</h3>
+  <p>Barnaamijyo iyo sheekooyin cusub.</p>
+  <button onclick="alert('Podcast-kan weli lama soo gelin')">▶ Dhagayso</button>
+ </div>
+</section>
+
+<section id="upload" hidden>
+ <h2>➕ Soo geli Qiso</h2>
+ <p>Halkan ayaad mustaqbalka ku soo gelin kartaa qisooyinkaaga.</p>
+</section>
+
+<nav class="bottom">
+ <button onclick="show('feed')">🏠<br>Hoyga</button>
+ <button onclick="show('podcasts')">🎙️<br>Podcast</button>
+ <button onclick="show('upload')">➕<br>Soo geli</button>
+ <button onclick="alert('Profile-kaaga dhawaan ayuu imanayaa')">👤<br>Aniga</button>
+</nav>
+
+<script>
+function show(page){
+ ['feed','podcasts','upload'].forEach(id=>{
+  document.getElementById(id).hidden=(id!==page);
+ });
+}
+function like(btn){
+ let n=Number(btn.dataset.likes||0);
+ n++;
+ btn.dataset.likes=n;
+ btn.innerText='♥ '+n;
+}
+function comment(){
+ let c=prompt('Faalladaada qor:');
+ if(c) alert('Mahadsanid faalladaada!');
+}
+function share(){
+ if(navigator.share){
+  navigator.share({title:'MADAL',text:'Ku soo biir MADAL'});
+ }else{
+  alert('MADAL - Qiso kasta waxay leedahay meel.');
+ }
+}
+</script>
+</body>
+</html>
