@@ -7,37 +7,48 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build MADAL APK
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Get MADAL files
-        uses: actions/checkout@v4
+      - name: Checkout MADAL
+        uses: actions/checkout@v7
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
+          package-manager-cache: false
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
 
       - name: Prepare MADAL
         run: |
-          mkdir -p www
+          test -f index.html
+          mkdir -p assets www
+          cp icon-only.png assets/icon-only.png
+          cp icon-foreground.png assets/icon-foreground.png
+          cp icon-background.png assets/icon-background.png
+          cp splash.png assets/splash.png
           cp index.html www/
           cp manifest.webmanifest www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
           npm init -y
           npm install @capacitor/core @capacitor/android
-          npm install -D @capacitor/cli
+          npm install --save-dev @capacitor/cli @capacitor/assets
           npx cap init MADAL com.madal.app --web-dir www
           npx cap add android
+          npx capacitor-assets generate --android
           npx cap sync android
 
       - name: Build APK
@@ -47,8 +58,8 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Upload MADAL APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: MADAL-Android-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
-          
+          if-no-files-found: error
