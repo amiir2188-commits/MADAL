@@ -153,10 +153,12 @@ async function loadSocialData(posts){
  const [likesResult,commentsResult,followsResult,repostsResult,favoritesResult]=await Promise.all([
   db.from('media_likes').select('post_id,user_id').in('post_id',ids),
   db.from('media_comments').select('id,post_id,user_id,body,created_at').in('post_id',ids).order('created_at',{ascending:true}),
-  authors.length?db.from('user_follows').select('follower_id,following_id').in('following_id',authors):Promise.resolve({data:[],error:null})
+  authors.length?db.from('user_follows').select('follower_id,following_id').in('following_id',authors):Promise.resolve({data:[],error:null}),
+  currentUser?db.from('media_reposts').select('post_id,user_id').in('post_id',ids).eq('user_id',currentUser.id):Promise.resolve({data:[],error:null}),
+  currentUser?db.from('media_favorites').select('post_id,user_id').in('post_id',ids).eq('user_id',currentUser.id):Promise.resolve({data:[],error:null})
  ]);
  if(likesResult.error||commentsResult.error||followsResult.error||repostsResult.error||favoritesResult.error){
-  console.warn('MADAL social tables are not ready. Run social_migration.sql in Supabase.',likesResult.error||commentsResult.error||followsResult.error);
+  console.warn('MADAL social tables are not ready. Run social_migration.sql and madal_social_v2_migration.sql.',likesResult.error||commentsResult.error||followsResult.error||repostsResult.error||favoritesResult.error);
   return;
  }
  socialReady=true;
@@ -170,6 +172,9 @@ $('allFeed').addEventListener('click',async e=>{
  const like=e.target.closest('[data-like]');
  const comments=e.target.closest('[data-comments]');
  const follow=e.target.closest('[data-follow]');
+ const repost=e.target.closest('[data-repost]');
+ const favorite=e.target.closest('[data-favorite]');
+ const privacy=e.target.closest('[data-private]');
  if(comments){$('comments-'+comments.dataset.comments)?.classList.toggle('hidden');return}
  if(!like&&!follow&&!repost&&!favorite&&!privacy)return;
  if(!currentUser){location.href='./account.html';return}
@@ -179,6 +184,27 @@ $('allFeed').addEventListener('click',async e=>{
    ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
    :await db.from('media_likes').insert({post_id:postId,user_id:currentUser.id});
   if(result.error)notice('Jeclaysigu ma shaqayn: '+result.error.message);else await loadMedia();
+ }
+ if(repost){
+  const postId=repost.dataset.repost;
+  const result=repostedPostIds.has(postId)
+   ?await db.from('media_reposts').delete().eq('post_id',postId).eq('user_id',currentUser.id)
+   :await db.from('media_reposts').insert({post_id:postId,user_id:currentUser.id});
+  if(result.error)notice('Repost ma shaqayn: '+result.error.message);else await loadMedia();
+ }
+ if(favorite){
+  const postId=favorite.dataset.favorite;
+  const result=favoritePostIds.has(postId)
+   ?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id)
+   :await db.from('media_favorites').insert({post_id:postId,user_id:currentUser.id});
+  if(result.error)notice('Favorite ma shaqayn: '+result.error.message);else await loadMedia();
+ }
+ if(privacy){
+  const postId=privacy.dataset.private,post=allPosts.find(p=>String(p.id)===postId);
+  if(post){
+   const {error}=await db.from('media_posts').update({is_private:!post.is_private}).eq('id',postId).eq('user_id',currentUser.id);
+   if(error)notice('Privacy lama beddelin: '+error.message);else await loadMedia();
+  }
  }
  if(follow){
   const target=follow.dataset.follow;
@@ -334,12 +360,15 @@ async function loadActivity(){
  const host=$('activityList');if(!host)return;
  if(!currentUser){host.innerHTML='<p class="muted">Soo gal si aad u aragto ogeysiisyada.</p>';return}
  const ownIds=allPosts.filter(p=>String(p.user_id)===currentUser.id).map(p=>p.id).filter(Boolean);
- const [likes,followers]=await Promise.all([
+ const [likes,followers,comments,reposts,incomingMessages]=await Promise.all([
   ownIds.length?db.from('media_likes').select('post_id,user_id,created_at').in('post_id',ownIds).neq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50):Promise.resolve({data:[],error:null}),
-  db.from('user_follows').select('follower_id,created_at').eq('following_id',currentUser.id).order('created_at',{ascending:false}).limit(50)
+  db.from('user_follows').select('follower_id,created_at').eq('following_id',currentUser.id).order('created_at',{ascending:false}).limit(50),
+  ownIds.length?db.from('media_comments').select('post_id,user_id,body,created_at').in('post_id',ownIds).neq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50):Promise.resolve({data:[],error:null}),
+  ownIds.length?db.from('media_reposts').select('post_id,user_id,created_at').in('post_id',ownIds).neq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50):Promise.resolve({data:[],error:null}),
+  db.from('madal_messages').select('sender_id,body,created_at').eq('recipient_id',currentUser.id).order('created_at',{ascending:false}).limit(30)
  ]);
- if(likes.error||followers.error){host.textContent='Ogeysiisyada lama soo rari karin. Hubi social_migration.sql.';return}
- const ids=[...new Set([...(likes.data||[]).map(x=>x.user_id),...(followers.data||[]).map(x=>x.follower_id)])];
+ if(likes.error||followers.error||comments.error||reposts.error||incomingMessages.error){host.textContent='Ogeysiisyada lama soo rari karin. Hubi social_migration.sql iyo madal_social_v2_migration.sql.';return}
+ const ids=[...new Set([...(likes.data||[]).map(x=>x.user_id),...(followers.data||[]).map(x=>x.follower_id),...(comments.data||[]).map(x=>x.user_id),...(reposts.data||[]).map(x=>x.user_id),...(incomingMessages.data||[]).map(x=>x.sender_id)])];
  let profiles={};
  if(ids.length){const p=await db.from('madal_profiles').select('id,username,display_name').in('id',ids);for(const row of p.data||[])profiles[row.id]=row}
  const events=[...(likes.data||[]).map(x=>({...x,kind:'like',actor:x.user_id})),...(followers.data||[]).map(x=>({...x,kind:'follow',actor:x.follower_id})),...(comments.data||[]).map(x=>({...x,kind:'comment',actor:x.user_id})),...(reposts.data||[]).map(x=>({...x,kind:'repost',actor:x.user_id})),...(incomingMessages.data||[]).map(x=>({...x,kind:'message',actor:x.sender_id}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
