@@ -65,7 +65,7 @@ jobs:
           const fs = require('fs');
           for (const file of ['index.html', 'account.html']) {
             const html = fs.readFileSync(file, 'utf8');
-            const blocks = [...html.matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\\S]*?)<\/script>/gi)];
+            const blocks = [...html.matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)];
             for (const block of blocks) new Function(block[1]);
             if (!blocks.length) throw new Error('No inline JavaScript found in ' + file);
           }
