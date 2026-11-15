@@ -83,13 +83,17 @@ security invoker
 set search_path = public
 as $$
 begin
-  if auth.uid() is not null and new.is_verified is distinct from old.is_verified then
-    raise exception 'MADAL verification can only be changed by an administrator';
+  if auth.uid() is not null then
+    if tg_op = 'INSERT' and new.is_verified then
+      raise exception 'MADAL verification can only be assigned by an administrator';
+    elsif tg_op = 'UPDATE' and new.is_verified is distinct from old.is_verified then
+      raise exception 'MADAL verification can only be changed by an administrator';
+    end if;
   end if;
   return new;
 end;
 $$;
 drop trigger if exists madal_verified_flag_guard on public.madal_profiles;
 create trigger madal_verified_flag_guard
-before update of is_verified on public.madal_profiles
+before insert or update of is_verified on public.madal_profiles
 for each row execute function public.madal_protect_verified_flag();
