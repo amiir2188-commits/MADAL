@@ -289,7 +289,7 @@ async function loadMedia(){
 }
 async function loadMyProfile(){
  if(!currentUser){$('myVideos').innerHTML='<div class="empty">Soo gal si aad u aragto profile-kaaga.</div>';return}
- const {data:profile,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url').eq('id',currentUser.id).maybeSingle();
+ const {data:profile,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').eq('id',currentUser.id).maybeSingle();
  if(error){console.warn('Profile load:',error.message)}
  const name=profile?.display_name||currentUser.user_metadata?.display_name||'MADAL User';
  const username=profile?.username||currentUser.user_metadata?.username||'user';
