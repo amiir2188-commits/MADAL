@@ -256,7 +256,7 @@ async function loadMyProfile(){
  const [followers,following,likes]=await Promise.all([
   db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',currentUser.id),
   db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',currentUser.id),
-  db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',own.map(p=>p.id).filter(Boolean))
+  own.length?db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',own.map(p=>p.id).filter(Boolean)):Promise.resolve({count:0,error:null})
  ]);
  $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;$('myLikeCount').textContent=likes.count??0;
  if(!own.length){$('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">Weli fiidiyow ma aadan soo gelin. Taabo Soo geli si aad u bilowdo.</div>';return}
@@ -295,10 +295,19 @@ async function loadActivity(){
 async function refreshProfile(){
  const {data}=await db.auth.getSession();currentUser=data?.session?.user||null;
  if(currentUser){
-  const accountIdentity=currentUser.email||currentUser.phone||'';
-  $('profileInfo').innerHTML='<strong>'+escapeHtml(currentUser.user_metadata?.display_name||accountIdentity||'MADAL User')+'</strong><p class="muted">'+escapeHtml(accountIdentity)+'</p><p class="small muted">Aqoonsiga: '+escapeHtml(currentUser.id)+'</p>';
+  $('profileLogin').classList.add('hidden');
   $('logout').classList.remove('hidden');
- }else{$('profileInfo').textContent='Akoon lama soo gelin. Soo gal si aad wax u soo geliso.';$('logout').classList.add('hidden')}
+  await loadMyProfile();
+  await loadActivity();
+ }else{
+  $('profileLogin').classList.remove('hidden');
+  $('logout').classList.add('hidden');
+  $('profileName').textContent='MADAL User';
+  $('profileHandle').textContent='@username';
+  $('profileBio').textContent='Ku soo biir bulshada MADAL.';
+  $('profileAvatar').textContent='M';
+  $('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">Soo gal si aad u aragto profile-kaaga.</div>';
+ }
 }
 $('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday MADAL.')}});
 $('uploadForm').addEventListener('submit',async e=>{
