@@ -36,7 +36,8 @@ a{color:#c4a5ff}
 <input id="name" placeholder="Magacaaga" autocomplete="name" required>
 <input id="username" placeholder="Username (tusaale: amiir01)" autocomplete="username" required>
 </div>
-<input id="email" type="email" placeholder="Email-kaaga" autocomplete="email" required>
+<input id="identity" type="text" placeholder="Email ama lambarka telefoonka (+252...)" autocomplete="username" required>
+<div id="phoneVerify" style="display:none"><input id="phoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Geli 6-da lambar ee SMS-ka"><button id="verifyPhone" type="button">Xaqiiji lambarka</button></div>
 <input id="password" type="password" placeholder="Furaha sirta ah (8 xaraf ama ka badan)" minlength="8" autocomplete="new-password" required>
 <button id="submit" type="submit">Samee akoon</button>
 </form>
@@ -55,31 +56,70 @@ function mode(value){
  document.getElementById("heading").textContent=value==="signup"?"Ku soo biir MADAL":"Ku soo dhowow MADAL";
  document.getElementById("submit").textContent=value==="signup"?"Samee akoon":"Soo gal";
  document.getElementById("status").textContent="";
+ document.getElementById("phoneVerify").style.display="none";
  document.getElementById("name").required=value==="signup";
  document.getElementById("username").required=value==="signup";
  document.getElementById("password").autocomplete=value==="signup"?"new-password":"current-password";
 }
+function normalizeSomaliPhone(value){
+ let phone=String(value||"").replace(/[\\s()-]/g,"");
+ if(phone.startsWith("00"))phone="+"+phone.slice(2);
+ if(phone.startsWith("0"))phone="+252"+phone.slice(1);
+ else if(phone.startsWith("252"))phone="+"+phone;
+ else if(/^6[0-9]{8}$/.test(phone))phone="+252"+phone;
+ return /^\\+252[0-9]{9}$/.test(phone)?phone:null;
+}
+document.getElementById("verifyPhone").addEventListener("click",async()=>{
+ const identity=document.getElementById("identity").value.trim();
+ const phone=normalizeSomaliPhone(identity);
+ const token=document.getElementById("phoneCode").value.trim();
+ const status=document.getElementById("status"),btn=document.getElementById("verifyPhone");
+ if(!phone||!token){status.textContent="Hubi lambarka iyo koodhka SMS-ka.";return}
+ btn.disabled=true;status.textContent="Lambarka waa la xaqiijinayaa...";
+ try{
+  const {data,error}=await db.auth.verifyOtp({phone,token,type:"sms"});
+  if(error)throw error;
+  if(!data.session)throw new Error("Xaqiijinta lama dhammaystirin. Mar kale isku day.");
+  status.textContent="Lambarka waa la xaqiijiyey. MADAL ayaa furmaya...";
+  setTimeout(()=>location.replace("./index.html"),800);
+ }catch(error){status.textContent="Cilad: "+(error.message||"Koodhka lama xaqiijin.");}
+ finally{btn.disabled=false;}
+});
+
 document.getElementById("form").addEventListener("submit",async e=>{
  e.preventDefault();
  const status=document.getElementById("status"),btn=document.getElementById("submit");
  btn.disabled=true;status.textContent="Fadlan sug...";
  try{
-  const email=document.getElementById("email").value.trim();
+  const identity=document.getElementById("identity").value.trim();
+  const isEmail=identity.includes("@");
+  const phone=normalizeSomaliPhone(identity);
   const password=document.getElementById("password").value;
   if(currentMode==="signup"){
    const name=document.getElementById("name").value.trim();
    const username=document.getElementById("username").value.trim().toLowerCase().replace(/^@/,"");
    if(!/^[a-z0-9_]{3,24}$/.test(username))throw new Error("Username-ku ha noqdo 3 ilaa 24 xaraf, tiro ama _.");
-   const {data,error}=await db.auth.signUp({email,password,options:{data:{display_name:name,username},emailRedirectTo:new URL("./index.html",location.href).href}});
+   let data,error;
+   if(isEmail){
+    ({data,error}=await db.auth.signUp({email:identity,password,options:{data:{display_name:name,username},emailRedirectTo:new URL("./index.html",location.href).href}}));
+   }else{
+    if(!phone)throw new Error("Geli email sax ah ama lambarka Soomaaliya sida +252612345678.");
+    ({data,error}=await db.auth.signUp({phone,password,options:{data:{display_name:name,username},channel:"sms"}}));
+   }
    if(error)throw error;
    if(data.session){
     status.textContent="Hambalyo! Akoonkaaga waa diyaar. MADAL ayaa furmaya...";
     setTimeout(()=>location.replace("./index.html"),900);
+   }else if(!isEmail){
+    document.getElementById("phoneVerify").style.display="block";
+    status.textContent="Koodh SMS ah ayaa loo diray lambarkaaga. Geli koodhka si aad u xaqiijiso akoonka.";
    }else{
     status.textContent="Akoonka waa la sameeyay. Email-kaaga ka xaqiiji, dabadeed halkan ka soo gal.";
    }
   }else{
-   const {data,error}=await db.auth.signInWithPassword({email,password});
+   if(!isEmail&&!phone)throw new Error("Geli email ama lambar +252 sax ah.");
+   const credentials=isEmail?{email:identity,password}:{phone,password};
+   const {data,error}=await db.auth.signInWithPassword(credentials);
    if(error)throw error;
    if(!data.session)throw new Error("Soo geliddu ma dhammaystirmin. Mar kale isku day.");
    status.textContent="Waad ku guulaysatay soo gelidda! MADAL ayaa furmaya...";
