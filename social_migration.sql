@@ -120,10 +120,6 @@ create policy "MADAL messages sender insert" on public.madal_messages
 for insert to authenticated
 with check (auth.uid() = sender_id and sender_id <> recipient_id);
 drop policy if exists "MADAL messages recipient mark read" on public.madal_messages;
-create policy "MADAL messages recipient mark read" on public.madal_messages
-for update to authenticated
-using (auth.uid() = recipient_id)
-with check (auth.uid() = recipient_id);
 create index if not exists madal_messages_conversation_idx
 on public.madal_messages(sender_id, recipient_id, created_at desc);
 create index if not exists madal_messages_recipient_unread_idx
