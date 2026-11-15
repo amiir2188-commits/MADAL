@@ -1,7 +1,7 @@
 {
-  "version": "1.8.0",
+  "version": "1.8.1",
   "name": "MADAL",
-  "message": "MADAL 1.8.0 — Full-screen feed, Discover search, notifications iyo messaging pages.",
-  "updated_at": "2026-11-15",
+  "message": "MADAL 1.8.1 — Full-screen feed, Discover search, notifications iyo messaging pages.",
+  "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
