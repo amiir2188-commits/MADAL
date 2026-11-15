@@ -1,50 +1,27 @@
 # MADAL
-Somali Stories and Podcast Platform
 
-name: Build MADAL Android APK
+MADAL is a Somali-first, video-focused social app for Android.
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+## Current beta features
+- Watch and upload videos.
+- Create an account and sign in with email/password.
+- Phone-number sign-in using Somalia's +252 format (requires Phone Auth and an SMS provider in Supabase).
+- Like videos, comment, and follow creators.
+- Search users by username and send private messages.
+- Receive in-app prompts when a new web-app update is available.
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+## Download
+[Download the latest MADAL Android APK](https://github.com/amiir2188-commits/MADAL/releases/latest/download/app-debug.apk)
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
+[View all MADAL releases](https://github.com/amiir2188-commits/MADAL/releases)
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
+## Supabase setup
+For a fresh project, run [supabase_schema.sql](./supabase_schema.sql) in the Supabase SQL Editor.
+For an existing project, the same script is designed to add the current social and messaging tables and policies without deleting existing posts.
 
-      - name: Prepare app
-        run: |
-          mkdir -p www
-          cp index.html www/
-          cp manifest.webmanifest www/ 2>/dev/null || true
-          cp sw.js www/ 2>/dev/null || true
-          cp -r icons www/ 2>/dev/null || true
-          npm init -y
-          npm install @capacitor/core @capacitor/android
-          npm install -D @capacitor/cli
-          npx cap init MADAL com.madal.app --web-dir www
-          npx cap add android
-          npx cap sync android
+To enable phone registration, turn on Phone Auth in Supabase Authentication and configure an SMS provider. Email sign-in remains available without SMS.
 
-      - name: Build APK
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: MADAL-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+## Notes
+- The Android APK is a beta/debug-signed build distributed directly; it is not a Play Store release.
+- Regular web-content updates can be delivered inside the installed app. Native Android changes still require a new APK.
+- The native Android package is `com.madal.app`. iPhone does not have a native IPA build yet.
