@@ -209,7 +209,7 @@ async function loadConversation(){
   return '<div class="message-bubble '+(mine?'mine':'')+'"><strong>'+(mine?'Adiga':'@'+escapeHtml(activeChatUser.username))+'</strong><p>'+escapeHtml(message.body)+'</p><small>'+new Date(message.created_at).toLocaleString('so-SO')+'</small></div>';
  }).join('')||'<p class="muted">Wada sheekaysigu waa cusub yahay. Dir fariinta koowaad.</p>';
  $('messageList').scrollTop=$('messageList').scrollHeight;
- await db.from('madal_messages').update({read_at:new Date().toISOString()}).eq('sender_id',other).eq('recipient_id',me).is('read_at',null);
+
 }
 $('messageForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!currentUser){location.href='./account.html';return}
