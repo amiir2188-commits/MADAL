@@ -48,6 +48,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .upload-file-input{display:none!important}\ninput,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e0915;color:white;margin:6px 0 12px;font:inherit}textarea{min-height:90px;resize:vertical}label{font-size:13px;color:var(--muted)}
 .bottom{position:fixed;z-index:8;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#100a19f5;border-top:1px solid var(--line);padding:9px 5px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
 .bottom button{border:0;background:none;color:var(--muted);font-size:12px;padding:5px 9px}.bottom button span{display:block;font-size:20px}.bottom button.active{color:var(--purple)}
+.discover-user{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--line)}.discover-user .user-avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#8751c9,#f18bd4);font-weight:900;overflow:hidden;flex:none}.discover-user .user-avatar img{width:100%;height:100%;object-fit:cover}.discover-user .user-meta{flex:1;min-width:0}.discover-user .user-meta strong,.discover-user .user-meta small{display:block;overflow:hidden;text-overflow:ellipsis}.discover-user .user-meta small{color:var(--muted)}.discover-post{padding:12px;border-bottom:1px solid var(--line);cursor:pointer}.discover-post strong{display:block}.discover-post small{color:var(--muted)}
 .status{padding:12px;border-radius:12px;background:#21152f;color:#e8d9ff;margin:10px 0}.empty{text-align:center;color:var(--muted);padding:26px 12px}.hidden{display:none!important}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.small{font-size:12px}
 @media(min-width:650px){main{padding:22px}.feed-card{padding:18px}}
@@ -58,6 +59,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 <main>
 <div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
 <section id="home" class="page"><h2 class="section-title">Hoyga MADAL</h2><div class="tabs feed-tabs"><button type="button" class="active" data-feed-tab="for_you">For You</button><button type="button" data-feed-tab="following">Following</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="discover" class="page hidden"><h2 class="section-title">Raadi MADAL</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli MADAL</h2>
 <div class="feed-card"><p class="muted">Dooro waxa aad rabto inaad bulshada la wadaagto.</p>
@@ -87,13 +89,14 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 <div id="myVideos" class="profile-grid"><div class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div></div>
 </section>
 <section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax MADAL qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card"><h3>Isticmaalka app-ka</h3><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Fiidiyowyada ha sii rarmin ilaa aad furto.</small></span><input id="dataSaverSetting" type="checkbox"></label><label class="settings-row"><span><strong>Ogeysiisyada gudaha MADAL</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ku saabsan MADAL</h3><p class="muted">Nooca MADAL: <strong id="settingsVersion">1.7.0</strong></p><p class="muted">MADAL — madasha fiidiyowyada Soomaaliyeed.</p></div></section>
+<section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
 <section id="messages" class="page hidden">
 <h2 class="section-title">✉️ Fariimaha</h2>
 <div class="feed-card">
 <label for="messageSearch">Raadi qof adigoo adeegsanaya username</label>
 <div class="row"><input id="messageSearch" placeholder="Tusaale: amiir01"><button id="searchUsers" class="secondary" type="button">Raadi</button></div>
 <div id="userResults" class="muted small">Raadi qof si aad ula bilowdo wada sheekaysi.</div>
-<div class="activity-box"><h3>Ogeysiisyada · Likes, Comments, Followers & Reposts</h3><div id="activityList" class="muted">Waa la soo rarayaa...</div></div>\n<div id="conversationPanel" class="hidden">
+\n<div id="conversationPanel" class="hidden">
 <div class="row"><h3 id="conversationTitle"></h3><button id="closeConversation" class="secondary" type="button">Xir</button></div>
 <div id="messageList" class="message-list"></div>
 <form id="messageForm" class="comment-form"><textarea id="messageBody" maxlength="2000" placeholder="Fariintaada qor..." required></textarea><button class="primary" type="submit">Dir fariinta</button></form>
@@ -101,7 +104,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 </div>
 </section>
 </main>
-<nav class="bottom"><button class="active" data-page="home"><span>⌂</span>Hoyga</button><button data-page="upload"><span>＋</span>Soo geli</button><button data-page="messages"><span>✉</span>Fariimo</button><button data-page="profile"><span>👤</span>Aniga</button></nav>
+<nav class="bottom"><button class="active" data-page="home"><span>⌂</span>Hoyga</button><button data-page="discover"><span>⌕</span>Raadi</button><button data-page="upload"><span>＋</span>Soo geli</button><button data-page="notifications"><span>♡</span>Ogeysiis</button><button data-page="messages"><span>✉</span>Fariimo</button><button data-page="profile"><span>👤</span>Aniga</button></nav>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
@@ -174,6 +177,33 @@ async function renderFeed(){
  $('allFeed').querySelectorAll('.video-slide').forEach(slide=>videoObserver.observe(slide));
 }
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
+let activeDiscoverTab='all',discoverTimer=null;
+document.querySelectorAll('[data-discover-tab]').forEach(button=>button.addEventListener('click',()=>{activeDiscoverTab=button.dataset.discoverTab;document.querySelectorAll('[data-discover-tab]').forEach(b=>b.classList.toggle('active',b===button));searchDiscover()}));
+$('discoverSearch').addEventListener('input',()=>{clearTimeout(discoverTimer);discoverTimer=setTimeout(searchDiscover,250)});
+async function searchDiscover(){
+ const host=$('discoverResults'),q=$('discoverSearch').value.trim().replace(/^@/,'');
+ if(q.length<2){host.innerHTML='<div class="empty">Geli ugu yaraan 2 xaraf si raadintu u bilaabato.</div>';return}
+ host.innerHTML='<div class="empty">Waa la raadinayaa...</div>';
+ let people=[],peopleError=null;
+ if(activeDiscoverTab!=='videos'){
+  const result=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').or('username.ilike.%'+q+'%,display_name.ilike.%'+q+'%').limit(20);
+  people=result.data||[];peopleError=result.error;
+ }
+ const videos=activeDiscoverTab==='people'?[]:allPosts.filter(p=>!p.is_private||String(p.user_id)===String(currentUser?.id)).filter(p=>[p.title,p.description,p.caption,p.username,p.display_name].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()))).slice(0,30);
+ if(peopleError)host.innerHTML='<p class="muted">Raadinta dadka: '+escapeHtml(peopleError.message)+'</p>';
+ let html='';
+ if(people.length)html+='<h3 class="section-title">Dadka</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</div><div class="user-meta"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followsByUser.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
+ if(videos.length)html+='<h3 class="section-title">Fiidiyowyada</h3>'+videos.map(post=>'<div class="discover-post" data-open-post="'+escapeHtml(post.id)+'"><strong>'+escapeHtml(post.title||'MADAL')+'</strong><small>' + escapeHtml(post.description||'Fiidiyow MADAL')+'</small></div>').join('');
+ if(!html)html+='<div class="empty">Wax natiijo ah lama helin.</div>';
+ host.innerHTML=html;
+}
+$('discoverResults').addEventListener('click',async e=>{
+ const follow=e.target.closest('[data-discover-follow]'),message=e.target.closest('[data-discover-message]'),post=e.target.closest('[data-open-post]');
+ if(follow){if(!currentUser){location.href='./account.html';return}const id=follow.dataset.discoverFollow;const result=followsByUser.has(id)?await db.from('user_follows').delete().eq('follower_id',currentUser.id).eq('following_id',id):await db.from('user_follows').insert({follower_id:currentUser.id,following_id:id});if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else{await loadSocialData(allPosts);searchDiscover()}return}
+ if(message){if(!currentUser){location.href='./account.html';return}showPage('messages');openConversation(message.dataset.discoverMessage);return}
+ if(post){$('videoSearch').value=allPosts.find(p=>String(p.id)===post.dataset.openPost)?.title||'';activeFeedTab='for_you';document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b.dataset.feedTab==='for_you'));showPage('home');await renderFeed()}
+});
+
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
 document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
 async function loadSocialData(posts){
