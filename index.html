@@ -31,7 +31,7 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 <main>
 <section class="welcome"><h1>Ku soo dhowow MADAL.</h1><p>Daawo fiidiyowyada, soo geli muuqaalkaaga, lana wadaag bulshada.</p></section>
 
-<div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="refreshApp" class="primary" type="button">Cusboonaysii hadda</button></div>
+<div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
 <section id="home" class="page"><h2 class="section-title">Fiidiyowyada cusub</h2><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli fiidiyow</h2>
@@ -51,7 +51,8 @@ const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[];
-const MADAL_VERSION="1.2.1";
+const MADAL_VERSION="1.3.0";
+window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 function notice(message){$('notice').textContent=message;$('notice').classList.remove('hidden')}
 function clearNotice(){$('notice').classList.add('hidden')}
@@ -164,7 +165,9 @@ installButton.addEventListener('click',async()=>{
 window.addEventListener('appinstalled',()=>{installButton.classList.add('hidden');notice('MADAL waa lagu rakibay telefoonkaaga!')});
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
 if(isIOS && !window.matchMedia('(display-mode: standalone)').matches) installButton.classList.remove('hidden');
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
+if('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
+
 </script>
+<script type="module" src="./update.js"></script>
 </body>
 </html>
