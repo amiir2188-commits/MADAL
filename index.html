@@ -17,8 +17,8 @@ h1{font-size:21px;margin:0 0 5px}.welcome p{margin:0;color:var(--muted)}
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
 .section-title{font-size:18px;margin:16px 2px 8px}.feed-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;overflow:hidden}
-.feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}\n.social-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.social-actions button,.comment-form button{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel2);color:#fff;font-weight:650}.comment-panel{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}.comment-item{padding:7px 0;border-bottom:1px solid #38254a;font-size:13px}.comment-form textarea{min-height:58px}\n.message-list{max-height:48vh;overflow:auto;margin:12px 0;padding:8px;border:1px solid var(--line);border-radius:12px}.message-bubble{max-width:88%;padding:9px 12px;border-radius:12px;background:var(--panel2);margin:8px 0}.message-bubble.mine{margin-left:auto;background:#493064}.message-bubble p{margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere}.message-bubble small{color:var(--muted)}
-input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e0915;color:white;margin:6px 0 12px;font:inherit}textarea{min-height:90px;resize:vertical}label{font-size:13px;color:var(--muted)}
+.feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}\n.social-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.social-actions button,.comment-form button{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel2);color:#fff;font-weight:650}.comment-panel{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}.comment-item{padding:7px 0;border-bottom:1px solid #38254a;font-size:13px}.comment-form textarea{min-height:58px}\n.activity-box{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}.activity-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.activity-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);color:var(--pink);flex:none}\n.message-list{max-height:48vh;overflow:auto;margin:12px 0;padding:8px;border:1px solid var(--line);border-radius:12px}.message-bubble{max-width:88%;padding:9px 12px;border-radius:12px;background:var(--panel2);margin:8px 0}.message-bubble.mine{margin-left:auto;background:#493064}.message-bubble p{margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere}.message-bubble small{color:var(--muted)}
+\n.profile-hero{text-align:center;padding:20px}.profile-avatar{width:88px;height:88px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;background:linear-gradient(135deg,#8751c9,#f18bd4);font-size:32px;font-weight:900;border:3px solid #d8baff}.profile-main h2{margin:4px 0}.profile-bio{max-width:420px;margin:8px auto 16px;white-space:pre-wrap}.profile-stats{display:flex;justify-content:space-around;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;margin:14px 0}.profile-stats div{display:grid;gap:2px}.profile-stats strong{font-size:19px}.profile-stats span{font-size:12px;color:var(--muted)}.profile-buttons{justify-content:center}.profile-buttons>*{flex:1;max-width:220px}\ninput,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e0915;color:white;margin:6px 0 12px;font:inherit}textarea{min-height:90px;resize:vertical}label{font-size:13px;color:var(--muted)}
 .bottom{position:fixed;z-index:8;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#100a19f5;border-top:1px solid var(--line);padding:9px 5px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
 .bottom button{border:0;background:none;color:var(--muted);font-size:12px;padding:5px 9px}.bottom button span{display:block;font-size:20px}.bottom button.active{color:var(--purple)}
 .status{padding:12px;border-radius:12px;background:#21152f;color:#e8d9ff;margin:10px 0}.empty{text-align:center;color:var(--muted);padding:26px 12px}.hidden{display:none!important}
@@ -42,14 +42,24 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 <label for="mediaFile">Dooro fiidiyowga (MP4, WebM ama MOV)</label><input id="mediaFile" type="file" accept="video/mp4,video/webm,video/quicktime" required><p class="muted small">Ugu badnaan 250 MB.</p>
 <button class="primary" id="uploadButton" type="submit">Soo geli</button>
 </form></div></section>
-<section id="profile" class="page hidden"><h2 class="section-title">👤 Profile-kayga</h2><div class="feed-card"><div id="profileInfo" class="muted">Akoon lama soo gelin.</div><div class="row" style="margin-top:12px"><a class="primary" href="./account.html" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a><button id="logout" class="secondary hidden">Ka bax</button></div></div></section>
+<section id="profile" class="page hidden">
+<h2 class="section-title">👤 Profile-kayga</h2>
+<div class="feed-card profile-hero">
+<div class="profile-avatar" id="profileAvatar">M</div>
+<div class="profile-main"><h2 id="profileName">MADAL User</h2><p class="muted" id="profileHandle">@username</p><p id="profileBio" class="profile-bio">Ku soo biir bulshada MADAL.</p></div>
+<div class="profile-stats"><div><strong id="myVideoCount">0</strong><span>Fiidiyow</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div><div><strong id="myFollowingCount">0</strong><span>Following</span></div></div>
+<div class="row profile-buttons"><button id="editProfile" class="secondary" type="button">Wax ka beddel profile</button><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html" id="profileLogin" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a></div>
+</div>
+<div id="profileEditor" class="feed-card hidden"><h3>Wax ka beddel profile-ka</h3><form id="profileForm"><label>Magaca muuqda</label><input id="editDisplayName" maxlength="60" required><label>Username</label><input id="editUsername" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" required><label>Bio / Isbarasho</label><textarea id="editBio" maxlength="160" placeholder="Naftaada wax yar ka sheeg..."></textarea><button class="primary" type="submit">Kaydi profile-ka</button></form></div>
+<h3 class="section-title">Fiidiyowyadayda</h3><div id="myVideos" class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div>
+</section>
 <section id="messages" class="page hidden">
 <h2 class="section-title">✉️ Fariimaha</h2>
 <div class="feed-card">
 <label for="messageSearch">Raadi qof adigoo adeegsanaya username</label>
 <div class="row"><input id="messageSearch" placeholder="Tusaale: amiir01"><button id="searchUsers" class="secondary" type="button">Raadi</button></div>
 <div id="userResults" class="muted small">Raadi qof si aad ula bilowdo wada sheekaysi.</div>
-<div id="conversationPanel" class="hidden">
+<div class="activity-box"><h3>Ogeysiisyada · Followers & Likes</h3><div id="activityList" class="muted">Waa la soo rarayaa...</div></div>\n<div id="conversationPanel" class="hidden">
 <div class="row"><h3 id="conversationTitle"></h3><button id="closeConversation" class="secondary" type="button">Xir</button></div>
 <div id="messageList" class="message-list"></div>
 <form id="messageForm" class="comment-form"><textarea id="messageBody" maxlength="2000" placeholder="Fariintaada qor..." required></textarea><button class="primary" type="submit">Dir fariinta</button></form>
@@ -228,7 +238,53 @@ async function loadMedia(){
  $('allFeed').textContent='Waa la soo rarayaa...';
  const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false});
  if(error){console.error(error);$('allFeed').innerHTML='<div class="empty">Weli lama soo rari karin waxyaabaha. Hubi isku xirka Supabase iyo rukhsadaha akhriska.</div>';notice('Xogta MADAL lama soo rari karin: '+error.message);return}
- allPosts=data||[];await renderFeed();
+ allPosts=data||[];await renderFeed();if(currentUser){await loadMyProfile();await loadActivity()}
+}
+async function loadMyProfile(){
+ if(!currentUser){$('myVideos').innerHTML='<div class="empty">Soo gal si aad u aragto profile-kaaga.</div>';return}
+ const {data:profile,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url').eq('id',currentUser.id).maybeSingle();
+ if(error){console.warn('Profile load:',error.message)}
+ const name=profile?.display_name||currentUser.user_metadata?.display_name||'MADAL User';
+ const username=profile?.username||currentUser.user_metadata?.username||'user';
+ $('profileName').textContent=name;$('profileHandle').textContent='@'+username;
+ $('profileBio').textContent=profile?.bio||'Ku soo biir bulshada MADAL.';
+ $('profileAvatar').textContent=(name.trim()[0]||'M').toUpperCase();
+ $('editDisplayName').value=name;$('editUsername').value=username;$('editBio').value=profile?.bio||'';
+ $('profileLogin').classList.add('hidden');
+ const own=allPosts.filter(p=>String(p.user_id)===currentUser.id&&isVideo(p));
+ $('myVideoCount').textContent=own.length;
+ const [followers,following]=await Promise.all([
+  db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',currentUser.id),
+  db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',currentUser.id)
+ ]);
+ $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;
+ if(!own.length){$('myVideos').innerHTML='<div class="empty">Weli fiidiyow ma aadan soo gelin.</div>';return}
+ $('myVideos').innerHTML='';
+ for(const post of own){$('myVideos').insertAdjacentHTML('beforeend',await card(post))}
+}
+$('editProfile').addEventListener('click',()=>{$('profileEditor').classList.toggle('hidden')});
+$('profileForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!currentUser)return;
+ const username=$('editUsername').value.trim().toLowerCase().replace(/^@/,'');
+ if(!/^[a-z0-9_]{3,24}$/.test(username)){notice('Username-ku ha noqdo 3 ilaa 24 xaraf, tiro ama _.');return}
+ const {error}=await db.from('madal_profiles').upsert({id:currentUser.id,username,display_name:$('editDisplayName').value.trim(),bio:$('editBio').value.trim()},{onConflict:'id'});
+ if(error){notice('Profile-ka lama kaydin: '+error.message);return}
+ notice('Profile-kaaga waa la cusboonaysiiyey.');$('profileEditor').classList.add('hidden');await loadMyProfile();
+});
+async function loadActivity(){
+ const host=$('activityList');if(!host)return;
+ if(!currentUser){host.innerHTML='<p class="muted">Soo gal si aad u aragto ogeysiisyada.</p>';return}
+ const ownIds=allPosts.filter(p=>String(p.user_id)===currentUser.id).map(p=>p.id).filter(Boolean);
+ const [likes,followers]=await Promise.all([
+  ownIds.length?db.from('media_likes').select('post_id,user_id,created_at').in('post_id',ownIds).neq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50):Promise.resolve({data:[],error:null}),
+  db.from('user_follows').select('follower_id,created_at').eq('following_id',currentUser.id).order('created_at',{ascending:false}).limit(50)
+ ]);
+ if(likes.error||followers.error){host.textContent='Ogeysiisyada lama soo rari karin. Hubi social_migration.sql.';return}
+ const ids=[...new Set([...(likes.data||[]).map(x=>x.user_id),...(followers.data||[]).map(x=>x.follower_id)])];
+ let profiles={};
+ if(ids.length){const p=await db.from('madal_profiles').select('id,username,display_name').in('id',ids);for(const row of p.data||[])profiles[row.id]=row}
+ const events=[...(likes.data||[]).map(x=>({...x,kind:'like',actor:x.user_id})),...(followers.data||[]).map(x=>({...x,kind:'follow',actor:x.follower_id}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+ host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'MADAL User',display_name:'Qof MADAL ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':'＋')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa jeclaaday fiidiyowgaaga':'ayaa ku raacay')+(post?' · '+escapeHtml(post.title):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
 }
 async function refreshProfile(){
  const {data}=await db.auth.getSession();currentUser=data?.session?.user||null;
