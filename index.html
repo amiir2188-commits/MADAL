@@ -27,11 +27,11 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 </style>
 </head>
 <body>
-<header><div><div class="brand">MADAL</div><div class="tag">Podcast • Qisooyin • Sheekooyin</div></div><div class="row" style="flex:0 0 auto;gap:6px"><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
+<header><div><div class="brand">MADAL</div><div class="tag">Podcast • Qisooyin • Sheekooyin</div></div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <section class="welcome"><h1>Qiso kasta waxay leedahay meel.</h1><p>Daawo qisooyin, dhagayso podcast-yo, lana wadaag codkaaga.</p></section>
 <div class="tabs" role="tablist"><button class="active" data-tab="home">Dhammaan</button><button data-tab="stories">📖 Qisooyin</button><button data-tab="podcasts">🎙️ Podcast</button></div>
-<div id="notice" class="status hidden" role="status"></div>
+<div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="refreshApp" class="primary" type="button">Cusboonaysii hadda</button></div>
 <section id="home" class="page"><h2 class="section-title">Waxyaabihii ugu dambeeyey</h2><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="stories" class="page hidden"><h2 class="section-title">📖 Qisooyin</h2><div id="storyFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="podcasts" class="page hidden"><h2 class="section-title">🎙️ Podcast-yada</h2><div id="podcastFeed" class="empty">Waa la soo rarayaa...</div></section>
@@ -53,7 +53,7 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-let currentUser=null, allPosts=[];
+let currentUser=null, allPosts=[];\nconst MADAL_VERSION="1.1.0";
 const $=id=>document.getElementById(id);
 function notice(message){$('notice').textContent=message;$('notice').classList.remove('hidden')}
 function clearNotice(){$('notice').classList.add('hidden')}
@@ -129,6 +129,30 @@ $('uploadForm').addEventListener('submit',async e=>{
  finally{button.disabled=false;button.textContent='Soo geli'}
 });
 db.auth.onAuthStateChange(()=>{refreshProfile()});
+$('shareButton').addEventListener('click',async()=>{
+ const shareData={title:'MADAL — Podcast iyo Qisooyin',text:'Ku soo biir MADAL: dhagayso podcast-yo, daawo qisooyin, lana wadaag dadka kale.',url:location.href};
+ try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga MADAL waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
+});
+$('refreshApp').addEventListener('click',()=>location.reload());
+async function checkMadalUpdate(){
+ try{
+  const response=await fetch('./version.json?check='+Date.now(),{cache:'no-store'});
+  if(!response.ok)return;
+  const latest=await response.json();
+  if(latest.version && latest.version!==MADAL_VERSION){
+   $('updateNotice').classList.remove('hidden');
+   $('updateNotice').firstChild.textContent='MADAL nooc cusub ('+latest.version+') ayaa diyaar ah. ';
+  }
+ }catch(err){console.warn('MADAL version check:',err)}
+}
+checkMadalUpdate();
+setInterval(()=>{if(document.visibilityState==='visible'){checkMadalUpdate();loadMedia()}},5*60*1000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){checkMadalUpdate();loadMedia()}});
+try{
+ db.channel('madal-live-posts').on('postgres_changes',{event:'INSERT',schema:'public',table:'media_posts',filter:'status=eq.published'},payload=>{
+  if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa MADAL lagu soo daray!')}
+ }).subscribe();
+}catch(err){console.warn('MADAL live feed:',err)}
 refreshProfile();loadMedia();
 let installPrompt=null;
 const installButton=$('installButton');
