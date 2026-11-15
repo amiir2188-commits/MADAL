@@ -1,0 +1,57 @@
+name: Publish MADAL in-app update bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: madal-web-update
+  cancel-in-progress: true
+
+jobs:
+  bundle:
+    name: Build and publish MADAL web update
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout MADAL
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Build web update bundle
+        run: |
+          mkdir -p www
+          cp index.html account.html update.js www/
+          cp manifest.webmanifest version.json sw.js www/
+          cp -r icons www/ 2>/dev/null || true
+          npm init -y
+          npm install @capacitor/core @capawesome/capacitor-live-update
+          npm install --save-dev esbuild
+          npx esbuild update.js --bundle --format=esm --outfile=www/update.js
+          cd www && zip -r ../madal-web.zip . && cd ..
+          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json'
+
+      - name: Read MADAL version
+        id: version
+        run: |
+          VERSION=$(node -e "console.log(require('./version.json').version)")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Publish in-app update
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: MADAL ${{ steps.version.outputs.version }}
+          target_commitish: main
+          make_latest: true
+          overwrite_files: true
+          files: madal-web.zip
