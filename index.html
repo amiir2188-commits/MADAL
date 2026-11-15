@@ -51,7 +51,7 @@ const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[];
-const MADAL_VERSION="1.2.0";
+const MADAL_VERSION="1.2.1";
 const $=id=>document.getElementById(id);
 function notice(message){$('notice').textContent=message;$('notice').classList.remove('hidden')}
 function clearNotice(){$('notice').classList.add('hidden')}
@@ -81,7 +81,7 @@ function isVideo(p){
 async function card(p){
  const url=await mediaUrl(p),title=escapeHtml(p.title||p.name||'MADAL'),desc=escapeHtml(p.description||p.caption||''),date=p.created_at?new Date(p.created_at).toLocaleDateString('so-SO'):'';
  let player='';
- if(url && isVideo(p)){player='<video class="media" controls playsinline preload="metadata" src="'+escapeHtml(url)+''></video>'}
+ if(url && isVideo(p)){player='<video class="media" controls playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>'}
  else player='<p class="muted">Fiidiyowgan lama heli karo.</p>';
  return '<article class="feed-card"><h3>'+title+'</h3><p class="muted">'+date+'</p>'+(desc?'<p>'+desc+'</p>':'')+player+'</article>';
 }
