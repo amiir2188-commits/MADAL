@@ -202,9 +202,9 @@ async function loadConversation(){
  if(!activeChatUser||!currentUser)return;
  const me=currentUser.id,other=activeChatUser.id;
  const filter='and(sender_id.eq.'+me+',recipient_id.eq.'+other+'),and(sender_id.eq.'+other+',recipient_id.eq.'+me+')';
- const {data,error}=await db.from('madal_messages').select('id,sender_id,recipient_id,body,created_at,read_at').or(filter).order('created_at',{ascending:true}).limit(300);
+ const {data,error}=await db.from('madal_messages').select('id,sender_id,recipient_id,body,created_at,read_at').or(filter).order('created_at',{ascending:false}).limit(300);
  if(error){$('messageList').textContent='Fariimaha lama soo rari karin: '+error.message;return}
- $('messageList').innerHTML=(data||[]).map(message=>{
+ $('messageList').innerHTML=(data||[]).slice().reverse().map(message=>{
   const mine=message.sender_id===me;
   return '<div class="message-bubble '+(mine?'mine':'')+'"><strong>'+(mine?'Adiga':'@'+escapeHtml(activeChatUser.username))+'</strong><p>'+escapeHtml(message.body)+'</p><small>'+new Date(message.created_at).toLocaleString('so-SO')+'</small></div>';
  }).join('')||'<p class="muted">Wada sheekaysigu waa cusub yahay. Dir fariinta koowaad.</p>';
