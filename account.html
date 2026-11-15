@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090512">
+<title>MADAL - Akoon</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;padding:25px;
+ display:grid;place-items:center;
+ background:#090512;color:white;
+ font-family:Arial,sans-serif
+}
+main{
+ width:100%;max-width:420px;
+ background:#191128;padding:25px;
+ border:1px solid #493264;border-radius:20px
+}
+h1{text-align:center;color:#c4a5ff;font-size:38px}
+h2{text-align:center}
+p{text-align:center;color:#c7b8d9}
+button,input{
+ width:100%;padding:14px;margin:8px 0;
+ border-radius:10px;font-size:16px
+}
+input{background:#0c0815;color:white;border:1px solid #59436f}
+button{
+ border:0;background:#9b59e8;color:white;
+ font-weight:bold;cursor:pointer
+}
+.tabs{display:flex;gap:10px}
+.tabs button{background:#352344}
+#status{font-size:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<main>
+<h1>MADAL</h1>
+<p>Qiso kasta waxay leedahay meel.</p>
+
+<div class="tabs">
+<button type="button" onclick="mode('signup')">Akoon samee</button>
+<button type="button" onclick="mode('login')">Soo gal</button>
+</div>
+
+<h2 id="heading">Ku soo biir MADAL</h2>
+
+<form id="form">
+<div id="extra">
+<input id="name" placeholder="Magacaaga" required>
+<input id="username" placeholder="Username (tusaale: amiir01)" required>
+</div>
+
+<input id="email" type="email" placeholder="Email-kaaga" required>
+<input id="password" type="password" placeholder="Furaha sirta ah (8 xaraf ama ka badan)" minlength="8" required>
+
+<button id="submit" type="submit">Samee akoon</button>
+</form>
+
+<p id="status"></p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
+const SUPABASE_ANON_KEY="HALKAN_GELI_ANON_PUBLIC_KEY";
+
+const db=supabase.createClient(
+ SUPABASE_URL,SUPABASE_ANON_KEY
+);
+
+let currentMode="signup";
+
+function mode(value){
+ currentMode=value;
+ document.getElementById("extra").style.display=
+ value==="signup"?"block":"none";
+ document.getElementById("heading").textContent=
+ value==="signup"?"Ku soo biir MADAL":"Ku soo dhowow MADAL";
+ document.getElementById("submit").textContent=
+ value==="signup"?"Samee akoon":"Soo gal";
+ document.getElementById("status").textContent="";
+ document.getElementById("name").required=value==="signup";
+ document.getElementById("username").required=value==="signup";
+}
+
+document.getElementById("form").addEventListener("submit",async function(e){
+ e.preventDefault();
+
+ const status=document.getElementById("status");
+ const btn=document.getElementById("submit");
+ btn.disabled=true;
+ status.textContent="Fadlan sug...";
+
+ try{
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+
+  if(currentMode==="signup"){
+   const name=document.getElementById("name").value.trim();
+   const username=document.getElementById("username").value.trim().toLowerCase().replace(/^@/,"");
+
+   if(!/^[a-z0-9_]{3,24}$/.test(username)){
+    throw new Error("Username-ku ha noqdo 3 ilaa 24 xaraf, tiro ama _.");
+   }
+
+   const {data,error}=await db.auth.signUp({
+    email,password,
+    options:{data:{display_name:name,username}}
+   });
+
+   if(error) throw error;
+
+   if(data.session && data.user){
+    await makeProfile(data.user,name,username);
+    status.textContent="Hambalyo! Akoonkaaga MADAL waa la sameeyay.";
+   }else{
+    status.textContent="Akoonka waa la codsaday. Email-kaaga ka xaqiiji, dabadeed soo gal.";
+   }
+
+  }else{
+   const {data,error}=await db.auth.signInWithPassword({email,password});
+   if(error) throw error;
+
+   if(data.user){
+    const {error:profileError}=await db.from("profiles").upsert({
+     user_id:data.user.id,
+     username:data.user.user_metadata.username || "user_"+data.user.id.slice(0,8),
+     display_name:data.user.user_metadata.display_name || "MADAL User"
+    },{onConflict:"user_id",ignoreDuplicates:true});
+
+    if(profileError) throw profileError;
+   }
+
+   status.textContent="Waad ku guulaysatay soo gelidda MADAL!";
+  }
+
+ }catch(error){
+  status.textContent="Cilad: "+error.message;
+ }finally{
+  btn.disabled=false;
+ }
+});
+
+async function makeProfile(user,name,username){
+ const {error}=await db.from("profiles").upsert({
+  user_id:user.id,
+  username:username,
+  display_name:name
+ },{onConflict:"user_id",ignoreDuplicates:true});
+
+ if(error) throw error;
+}
+</script>
+</body>
+</html>
