@@ -54,3 +54,23 @@ create policy "MADAL owner update own media" on public.media_posts
 
 -- Verification is assigned only by the MADAL administrator, never by a normal user.
 -- Set is_verified=true for the confirmed official MADAL owner profile after confirming its username.
+
+-- Enforce private visibility at the database and media-storage layers.
+drop policy if exists "MADAL read published" on public.media_posts;
+create policy "MADAL read published" on public.media_posts
+  for select to anon, authenticated
+  using ((status = 'published' and (not is_private or auth.uid() = user_id))
+         or auth.uid() = user_id);
+
+drop policy if exists "MADAL play published" on storage.objects;
+create policy "MADAL play published" on storage.objects
+  for select to anon, authenticated
+  using (
+    bucket_id = 'madal-media'
+    and exists (
+      select 1 from public.media_posts p
+      where p.storage_path = storage.objects.name
+        and p.status = 'published'
+        and (not p.is_private or auth.uid() = p.user_id)
+    )
+  );
