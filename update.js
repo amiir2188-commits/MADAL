@@ -1,8 +1,15 @@
-import { LiveUpdate } from '@capawesome/capacitor-live-update';
+let LiveUpdate = null;
+const isNative = Boolean(window.Capacitor?.isNativePlatform?.());
+if (isNative) {
+  try {
+    ({ LiveUpdate } = await import('@capawesome/capacitor-live-update'));
+  } catch (error) {
+    console.warn('MADAL live update plugin is unavailable:', error);
+  }
+}
 
 const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/MADAL/main/version.json';
 const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip';
-const isNative = Boolean(window.Capacitor?.isNativePlatform?.());
 const notice = document.getElementById('updateNotice');
 const button = document.getElementById('applyUpdate');
 
@@ -17,7 +24,7 @@ function showMessage(message) {
 }
 
 async function checkNativeUpdate() {
-  if (!isNative || !notice || !button) return;
+  if (!isNative || !LiveUpdate || !notice || !button) return;
   try {
     await LiveUpdate.ready();
     const response = await fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' });
@@ -39,7 +46,7 @@ async function checkNativeUpdate() {
 
 if (button) {
   button.addEventListener('click', async () => {
-    if (!isNative || !latestBundle) {
+    if (!isNative || !LiveUpdate || !latestBundle) {
       location.reload();
       return;
     }
