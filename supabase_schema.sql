@@ -4,7 +4,7 @@ create table if not exists public.media_posts (
  user_id uuid not null references auth.users(id) on delete cascade,
  title text not null check(char_length(title) between 1 and 140),
  description text default '',
- media_type text not null check(media_type in ('qiso','podcast')),
+ media_type text not null check(media_type in ('video','qiso','podcast')),
  storage_path text not null unique,
  download_allowed boolean not null default false,
  status text not null default 'published' check(status in ('published','hidden')),
@@ -28,3 +28,8 @@ drop policy if exists "MADAL play published" on storage.objects;
 create policy "MADAL play published" on storage.objects for select to anon, authenticated using(bucket_id='madal-media' and exists(select 1 from public.media_posts p where p.storage_path=storage.objects.name and (p.status='published' or p.user_id=auth.uid())));
 drop policy if exists "MADAL delete own files" on storage.objects;
 create policy "MADAL delete own files" on storage.objects for delete to authenticated using(bucket_id='madal-media' and (storage.foldername(name))[1]=auth.uid()::text);
+
+
+-- Migration for an existing MADAL database: enable video-only uploads.
+alter table public.media_posts drop constraint if exists media_posts_media_type_check;
+alter table public.media_posts add constraint media_posts_media_type_check check (media_type in ('video','qiso','podcast'));
