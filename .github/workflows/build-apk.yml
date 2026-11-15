@@ -7,7 +7,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -39,23 +39,44 @@ jobs:
           cp icon-foreground.png assets/icon-foreground.png
           cp icon-background.png assets/icon-background.png
           cp splash.png assets/splash.png
-          cp index.html account.html www/
+          cp index.html account.html update.js www/
           cp manifest.webmanifest www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
           npm init -y
-          npm install @capacitor/core @capacitor/android
+          npm install @capacitor/core @capacitor/android @capawesome/capacitor-live-update
+          npm install --save-dev esbuild
           npm install --save-dev @capacitor/cli @capacitor/assets
           npx cap init MADAL com.madal.app --web-dir www
+          node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
           npx capacitor-assets generate --android
           npx cap sync android
+          npx esbuild update.js --bundle --format=esm --outfile=www/update.js
+          cd www && zip -r ../madal-web.zip . && cd ..
 
       - name: Build APK
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
+
+      - name: Read MADAL version
+        id: version
+        run: echo "version=$(node -p \"require('./version.json').version\")" >> "$GITHUB_OUTPUT"
+
+      - name: Publish MADAL release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: MADAL ${{ steps.version.outputs.version }}
+          target_commitish: main
+          generate_release_notes: true
+          make_latest: true
+          overwrite_files: true
+          files: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            madal-web.zip
 
       - name: Upload MADAL APK
         uses: actions/upload-artifact@v7
