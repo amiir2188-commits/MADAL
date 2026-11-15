@@ -65,7 +65,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[];
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, socialReady=false;
-const MADAL_VERSION="1.3.4";
+const MADAL_VERSION="1.3.5";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 function notice(message){$('notice').textContent=message;$('notice').classList.remove('hidden')}
