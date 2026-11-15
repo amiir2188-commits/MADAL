@@ -74,7 +74,14 @@ async function mediaUrl(p){
  if(error){console.warn('MADAL media URL:',error.message);return ''}
  return data?.signedUrl||'';
 }
-function isAudio(p){return postType(p).includes('podcast')||String(p.mime_type||'').startsWith('audio/')||/\.(mp3|m4a|wav|ogg|aac)$/i.test(postPath(p))}
+function isAudio(p){
+ const mime=String(p.mime_type||'').toLowerCase(),path=postPath(p);
+ if(mime.startsWith('audio/'))return true;
+ if(mime.startsWith('video/'))return false;
+ if(/\.(mp3|m4a|wav|ogg|aac|flac)$/i.test(path))return true;
+ if(/\.(mp4|webm|mov|m4v)$/i.test(path))return false;
+ return postType(p).includes('podcast');
+}
 async function card(p){
  const url=await mediaUrl(p),title=escapeHtml(p.title||p.name||'MADAL'),desc=escapeHtml(p.description||p.caption||''),date=p.created_at?new Date(p.created_at).toLocaleDateString('so-SO'):'';
  let player='';
