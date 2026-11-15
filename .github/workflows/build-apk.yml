@@ -1,4 +1,3 @@
-
 name: Build MADAL Android APK
 
 on:
@@ -34,12 +33,13 @@ jobs:
       - name: Prepare MADAL
         run: |
           test -f index.html
+          test -f account.html
           mkdir -p assets www
           cp icon-only.png assets/icon-only.png
           cp icon-foreground.png assets/icon-foreground.png
           cp icon-background.png assets/icon-background.png
           cp splash.png assets/splash.png
-          cp index.html www/
+          cp index.html account.html www/
           cp manifest.webmanifest www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
