@@ -292,9 +292,10 @@ async function loadMyProfile(){
  const {data:profile,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url').eq('id',currentUser.id).maybeSingle();
  if(error){console.warn('Profile load:',error.message)}
  const name=profile?.display_name||currentUser.user_metadata?.display_name||'MADAL User';
- $('profileVerified').classList.toggle('hidden',!profile?.is_verified);
  const username=profile?.username||currentUser.user_metadata?.username||'user';
- $('profileName').textContent=name;$('profileHandle').textContent='@'+username;
+ $('profileName').textContent=name;
+ if(profile?.is_verified){const badge=document.createElement('span');badge.className='verified';badge.title='MADAL Verified';badge.textContent='✓';$('profileName').appendChild(badge)}
+ $('profileHandle').textContent='@'+username;
  $('profileBio').textContent=profile?.bio||'Ku soo biir bulshada MADAL.';
  $('profileAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="Sawirka profile-ka">':escapeHtml((name.trim()[0]||'M').toUpperCase());
  $('editDisplayName').value=name;$('editUsername').value=username;$('editBio').value=profile?.bio||'';$('editAvatarUrl').value=profile?.avatar_url||'';$('avatarPreview').src=profile?.avatar_url||'';
