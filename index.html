@@ -12,8 +12,8 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font:15px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif;padding-bottom:86px}
 header{position:sticky;top:0;z-index:5;background:#100a19ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
 .brand{font-weight:900;font-size:25px;letter-spacing:2px;color:var(--purple)}.tag{font-size:11px;color:var(--muted)}
-main{max-width:720px;margin:auto;padding:14px}.welcome{padding:17px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#251638,#120c1c)}
-h1{font-size:21px;margin:0 0 5px}.welcome p{margin:0;color:var(--muted)}
+main{max-width:720px;margin:auto;padding:14px}
+h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.settings-row strong{display:block}.settings-row small{display:block;color:var(--muted);margin-top:3px}.settings-row input{width:22px;height:22px;accent-color:var(--purple);margin:0;flex:none}.settings-head{display:flex;align-items:center;gap:12px}.settings-head button{flex:none}
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
 .section-title{font-size:18px;margin:16px 2px 8px}.feed-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;overflow:hidden}
@@ -29,8 +29,6 @@ h1{font-size:21px;margin:0 0 5px}.welcome p{margin:0;color:var(--muted)}
 <body>
 <header><div><div class="brand">MADAL</div><div class="tag">Fiidiyowyo • Bulsho • Madadaalo</div></div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
-<section class="welcome"><h1>Ku soo dhowow MADAL.</h1><p>Daawo fiidiyowyada, soo geli muuqaalkaaga, lana wadaag bulshada.</p></section>
-
 <div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
 <section id="home" class="page"><h2 class="section-title">Fiidiyowyada cusub</h2><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="upload" class="page hidden">
@@ -43,17 +41,18 @@ h1{font-size:21px;margin:0 0 5px}.welcome p{margin:0;color:var(--muted)}
 <button class="primary" id="uploadButton" type="submit">Soo geli</button>
 </form></div></section>
 <section id="profile" class="page hidden">
-<div class="row" style="justify-content:space-between"><h2 class="section-title">Profile</h2><button class="secondary" type="button" id="profileMenu" aria-label="Dejinta profile-ka">⚙</button></div>
+<div class="row" style="justify-content:space-between"><h2 class="section-title">Profile</h2><button class="secondary" type="button" id="profileMenu" aria-label="Dejinta profile-ka">⚙ Dejinta</button></div>
 <div class="feed-card profile-hero">
 <div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">MADAL User</h2><p class="muted" id="profileHandle">@username</p><p class="muted small">MADAL Creator</p></div></div>
 <p id="profileBio" class="profile-bio">Ku soo biir bulshada MADAL.</p>
-<div class="profile-stats"><div><strong id="myFollowingCount">0</strong><span>Following</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div><div><strong id="myLikeCount">0</strong><span>Likes</span></div></div>
-<div class="row profile-buttons"><button id="editProfile" class="secondary" type="button">Edit profile</button><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html" id="profileLogin" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a></div>
+<div class="profile-stats"><div><strong id="myFollowingCount">0</strong><span>La raaco</span></div><div><strong id="myFollowerCount">0</strong><span>Raacayaal</span></div><div><strong id="myLikeCount">0</strong><span>Jeclaysi</span></div></div>
+<div class="row profile-buttons"><button id="editProfile" class="secondary" type="button">Wax ka beddel profile-ka</button><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html" id="profileLogin" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a></div>
 </div>
 <div id="profileEditor" class="feed-card hidden"><h3>Wax ka beddel profile-ka</h3><form id="profileForm"><label>Magaca muuqda</label><input id="editDisplayName" maxlength="60" required><label>Username</label><input id="editUsername" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" required><label>Bio / Isbarasho</label><textarea id="editBio" maxlength="160" placeholder="Naftaada wax yar ka sheeg..."></textarea><label>Sawirka profile-ka</label><div class="avatar-picker"><img id="avatarPreview" class="avatar-preview" alt="Hordhaca sawirka profile-ka"><input id="editAvatarFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></div><p class="muted small">Ka dooro sawir Gallery-ga telefoonkaaga (PNG, JPG ama WebP; ugu badnaan 5 MB).</p><input id="editAvatarUrl" type="url" placeholder="Ama geli link sawir (ikhtiyaari)"><button class="primary" type="submit">Kaydi profile-ka</button></form></div>
-<div class="profile-tabs"><button type="button" class="active">▦ Fiidiyowyada</button></div>
+<div class="profile-tabs"><button type="button" class="active">▦ Muuqaallada</button></div>
 <div id="myVideos" class="profile-grid"><div class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div></div>
 </section>
+<section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax MADAL qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card"><h3>Isticmaalka app-ka</h3><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Fiidiyowyada ha sii rarmin ilaa aad furto.</small></span><input id="dataSaverSetting" type="checkbox"></label><label class="settings-row"><span><strong>Ogeysiisyada gudaha MADAL</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ku saabsan MADAL</h3><p class="muted">Nooca MADAL: <strong id="settingsVersion">1.5.0</strong></p><p class="muted">MADAL — madasha fiidiyowyada Soomaaliyeed.</p></div></section>
 <section id="messages" class="page hidden">
 <h2 class="section-title">✉️ Fariimaha</h2>
 <div class="feed-card">
@@ -76,10 +75,12 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null;
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, socialReady=false;
-const MADAL_VERSION="1.5.0";
+const MADAL_VERSION="1.5.1";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
-function notice(message){$('notice').textContent=message;$('notice').classList.remove('hidden')}
+function preference(key,fallback){try{const value=localStorage.getItem("madal_"+key);return value===null?fallback:value==="true"}catch(_){return fallback}}
+function savePreference(key,value){try{localStorage.setItem("madal_"+key,String(value))}catch(_){}}
+function notice(message){if(!preference("app_alerts",true))return;$('notice').textContent=message;$('notice').classList.remove('hidden')}
 function clearNotice(){$('notice').classList.add('hidden')}
 function showPage(page){
  document.querySelectorAll('.page').forEach(el=>el.classList.toggle('hidden',el.id!==page));
@@ -108,7 +109,7 @@ async function card(p){
  const url=await mediaUrl(p),title=escapeHtml(p.title||p.name||'MADAL'),desc=escapeHtml(p.description||p.caption||''),date=p.created_at?new Date(p.created_at).toLocaleDateString('so-SO'):'';
  const postId=String(p.id||''),author=String(p.user_id||''),liked=likedPostIds.has(postId),likes=likesByPost[postId]||0,comments=commentsByPost[postId]||[];
  let player='';
- if(url && isVideo(p)){player='<video class="media" controls playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>'}
+ if(url && isVideo(p)){player='<video class="media" controls playsinline preload="'+(preference("data_saver",false)?"none":"metadata")+'" src="'+escapeHtml(url)+'"></video>'}
  else player='<p class="muted">Fiidiyowgan lama heli karo.</p>';
  let social='';
  if(socialReady){
@@ -269,6 +270,13 @@ async function loadMyProfile(){
  }
 }
 $('editProfile').addEventListener('click',()=>{$('profileEditor').classList.toggle('hidden')});
+$('profileMenu').addEventListener('click',()=>{syncSettings();showPage("settings")});
+$('settingsBack').addEventListener('click',()=>showPage("profile"));
+$('settingsEditProfile').addEventListener('click',()=>{showPage("profile");$('profileEditor').classList.remove("hidden")});
+$('settingsLogout').addEventListener('click',()=>$('logout').click());
+function syncSettings(){$('dataSaverSetting').checked=preference("data_saver",false);$('appAlertsSetting').checked=preference("app_alerts",true);$('settingsVersion').textContent=MADAL_VERSION}
+$('dataSaverSetting').addEventListener('change',e=>{savePreference("data_saver",e.target.checked);document.querySelectorAll(".media").forEach(v=>v.preload=e.target.checked?"none":"metadata");notice(e.target.checked?"Keydinta xogta internetka waa la daaray.":"Keydinta xogta internetka waa la damiyey.")});
+$('appAlertsSetting').addEventListener('change',e=>{savePreference("app_alerts",e.target.checked);if(e.target.checked)notice("Ogeysiisyada gudaha MADAL waa la daaray.");});
 $('editAvatarFile').addEventListener('change',()=>{const file=$('editAvatarFile').files[0];if(!file)return;if(!file.type.startsWith('image/')){notice('Fadlan dooro sawir sax ah.');$('editAvatarFile').value='';return}if(file.size>5*1024*1024){notice('Sawirku ha ka weynaan 5 MB.');$('editAvatarFile').value='';return}const preview=URL.createObjectURL(file);$('avatarPreview').src=preview;$('editAvatarUrl').value=''});
 $('profileForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!currentUser)return;
