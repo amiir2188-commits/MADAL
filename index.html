@@ -32,7 +32,7 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 <section class="welcome"><h1>Ku soo dhowow MADAL.</h1><p>Daawo fiidiyowyada, soo geli muuqaalkaaga, lana wadaag bulshada.</p></section>
 
 <div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
-<section id="home" class="page"><h2 class="section-title">Fiidiyowyada cusub</h2><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><h2 class="section-title">Fiidiyowyada cusub</h2><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli fiidiyow</h2>
 <div class="feed-card"><p class="muted">MADAL waxay taageertaa fiidiyowyo oo keliya. Soo geli muuqaal aad rabto in bulshada la wadaagto.</p>
@@ -108,12 +108,14 @@ async function card(p){
  return '<article class="feed-card"><h3>'+title+'</h3><p class="muted">'+date+'</p>'+(desc?'<p>'+desc+'</p>':'')+player+social+'</article>';
 }
 async function renderFeed(){
- const posts=allPosts.filter(isVideo);
+ const query=$('videoSearch')?.value.trim().toLowerCase()||'';
+ const posts=allPosts.filter(isVideo).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
  await loadSocialData(posts);
- if(!posts.length){$('allFeed').innerHTML='<div class="empty">Weli fiidiyow lama soo gelin. Noqo qofka ugu horreeya ee fiidiyow soo geliya!</div>';return}
+ if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax fiidiyow ah oo raadintaas la jaanqaadaya lama helin.':'Weli fiidiyow lama soo gelin. Noqo qofka ugu horreeya ee fiidiyow soo geliya!')+'</div>';return}
  $('allFeed').innerHTML='';
  for(const p of posts){const html=await card(p);$('allFeed').insertAdjacentHTML('beforeend',html)}
 }
+if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
 async function loadSocialData(posts){
  socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};
  const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
