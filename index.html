@@ -20,7 +20,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 /* MADAL vertical short-video experience */
 #home{margin:0 -14px 0}
 #home>.section-title{display:none}
-#home .feed-tabs{height:50px;display:flex;align-items:center;justify-content:space-evenly;gap:0;padding:0 14px;margin:0;background:#100a19;overflow:visible}
+#home .feed-tabs{height:54px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px;align-items:center;justify-content:stretch;gap:0;padding:0 14px;margin:0;background:#100a19;overflow:visible}
 #home .feed-tabs .feed-search{width:38px;height:38px;min-width:38px;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;font-size:20px;display:grid;place-items:center;margin-left:4px}
 #home .feed-tabs .feed-search:active{background:#38234d}
 #home .feed-tabs button{min-width:0;padding:8px 5px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:14px;font-weight:750;position:relative}
@@ -62,13 +62,38 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 .status{padding:12px;border-radius:12px;background:#21152f;color:#e8d9ff;margin:10px 0}.empty{text-align:center;color:var(--muted);padding:26px 12px}.hidden{display:none!important}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.small{font-size:12px}
 @media(min-width:650px){main{padding:22px}.feed-card{padding:18px}}
+
+/* MADAL first-launch welcome */
+.welcome-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 20%,#452365 0%,#1b1029 42%,#090512 100%);text-align:center}
+.welcome-screen.hidden{display:none}
+.welcome-content{width:100%;max-width:420px;animation:welcome-rise .65s ease both}
+.welcome-mark{width:104px;height:104px;margin:0 auto 24px;border-radius:32px;display:grid;place-items:center;background:linear-gradient(145deg,#bd83ff,#e879c5);box-shadow:0 16px 55px #bd83ff55;color:#170d24;font-size:43px;font-weight:1000;letter-spacing:2px}
+.welcome-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin:0 0 9px}
+.welcome-content h1{font-size:34px;line-height:1.15;margin:0 0 14px;letter-spacing:-.7px}
+.welcome-copy{color:#d4c7e1;font-size:15px;line-height:1.75;margin:0 auto 30px;max-width:320px}
+.welcome-points{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 30px}
+.welcome-points span{border:1px solid #ffffff20;background:#ffffff0c;border-radius:30px;padding:8px 12px;color:#eee4f8;font-size:12px}
+.welcome-start{width:100%;max-width:320px;min-height:54px;border:0;border-radius:16px;background:linear-gradient(105deg,#a66be8,#e17ac5);color:#180d25;font-size:16px;font-weight:900;box-shadow:0 10px 32px #a66be844;cursor:pointer}
+.welcome-start:active{transform:scale(.98)}
+@keyframes welcome-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.welcome-content{animation:none}}
 </style>
 </head>
 <body>
+<div id="welcomeScreen" class="welcome-screen hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeCopy">
+ <div class="welcome-content">
+  <div class="welcome-mark" aria-hidden="true">M</div>
+  <p class="welcome-kicker">MADAL • BULSHO IYO MADADAALO</p>
+  <h1 id="welcomeTitle">Ku soo dhawoow MADAL!</h1>
+  <p id="welcomeCopy" class="welcome-copy">Meesha aad ka daawan karto fiidiyowyo, kula wadaagi karto fikradahaaga, kuna xiriiri karto bulshada.</p>
+  <div class="welcome-points"><span>▶ Fiidiyowyo</span><span>♥ Bulsho</span><span>✦ Madadaalo</span></div>
+  <button id="welcomeStart" class="welcome-start" type="button">Bilow MADAL</button>
+ </div>
+</div>
 <header><div class="brand">MADAL</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
-<section id="home" class="page"><div class="tabs feed-tabs"><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Raadi" title="Raadi">🔍</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Dooro waxa aad daawanayso"><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Raadi" title="Raadi">🔍</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi MADAL</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli MADAL</h2>
@@ -125,6 +150,14 @@ let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new
 const MADAL_VERSION="1.8.0";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
+const welcomeScreen=$('welcomeScreen');
+let welcomeSeen=false;
+try{welcomeSeen=localStorage.getItem('madal_welcome_seen_v1')==='true'}catch(_){welcomeSeen=true}
+if(!welcomeSeen)welcomeScreen.classList.remove('hidden');
+$('welcomeStart').addEventListener('click',()=>{
+ try{localStorage.setItem('madal_welcome_seen_v1','true')}catch(_){}
+ welcomeScreen.classList.add('hidden');
+});
 function preference(key,fallback){try{const value=localStorage.getItem("madal_"+key);return value===null?fallback:value==="true"}catch(_){return fallback}}
 function savePreference(key,value){try{localStorage.setItem("madal_"+key,String(value))}catch(_){}}
 function notice(message){if(!preference("app_alerts",true))return;$('notice').textContent=message;$('notice').classList.remove('hidden')}
