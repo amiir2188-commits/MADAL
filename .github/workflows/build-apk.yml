@@ -54,6 +54,17 @@ jobs:
           npx cap init MADAL com.madal.app --web-dir www
           node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
+          MADAL_VERSION="$(node -e "console.log(require('./version.json').version)")"
+          MADAL_VERSION_CODE="$(node -e "const [a,b,c]=require('./version.json').version.split('.').map(Number);console.log(a*1000000+b*1000+c)")"
+          export MADAL_VERSION MADAL_VERSION_CODE
+          node <<'NODE'
+          const fs = require('fs');
+          const file = 'android/app/build.gradle';
+          let gradle = fs.readFileSync(file, 'utf8');
+          gradle = gradle.replace(/versionCode\s+\d+/, 'versionCode ' + process.env.MADAL_VERSION_CODE);
+          gradle = gradle.replace(/versionName\s+["'][^"']+["']/, 'versionName "' + process.env.MADAL_VERSION + '"');
+          fs.writeFileSync(file, gradle);
+          NODE
           npx capacitor-assets generate --android
           npx cap sync android
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
