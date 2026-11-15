@@ -142,7 +142,9 @@ async function renderFeed(){
  $('allFeed').innerHTML='';
  for(const p of posts){const html=await card(p);$('allFeed').insertAdjacentHTML('beforeend',html)}
 }
-if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());\ndocument.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));\ndocument.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
+if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
+document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
+document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
 async function loadSocialData(posts){
  socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();favoritePostIds=new Set();
  const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
@@ -160,7 +162,9 @@ async function loadSocialData(posts){
  socialReady=true;
  for(const like of likesResult.data||[]){likesByPost[like.post_id]=(likesByPost[like.post_id]||0)+1;if(currentUser&&like.user_id===currentUser.id)likedPostIds.add(like.post_id)}
  for(const comment of commentsResult.data||[]){(commentsByPost[comment.post_id]??=[]).push(comment)}
- for(const follow of followsResult.data||[]){followerCounts[follow.following_id]=(followerCounts[follow.following_id]||0)+1;if(currentUser&&follow.follower_id===currentUser.id)followsByUser.add(follow.following_id)}\n for(const row of repostsResult.data||[])repostedPostIds.add(row.post_id);\n for(const row of favoritesResult.data||[])favoritePostIds.add(row.post_id);
+ for(const follow of followsResult.data||[]){followerCounts[follow.following_id]=(followerCounts[follow.following_id]||0)+1;if(currentUser&&follow.follower_id===currentUser.id)followsByUser.add(follow.following_id)}
+ for(const row of repostsResult.data||[])repostedPostIds.add(row.post_id);
+ for(const row of favoritesResult.data||[])favoritePostIds.add(row.post_id);
 }
 $('allFeed').addEventListener('click',async e=>{
  const like=e.target.closest('[data-like]');
@@ -269,7 +273,13 @@ async function loadMyProfile(){
  $('profileAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="Sawirka profile-ka">':escapeHtml((name.trim()[0]||'M').toUpperCase());
  $('editDisplayName').value=name;$('editUsername').value=username;$('editBio').value=profile?.bio||'';$('editAvatarUrl').value=profile?.avatar_url||'';$('avatarPreview').src=profile?.avatar_url||'';
  $('profileLogin').classList.add('hidden');
- let own=allPosts.filter(p=>String(p.user_id)===currentUser.id&&(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/')));\n if(activeProfileTab==='private')own=own.filter(p=>p.is_private);\n else if(activeProfileTab!=='videos') {\n  const table=activeProfileTab==='reposts'?'media_reposts':activeProfileTab==='liked'?'media_likes':'media_favorites';\n  const {data:rows,error:rowsError}=await db.from(table).select('post_id').eq('user_id',currentUser.id).order('created_at',{ascending:false});\n  if(rowsError){notice('Qaybtan lama soo rari karin: '+rowsError.message);own=[]}else{const ids=(rows||[]).map(x=>x.post_id);own=ids.map(id=>allPosts.find(p=>String(p.id)===String(id))).filter(Boolean).filter(p=>!p.is_private||String(p.user_id)===currentUser.id)}\n }
+ let own=allPosts.filter(p=>String(p.user_id)===currentUser.id&&(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/')));
+ if(activeProfileTab==='private')own=own.filter(p=>p.is_private);
+ else if(activeProfileTab!=='videos') {
+  const table=activeProfileTab==='reposts'?'media_reposts':activeProfileTab==='liked'?'media_likes':'media_favorites';
+  const {data:rows,error:rowsError}=await db.from(table).select('post_id').eq('user_id',currentUser.id).order('created_at',{ascending:false});
+  if(rowsError){notice('Qaybtan lama soo rari karin: '+rowsError.message);own=[]}else{const ids=(rows||[]).map(x=>x.post_id);own=ids.map(id=>allPosts.find(p=>String(p.id)===String(id))).filter(Boolean).filter(p=>!p.is_private||String(p.user_id)===currentUser.id)}
+ }
  const [followers,following,likes]=await Promise.all([
   db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',currentUser.id),
   db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',currentUser.id),
