@@ -92,7 +92,7 @@ document.getElementById("verifyPhone").addEventListener("click",async()=>{
  const phone=normalizeSomaliPhone(identity);
  const token=document.getElementById("phoneCode").value.trim();
  const status=document.getElementById("status"),btn=document.getElementById("verifyPhone");
- if(!phone||!token){status.textContent="Hubi lambarka iyo koodhka SMS-ka.";return}
+ if(!phone||!/^\\d{6}$/.test(token)){status.textContent="Hubi lambarka iyo koodhka SMS-ka ee 6-da lambar ah.";return}
  btn.disabled=true;status.textContent="Lambarka waa la xaqiijinayaa...";
  try{
   const {data,error}=await db.auth.verifyOtp({phone,token,type:"sms"});
