@@ -17,7 +17,7 @@ h1{font-size:21px;margin:0 0 5px}.welcome p{margin:0;color:var(--muted)}
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
 .section-title{font-size:18px;margin:16px 2px 8px}.feed-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;overflow:hidden}
-.feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}
+.feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}\n.social-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.social-actions button,.comment-form button{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel2);color:#fff;font-weight:650}.comment-panel{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}.comment-item{padding:7px 0;border-bottom:1px solid #38254a;font-size:13px}.comment-form textarea{min-height:58px}
 input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e0915;color:white;margin:6px 0 12px;font:inherit}textarea{min-height:90px;resize:vertical}label{font-size:13px;color:var(--muted)}
 .bottom{position:fixed;z-index:8;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#100a19f5;border-top:1px solid var(--line);padding:9px 5px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
 .bottom button{border:0;background:none;color:var(--muted);font-size:12px;padding:5px 9px}.bottom button span{display:block;font-size:20px}.bottom button.active{color:var(--purple)}
@@ -51,6 +51,7 @@ const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[];
+let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, socialReady=false;
 const MADAL_VERSION="1.3.0";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
@@ -81,17 +82,74 @@ function isVideo(p){
 }
 async function card(p){
  const url=await mediaUrl(p),title=escapeHtml(p.title||p.name||'MADAL'),desc=escapeHtml(p.description||p.caption||''),date=p.created_at?new Date(p.created_at).toLocaleDateString('so-SO'):'';
+ const postId=String(p.id||''),author=String(p.user_id||''),liked=likedPostIds.has(postId),likes=likesByPost[postId]||0,comments=commentsByPost[postId]||[];
  let player='';
  if(url && isVideo(p)){player='<video class="media" controls playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>'}
  else player='<p class="muted">Fiidiyowgan lama heli karo.</p>';
- return '<article class="feed-card"><h3>'+title+'</h3><p class="muted">'+date+'</p>'+(desc?'<p>'+desc+'</p>':'')+player+'</article>';
+ let social='';
+ if(socialReady){
+  const followButton=currentUser && author && author!==currentUser.id?'<button type="button" data-follow="'+escapeHtml(author)+'">'+(followsByUser.has(author)?'Raacista ka noqo':'Raac')+' · '+(followerCounts[author]||0)+'</button>':'';
+  const commentItems=comments.map(c=>'<p class="comment-item"><strong>'+escapeHtml(String(c.user_id||'').slice(0,8))+'</strong> '+escapeHtml(c.body)+' <span class="muted small">'+(c.created_at?new Date(c.created_at).toLocaleDateString('so-SO'):'')+'</span></p>').join('')||'<p class="muted small">Weli faallo lama qorin.</p>';
+  social='<div class="social-actions"><button type="button" data-like="'+escapeHtml(postId)+'">'+(liked?'♥':'♡')+' '+likes+' Jeclow</button><button type="button" data-comments="'+escapeHtml(postId)+'">Faallo ('+comments.length+')</button>'+followButton+'</div><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" maxlength="1000" placeholder="Faallo qor..." required></textarea><button class="primary" type="submit">Dir faallada</button></form></div>';
+ }
+ return '<article class="feed-card"><h3>'+title+'</h3><p class="muted">'+date+'</p>'+(desc?'<p>'+desc+'</p>':'')+player+social+'</article>';
 }
 async function renderFeed(){
  const posts=allPosts.filter(isVideo);
+ await loadSocialData(posts);
  if(!posts.length){$('allFeed').innerHTML='<div class="empty">Weli fiidiyow lama soo gelin. Noqo qofka ugu horreeya ee fiidiyow soo geliya!</div>';return}
  $('allFeed').innerHTML='';
  for(const p of posts){const html=await card(p);$('allFeed').insertAdjacentHTML('beforeend',html)}
 }
+async function loadSocialData(posts){
+ socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};
+ const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
+ if(!ids.length)return;
+ const {data:session}=await db.auth.getSession();currentUser=session?.session?.user||currentUser;
+ const [likesResult,commentsResult,followsResult]=await Promise.all([
+  db.from('media_likes').select('post_id,user_id').in('post_id',ids),
+  db.from('media_comments').select('id,post_id,user_id,body,created_at').in('post_id',ids).order('created_at',{ascending:true}),
+  authors.length?db.from('user_follows').select('follower_id,following_id').in('following_id',authors):Promise.resolve({data:[],error:null})
+ ]);
+ if(likesResult.error||commentsResult.error||followsResult.error){
+  console.warn('MADAL social tables are not ready. Run social_migration.sql in Supabase.',likesResult.error||commentsResult.error||followsResult.error);
+  return;
+ }
+ socialReady=true;
+ for(const like of likesResult.data||[]){likesByPost[like.post_id]=(likesByPost[like.post_id]||0)+1;if(currentUser&&like.user_id===currentUser.id)likedPostIds.add(like.post_id)}
+ for(const comment of commentsResult.data||[]){(commentsByPost[comment.post_id]??=[]).push(comment)}
+ for(const follow of followsResult.data||[]){followerCounts[follow.following_id]=(followerCounts[follow.following_id]||0)+1;if(currentUser&&follow.follower_id===currentUser.id)followsByUser.add(follow.following_id)}
+}
+$('allFeed').addEventListener('click',async e=>{
+ const like=e.target.closest('[data-like]');
+ const comments=e.target.closest('[data-comments]');
+ const follow=e.target.closest('[data-follow]');
+ if(comments){$('comments-'+comments.dataset.comments)?.classList.toggle('hidden');return}
+ if(!like&&!follow)return;
+ if(!currentUser){location.href='./account.html';return}
+ if(like){
+  const postId=like.dataset.like;
+  const result=likedPostIds.has(postId)
+   ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
+   :await db.from('media_likes').insert({post_id:postId,user_id:currentUser.id});
+  if(result.error)notice('Jeclaysigu ma shaqayn: '+result.error.message);else await loadMedia();
+ }
+ if(follow){
+  const target=follow.dataset.follow;
+  const result=followsByUser.has(target)
+   ?await db.from('user_follows').delete().eq('follower_id',currentUser.id).eq('following_id',target)
+   :await db.from('user_follows').insert({follower_id:currentUser.id,following_id:target});
+  if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else await loadMedia();
+ }
+});
+$('allFeed').addEventListener('submit',async e=>{
+ const form=e.target.closest('[data-comment-form]');if(!form)return;
+ e.preventDefault();if(!currentUser){location.href='./account.html';return}
+ const body=form.querySelector('textarea').value.trim();if(!body)return;
+ const {error}=await db.from('media_comments').insert({post_id:form.dataset.commentForm,user_id:currentUser.id,body});
+ if(error){notice('Faallada lama dirin: '+error.message);return}
+ await loadMedia();$('comments-'+form.dataset.commentForm)?.classList.remove('hidden');
+});
 async function loadMedia(){
  $('allFeed').textContent='Waa la soo rarayaa...';
  const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false});
