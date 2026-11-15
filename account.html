@@ -107,7 +107,21 @@ document.getElementById("form").addEventListener("submit",async function(e){
     throw new Error("Username-ku ha noqdo 3 ilaa 24 xaraf, tiro ama _.");
    }
 
-   const {data,error}=await db.auth.signUp({
+   
+const {data,error}=await db.auth.signUp({
+  email,
+  password,
+  options:{
+    data:{
+      display_name:name,
+      username:username
+    },
+    emailRedirectTo:"https://amiir2188-commits.github.io/MADAL/account.html"
+  }
+});
+
+if(error) throw error;
+   
     email,password,
     options:{
   data:{display_name:name,username},
