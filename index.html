@@ -53,7 +53,8 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-let currentUser=null, allPosts=[];\nconst MADAL_VERSION="1.1.0";
+let currentUser=null, allPosts=[];
+const MADAL_VERSION="1.1.1";
 const $=id=>document.getElementById(id);
 function notice(message){$('notice').textContent=message;$('notice').classList.remove('hidden')}
 function clearNotice(){$('notice').classList.add('hidden')}
