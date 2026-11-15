@@ -27,7 +27,7 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 </style>
 </head>
 <body>
-<header><div><div class="brand">MADAL</div><div class="tag">Podcast • Qisooyin • Sheekooyin</div></div><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></header>
+<header><div><div class="brand">MADAL</div><div class="tag">Podcast • Qisooyin • Sheekooyin</div></div><div class="row" style="flex:0 0 auto;gap:6px"><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <section class="welcome"><h1>Qiso kasta waxay leedahay meel.</h1><p>Daawo qisooyin, dhagayso podcast-yo, lana wadaag codkaaga.</p></section>
 <div class="tabs" role="tablist"><button class="active" data-tab="home">Dhammaan</button><button data-tab="stories">📖 Qisooyin</button><button data-tab="podcasts">🎙️ Podcast</button></div>
@@ -123,6 +123,21 @@ $('uploadForm').addEventListener('submit',async e=>{
 });
 db.auth.onAuthStateChange(()=>{refreshProfile()});
 refreshProfile();loadMedia();
+let installPrompt=null;
+const installButton=$('installButton');
+window.addEventListener('beforeinstallprompt',event=>{
+ event.preventDefault();installPrompt=event;installButton.classList.remove('hidden');
+});
+installButton.addEventListener('click',async()=>{
+ if(installPrompt){
+  installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.classList.add('hidden');
+ }else{
+  notice('iPhone: Safari ka fur MADAL, taabo Share, kadib dooro Add to Home Screen.');
+ }
+});
+window.addEventListener('appinstalled',()=>{installButton.classList.add('hidden');notice('MADAL waa lagu rakibay telefoonkaaga!')});
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+if(isIOS && !window.matchMedia('(display-mode: standalone)').matches) installButton.classList.remove('hidden');
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
 </script>
 </body>
