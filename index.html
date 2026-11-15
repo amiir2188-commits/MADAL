@@ -186,8 +186,8 @@ async function searchDiscover(){
  host.innerHTML='<div class="empty">Waa la raadinayaa...</div>';
  let people=[],peopleError=null;
  if(activeDiscoverTab!=='videos'){
-  const result=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').or('username.ilike.%'+q+'%,display_name.ilike.%'+q+'%').limit(20);
-  people=result.data||[];peopleError=result.error;
+  const [byName,byHandle]=await Promise.all([db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('username','%'+q+'%').limit(20),db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('display_name','%'+q+'%').limit(20)]);
+  peopleError=byName.error||byHandle.error;people=[...(byName.data||[]),...(byHandle.data||[])].filter((person,index,array)=>array.findIndex(x=>x.id===person.id)===index).slice(0,20);
  }
  const videos=activeDiscoverTab==='people'?[]:allPosts.filter(p=>!p.is_private||String(p.user_id)===String(currentUser?.id)).filter(p=>[p.title,p.description,p.caption,p.username,p.display_name].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()))).slice(0,30);
  if(peopleError)host.innerHTML='<p class="muted">Raadinta dadka: '+escapeHtml(peopleError.message)+'</p>';
