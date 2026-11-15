@@ -17,6 +17,27 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
 .section-title{font-size:18px;margin:16px 2px 8px}.feed-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;overflow:hidden}
+/* MADAL vertical short-video experience */
+#home{margin:-14px -14px 0}
+#home>.section-title{padding:10px 14px 0}
+#home .feed-tabs{padding:8px 14px}
+#home #videoSearch{margin:0 14px 10px;width:calc(100% - 28px)}
+#allFeed{height:calc(100dvh - 220px);min-height:440px;overflow-y:auto;overscroll-behavior-y:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
+#allFeed::-webkit-scrollbar{display:none}
+.video-slide{position:relative;min-height:440px;height:calc(100dvh - 220px);scroll-snap-align:start;scroll-snap-stop:always;background:#050308;overflow:hidden;border:0;border-radius:0;margin:0;padding:0}
+.video-slide .slide-media{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;margin:0;background:#050308}
+.video-slide .slide-shade{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#08050dcc);pointer-events:none}
+.video-slide .slide-info{position:absolute;left:14px;right:82px;bottom:18px;z-index:2;text-shadow:0 1px 4px #000}
+.video-slide .slide-info h3{font-size:17px;margin:0 0 5px}
+.video-slide .slide-info p{font-size:13px;margin:5px 0;max-width:100%;overflow-wrap:anywhere}
+.video-slide .slide-actions{position:absolute;right:12px;bottom:22px;z-index:3;display:flex;flex-direction:column;gap:12px;align-items:center}
+.video-slide .slide-actions button{min-width:52px;min-height:46px;border:0;border-radius:24px;background:#21152fbb;color:white;padding:7px 5px;font-size:12px}
+.video-slide .slide-actions button span{display:block;font-size:22px}
+.video-slide .comment-panel{position:absolute;z-index:4;left:0;right:0;bottom:0;max-height:55%;overflow:auto;background:#100a19f5;padding:14px;border-radius:18px 18px 0 0}
+.video-slide .comment-panel.hidden{display:none}
+.video-slide .muted{color:#e0d5e9}
+@media(max-width:480px){#home{margin:-14px -14px 0}#allFeed{height:calc(100dvh - 205px);min-height:420px}.video-slide{height:calc(100dvh - 205px);min-height:420px}}
+
 .feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}\n.social-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.social-actions button,.comment-form button{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel2);color:#fff;font-weight:650}.comment-panel{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}.comment-item{padding:7px 0;border-bottom:1px solid #38254a;font-size:13px}.comment-form textarea{min-height:58px}\n.activity-box{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}.activity-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.activity-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);color:var(--pink);flex:none}\n.message-list{max-height:48vh;overflow:auto;margin:12px 0;padding:8px;border:1px solid var(--line);border-radius:12px}.message-bubble{max-width:88%;padding:9px 12px;border-radius:12px;background:var(--panel2);margin:8px 0}.message-bubble.mine{margin-left:auto;background:#493064}.message-bubble p{margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere}.message-bubble small{color:var(--muted)}
 \n.profile-hero{text-align:center;padding:20px 16px 14px}.profile-top{display:flex;align-items:center;justify-content:center;gap:18px;text-align:left;max-width:440px;margin:0 auto 14px}.profile-avatar{width:94px;height:94px;flex:none;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#8751c9,#f18bd4);font-size:32px;font-weight:900;border:3px solid #d8baff}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-main h2{margin:4px 0}.profile-bio{max-width:420px;margin:8px auto 14px;white-space:pre-wrap}.profile-stats{display:flex;justify-content:space-around;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;margin:14px 0}.profile-stats div{display:grid;gap:2px}.profile-stats strong{font-size:19px}.profile-stats span{font-size:12px;color:var(--muted)}.profile-buttons{justify-content:center}.profile-buttons>*{flex:1;max-width:220px}.profile-tabs{display:flex;border-bottom:1px solid var(--line);margin:4px -14px 0}.profile-tabs{overflow-x:auto}.profile-tabs button{flex:1;min-width:max-content;padding:12px 10px;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font-weight:700}.profile-tabs button.active{color:#fff;border-bottom-color:var(--purple)}.feed-tabs{padding:8px 0}.verified{display:inline-grid;place-items:center;width:17px;height:17px;margin-left:5px;border-radius:50%;background:#2589ed;color:white;font-size:11px;font-weight:900;vertical-align:middle}.feed-tabs button{min-width:100px}.social-actions button{font-size:12px}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin:0 -14px}.profile-tile{position:relative;aspect-ratio:3/4;background:#21152f;overflow:hidden}.profile-tile video{width:100%;height:100%;object-fit:cover}.profile-tile .tile-title{position:absolute;left:0;right:0;bottom:0;padding:22px 5px 5px;background:linear-gradient(transparent,#090512dd);font-size:11px;line-height:1.25;overflow-wrap:anywhere}.profile-tile .tile-views{position:absolute;left:6px;top:6px;background:#090512aa;border-radius:6px;padding:2px 5px;font-size:10px}.profile-avatar img{display:block}.avatar-picker{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 12px}.avatar-preview{width:68px;height:68px;border-radius:50%;object-fit:cover;border:2px solid var(--purple);background:var(--panel2)}.avatar-picker input{flex:1;min-width:180px}
 .upload-choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
@@ -131,7 +152,10 @@ async function card(p){
   const commentItems=comments.map(c=>'<p class="comment-item"><strong>'+escapeHtml(String(c.user_id||'').slice(0,8))+'</strong> '+escapeHtml(c.body)+' <span class="muted small">'+(c.created_at?new Date(c.created_at).toLocaleDateString('so-SO'):'')+'</span></p>').join('')||'<p class="muted small">Weli faallo lama qorin.</p>';
   social='<div class="social-actions"><button type="button" data-like="'+escapeHtml(postId)+'">'+(liked?'♥':'♡')+' '+likes+' Like</button><button type="button" data-repost="'+escapeHtml(postId)+'">'+(reposted?'↗ Reposted':'↗ Repost')+'</button><button type="button" data-favorite="'+escapeHtml(postId)+'">'+(favorite?'★ Saved':'☆ Favorite')+'</button><button type="button" data-comments="'+escapeHtml(postId)+'">Faallo ('+comments.length+')</button>'+followButton+(currentUser&&author===currentUser.id?'<button type="button" data-private="'+escapeHtml(postId)+'">'+(p.is_private?'🔓 Public ka dhig':'🔒 Private ka dhig')+'</button>':'')+'</div><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" maxlength="1000" placeholder="Faallo qor..." required></textarea><button class="primary" type="submit">Dir faallada</button></form></div>';
  }
- return '<article class="feed-card"><h3>'+title+'</h3><p class="muted">'+date+'</p>'+(desc?'<p>'+desc+'</p>':'')+player+social+'</article>';
+ const authorName=escapeHtml(p.display_name||p.username||'MADAL Creator');
+ const slidePlayer=player.replace('class="media"','class="slide-media"').replace('<video class="slide-media" controls playsinline','<video class="slide-media" autoplay muted loop playsinline').replace(' preload="metadata"',' preload="metadata"');
+ const actionMarkup=social.replace('<div class="social-actions">','<div class="slide-actions">').replace(/<button type="button" data-like="([^"]+)">([\\s\\S]*?)<\\/button>/,'<button type="button" data-like="$1"><span>♥</span>$2</button>').replace(/<button type="button" data-comments="([^"]+)">([\\s\\S]*?)<\\/button>/,'<button type="button" data-comments="$1"><span>💬</span>$2</button>').replace(/<button type="button" data-follow="([^"]+)">([\\s\\S]*?)<\\/button>/,'<button type="button" data-follow="$1"><span>＋</span>$2</button>');
+ return '<article class="video-slide" data-slide="'+escapeHtml(postId)+'">'+slidePlayer+'<div class="slide-shade"></div><div class="slide-info"><h3>@'+authorName+'</h3><p>'+title+'</p>'+(desc?'<p>'+desc+'</p>':'')+'<p class="small">'+date+'</p></div>'+actionMarkup+'</article>';
 }
 async function renderFeed(){
  const query=$('videoSearch')?.value.trim().toLowerCase()||'';
@@ -141,6 +165,13 @@ async function renderFeed(){
  if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee MADAL wax soo geliya!')+'</div>';return}
  $('allFeed').innerHTML='';
  for(const p of posts){const html=await card(p);$('allFeed').insertAdjacentHTML('beforeend',html)}
+ const videoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  const video=entry.target.querySelector('video');
+  if(!video)return;
+  if(entry.isIntersecting){video.play().catch(()=>{});}
+  else{video.pause();}
+ }),{root:$('allFeed'),threshold:0.65});
+ $('allFeed').querySelectorAll('.video-slide').forEach(slide=>videoObserver.observe(slide));
 }
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
