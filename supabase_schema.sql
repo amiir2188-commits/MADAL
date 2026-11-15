@@ -166,3 +166,29 @@ on public.madal_messages(sender_id, recipient_id, created_at desc);
 create index if not exists madal_messages_recipient_unread_idx
 on public.madal_messages(recipient_id, read_at)
 where read_at is null;
+
+
+-- Enable realtime events for the feed and private messages when the default
+-- Supabase realtime publication is available.
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime') then
+    if not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime'
+        and schemaname = 'public'
+        and tablename = 'media_posts'
+    ) then
+      alter publication supabase_realtime add table public.media_posts;
+    end if;
+    if not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime'
+        and schemaname = 'public'
+        and tablename = 'madal_messages'
+    ) then
+      alter publication supabase_realtime add table public.madal_messages;
+    end if;
+  end if;
+end
+$$;
