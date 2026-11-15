@@ -80,7 +80,9 @@ jobs:
 
       - name: Read MADAL version
         id: version
-        run: echo "version=$(node -p \"require('./version.json').version\")" >> "$GITHUB_OUTPUT"
+        run: |
+          VERSION=$(node -e "console.log(require('./version.json').version)")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Publish MADAL release assets
         uses: softprops/action-gh-release@v2
