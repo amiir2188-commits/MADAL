@@ -44,7 +44,7 @@ jobs:
           cp icon-background.png assets/icon-background.png
           cp splash.png assets/splash.png
           cp index.html account.html update.js www/
-          cp manifest.webmanifest www/ 2>/dev/null || true
+          cp manifest.webmanifest version.json www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
           npm init -y
