@@ -78,6 +78,16 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
+      - name: Verify Android APK and web update bundle
+        run: |
+          APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          AAPT="$(find "$ANDROID_HOME/build-tools" -name aapt | sort -V | tail -n 1)"
+          APKSIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -n 1)"
+          test -s "$APK"
+          "$AAPT" dump badging "$APK" | grep "package: name='com.madal.app'"
+          "$APKSIGNER" verify --verbose "$APK"
+          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json'
+
       - name: Read MADAL version
         id: version
         run: |
