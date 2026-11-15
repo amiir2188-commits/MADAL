@@ -4,7 +4,7 @@ create table if not exists public.media_posts (
  user_id uuid not null references auth.users(id) on delete cascade,
  title text not null check(char_length(title) between 1 and 140),
  description text default '',
- media_type text not null check(media_type in ('video','qiso','podcast')),
+ media_type text not null check(media_type in ('video','image','qiso','podcast')),
  storage_path text not null unique,
  download_allowed boolean not null default false,
  status text not null default 'published' check(status in ('published','hidden')),
@@ -20,7 +20,7 @@ create policy "MADAL update own" on public.media_posts for update to authenticat
 drop policy if exists "MADAL delete own" on public.media_posts;
 create policy "MADAL delete own" on public.media_posts for delete to authenticated using(auth.uid()=user_id);
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
-values('madal-media','madal-media',false,262144000,array['video/mp4','video/webm','video/quicktime','audio/mpeg','audio/mp4','audio/wav','audio/ogg'])
+values('madal-media','madal-media',false,262144000,array['video/mp4','video/webm','video/quicktime','image/jpeg','image/png','image/webp','image/gif','audio/mpeg','audio/mp4','audio/wav','audio/ogg'])
 on conflict(id) do update set public=false,file_size_limit=262144000;
 drop policy if exists "MADAL upload own folder" on storage.objects;
 create policy "MADAL upload own folder" on storage.objects for insert to authenticated with check(bucket_id='madal-media' and (storage.foldername(name))[1]=auth.uid()::text);
