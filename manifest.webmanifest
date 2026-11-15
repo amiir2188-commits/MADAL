@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "MADAL — Podcast iyo Qisooyin",
+  "name": "MADAL — Fiidiyowyo",
   "short_name": "MADAL",
-  "description": "Ku daawo qisooyin, kuna dhagayso podcast-yo Af Soomaali ah.",
+  "description": "Ku daawo, kuna wadaag fiidiyowyo Af Soomaali ah.",
   "lang": "so",
   "start_url": "./",
   "scope": "./",
