@@ -1,7 +1,7 @@
 {
-  "version": "1.6.0",
+  "version": "1.7.0",
   "name": "MADAL",
-  "message": "MADAL 1.6.0 — For You, Following, Inbox, Reposts, Favorites iyo Private.",
+  "message": "MADAL 1.7.0 — Full-screen vertical video feed, For You iyo Following.",
   "updated_at": "2026-11-15",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
