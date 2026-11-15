@@ -256,7 +256,7 @@ $('uploadForm').addEventListener('submit',async e=>{
  }catch(err){console.error(err);notice('Soo gelintu way fashilantay: '+err.message)}
  finally{button.disabled=false;button.textContent='Soo geli'}
 });
-db.auth.onAuthStateChange(()=>{refreshProfile()});
+db.auth.onAuthStateChange((event,session)=>{if(!session?.user){if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}activeChatUser=null;$('conversationPanel')?.classList.add('hidden')}refreshProfile()});
 $('shareButton').addEventListener('click',async()=>{
  const shareData={title:'MADAL — Fiidiyowyo',text:'Ku soo biir MADAL: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
  try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga MADAL waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
