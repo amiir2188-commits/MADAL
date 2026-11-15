@@ -47,3 +47,85 @@ create policy "MADAL follow self" on public.user_follows for insert to authentic
 drop policy if exists "MADAL unfollow self" on public.user_follows;
 create policy "MADAL unfollow self" on public.user_follows for delete to authenticated using (auth.uid() = follower_id);
 create index if not exists user_follows_following_idx on public.user_follows(following_id);
+
+
+-- Public user directory for MADAL handles and direct messages.
+create table if not exists public.madal_profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  username text not null unique,
+  display_name text not null default 'MADAL User',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+alter table public.madal_profiles enable row level security;
+drop policy if exists "MADAL profiles readable" on public.madal_profiles;
+create policy "MADAL profiles readable" on public.madal_profiles for select to anon, authenticated using (true);
+drop policy if exists "MADAL profile insert own" on public.madal_profiles;
+create policy "MADAL profile insert own" on public.madal_profiles for insert to authenticated with check (auth.uid() = id);
+drop policy if exists "MADAL profile update own" on public.madal_profiles;
+create policy "MADAL profile update own" on public.madal_profiles for update to authenticated using (auth.uid() = id) with check (auth.uid() = id);
+
+create or replace function public.madal_create_profile()
+returns trigger
+language plpgsql
+security definer
+set search_path = public, auth
+as $$
+declare
+  desired_username text;
+begin
+  desired_username := lower(coalesce(nullif(new.raw_user_meta_data->>'username',''), 'user_' || left(new.id::text,8)));
+  insert into public.madal_profiles(id, username, display_name)
+  values (
+    new.id,
+    desired_username,
+    coalesce(nullif(new.raw_user_meta_data->>'display_name',''), 'MADAL User')
+  )
+  on conflict (id) do update
+    set display_name = excluded.display_name,
+        updated_at = now();
+  return new;
+end;
+$$;
+drop trigger if exists madal_auth_user_profile on auth.users;
+create trigger madal_auth_user_profile
+after insert on auth.users
+for each row execute procedure public.madal_create_profile();
+
+insert into public.madal_profiles(id, username, display_name)
+select
+  u.id,
+  lower(coalesce(nullif(u.raw_user_meta_data->>'username',''), 'user_' || left(u.id::text,8))),
+  coalesce(nullif(u.raw_user_meta_data->>'display_name',''), 'MADAL User')
+from auth.users u
+on conflict (id) do nothing;
+
+-- Direct messages between two MADAL accounts.
+create table if not exists public.madal_messages (
+  id uuid primary key default gen_random_uuid(),
+  sender_id uuid not null references auth.users(id) on delete cascade,
+  recipient_id uuid not null references auth.users(id) on delete cascade,
+  body text not null check (char_length(body) between 1 and 2000),
+  created_at timestamptz not null default now(),
+  read_at timestamptz,
+  constraint madal_no_self_message check (sender_id <> recipient_id)
+);
+alter table public.madal_messages enable row level security;
+drop policy if exists "MADAL messages participants read" on public.madal_messages;
+create policy "MADAL messages participants read" on public.madal_messages
+for select to authenticated
+using (auth.uid() = sender_id or auth.uid() = recipient_id);
+drop policy if exists "MADAL messages sender insert" on public.madal_messages;
+create policy "MADAL messages sender insert" on public.madal_messages
+for insert to authenticated
+with check (auth.uid() = sender_id and sender_id <> recipient_id);
+drop policy if exists "MADAL messages recipient mark read" on public.madal_messages;
+create policy "MADAL messages recipient mark read" on public.madal_messages
+for update to authenticated
+using (auth.uid() = recipient_id)
+with check (auth.uid() = recipient_id);
+create index if not exists madal_messages_conversation_idx
+on public.madal_messages(sender_id, recipient_id, created_at desc);
+create index if not exists madal_messages_recipient_unread_idx
+on public.madal_messages(recipient_id, read_at)
+where read_at is null;
