@@ -10,21 +10,24 @@
 <style>
 :root{color-scheme:dark;--bg:#090512;--panel:#171020;--panel2:#21152f;--line:#38254a;--purple:#b47aff;--pink:#f18bd4;--muted:#b9acc7}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font:15px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif;padding-bottom:86px}
-header{position:sticky;top:0;z-index:5;background:#100a19ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:900;font-size:25px;letter-spacing:2px;color:var(--purple)}.tag{font-size:11px;color:var(--muted)}
+header{position:sticky;top:0;z-index:10;background:#100a19ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:8px 14px;min-height:54px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:950;font-size:25px;letter-spacing:2px;color:var(--purple)}.tag{display:none}.header-search{width:42px;height:42px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:#fff;font-size:25px;cursor:pointer}.header-search:active{background:#38234d}
 main{max-width:720px;margin:auto;padding:14px}
 h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.settings-row strong{display:block}.settings-row small{display:block;color:var(--muted);margin-top:3px}.settings-row input{width:22px;height:22px;accent-color:var(--purple);margin:0;flex:none}.settings-head{display:flex;align-items:center;gap:12px}.settings-head button{flex:none}
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
 .section-title{font-size:18px;margin:16px 2px 8px}.feed-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;overflow:hidden}
 /* MADAL vertical short-video experience */
-#home{margin:-14px -14px 0}
-#home>.section-title{padding:10px 14px 0}
-#home .feed-tabs{padding:8px 14px}
-#home #videoSearch{margin:0 14px 10px;width:calc(100% - 28px)}
-#allFeed{height:calc(100dvh - 220px);min-height:440px;overflow-y:auto;overscroll-behavior-y:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
+#home{margin:0 -14px 0}
+#home>.section-title{display:none}
+#home .feed-tabs{height:46px;display:flex;align-items:center;justify-content:center;gap:28px;padding:0 14px;margin:0;background:#100a19}
+#home .feed-tabs button{min-width:0;padding:8px 5px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:14px;font-weight:750;position:relative}
+#home .feed-tabs button.active{background:transparent;color:#fff}
+#home .feed-tabs button.active:after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px;background:#fff}
+#home #videoSearch{display:none}
+#allFeed{height:calc(100dvh - 166px);min-height:360px;overflow-y:auto;overscroll-behavior-y:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
 #allFeed::-webkit-scrollbar{display:none}
-.video-slide{position:relative;min-height:440px;height:calc(100dvh - 220px);scroll-snap-align:start;scroll-snap-stop:always;background:#050308;overflow:hidden;border:0;border-radius:0;margin:0;padding:0}
+.video-slide{position:relative;min-height:360px;height:calc(100dvh - 166px);scroll-snap-align:start;scroll-snap-stop:always;background:#050308;overflow:hidden;border:0;border-radius:0;margin:0;padding:0}
 .video-slide .slide-media{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;margin:0;background:#050308}
 .video-slide .slide-shade{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#08050dcc);pointer-events:none}
 .video-slide .slide-info{position:absolute;left:14px;right:82px;bottom:18px;z-index:2;text-shadow:0 1px 4px #000}
@@ -36,7 +39,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .video-slide .comment-panel{position:absolute;z-index:4;left:0;right:0;bottom:0;max-height:55%;overflow:auto;background:#100a19f5;padding:14px;border-radius:18px 18px 0 0}
 .video-slide .comment-panel.hidden{display:none}
 .video-slide .muted{color:#e0d5e9}
-@media(max-width:480px){#home{margin:-14px -14px 0}#allFeed{height:calc(100dvh - 205px);min-height:420px}.video-slide{height:calc(100dvh - 205px);min-height:420px}}
+@media(max-width:480px){#home{margin:0 -14px 0}#allFeed{height:calc(100dvh - 166px);min-height:360px}.video-slide{height:calc(100dvh - 166px);min-height:360px}}
 
 .feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}
 .social-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.social-actions button,.comment-form button{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel2);color:#fff;font-weight:650}.comment-panel{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}.comment-item{padding:7px 0;border-bottom:1px solid #38254a;font-size:13px}.comment-form textarea{min-height:58px}
@@ -60,10 +63,10 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 </style>
 </head>
 <body>
-<header><div><div class="brand">MADAL</div><div class="tag">Fiidiyowyo • Bulsho • Madadaalo</div></div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
+<header><div class="brand">MADAL</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="headerSearch" class="header-search" type="button" aria-label="Raadi" title="Raadi">⌕</button><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
-<section id="home" class="page"><h2 class="section-title">Hoyga MADAL</h2><div class="tabs feed-tabs"><button type="button" class="active" data-feed-tab="for_you">For You</button><button type="button" data-feed-tab="following">Following</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><div class="tabs feed-tabs"><button type="button" class="active" data-feed-tab="for_you">For You</button><button type="button" data-feed-tab="following">Following</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi MADAL</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli MADAL</h2>
@@ -131,6 +134,7 @@ function showPage(page){
  clearNotice();window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+$('headerSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.tab)));
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function postType(p){return String(p.media_type||p.type||p.category||'').toLowerCase()}
