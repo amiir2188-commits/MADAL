@@ -109,8 +109,10 @@ document.getElementById("form").addEventListener("submit",async function(e){
 
    const {data,error}=await db.auth.signUp({
     email,password,
-    options:{data:{display_name:name,username}}
-   });
+    options:{
+  data:{display_name:name,username},
+  emailRedirectTo:"https://amiir2188-commits.github.io/MADAL/account.html"
+    }
 
    if(error) throw error;
 
