@@ -50,7 +50,7 @@ jobs:
           npm init -y
           npm install @capacitor/core @capacitor/android @capawesome/capacitor-live-update
           npm install --save-dev esbuild
-          npm install --save-dev @capacitor/cli @capacitor/assets
+          npm install --save-dev @capacitor/cli @capacitor/assets sharp
           npx cap init GoGol com.madal.app --web-dir www
           node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
@@ -83,6 +83,7 @@ jobs:
           gradle = gradle.replace(/versionName\s+["'][^"']+["']/, 'versionName "' + process.env.GOGOL_VERSION + '"');
           fs.writeFileSync(file, gradle);
           NODE
+          node -e "require('sharp')('gogol-logo.svg').resize(1024,1024,{fit:'contain',background:{r:0,g:0,b:0,alpha:0}}).png().toFile('assets/icon-only.png').then(()=>require('sharp')('assets/icon-only.png').png().toFile('assets/icon-foreground.png'))"
           npx capacitor-assets generate --android
           npx cap sync android
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
