@@ -7,8 +7,8 @@
 <title>GoGol - Sign up or Log in</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:25px;display:grid;place-items:center;background:#090512;color:white;font-family:Arial,sans-serif}
-main{width:100%;max-width:420px;background:#191128;padding:25px;border:1px solid #493264;border-radius:20px}
+body{margin:0;min-height:100vh;padding:25px;display:grid;place-items:center;background:#000;color:white;font-family:Arial,sans-serif}
+main{width:100%;max-width:420px;background:#101010;padding:25px;border:1px solid #303030;border-radius:20px}
 h1{text-align:center;color:#c4a5ff;font-size:38px}
 h2{text-align:center}
 p{text-align:center;color:#c7b8d9}
@@ -34,7 +34,7 @@ a{color:#c4a5ff}
 <form id="form">
 <div id="extra">
 <input id="name" placeholder="Your name" autocomplete="name" required>
-<input id="username" placeholder="Username (tusaale: amiir01)" autocomplete="username" required>
+<input id="username" placeholder="Username (e.g. amiir01)" autocomplete="username" required>
 </div>
 <input id="identity" type="text" placeholder="Email or phone number (+252...)" autocomplete="username" required>
 <div id="emailVerify" style="display:none"><p>A 6-digit code was sent to your email.</p><input id="emailCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Enter the 6-digit email code"><button id="verifyEmail" type="button">Verify email</button></div>
