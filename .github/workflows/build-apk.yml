@@ -102,6 +102,28 @@ jobs:
           console.log('GoGol inline JavaScript syntax is valid.');
           NODE
 
+      - name: Validate GoGol release metadata and safety controls
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const version = JSON.parse(fs.readFileSync('version.json', 'utf8')).version;
+          const html = fs.readFileSync('index.html', 'utf8');
+          const sw = fs.readFileSync('sw.js', 'utf8');
+          const migration = fs.readFileSync('supabase/migrations/20261116000300_user_safety_moderation.sql', 'utf8');
+          if (!html.includes("const MADAL_VERSION='" + version + "'")) throw new Error('App version does not match version.json');
+          if (!sw.includes("gogol-app-v" + version)) throw new Error('Service worker cache does not match version.json');
+          for (const marker of ['data-report-post', 'data-block-user', 'data-unblock-user', 'privacySafetyCard', 'blockedUsersList']) {
+            if (!html.includes(marker)) throw new Error('Missing safety feature: ' + marker);
+          }
+          for (const table of ['madal_user_blocks', 'madal_moderation_reports']) {
+            if (!migration.includes('create table if not exists public.' + table)) throw new Error('Missing safety migration table: ' + table);
+          }
+          const controls = [...html.matchAll(/<(?:input|textarea|select)\\b[^>]*>/gi)].map(match => match[0]);
+          const unlabeled = controls.filter(tag => !/\\baria-label\\s*=|\\baria-labelledby\\s*=/.test(tag));
+          if (unlabeled.length) throw new Error('Found form controls without explicit accessible labels: ' + unlabeled.join(' | '));
+          console.log('GoGol version, safety migration, controls and accessibility labels are consistent.');
+          NODE
+
       - name: Build APK
         run: |
           cd android
