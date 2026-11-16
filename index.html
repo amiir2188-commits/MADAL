@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.30';
+const MADAL_VERSION='1.10.32';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -555,10 +555,11 @@ async function searchDiscover(){
  if(token!==discoverSearchToken)return;
  let videos=[],videoError=null;
  if(tab!=='people'){
-  const {data:remoteVideos,error}=await db.from('media_posts').select('*').eq('status','published').or('title.ilike.%'+likeTerm+'%,description.ilike.%'+likeTerm+'%,caption.ilike.%'+likeTerm+'%').order('created_at',{ascending:false}).order('id',{ascending:false}).limit(30);
+  const [byTitle,byDescription,byCaption]=await Promise.all(['title','description','caption'].map(column=>db.from('media_posts').select('*').eq('status','published').ilike(column,'%'+likeTerm+'%').order('created_at',{ascending:false}).order('id',{ascending:false}).limit(30)));
   if(token!==discoverSearchToken)return;
-  videoError=remoteVideos?.error||error;
-  const visible=(remoteVideos||[]).filter(post=>!post.is_private||String(post.user_id)===String(currentUser?.id));
+  videoError=byTitle.error||byDescription.error||byCaption.error;
+  const remoteVideos=[...(byTitle.data||[]),...(byDescription.data||[]),...(byCaption.data||[])];
+  const visible=remoteVideos.filter(post=>!post.is_private||String(post.user_id)===String(currentUser?.id));
   const byId=new Map();
   [...visible,...allPosts.filter(post=>!post.is_private||String(post.user_id)===String(currentUser?.id)).filter(post=>[post.title,post.description,post.caption].some(value=>String(value||'').toLowerCase().includes(q.toLowerCase())))].forEach(post=>byId.set(String(post.id),post));
   videos=[...byId.values()].slice(0,30);

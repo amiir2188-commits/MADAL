@@ -1,7 +1,7 @@
 {
-  "version": "1.10.31",
+  "version": "1.10.32",
   "name": "GoGol",
-  "message": "Raadinta fiidiyowyada hadda waxay si toos ah uga raadisaa kaydka GoGol, halkii ay ku koobnaan lahayd 24-ka muuqaal ee markii hore la soo raray.",
+  "message": "La saxay isku ekaanshaha lambarka app-ka iyo metadata-da; raadinta fiidiyowadana waxaa laga ilaaliyey in calaamadaha raadintu khaldaan PostgREST filter-ka.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
