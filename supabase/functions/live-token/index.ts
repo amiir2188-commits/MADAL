@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
 
   const isHost = session.host_id === authData.user.id;
   const heartbeatAge = Date.now() - new Date(session.last_heartbeat_at).getTime();
-  if (body.role === "viewer" && heartbeatAge > 180000) return reply({ error: "Baahiyuhu hadda ma muuqdo. Dib u cusboonaysii LIVE-yada." }, 410);
+  if (heartbeatAge > 180000) return reply({ error: "LIVE-kan hadda ma muuqdo. Dib u cusboonaysii LIVE-yada." }, 410);
   if (body.role === "host" && !isHost) return reply({ error: "Kaliya qofka bilaabay LIVE-ga ayaa baahin kara." }, 403);
   if (body.role === "viewer" && isHost) return reply({ error: "Martigeliyaha hore ayuu ugu jiraa LIVE-ga." }, 400);
 
