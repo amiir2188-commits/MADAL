@@ -1082,7 +1082,18 @@ $('uploadForm').addEventListener('submit',async e=>{
  }catch(err){console.error(err);notice('Soo gelintu way fashilantay: '+err.message)}
  finally{button.disabled=false;button.textContent='Soo geli GoGol'}
 });
-db.auth.onAuthStateChange((event,session)=>{resetMediaUrlSession(session?.user||null);if(!session?.user){if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}activeChatUser=null;$('conversationPanel')?.classList.add('hidden')}refreshProfile()});
+db.auth.onAuthStateChange((event,session)=>{
+ const nextUserId=session?.user?.id||null,previousUserId=currentUser?.id||null;
+ resetMediaUrlSession(session?.user||null);
+ if(String(nextUserId||'')!==String(previousUserId||'')){
+  socialLoadToken++;activityLoadToken++;profileLoadToken++;profileRefreshToken++;
+  inboxLoadToken++;conversationOpenToken++;conversationLoadToken++;messageSearchToken++;
+  if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}
+  activeChatUser=null;
+  $('conversationPanel')?.classList.add('hidden');
+ }
+ refreshProfile();
+});
 $('shareButton').addEventListener('click',async()=>{
  const shareData={title:'GoGol — Fiidiyowyo',text:'Ku soo biir GoGol: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
  try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga GoGol waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
