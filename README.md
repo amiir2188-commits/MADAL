@@ -4,7 +4,7 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 ## Latest verified release
 
-**Android and Web: GoGol 1.10.56**
+**Android and Web: GoGol 1.10.57 (LIVE beta integration)**
 
 - [Download GoGol 1.10.56 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.56/app-debug.apk)
 - [Download GoGol 1.10.56 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.56/madal-web.zip)
@@ -25,11 +25,11 @@ The Android APK is a beta/debug-signed build distributed directly; it is not a P
 - Privacy policy, community guidelines, and terms pages.
 - Secure account deletion from Settings (requires the matching Supabase migration and deployed Edge Function).
 - Multi-photo albums: upload up to 10 photos and browse the published album in a swipeable carousel.
-- 24-hour Stories: upload, view with previous/next navigation, and delete photo/video updates (requires Supabase migration 008).
+- 24-hour Stories: upload, view with previous/next navigation, and delete photo/video updates (requires Supabase migration 008).\n- GoGol LIVE beta: create a live camera/microphone broadcast and join active streams as a viewer (requires migration 009, LiveKit credentials, and the `live-token` Edge Function).
 
-This is still a beta. Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. The current release is not a Play Store production release. The Stories client and database migration are implemented; Stories become available after applying migration 008 and deploying the scheduled cleanup function. Live streaming is not implemented yet. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
+This is still a beta. Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. The current release is not a Play Store production release. The Stories client and database migration are implemented; Stories become available after applying migration 008 and deploying the scheduled cleanup function. A first GoGol LIVE integration is included in 1.10.57: hosts can publish camera/microphone and signed-in users can join as viewers through LiveKit. It requires migration 009, deployment of the `live-token` Edge Function, and the LiveKit secrets below. It is not production-ready until multi-device tests, moderation/reporting, chat, capacity and network-failure tests are completed. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
 
-## Supabase setup
+## GoGol LIVE setup\n\nThe LIVE client uses LiveKit for real-time audio/video. Apply `supabase/migrations/20261116000900_live_streaming.sql`, deploy `supabase functions deploy live-token`, then set these Edge Function secrets in Supabase: `LIVEKIT_URL` (your LiveKit WebSocket URL), `LIVEKIT_API_KEY`, and `LIVEKIT_API_SECRET`. Keep the API secret server-side only; the `live-token` function verifies the signed-in GoGol user and issues a room-scoped token with publish permission only for the session owner. See [LiveKit token and grant documentation](https://docs.livekit.io/home/server/generating-tokens). Configure a LiveKit Cloud project or self-hosted LiveKit server before testing. The browser client loads the LiveKit SDK from jsDelivr, so the first launch of LIVE requires internet access.\n\n## Supabase setup
 
 ### Optional controlled production deployment
 
