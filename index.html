@@ -453,11 +453,13 @@ async function recordMadalView(postId){
  const post=allPosts.find(item=>String(item.id)===id);
  if(post&&typeof data==='number')post.view_count=data;
 }
-let feedVideoObserver=null;
+let feedVideoObserver=null,feedRenderToken=0;
 async function renderFeed(){
+ const renderToken=++feedRenderToken;
  const query=$('videoSearch')?.value.trim().toLowerCase()||'';
  let posts=allPosts.filter(p=>(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))&&(!p.is_private||String(p.user_id)===String(currentUser?.id))).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
- await loadSocialData(posts);
+ await loadSocialData(posts,renderToken);
+ if(renderToken!==feedRenderToken)return;
  if(activeFeedTab==='following')posts=posts.filter(p=>currentUser&&followsByUser.has(String(p.user_id)));
  if(activeFeedTab==='stem')posts=posts.filter(p=>/stem|science|technology|engineering|math|saynis|teknooloji|xisaab/i.test([p.category,p.topic,p.title,p.description,p.caption].filter(Boolean).join(' ')));
  if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
@@ -465,6 +467,7 @@ async function renderFeed(){
  $('allFeed').innerHTML='';
  for(let start=0;start<posts.length;start+=8){
   const batch=await Promise.all(posts.slice(start,start+8).map(post=>card(post)));
+  if(renderToken!==feedRenderToken)return;
   $('allFeed').insertAdjacentHTML('beforeend',batch.join(''));
  }
  if(feedVideoObserver)feedVideoObserver.disconnect();
@@ -507,7 +510,7 @@ $('discoverResults').addEventListener('click',async e=>{
 
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
 document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
-async function loadSocialData(posts){
+async function loadSocialData(posts,renderToken=null){
  socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();repostCountsByPost={};favoritePostIds=new Set();
  const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
  if(!ids.length)return;
@@ -520,6 +523,7 @@ async function loadSocialData(posts){
   db.from('media_favorites').select('post_id,user_id').in('post_id',ids),
   authors.length?db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',authors):Promise.resolve({data:[],error:null})
  ]);
+ if(renderToken!==null&&renderToken!==feedRenderToken)return;
  authorProfiles={};for(const profile of profilesResult.data||[])authorProfiles[profile.id]=profile;
  if(likesResult.error||commentsResult.error||followsResult.error||repostsResult.error||favoritesResult.error){
   console.warn('MADAL social tables are not ready. Run social_migration.sql and madal_social_v2_migration.sql.',likesResult.error||commentsResult.error||followsResult.error||repostsResult.error||favoritesResult.error);
