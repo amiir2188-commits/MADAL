@@ -1,7 +1,7 @@
 {
-  "version": "1.8.2",
+  "version": "1.8.3",
   "name": "MADAL",
-  "message": "MADAL 1.8.2 — TikTok-style center play/pause control iyo playback settings.",
+  "message": "MADAL 1.8.3 — Automatic in-app update prompt; users can update without downloading a new APK for web changes.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
