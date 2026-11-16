@@ -144,6 +144,8 @@ jobs:
           const profileMigration = fs.readFileSync('supabase/migrations/20261116000700_profile_storage.sql', 'utf8');
           const storiesMigration = fs.readFileSync('supabase/migrations/20261116000800_stories.sql', 'utf8');
           const deletionFunction = fs.readFileSync('supabase/functions/delete-account/index.ts', 'utf8');
+          const storyCleanupFunction = fs.readFileSync('supabase/functions/cleanup-expired-stories/index.ts', 'utf8');
+          const supabaseConfig = fs.readFileSync('supabase/config.toml', 'utf8');
           if (!html.includes("db.functions.invoke('delete-account')")) throw new Error('Settings must call the secure account-deletion Edge Function');
           if (!deletionMigration.includes('create table if not exists public.madal_account_deletion_requests')) throw new Error('Account-deletion request migration is missing');
           for (const marker of ['authClient.auth.getUser()', 'SUPABASE_SERVICE_ROLE_KEY', 'admin.auth.admin.deleteUser(userId, false)', 'madal-media', 'madal-avatars']) {
@@ -159,6 +161,10 @@ jobs:
           for (const marker of ['id="storyTray"', 'id="storyFile"', 'async function loadStories()', "db.from('madal_stories')", '24 saac kadib']) {
             if (!html.includes(marker)) throw new Error('Stories client feature is missing: ' + marker);
           }
+          for (const marker of ['CRON_SECRET', 'SUPABASE_SERVICE_ROLE_KEY', 'madal_stories', 'expires_at', 'storage.from("madal-media").remove', 'constantTimeEqual']) {
+            if (!storyCleanupFunction.includes(marker)) throw new Error('Expired Stories cleanup safeguard missing: ' + marker);
+          }
+          if (!supabaseConfig.includes('[functions.cleanup-expired-stories]') || !supabaseConfig.includes('verify_jwt = false')) throw new Error('Scheduled cleanup endpoint must be configured for its own CRON_SECRET authentication');
           console.log('GoGol version, safety migrations, account deletion, Stories, controls and accessibility labels are consistent.');
           NODE
 
