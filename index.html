@@ -320,7 +320,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.22';
+const MADAL_VERSION='1.10.23';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1007,7 +1007,8 @@ $('inboxConversations').addEventListener('click',event=>{
 $('profileSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
 $('profileAvatar').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('profileEditor').classList.remove('hidden');$('profileEditor').scrollIntoView({behavior:'smooth',block:'start'})});
 $('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday GoGol.')}});
-let uploadKind='video',capturedUploadFile=null,activePhotoFilter='none';
+let uploadKind='video',capturedUploadFile=null,activePhotoFilter='none',uploadPreviewUrl=null;
+function releaseUploadPreviewUrl(){if(uploadPreviewUrl){URL.revokeObjectURL(uploadPreviewUrl);uploadPreviewUrl=null}}
 const PHOTO_FILTERS={none:'none',vivid:'contrast(1.18) saturate(1.28) brightness(1.04)',portrait:'contrast(1.06) saturate(1.12) brightness(1.08)',warm:'sepia(.18) saturate(1.2) contrast(1.04)',cool:'saturate(1.08) hue-rotate(9deg) brightness(1.04)',mono:'grayscale(1) contrast(1.12)',soft:'brightness(1.08) saturate(.88) contrast(.94)',night:'brightness(1.22) contrast(1.12) saturate(1.12)',gold:'sepia(.28) saturate(1.3) contrast(1.08)'};
 let photoRotation=0;
 function photoAdjustments(){return {brightness:Number($('editBrightness')?.value||100),contrast:Number($('editContrast')?.value||100),saturation:Number($('editSaturation')?.value||100),warmth:Number($('editWarmth')?.value||0)}}
@@ -1040,8 +1041,9 @@ function previewUploadFile(file){
  if(uploadKind==='image'&&!isImage){notice('Fadlan dooro sawir.');return}
  if(uploadKind==='video'&&!file.type.startsWith('video/')){notice('Fadlan dooro fiidiyow.');return}
  capturedUploadFile=file;
+ releaseUploadPreviewUrl();
  $('selectedMediaName').textContent=file.name;
- const url=URL.createObjectURL(file);
+ const url=URL.createObjectURL(file);uploadPreviewUrl=url;
  $('uploadImagePreview').classList.toggle('hidden',!isImage);
  $('uploadVideoPreview').classList.toggle('hidden',isImage);
  $('photoEditor').classList.toggle('hidden',!isImage);
@@ -1151,7 +1153,7 @@ $('uploadForm').addEventListener('submit',async e=>{
   const record={user_id:uploaderId,title:$('title').value.trim(),description:$('description').value.trim(),media_type:uploadKind,mime_type:file.type,storage_path:path,status:'published'};
   const {error:insertError}=await db.from('media_posts').insert(record);
   if(insertError){await db.storage.from('madal-media').remove([path]);throw insertError}
-  $('uploadForm').reset();setUploadKind('video');capturedUploadFile=null;$('selectedMediaName').textContent='Weli waxba lama dooran.';notice('Waa lagu guulaystay soo gelinta!');await loadMedia();showPage('home');
+  releaseUploadPreviewUrl();$('uploadImagePreview').removeAttribute('src');$('uploadVideoPreview').removeAttribute('src');$('uploadVideoPreview').load();$('uploadForm').reset();setUploadKind('video');capturedUploadFile=null;$('selectedMediaName').textContent='Weli waxba lama dooran.';notice('Waa lagu guulaystay soo gelinta!');await loadMedia();showPage('home');
  }catch(err){console.error(err);notice('Soo gelintu way fashilantay: '+err.message)}
  finally{button.disabled=false;button.textContent='Soo geli GoGol'}
 });
