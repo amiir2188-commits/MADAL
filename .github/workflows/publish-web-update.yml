@@ -31,7 +31,8 @@ jobs:
         run: |
           mkdir -p www
           cp index.html account.html update.js live.js www/
-          cp manifest.webmanifest version.json sw.js www/\n          node --check live.js
+          cp manifest.webmanifest version.json sw.js www/
+          node --check live.js
           cp -r icons www/ 2>/dev/null || true
           npm init -y
           npm install @capacitor/core @capawesome/capacitor-live-update
