@@ -2,7 +2,7 @@
   "id": "./",
   "name": "MADAL — Fiidiyowyo",
   "short_name": "MADAL",
-  "description": "Ku daawo, kuna wadaag fiidiyowyo Af Soomaali ah.",
+  "description": "Ku daawo fiidiyowyo, dhagayso podcast-yo, kuna wadaag qisooyin Af Soomaali ah.",
   "lang": "so",
   "start_url": "./",
   "scope": "./",
@@ -10,7 +10,10 @@
   "orientation": "portrait",
   "background_color": "#090512",
   "theme_color": "#090512",
-  "categories": ["entertainment", "education"],
+  "categories": [
+    "entertainment",
+    "education"
+  ],
   "icons": [
     {
       "src": "./icon-only.png",
