@@ -1,14 +1,14 @@
 GOGOL — APP BULSHO FIIDIYOW AH
-Nooca ugu dambeeya ee Android iyo Web ee la xaqiijiyey: 1.10.52
+Nooca ugu dambeeya ee Android iyo Web ee la xaqiijiyey: 1.10.53
 
 GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo, laguna isticmaalo Android iyo web.
 
 SOO DEJINTA
 APK Android:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.52/app-debug.apk
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.53/app-debug.apk
 
 Sii-daynta iyo dhammaan faylasha:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.52/madal-web.zip
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.53/madal-web.zip
 
 WAXYAABAHA NOOCA BETA-GA KU JIRA
 - Daawashada iyo soo gelinta sawirro iyo fiidiyowyo; album sawirro badan (ilaa 10 sawir).
@@ -18,18 +18,18 @@ WAXYAABAHA NOOCA BETA-GA KU JIRA
 - Raadinta dadka, profiles iyo fariimo gaar ah.
 - Wadaagis, repost iyo kaydinta waxyaabaha la jecleystay.
 - Ogeysiisyo ku saabsan cusboonaysiinta web-content-ka.
-- Aasaaska amniga Stories: sawirro/fiidiyowyo ku dhacaya 24 saac kadib (waxay u baahan yihiin migration-ka 008 iyo interface-ka Stories).
+- Stories: soo geli, daawo, tirtir sawirro/fiidiyowyo; waxay dhacayaan 24 saac kadib (waxay u baahan yihiin migration-ka Supabase 008).
 - Bogagga asturnaanta, xeerarka bulshada iyo shuruudaha isticmaalka.
 - Aqbalid cad oo shuruudaha iyo siyaasadda asturnaanta ah marka akoon cusub la samaynayo.
 - Tirtiridda joogtada ah ee akoonka, fariimaha iyo faylasha isticmaalaha (waxay u baahan tahay migration-ka Supabase iyo Edge Function la daabacay).
 
-Qaar ka mid ah adeegyada bulshada iyo badbaadadu waxay ku xiran yihiin in jadwallada, siyaasadaha RLS iyo migrations-ka Supabase ee ku habboon la rakibo. Stories iyo baahinta tooska ah (Live) weli ma aha adeegyo dhamaystiran. For You hadda wuxuu adeegsadaa kala-hormarin ku salaysan falgalka iyo cusaybka; ma aha nidaam AI la tababaray.
+Qaar ka mid ah adeegyada bulshada iyo badbaadadu waxay ku xiran yihiin in jadwallada, siyaasadaha RLS iyo migrations-ka Supabase ee ku habboon la rakibo. Stories interface-keeda iyo aasaaska server-ka waa la hirgeliyey; waxay shaqaynayaan marka migration-ka 008 la dabaqo. Live streaming wali lama hirgelin. For You hadda wuxuu adeegsadaa kala-hormarin ku salaysan falgalka iyo cusaybka; ma aha nidaam AI la tababaray.
 
 HABAYNTA SUPABASE
 1. Hubi Project URL iyo publishable/anon key-ga app-ka. Ha gelin service-role ama secret key gudaha app-ka.
 2. Haddii database cusub yahay, dib u eeg supabase_schema.sql ka hor inta aan lagu fulin Supabase SQL Editor.
 3. Haddii database hore u jiro, marka hore hubi schema-giisa; kadib dib u eeg oo keliya migrations-ka ku habboon, kuna dabaq kala-horrayntooda.
-4. Dib u eeg oo ku dabaq migration-ka profile/avatar iyo migrations-ka kale ee ku jira `supabase/migrations/`, adigoo kala-horrayn sax ah raacaya. Migration-ka account deletion wuxuu diyaariyaa jadwalka hawsha tirtirka.
+4. Dib u eeg oo ku dabaq migration-ka profile/avatar iyo migrations-ka kale ee ku jira `supabase/migrations/`, adigoo kala-horrayn sax ah raacaya. Migration-ka account deletion wuxuu diyaariyaa jadwalka hawsha tirtirka. Migration-ka `20261116000800_stories.sql` wuxuu diyaariyaa Stories 24-saac ah.
 5. Daabac Edge Function-ka tirtirka akoonka adigoo adeegsanaya `supabase functions deploy delete-account`. Service-role key-ga ha gelin app-ka; wuxuu ku ekaanayaa deegaanka Edge Function-ka.
 6. Si telefoonka +252 loogu galo, daar Phone Auth oo habeey adeeg SMS.
 
