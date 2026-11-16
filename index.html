@@ -94,9 +94,13 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 .share-person button{border:0;border-radius:20px;padding:8px 16px;background:#fff;color:#171020;font-weight:800}
 @media(min-width:600px){.share-sheet{align-items:center;padding:20px}.share-sheet-card{border-radius:22px}}
 
+
+/* Separate update first screen; shown only when a newer version is detected */
+.update-screen{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 18%,#452365 0%,#1b1029 45%,#090512 100%);text-align:center;overflow:auto}.update-screen.hidden{display:none!important}.update-content{width:100%;max-width:420px}.update-mark{width:104px;height:104px;margin:0 auto 24px;border-radius:32px;display:grid;place-items:center;background:linear-gradient(145deg,#bd83ff,#e879c5);box-shadow:0 16px 55px #bd83ff55;color:#170d24;font-size:43px;font-weight:1000;letter-spacing:2px}.update-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;margin:0 0 10px}.update-content h1{font-size:30px;line-height:1.2;margin:0 0 14px}.update-copy{color:#e1d5ec;font-size:15px;line-height:1.7;margin:0 auto 18px;max-width:340px}.update-note{color:#b9acc7;font-size:13px;margin:0 auto 28px;max-width:320px}.update-start{width:100%;max-width:320px;min-height:56px;border:0;border-radius:16px;background:linear-gradient(105deg,#a66be8,#e17ac5);color:#180d25;font-size:16px;font-weight:900;box-shadow:0 10px 32px #bd83ff44;cursor:pointer}.update-start:disabled{opacity:.7;cursor:wait}.update-start:active{transform:scale(.98)}
 </style>
 </head>
 <body>
+<div id="updateNotice" class="update-screen hidden" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateMessage"><div class="update-content"><div class="update-mark" aria-hidden="true">M</div><p class="update-kicker">MADAL • CUSBOONAYSIIN</p><h1 id="updateTitle">Update cusub ayaa diyaar ah!</h1><p id="updateMessage" class="update-copy">Nooc cusub oo MADAL ah ayaa diyaar ah.</p><div class="update-note">Cusboonaysii hadda si aad u hesho hagaajinta iyo muuqaalada cusub.</div><button id="applyUpdate" class="update-start" type="button">Update App</button></div></div>
 <div id="welcomeScreen" class="welcome-screen hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeCopy">
  <div class="welcome-content">
   <div class="welcome-mark" aria-hidden="true">M</div>
@@ -109,7 +113,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 </div>
 <header><div class="brand">MADAL</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
-<div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status" aria-live="polite"><strong>⬆ MADAL update cusub ayaa diyaar ah!</strong><p id="updateMessage">Cusboonaysii app-kaaga adigoon APK cusub soo dejisan.</p><button id="applyUpdate" class="primary" type="button">Update App</button></div>
+<div id="notice" class="status hidden" role="status"></div>
 <section id="home" class="page"><div class="tabs feed-tabs" aria-label="Dooro waxa aad daawanayso"><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Raadi" title="Raadi">🔍</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi MADAL</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
 <section id="upload" class="page hidden">
@@ -595,21 +599,9 @@ $('shareButton').addEventListener('click',async()=>{
  const shareData={title:'MADAL — Fiidiyowyo',text:'Ku soo biir MADAL: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
  try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga MADAL waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
 });
-// Update button is managed by update.js for native Android builds.
-async function checkMadalUpdate(){
- try{
-  const response=await fetch('./version.json?check='+Date.now(),{cache:'no-store'});
-  if(!response.ok)return;
-  const latest=await response.json();
-  if(latest.version && latest.version!==MADAL_VERSION){
-   $('updateNotice').classList.remove('hidden');
-   $('updateNotice').firstChild.textContent='MADAL update cusub ('+latest.version+') ayaa diyaar ah. ';
-  }
- }catch(err){console.warn('MADAL version check:',err)}
-}
-checkMadalUpdate();
-setInterval(()=>{if(document.visibilityState==='visible'){checkMadalUpdate();loadMedia()}},5*60*1000);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){checkMadalUpdate();loadMedia()}});
+// Update checks are handled by the standalone first-screen updater (update.js).
+setInterval(()=>{if(document.visibilityState==='visible')loadMedia()},5*60*1000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadMedia()});
 try{
  db.channel('madal-live-posts').on('postgres_changes',{event:'INSERT',schema:'public',table:'media_posts',filter:'status=eq.published'},payload=>{
   if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa MADAL lagu soo daray!')}
