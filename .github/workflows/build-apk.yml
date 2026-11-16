@@ -110,6 +110,7 @@ jobs:
           const html = fs.readFileSync('index.html', 'utf8');
           const sw = fs.readFileSync('sw.js', 'utf8');
           const migration = fs.readFileSync('supabase/migrations/20261116000300_user_safety_moderation.sql', 'utf8');
+          const account = fs.readFileSync('account.html', 'utf8');
           if (!html.includes("const MADAL_VERSION='" + version + "'")) throw new Error('App version does not match version.json');
           if (!sw.includes("gogol-app-v" + version)) throw new Error('Service worker cache does not match version.json');
           for (const marker of ['data-report-post', 'data-block-user', 'data-unblock-user', 'privacySafetyCard', 'blockedUsersList']) {
@@ -118,8 +119,12 @@ jobs:
           for (const table of ['madal_user_blocks', 'madal_moderation_reports']) {
             if (!migration.includes('create table if not exists public.' + table)) throw new Error('Missing safety migration table: ' + table);
           }
+          if (!account.includes('!/^[0-9]{6}$/.test(token)')) throw new Error('Phone OTP must accept exactly six digits');
+          if (migration.includes('madal_moderation_reports_target_required')) throw new Error('Report target constraint must not block ON DELETE SET NULL');
+          if (!migration.includes('and (reported_user_id is not null or post_id is not null)')) throw new Error('Report insert policy must require a target');
           const controls = [...html.matchAll(/<(?:input|textarea|select)\b[^>]*>/gi)].map(match => match[0]);
-          const unlabeled = controls.filter(tag => !tag.includes('aria-label=') && !tag.includes('aria-labelledby='));
+          const accountControls = [...account.matchAll(/<(?:input|textarea|select)\b[^>]*>/gi)].map(match => match[0]);
+          const unlabeled = [...controls, ...accountControls].filter(tag => !tag.includes('aria-label=') && !tag.includes('aria-labelledby='));
           if (unlabeled.length) throw new Error('Found form controls without explicit accessible labels: ' + unlabeled.join(' | '));
           console.log('GoGol version, safety migration, controls and accessibility labels are consistent.');
           NODE
