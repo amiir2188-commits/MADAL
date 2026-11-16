@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.36';
+const MADAL_VERSION='1.10.37';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1032,7 +1032,7 @@ async function loadActivity(){
  if(likes.error||followers.error||comments.error||reposts.error||incomingMessages.error){host.textContent='Ogeysiisyada lama soo rari karin. Hubi social_migration.sql iyo madal_social_v2_migration.sql.';return}
  const ids=[...new Set([...(likes.data||[]).map(x=>x.user_id),...(followers.data||[]).map(x=>x.follower_id),...(comments.data||[]).map(x=>x.user_id),...(reposts.data||[]).map(x=>x.user_id),...(incomingMessages.data||[]).map(x=>x.sender_id)])];
  let profiles={};
- if(ids.length){const p=await db.from('madal_profiles').select('id,username,display_name').in('id',ids);if(token!==activityLoadToken||!currentUser)return;for(const row of p.data||[])profiles[row.id]=row}
+ if(ids.length){const p=await db.from('madal_profiles').select('id,username,display_name').in('id',ids);if(token!==activityLoadToken||currentUser?.id!==userId)return;for(const row of p.data||[])profiles[row.id]=row}
  const events=[...(likes.data||[]).map(x=>({...x,kind:'like',actor:x.user_id})),...(followers.data||[]).map(x=>({...x,kind:'follow',actor:x.follower_id})),...(comments.data||[]).map(x=>({...x,kind:'comment',actor:x.user_id})),...(reposts.data||[]).map(x=>({...x,kind:'repost',actor:x.user_id})),...(incomingMessages.data||[]).map(x=>({...x,kind:'message',actor:x.sender_id}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
  host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'GoGol User',display_name:'Qof GoGol ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':ev.kind==='follow'?'＋':ev.kind==='comment'?'💬':ev.kind==='repost'?'↗':'✉')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa Like saaray muuqaalkaaga':ev.kind==='follow'?'ayaa ku Follow gareeyay':ev.kind==='comment'?'ayaa faallo ka bixiyey muuqaalkaaga':ev.kind==='repost'?'ayaa Repost gareeyey muuqaalkaaga':'wuxuu kuu soo diray fariin')+(post?' · '+escapeHtml(post.title):ev.kind==='message'?' · '+escapeHtml(ev.body):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
 }
