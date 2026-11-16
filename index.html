@@ -24,6 +24,11 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
 .section-title{font-size:18px;margin:16px 2px 8px}.feed-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;overflow:hidden}
+.album-strip{display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:4px 2px 12px;max-width:100%;-webkit-overflow-scrolling:touch}
+.album-strip figure{position:relative;flex:0 0 min(84vw,560px);height:min(68vh,620px);min-height:260px;margin:0;border-radius:14px;overflow:hidden;background:#08050d;scroll-snap-align:center}
+.album-strip img{display:block;width:100%;height:100%;object-fit:contain}
+.album-strip figcaption{position:absolute;right:10px;bottom:10px;padding:4px 9px;border-radius:20px;background:#090512cc;color:#fff;font-size:12px}
+.album-hint{font-size:12px;color:var(--muted);text-align:center;margin:-4px 0 8px}
 /* MADAL vertical short-video experience */
 #home{margin:0 -14px 0}
 #home>.section-title{display:none}
@@ -457,7 +462,20 @@ async function card(p){
  const postId=String(p.id||''),author=String(p.user_id||''),liked=likedPostIds.has(postId),likes=likesByPost[postId]||0,comments=commentsByPost[postId]||[],reposted=repostedPostIds.has(postId),favorite=favoritePostIds.has(postId);
  let player='';
  if(url && isVideo(p)){player='<video class="media" controls playsinline preload="'+(preference("data_saver",false)?"none":"metadata")+'" src="'+escapeHtml(url)+'"></video>'}
- else if(url && (postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))){player='<img class="media" style="object-fit:contain;max-height:680px" src="'+escapeHtml(url)+'" alt="'+title+'" loading="lazy">'}
+ else if(url && (postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))){
+  let album=[p];
+  if(p.album_id){
+   const cached=allPosts.filter(item=>String(item.album_id||'')===String(p.album_id)&&!isVideo(item));
+   try{
+    const {data,error}=await db.from('media_posts').select('*').eq('album_id',p.album_id).eq('status','published').order('created_at',{ascending:true}).order('id',{ascending:true});
+    if(!error&&data?.length)album=data;
+    else if(cached.length>1)album=cached;
+   }catch(error){if(cached.length>1)album=cached;console.warn('GoGol album viewer:',error?.message)}
+  }
+  const albumImages=await Promise.all(album.map(async(item)=>({item,url:await mediaUrl(item)})));
+  const usable=albumImages.filter(item=>item.url);
+  player=usable.length>1?'<div class="album-strip" role="group" aria-label="Album sawirro ah, '+usable.length+' sawir">'+usable.map((item,index)=>'<figure><img src="'+escapeHtml(item.url)+'" alt="'+title+' — sawirka '+(index+1)+'" loading="lazy"><figcaption>'+ (index+1)+' / '+usable.length+'</figcaption></figure>').join('')+'</div><div class="album-hint">Sawirrada dhinac u jiid si aad u wada aragto</div>':'<img class="media" style="object-fit:contain;max-height:680px" src="'+escapeHtml(usable[0]?.url||url)+'" alt="'+title+'" loading="lazy">';
+ }
  else player='<p class="muted">Muuqaalkan lama heli karo.</p>';
  let social='';
  {
@@ -520,6 +538,8 @@ async function renderFeed(){
  if(activeFeedTab==='videos')posts=posts.filter(p=>isVideo(p));
  if(activeFeedTab==='stem')posts=posts.filter(p=>/stem|science|technology|engineering|math|saynis|teknooloji|xisaab/i.test([p.category,p.topic,p.title,p.description,p.caption].filter(Boolean).join(' ')));
  if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
+ const seenAlbums=new Set();
+ posts=posts.filter(post=>{const albumId=String(post.album_id||'');if(!albumId)return true;if(seenAlbums.has(albumId))return false;seenAlbums.add(albumId);return true});
  if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan wax cusub oo dadka aad raacdo soo geliyeen.':activeFeedTab==='photos'?'Weli sawirro lama soo gelin. Soo geli sawirkaaga koowaad!':activeFeedTab==='videos'?'Weli fiidiyowyo lama soo gelin. Soo geli fiidiyowgaaga koowaad!':mediaHasMore?'Qaybtan weli wax muuqaal ah kama muuqdaan. Soo rar qaybta xigta.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>'+(mediaHasMore?feedLoadMoreButton():'');return}
  $('allFeed').innerHTML='';
  for(let start=0;start<posts.length;start+=8){
