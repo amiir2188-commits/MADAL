@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090512">
-<meta name="description" content="GoGol — madasha fiidiyowyada Soomaaliyeed.">
+<meta name="description" content="GoGol — madasha sawirrada, fiidiyowyada iyo bulshada.">
 <link rel="manifest" href="./manifest.webmanifest">
-<title>GoGol — Somali Videos &amp; Stories</title>
+<title>GoGol — Videos, Photos &amp; Community</title>
 <style>
 :root{color-scheme:dark;--bg:#090512;--panel:#171020;--panel2:#21152f;--line:#38254a;--purple:#b47aff;--pink:#f18bd4;--muted:#b9acc7}
 /* Accessibility and resilient connectivity */
@@ -260,11 +260,11 @@ html[dir="rtl"] .bottom{direction:rtl}
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
-<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Video feed navigation"><button type="button" class="live-entry" id="liveEntry" aria-label="LIVE">▣</button><button type="button" data-feed-tab="stem">STEM</button><button type="button" data-feed-tab="community">Community</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..." aria-label="Raadi fiidiyow cinwaan ama faahfaahin"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
-<section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Videos and photos feed navigation"><button type="button" class="live-entry" id="liveEntry" aria-label="LIVE">▣</button><button type="button" data-feed-tab="stem">STEM</button><button type="button" data-feed-tab="community">Community</button><button type="button" data-feed-tab="photos">Photos</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli GoGol</h2>
-<div class="feed-card"><p class="muted">Dooro waxa aad rabto inaad bulshada la wadaagto.</p>
+<div class="feed-card"><p class="muted">Dooro sawir ama fiidiyow aad bulshada la wadaagto.</p>
 <div class="upload-choice"><button type="button" class="active" data-upload-kind="video">🎬 Fiidiyow</button><button type="button" data-upload-kind="image">🖼️ Sawir</button></div>
 <div class="upload-methods"><button type="button" id="cameraPick">📷 Camera</button><button type="button" id="galleryPick">🖼️ Gallery</button></div>
 <form id="uploadForm">
@@ -280,7 +280,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 <button class="primary" id="uploadButton" type="submit">Soo geli GoGol</button>
 </form></div></section>
 <section id="profile" class="page hidden">
-<div class="profile-masthead"><div class="profile-brand"><img class="profile-brand-mark" src="./gogol-logo.svg" alt="GoGol"><span><strong>GoGol</strong><small>Podcast • Qisooyin • Bulsho</small></span></div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">•••</button></div></div>
+<div class="profile-masthead"><div class="profile-brand"><img class="profile-brand-mark" src="./gogol-logo.svg" alt="GoGol"><span><strong>GoGol</strong><small>Videos • Photos • Community</small></span></div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">•••</button></div></div>
 <div class="feed-card profile-hero">
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
 <div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">GoGol User <span id="profileVerified" class="verified hidden" title="GoGol Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small">GoGol Creator</p></div></div>
@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.41';
+const MADAL_VERSION='1.10.42';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -516,9 +516,10 @@ async function renderFeed(){
  posts=posts.filter(p=>!blockedUserIds.has(String(p.user_id)));
  if(activeFeedTab==='for_you'&&!query)posts=rankForYouPosts(posts);
  if(activeFeedTab==='following')posts=posts.filter(p=>currentUser&&followsByUser.has(String(p.user_id)));
+ if(activeFeedTab==='photos')posts=posts.filter(p=>postType(p)==='image'||String(p.mime_type||'').startsWith('image/'));
  if(activeFeedTab==='stem')posts=posts.filter(p=>/stem|science|technology|engineering|math|saynis|teknooloji|xisaab/i.test([p.category,p.topic,p.title,p.description,p.caption].filter(Boolean).join(' ')));
  if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
- if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':mediaHasMore?'Qaybtan weli wax muuqaal ah kama muuqdaan. Soo rar qaybta xigta.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>'+(mediaHasMore?feedLoadMoreButton():'');return}
+ if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan wax cusub oo dadka aad raacdo soo geliyeen.':activeFeedTab==='photos'?'Weli sawirro lama soo gelin. Soo geli sawirkaaga koowaad!':mediaHasMore?'Qaybtan weli wax muuqaal ah kama muuqdaan. Soo rar qaybta xigta.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>'+(mediaHasMore?feedLoadMoreButton():'');return}
  $('allFeed').innerHTML='';
  for(let start=0;start<posts.length;start+=8){
   const batch=await Promise.all(posts.slice(start,start+8).map(post=>card(post)));
