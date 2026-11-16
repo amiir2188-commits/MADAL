@@ -320,7 +320,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.23';
+const MADAL_VERSION='1.10.24';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1019,8 +1019,14 @@ document.querySelectorAll('[data-photo-filter]').forEach(b=>b.addEventListener('
 ['editBrightness','editContrast','editSaturation','editWarmth'].forEach(id=>$(id).addEventListener('input',updatePhotoPreview));
 $('rotatePhoto').addEventListener('click',()=>{photoRotation=(photoRotation+90)%360;updatePhotoPreview()});
 $('resetPhotoEdit').addEventListener('click',()=>{activePhotoFilter='none';photoRotation=0;['editBrightness','editContrast','editSaturation'].forEach(id=>$(id).value=100);$('editWarmth').value=0;$('editCrop').value='original';$('photoCaption').value='';setPhotoFilter('none')});
+function clearUploadSelection(){
+ capturedUploadFile=null;releaseUploadPreviewUrl();
+ $('uploadImagePreview').removeAttribute('src');$('uploadImagePreview').style.filter='none';$('uploadImagePreview').style.transform='none';
+ $('uploadVideoPreview').pause();$('uploadVideoPreview').removeAttribute('src');$('uploadVideoPreview').load();
+ $('uploadImagePreview').classList.add('hidden');$('uploadVideoPreview').classList.add('hidden');$('photoEditor').classList.add('hidden');
+}
 function setUploadKind(kind){
- uploadKind=kind;capturedUploadFile=null;
+ uploadKind=kind;clearUploadSelection();
  document.querySelectorAll('[data-upload-kind]').forEach(b=>b.classList.toggle('active',b.dataset.uploadKind===kind));
  const accept=kind==='image'?'image/*':'video/*';
  $('mediaFile').accept=accept;$('galleryFile').accept=accept;
@@ -1038,8 +1044,8 @@ function selectedUploadFile(){return capturedUploadFile||$('mediaFile').files[0]
 function previewUploadFile(file){
  if(!file)return;
  const isImage=file.type.startsWith('image/');
- if(uploadKind==='image'&&!isImage){notice('Fadlan dooro sawir.');return}
- if(uploadKind==='video'&&!file.type.startsWith('video/')){notice('Fadlan dooro fiidiyow.');return}
+ if(uploadKind==='image'&&!isImage){clearUploadSelection();notice('Fadlan dooro sawir.');return}
+ if(uploadKind==='video'&&!file.type.startsWith('video/')){clearUploadSelection();notice('Fadlan dooro fiidiyow.');return}
  capturedUploadFile=file;
  releaseUploadPreviewUrl();
  $('selectedMediaName').textContent=file.name;
@@ -1070,9 +1076,18 @@ async function openCameraStudio(){
   await $('cameraPreview').play().catch(()=>{});
  }catch(error){stopCameraTracks();notice('Camera lama furin: oggolow camera permission-ka telefoonka.');$('mediaFile').click()}
 }
-function closeCameraStudio(){if(cameraRecorder?.state==='recording')cameraRecorder.stop();stopCameraTracks();$('cameraStudio').classList.add('hidden')}
-$('closeCamera').addEventListener('click',closeCameraStudio);
-$('switchCamera').addEventListener('click',async()=>{cameraFacing=cameraFacing==='environment'?'user':'environment';await openCameraStudio()});
+function closeCameraStudio(cancelRecording=false){
+ if(cameraRecorder?.state==='recording'){
+  if(cancelRecording){cameraRecorder.onstop=null;cameraChunks=[];cameraRecorder.stop()}
+  else cameraRecorder.stop();
+ }
+ stopCameraTracks();$('cameraPreview').pause();$('cameraPreview').srcObject=null;$('cameraStudio').classList.add('hidden');
+}
+$('closeCamera').addEventListener('click',()=>closeCameraStudio(true));
+$('switchCamera').addEventListener('click',async()=>{
+ if(cameraRecorder?.state==='recording'){notice('Marka hore jooji duubista, kadib beddel camera-ga.');return}
+ cameraFacing=cameraFacing==='environment'?'user':'environment';await openCameraStudio()
+});
 $('torchToggle').addEventListener('click',async()=>{
  const track=cameraStream?.getVideoTracks()[0];let supported=false;
  try{const caps=track?.getCapabilities?.();supported=!!caps?.torch;if(supported){cameraTorchOn=!cameraTorchOn;await track.applyConstraints({advanced:[{torch:cameraTorchOn}]});$('torchToggle').textContent=cameraTorchOn?'⚡ Iftiin ON':'⚡ Iftiin OFF';return}}catch(error){console.warn('MADAL torch:',error)}
