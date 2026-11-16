@@ -768,18 +768,26 @@ $('messageForm').addEventListener('submit',async e=>{
  finally{button.disabled=false}
 });
 
+let mediaLoadToken=0;
 async function loadMedia(){
+ const token=++mediaLoadToken;
  $('allFeed').textContent='Waa la soo rarayaa...';
  const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false});
+ if(token!==mediaLoadToken)return;
  if(error){console.error(error);$('allFeed').innerHTML='<div class="empty">Weli lama soo rari karin waxyaabaha. Hubi isku xirka Supabase iyo rukhsadaha akhriska.</div>';notice('Xogta GoGol lama soo rari karin: '+error.message);return}
- allPosts=data||[];await renderFeed();if(currentUser){await loadMyProfile();await loadActivity()}
+ allPosts=data||[];await renderFeed();if(token!==mediaLoadToken)return;
+ if(currentUser){await loadMyProfile();if(token!==mediaLoadToken)return;await loadActivity()}
 }
+let profileLoadToken=0;
 async function loadMyProfile(){
- if(!currentUser){$('myVideos').innerHTML='<div class="empty">Soo gal si aad u aragto profile-kaaga.</div>';return}
- const {data:profile,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').eq('id',currentUser.id).maybeSingle();
+ const token=++profileLoadToken,user=currentUser;
+ if(!user){$('myVideos').innerHTML='<div class="empty">Soo gal si aad u aragto profile-kaaga.</div>';return}
+ const userId=user.id;
+ const {data:profile,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').eq('id',userId).maybeSingle();
+ if(token!==profileLoadToken||currentUser?.id!==userId)return;
  if(error){console.warn('Profile load:',error.message)}
- const name=profile?.display_name||currentUser.user_metadata?.display_name||'GoGol User';
- const username=profile?.username||currentUser.user_metadata?.username||'user';
+ const name=profile?.display_name||user.user_metadata?.display_name||'GoGol User';
+ const username=profile?.username||user.user_metadata?.username||'user';
  $('profileName').textContent=name;
  if(profile?.is_verified){const badge=document.createElement('span');badge.className='verified';badge.title='GoGol Verified';badge.textContent='✓';$('profileName').appendChild(badge)}
  $('profileHandle').textContent='@'+username;
@@ -788,23 +796,26 @@ async function loadMyProfile(){
  $('storyAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((name.trim()[0]||'M').toUpperCase());
  $('editDisplayName').value=name;$('editUsername').value=username;$('editBio').value=profile?.bio||'';$('editAvatarUrl').value=profile?.avatar_url||'';$('avatarPreview').src=profile?.avatar_url||'';
  $('profileLogin').classList.add('hidden');
- let own=allPosts.filter(p=>String(p.user_id)===currentUser.id&&(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/')));
+ let own=allPosts.filter(p=>String(p.user_id)===userId&&(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/')));
  if(activeProfileTab==='private')own=own.filter(p=>p.is_private);
  else if(activeProfileTab!=='videos') {
   const table=activeProfileTab==='reposts'?'media_reposts':activeProfileTab==='liked'?'media_likes':'media_favorites';
-  const {data:rows,error:rowsError}=await db.from(table).select('post_id').eq('user_id',currentUser.id).order('created_at',{ascending:false});
-  if(rowsError){notice('Qaybtan lama soo rari karin: '+rowsError.message);own=[]}else{const ids=(rows||[]).map(x=>x.post_id);own=ids.map(id=>allPosts.find(p=>String(p.id)===String(id))).filter(Boolean).filter(p=>!p.is_private||String(p.user_id)===currentUser.id)}
+  const {data:rows,error:rowsError}=await db.from(table).select('post_id').eq('user_id',userId).order('created_at',{ascending:false});
+  if(token!==profileLoadToken||currentUser?.id!==userId)return;
+  if(rowsError){notice('Qaybtan lama soo rari karin: '+rowsError.message);own=[]}else{const ids=(rows||[]).map(x=>x.post_id);own=ids.map(id=>allPosts.find(p=>String(p.id)===String(id))).filter(Boolean).filter(p=>!p.is_private||String(p.user_id)===userId)}
  }
  const [followers,following,likes]=await Promise.all([
-  db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',currentUser.id),
-  db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',currentUser.id),
+  db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',userId),
+  db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',userId),
   own.length?db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',own.map(p=>p.id).filter(Boolean)):Promise.resolve({count:0,error:null})
  ]);
+ if(token!==profileLoadToken||currentUser?.id!==userId)return;
  $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;$('myLikeCount').textContent=likes.count??0;
  if(!own.length){$('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">'+(activeProfileTab==='videos'?'Weli muuqaal ma aadan soo gelin.':activeProfileTab==='reposts'?'Weli waxba ma aadan Repost gareyn.':activeProfileTab==='liked'?'Weli muuqaal Like ah ma jiro.':activeProfileTab==='favorites'?'Weli Favorites ma jiraan.':'Weli muuqaal Private ah ma jiro.')+'</div>';return}
  $('myVideos').innerHTML='';
  for(const post of own){
   const url=await mediaUrl(post);
+  if(token!==profileLoadToken||currentUser?.id!==userId)return;
   const tile=document.createElement('div');tile.className='profile-tile';
   tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'" style="width:100%;height:100%;object-fit:cover">'):'<div class="empty">Muuqaal</div>')+'<span class="tile-views">▶ '+Number(post.view_count||0).toLocaleString('en-US')+'</span><span class="tile-title">'+escapeHtml(post.title||'Muuqaal GoGol')+'</span>';
   $('myVideos').appendChild(tile);
@@ -868,14 +879,18 @@ async function loadActivity(){
  const events=[...(likes.data||[]).map(x=>({...x,kind:'like',actor:x.user_id})),...(followers.data||[]).map(x=>({...x,kind:'follow',actor:x.follower_id})),...(comments.data||[]).map(x=>({...x,kind:'comment',actor:x.user_id})),...(reposts.data||[]).map(x=>({...x,kind:'repost',actor:x.user_id})),...(incomingMessages.data||[]).map(x=>({...x,kind:'message',actor:x.sender_id}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
  host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'GoGol User',display_name:'Qof GoGol ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':ev.kind==='follow'?'＋':ev.kind==='comment'?'💬':ev.kind==='repost'?'↗':'✉')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa Like saaray muuqaalkaaga':ev.kind==='follow'?'ayaa ku Follow gareeyay':ev.kind==='comment'?'ayaa faallo ka bixiyey muuqaalkaaga':ev.kind==='repost'?'ayaa Repost gareeyey muuqaalkaaga':'wuxuu kuu soo diray fariin')+(post?' · '+escapeHtml(post.title):ev.kind==='message'?' · '+escapeHtml(ev.body):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
 }
+let profileRefreshToken=0;
 async function refreshProfile(){
- const {data}=await db.auth.getSession();currentUser=data?.session?.user||null;
+ const token=++profileRefreshToken;
+ const {data}=await db.auth.getSession();if(token!==profileRefreshToken)return;
+ currentUser=data?.session?.user||null;
  if(currentUser){
   $('profileLogin').classList.add('hidden');
   $('logout').classList.remove('hidden');
   await loadMyProfile();
   await loadActivity();
  }else{
+  profileLoadToken++;
   $('profileLogin').classList.remove('hidden');
   $('logout').classList.add('hidden');
   $('profileName').textContent='GoGol User';
