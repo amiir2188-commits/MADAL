@@ -8,8 +8,8 @@ if (isNative) {
   }
 }
 
-const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/GoGol/main/version.json';
-const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/GoGol/releases/latest/download/madal-web.zip';
+const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/MADAL/main/version.json';
+const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip';
 const notice = document.getElementById('updateNotice');
 const button = document.getElementById('applyUpdate');
 const message = document.getElementById('updateMessage');
@@ -32,8 +32,9 @@ async function checkNativeUpdate() {
     const response = await fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' });
     if (!response.ok) return;
     const latest = await response.json();
-    const current = window.GoGol_VERSION || '0.0.0';
+    const current = window.MADAL_VERSION || '0.0.0';
     if (!latest.version || latest.version === current) return;
+    if (isNative && !latest.bundle_url) return;
     latestBundle = {
       version: String(latest.version),
       url: latest.bundle_url || FALLBACK_BUNDLE_URL
@@ -67,6 +68,8 @@ if (button) {
         await LiveUpdate.setNextBundle({ bundleId: latestBundle.version });
         button.textContent = 'Waa la dhammeeyey — dib ayaa loo furayaa...';
         await LiveUpdate.reload();
+      } else if (isNative) {
+        throw new Error('Native update bundle is not published yet.');
       } else {
         // PWA/browser: the service worker fetches the newest web files.
         if ('serviceWorker' in navigator) {
