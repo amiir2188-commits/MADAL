@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "MADAL — Bulsho iyo Madadaalo",
-  "short_name": "MADAL",
-  "description": "La wadaag fiidiyowyo, sawirro iyo daqiiqadaha noloshaada; la xiriir bulshada MADAL.",
+  "name": "GoGol — Bulsho iyo Madadaalo",
+  "short_name": "GoGol",
+  "description": "La wadaag fiidiyowyo, sawirro iyo daqiiqadaha noloshaada; la xiriir bulshada GoGol.",
   "lang": "so",
   "start_url": "./",
   "scope": "./",
@@ -16,9 +16,9 @@
   ],
   "icons": [
     {
-      "src": "./icon-only.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
+      "src": "./gogol-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     }
   ]
