@@ -120,6 +120,9 @@ jobs:
             if (!migration.includes('create table if not exists public.' + table)) throw new Error('Missing safety migration table: ' + table);
           }
           if (!account.includes('!/^[0-9]{6}$/.test(token)')) throw new Error('Phone OTP must accept exactly six digits');
+          for (const marker of ['function rankForYouPosts(posts)', "activeFeedTab==='for_you'&&!query"]) {
+            if (!html.includes(marker)) throw new Error('Missing For You ranking safeguard: ' + marker);
+          }
           if (!html.includes('function releaseUploadPreviewUrl()')) throw new Error('Upload preview object URLs must be released');
           if (!html.includes('releaseUploadPreviewUrl();')) throw new Error('Upload flow must release preview URLs');
           for (const marker of ['function clearUploadSelection()', 'clearUploadSelection();', 'function closeCameraStudio(cancelRecording=false)', "addEventListener('click',()=>closeCameraStudio(true))"]) {

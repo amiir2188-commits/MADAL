@@ -320,7 +320,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.24';
+const MADAL_VERSION='1.10.25';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -490,13 +490,30 @@ async function recordMadalView(postId){
 const reducedMotionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
 function shouldAutoplayVideos(){return preference("autoplay",true)&&!reducedMotionQuery.matches}
 let feedVideoObserver=null,feedRenderToken=0;
-async function renderFeed(){
+async function rankForYouPosts(posts){
+ const now=Date.now();
+ return posts.map((post,index)=>{
+  const createdAt=Date.parse(post.created_at||'');
+  const ageHours=Number.isFinite(createdAt)?Math.max(0,(now-createdAt)/3600000):168;
+  const freshness=Math.exp(-ageHours/(24*7));
+  const likes=Math.max(0,Number(likesByPost[post.id])||0);
+  const comments=Array.isArray(commentsByPost[post.id])?commentsByPost[post.id].length:0;
+  const reposts=Math.max(0,Number(repostCountsByPost[post.id])||0);
+  const views=Math.max(0,Number(post.view_count)||0);
+  const followsCreator=!!currentUser&&followsByUser.has(String(post.user_id));
+  const engagement=Math.log1p(likes)*1.4+Math.log1p(comments)*2+Math.log1p(reposts)*1.8+Math.log1p(views)*0.45;
+  const score=(1.2+engagement)*(0.35+0.65*freshness)+freshness*1.2+(followsCreator?2.5:0);
+  return {post,index,score,createdAt:Number.isFinite(createdAt)?createdAt:0};
+ }).sort((a,b)=>b.score-a.score||b.createdAt-a.createdAt||a.index-b.index).map(item=>item.post);
+}
+function renderFeed(){
  const renderToken=++feedRenderToken;
  const query=$('videoSearch')?.value.trim().toLowerCase()||'';
  let posts=allPosts.filter(p=>(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))&&(!p.is_private||String(p.user_id)===String(currentUser?.id))).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
  await loadSocialData(posts,renderToken);
  if(renderToken!==feedRenderToken)return;
  posts=posts.filter(p=>!blockedUserIds.has(String(p.user_id)));
+ if(activeFeedTab==='for_you'&&!query)posts=rankForYouPosts(posts);
  if(activeFeedTab==='following')posts=posts.filter(p=>currentUser&&followsByUser.has(String(p.user_id)));
  if(activeFeedTab==='stem')posts=posts.filter(p=>/stem|science|technology|engineering|math|saynis|teknooloji|xisaab/i.test([p.category,p.topic,p.title,p.description,p.caption].filter(Boolean).join(' ')));
  if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
