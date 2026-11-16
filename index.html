@@ -244,6 +244,9 @@ html,body,main,.page,#home,#profile,#discover,#upload,#messages,#notifications,#
 .language-card .settings-row{align-items:center}
 html[dir="rtl"] body{text-align:initial}
 html[dir="rtl"] .bottom{direction:rtl}
+
+/* GoGol Stories */
+.story-tray{display:flex;gap:12px;overflow-x:auto;padding:10px 2px 14px;scrollbar-width:none}.story-tray::-webkit-scrollbar{display:none}.story-chip{flex:0 0 76px;min-width:76px;border:0;background:transparent;color:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0}.story-chip .story-ring{width:66px;height:66px;border-radius:50%;padding:3px;border:2px solid #a855f7;display:grid;place-items:center;overflow:hidden}.story-chip img{width:100%;height:100%;border-radius:50%;object-fit:cover}.story-chip strong{font-size:11px;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.story-viewer{position:fixed;inset:0;z-index:1000;background:#050505f5;display:flex;align-items:center;justify-content:center;padding:16px}.story-viewer.hidden{display:none}.story-viewer-panel{position:relative;width:min(100%,460px);height:min(88dvh,820px);background:#151515;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}.story-viewer-head{display:flex;align-items:center;justify-content:space-between;padding:12px;color:#fff;gap:10px}.story-viewer-head button{background:#333;color:#fff;border:0;border-radius:9px;padding:8px 12px}.story-viewer-media{flex:1;min-height:0;width:100%;height:100%;object-fit:contain;background:#000}.story-viewer-caption{color:#fff;padding:12px;margin:0}.story-viewer-actions{display:flex;justify-content:flex-end;padding:8px}
 </style>
 </head>
 <body>
@@ -301,7 +304,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 <section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
 <section id="messages" class="page hidden">
 <div class="inbox-heading"><h2>Inbox</h2><button type="button" id="inboxSearchFocus" aria-label="Search messages">⌕</button><button type="button" id="inboxMenu" aria-label="More options">•••</button></div>
-<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div>
+<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div><div id="storyTray" class="story-tray" aria-label="Stories" aria-live="polite"></div><input id="storyFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" hidden><div id="storyViewer" class="story-viewer hidden" role="dialog" aria-modal="true" aria-label="Daawo Story"><div class="story-viewer-panel"><div class="story-viewer-head"><strong id="storyViewerAuthor">GoGol</strong><button type="button" id="storyViewerClose">Xir ✕</button></div><div id="storyViewerContent" style="display:flex;flex:1;min-height:0"></div><p id="storyViewerCaption" class="story-viewer-caption"></p><div class="story-viewer-actions"><button type="button" id="storyViewerDelete" class="secondary hidden">Tirtir Story</button></div></div></div>
 <div class="inbox-filters" role="group" aria-label="Inbox filters"><button class="active" type="button" data-inbox-filter="main">Main</button><button type="button" data-inbox-filter="requests">Requests</button><button type="button" data-inbox-filter="unread">Unread</button><button type="button" data-inbox-filter="starred">Starred</button></div>
 <div id="inboxConversations" class="inbox-conversations" aria-live="polite"><p class="muted">Your conversations will appear here.</p></div>
 <button type="button" class="inbox-activity" id="inboxActivity"><span class="inbox-activity-icon">ϟ</span><span><strong>Activity &amp; new followers</strong><small>Likes, comments, follows and updates</small></span><span class="inbox-chevron">›</span></button>
@@ -1108,6 +1111,7 @@ async function refreshProfile(){
   $('logout').classList.remove('hidden');
   await loadMyProfile();
   await loadActivity();
+  await loadStories();
  }else{
   profileLoadToken++;
   $('profileLogin').classList.remove('hidden');
@@ -1117,10 +1121,59 @@ async function refreshProfile(){
   $('profileBio').textContent='Ku soo biir bulshada GoGol.';
   $('profileAvatar').textContent='M';
   $('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">Soo gal si aad u aragto profile-kaaga.</div>';
+  await loadStories();
  }
 }
+
+let activeStories=[];
+function storyName(story){return story.storyProfile?.display_name||story.storyProfile?.username||'GoGol User'}
+async function loadStories(){
+ const tray=$('storyTray');if(!tray)return;
+ const {data,error}=await db.from('madal_stories').select('id,user_id,storage_path,mime_type,caption,created_at,expires_at').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(80);
+ if(error){console.warn('GoGol Stories:',error.message);tray.innerHTML='<span class="muted small">Stories waxay u baahan yihiin migration-ka Supabase 008.</span>';return}
+ const rows=data||[],ids=[...new Set(rows.map(x=>x.user_id))];let profiles=[];
+ if(ids.length){const result=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',ids);if(!result.error)profiles=result.data||[]}
+ const byId=Object.fromEntries(profiles.map(p=>[p.id,p]));activeStories=rows.map(story=>({...story,storyProfile:byId[story.user_id]||{}}));
+ const groups=new Map();for(const story of activeStories){if(!groups.has(story.user_id))groups.set(story.user_id,[]);groups.get(story.user_id).push(story)}
+ const ownId=currentUser?.id;
+ tray.innerHTML=[...groups.entries()].map(([userId,items])=>{const profile=items[0].storyProfile,name=escapeHtml(profile.display_name||profile.username||'GoGol User'),avatar=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((name[0]||'G').toUpperCase());return '<button type="button" class="story-chip" data-story-user="'+escapeHtml(userId)+'"><span class="story-ring">'+avatar+'</span><strong>'+(userId===ownId?'Story-gaaga':name)+'</strong></button>'}).join('');
+}
+async function showStory(story){
+ const url=await mediaUrl(story);if(!url){notice('Story-ga lama furi karin. Hubi migration-ka Supabase 008.');return}
+ $('storyViewerAuthor').textContent=storyName(story);$('storyViewerCaption').textContent=story.caption||'';
+ $('storyViewerDelete').classList.toggle('hidden',story.user_id!==currentUser?.id);$('storyViewerDelete').dataset.storyId=story.id;
+ $('storyViewerContent').innerHTML=story.mime_type.startsWith('video/')?'<video class="story-viewer-media" src="'+escapeHtml(url)+'" controls autoplay playsinline></video>':'<img class="story-viewer-media" src="'+escapeHtml(url)+'" alt="Story">';
+ $('storyViewer').classList.remove('hidden');
+}
+function closeStoryViewer(){$('storyViewerContent').innerHTML='';$('storyViewer').classList.add('hidden')}
+$('storyViewerClose').addEventListener('click',closeStoryViewer);
+$('storyViewer').addEventListener('click',e=>{if(e.target===$('storyViewer'))closeStoryViewer()});
+$('storyTray').addEventListener('click',e=>{const b=e.target.closest('[data-story-user]');if(!b)return;const item=activeStories.find(x=>x.user_id===b.dataset.storyUser);if(item)showStory(item)});
+$('storyViewerDelete').addEventListener('click',async()=>{
+ const id=$('storyViewerDelete').dataset.storyId,story=activeStories.find(x=>x.id===id);if(!story||story.user_id!==currentUser?.id)return;
+ const b=$('storyViewerDelete');b.disabled=true;
+ try{const {error}=await db.from('madal_stories').delete().eq('id',id);if(error)throw error;
+  const {error:storageError}=await db.storage.from('madal-media').remove([story.storage_path]);if(storageError)console.warn('Story media cleanup:',storageError.message);
+  closeStoryViewer();await loadStories();notice('Story-ga waa la tirtiray.');
+ }catch(error){notice('Story-ga lama tirtiri karin: '+error.message)}finally{b.disabled=false}
+});
+$('storyFile').addEventListener('change',async()=>{
+ const file=$('storyFile').files?.[0];$('storyFile').value='';if(!file)return;if(!currentUser){location.href='./account.html';return}
+ const images=['image/jpeg','image/png','image/webp','image/gif'],videos=['video/mp4','video/webm','video/quicktime'];
+ if(!images.includes(file.type)&&!videos.includes(file.type)){notice('Story-gu waa inuu noqdaa sawir ama fiidiyow la taageero.');return}
+ if(file.size>(file.type.startsWith('image/')?15:250)*1024*1024){notice('Sawirka ugu badnaan 15 MB; fiidiyowguna 250 MB.');return}
+ const owner=currentUser.id,b=$('profileCreate'),safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_'),path=owner+'/stories/'+Date.now()+'-'+safeName;b.disabled=true;
+ try{
+  const {error:up}=await db.storage.from('madal-media').upload(path,file,{contentType:file.type,upsert:false});if(up)throw up;
+  if(currentUser?.id!==owner)throw new Error('Akoonka waa isbeddelay intii la soo gelinayey.');
+  const {error:ins}=await db.from('madal_stories').insert({user_id:owner,storage_path:path,mime_type:file.type,caption:''});if(ins)throw ins;
+  notice('Story-ga waa la soo geliyey; wuxuu dhacayaa 24 saac kadib.');await loadStories();
+ }catch(error){await db.storage.from('madal-media').remove([path]).catch(()=>{});notice('Story lama soo gelin: '+error.message)}
+ finally{b.disabled=false}
+});
+
 const liveEntry=$("liveEntry");if(liveEntry)liveEntry.addEventListener("click",()=>{showPage("upload");notice("LIVE streaming wali waa la diyaarinayaa. Camera iyo Gallery waad isticmaali kartaa hadda.")});
-$('profileCreate').addEventListener('click',()=>showPage('upload'));
+$('profileCreate').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('storyFile').click()});
 $('profileFriends').addEventListener('click',()=>showPage('discover'));
 $('profileNotifications').addEventListener('click',()=>showPage('notifications'));
 $('inboxActivity').addEventListener('click',()=>showPage('notifications'));
