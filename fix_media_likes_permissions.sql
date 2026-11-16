@@ -20,7 +20,6 @@ with check (
     from public.media_posts p
     where p.id = media_likes.post_id
       and p.status = 'published'
-      and (not coalesce(p.is_private, false) or p.user_id = (select auth.uid()))
   )
 );
 
