@@ -196,6 +196,36 @@ main,.page,#profile,#discover,#upload,#messages,#notifications,#settings{backgro
 #appBoot .boot-caption{font-size:12px;color:#aaa;letter-spacing:.5px}
 @keyframes gogolSpin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){#appBoot .boot-track{animation-duration:2.5s}}
+
+/* GoGol 1.9.9: consistent black surfaces and polished profile */
+:root{--bg:#000!important;--panel:#101010!important;--panel2:#191919!important;--line:#292929!important;--muted:#aaa!important;color-scheme:dark}
+html,body,main,.page,#home,#profile,#discover,#upload,#messages,#notifications,#settings{background:#000!important}
+#home .feed-tabs,.profile-tabs,#profile .profile-tabs,.video-slide .comment-panel,.video-slide .comment-form,.photo-editor,.upload-choice button,.upload-methods button{background:#000!important}
+#profile{background:#000!important}
+#profile .profile-masthead{background:#000!important}
+#profile .profile-brand{display:none!important}
+#profile .profile-head-actions button{background:#151515;border:1px solid #333}
+#profile .profile-hero{background:transparent!important}
+#profile .profile-avatar{border:2px solid #fff;box-shadow:none}
+#profile .profile-edit-pencil{background:#202020!important;border:1px solid #444!important}
+#profile .profile-tabs{border-color:#333}
+#profile .profile-tabs button.active{border-bottom-color:#fff}
+#profile .profile-tile{background:#111}
+#profile .profile-tile .tile-title{background:linear-gradient(transparent,#000e)}
+.bottom{background:#000!important;border-top:1px solid #242424!important}
+#appBoot{background:#000!important}
+.inbox-conversations{display:grid;gap:2px;margin:0 0 14px}
+.inbox-conversation{display:flex;align-items:center;gap:12px;width:100%;padding:12px 4px;border:0;border-bottom:1px solid #ffffff18;background:transparent;color:#fff;text-align:left}
+.inbox-person-avatar{width:54px;height:54px;flex:none;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#222;border:1px solid #444;font-weight:850}
+.inbox-person-avatar img{width:100%;height:100%;object-fit:cover}
+.inbox-conversation-copy{min-width:0;flex:1}
+.inbox-conversation-copy strong,.inbox-conversation-copy small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.inbox-conversation-copy small{color:#999;margin-top:3px;font-size:12px}
+.inbox-conversation-meta{display:flex;flex-direction:column;align-items:center;gap:6px;color:#aaa;font-size:11px}
+.inbox-unread-dot{width:9px;height:9px;border-radius:50%;background:#28c8e8}
+.inbox-star{border:0;background:transparent;color:#888;font-size:20px;padding:5px}
+.inbox-star.is-starred{color:#ffd34f}
+.inbox-empty{padding:20px 8px;text-align:center;color:#999}
 </style>
 </head>
 <body>
@@ -252,7 +282,8 @@ main,.page,#profile,#discover,#upload,#messages,#notifications,#settings{backgro
 <section id="messages" class="page hidden">
 <div class="inbox-heading"><h2>Inbox</h2><button type="button" id="inboxSearchFocus" aria-label="Search messages">⌕</button><button type="button" id="inboxMenu" aria-label="More options">•••</button></div>
 <div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div>
-<div class="inbox-filters"><button class="active" type="button">Main</button><button type="button" id="inboxRequests">Requests ›</button><button type="button" id="inboxUnread">Unread</button><button type="button" id="inboxStarred">Starred</button></div>
+<div class="inbox-filters" role="group" aria-label="Inbox filters"><button class="active" type="button" data-inbox-filter="main">Main</button><button type="button" data-inbox-filter="requests">Requests</button><button type="button" data-inbox-filter="unread">Unread</button><button type="button" data-inbox-filter="starred">Starred</button></div>
+<div id="inboxConversations" class="inbox-conversations" aria-live="polite"><p class="muted">Your conversations will appear here.</p></div>
 <button type="button" class="inbox-activity" id="inboxActivity"><span class="inbox-activity-icon">ϟ</span><span><strong>Activity &amp; new followers</strong><small>Likes, comments, follows and updates</small></span><span class="inbox-chevron">›</span></button>
 <div class="feed-card inbox-search-card">
 <label for="messageSearch">Find people by username</label>
@@ -274,7 +305,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.8";
+const MADAL_VERSION="1.9.9";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -295,6 +326,7 @@ function showPage(page){
  document.querySelectorAll('[data-tab]').forEach(el=>el.classList.toggle('active',el.dataset.tab===page));
  clearNotice();window.scrollTo({top:0,behavior:'smooth'});
  if(page==='notifications')loadActivity();
+ if(page==='messages')loadInbox();
 }
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 $('headerSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
@@ -504,6 +536,52 @@ $('closeConversation').addEventListener('click',()=>{
  activeChatUser=null;$('conversationPanel').classList.add('hidden');
  if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}
 });
+
+function inboxStarIds(){
+ try{return new Set(JSON.parse(localStorage.getItem('gogol_inbox_stars_v1')||'[]'))}catch(_){return new Set()}
+}
+function toggleInboxStar(userId){
+ const stars=inboxStarIds();if(stars.has(userId))stars.delete(userId);else stars.add(userId);
+ try{localStorage.setItem('gogol_inbox_stars_v1',JSON.stringify([...stars]))}catch(_){}
+ loadInbox();
+}
+async function loadInbox(){
+ const host=$('inboxConversations');if(!host)return;
+ if(!currentUser){host.innerHTML='<p class="inbox-empty">Log in to see your messages.</p>';return}
+ host.innerHTML='<p class="inbox-empty">Loading conversations…</p>';
+ const me=currentUser.id;
+ const {data:messages,error}=await db.from('madal_messages')
+  .select('sender_id,recipient_id,body,created_at,read_at')
+  .or('sender_id.eq.'+me+',recipient_id.eq.'+me)
+  .order('created_at',{ascending:false}).limit(250);
+ if(error){host.innerHTML='<p class="inbox-empty">Messages could not be loaded. Check your connection and try again.</p>';console.warn('GoGol inbox:',error.message);return}
+ const latest=new Map();
+ for(const message of messages||[]){
+  const other=message.sender_id===me?message.recipient_id:message.sender_id;
+  if(other&&!latest.has(other))latest.set(other,message);
+ }
+ const ids=[...latest.keys()];
+ if(!ids.length){host.innerHTML='<p class="inbox-empty">No conversations yet. Search for a username below to start chatting.</p>';return}
+ const [profilesResult,followsResult]=await Promise.all([
+  db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',ids),
+  db.from('user_follows').select('following_id').eq('follower_id',me).in('following_id',ids)
+ ]);
+ if(profilesResult.error){host.innerHTML='<p class="inbox-empty">People in your conversations could not be loaded.</p>';return}
+ const profiles=new Map((profilesResult.data||[]).map(profile=>[profile.id,profile]));
+ const followed=new Set((followsResult.data||[]).map(row=>row.following_id));
+ const stars=inboxStarIds();
+ let rows=ids.map(id=>({id,message:latest.get(id),profile:profiles.get(id)})).filter(row=>row.profile);
+ if(activeInboxFilter==='unread')rows=rows.filter(row=>row.message.recipient_id===me&&!row.message.read_at);
+ if(activeInboxFilter==='requests')rows=rows.filter(row=>row.message.sender_id===row.id&&!followed.has(row.id));
+ if(activeInboxFilter==='starred')rows=rows.filter(row=>stars.has(row.id));
+ if(activeInboxFilter==='main')rows=rows.filter(row=>followed.has(row.id)||!stars.has(row.id));
+ host.innerHTML=rows.map(row=>{
+  const profile=row.profile,message=row.message,unread=message.recipient_id===me&&!message.read_at;
+  const avatar=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((profile.display_name||profile.username||'G').trim()[0].toUpperCase());
+  const preview=(message.sender_id===me?'You: ':'')+String(message.body||'');
+  return '<div class="inbox-conversation" role="group"><button type="button" class="inbox-conversation" data-inbox-user="'+escapeHtml(row.id)+'"><span class="inbox-person-avatar">'+avatar+'</span><span class="inbox-conversation-copy"><strong>'+escapeHtml(profile.display_name||('@'+profile.username))+'</strong><small>'+escapeHtml(preview)+'</small></span><span class="inbox-conversation-meta">'+(unread?'<i class="inbox-unread-dot"></i>':'')+'<small>'+new Date(message.created_at).toLocaleDateString()+'</small></span></button><button type="button" class="inbox-star '+(stars.has(row.id)?'is-starred':'')+'" data-inbox-star="'+escapeHtml(row.id)+'" aria-label="'+(stars.has(row.id)?'Remove star':'Star conversation')+'">'+(stars.has(row.id)?'★':'☆')+'</button></div>';
+ }).join('')||'<p class="inbox-empty">No conversations in this filter yet.</p>';
+}
 async function openConversation(userId){
  if(!currentUser)return;
  const {data:user,error}=await db.from('madal_profiles').select('id,username,display_name').eq('id',userId).maybeSingle();
@@ -665,7 +743,18 @@ $('profileNotifications').addEventListener('click',()=>showPage('notifications')
 $('inboxActivity').addEventListener('click',()=>showPage('notifications'));
 $('inboxSearchFocus').addEventListener('click',()=>{$('messageSearch').focus();$('messageSearch').scrollIntoView({behavior:'smooth',block:'center'})});
 $('inboxMenu').addEventListener('click',()=>{syncSettings();showPage('settings')});
-['inboxRequests','inboxUnread','inboxStarred'].forEach(id=>$(id).addEventListener('click',()=>notice('This Inbox filter is coming soon.')));
+let activeInboxFilter='main';
+document.querySelectorAll('[data-inbox-filter]').forEach(button=>button.addEventListener('click',()=>{
+ activeInboxFilter=button.dataset.inboxFilter;
+ document.querySelectorAll('[data-inbox-filter]').forEach(item=>item.classList.toggle('active',item===button));
+ loadInbox();
+}));
+$('inboxConversations').addEventListener('click',event=>{
+ const star=event.target.closest('[data-inbox-star]');
+ if(star){event.stopPropagation();toggleInboxStar(star.dataset.inboxStar);return}
+ const row=event.target.closest('[data-inbox-user]');
+ if(row)openConversation(row.dataset.inboxUser);
+});
 $('profileSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
 $('profileAvatar').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('profileEditor').classList.remove('hidden');$('profileEditor').scrollIntoView({behavior:'smooth',block:'start'})});
 $('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday GoGol.')}});
