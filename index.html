@@ -453,6 +453,7 @@ async function recordMadalView(postId){
  const post=allPosts.find(item=>String(item.id)===id);
  if(post&&typeof data==='number')post.view_count=data;
 }
+let feedVideoObserver=null;
 async function renderFeed(){
  const query=$('videoSearch')?.value.trim().toLowerCase()||'';
  let posts=allPosts.filter(p=>(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))&&(!p.is_private||String(p.user_id)===String(currentUser?.id))).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
@@ -466,13 +467,14 @@ async function renderFeed(){
   const batch=await Promise.all(posts.slice(start,start+8).map(post=>card(post)));
   $('allFeed').insertAdjacentHTML('beforeend',batch.join(''));
  }
- const videoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+ if(feedVideoObserver)feedVideoObserver.disconnect();
+ feedVideoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   const video=entry.target.querySelector('video');
   if(!video)return;
   if(entry.isIntersecting){if(preference("autoplay",true))video.play().then(()=>entry.target.classList.remove("is-paused")).catch(()=>entry.target.classList.add("is-paused"));else entry.target.classList.add("is-paused");recordMadalView(entry.target.dataset.slide);}
   else{video.pause();entry.target.classList.remove("is-paused");}
  }),{root:$('allFeed'),threshold:0.65});
- $('allFeed').querySelectorAll('.video-slide').forEach(slide=>videoObserver.observe(slide));
+ $('allFeed').querySelectorAll('.video-slide').forEach(slide=>feedVideoObserver.observe(slide));
  $('allFeed').querySelectorAll('.video-slide video').forEach(video=>{video.muted=!preference("video_sound",false);video.volume=1;const slide=video.closest('.video-slide');video.addEventListener('click',()=>{if(video.paused){video.play().then(()=>slide?.classList.remove('is-paused')).catch(()=>slide?.classList.add('is-paused'));}else{video.pause();slide?.classList.add('is-paused');}});video.addEventListener('play',()=>{slide?.classList.remove('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="Ⅱ"});video.addEventListener('pause',()=>{slide?.classList.add('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"});if(!preference("autoplay",true)){slide?.classList.add("is-paused");const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"}});
 }
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
@@ -591,10 +593,18 @@ $('allFeed').addEventListener('click',async e=>{
 $('allFeed').addEventListener('submit',async e=>{
  const form=e.target.closest('[data-comment-form]');if(!form)return;
  e.preventDefault();if(!currentUser){location.href='./account.html';return}
- const body=form.querySelector('textarea').value.trim();if(!body)return;
- const {error}=await db.from('media_comments').insert({post_id:form.dataset.commentForm,user_id:currentUser.id,body});
- if(error){notice('Faallada lama dirin: '+error.message);return}
- await loadMedia();$('comments-'+form.dataset.commentForm)?.classList.remove('hidden');const updatedComposer=$('comments-'+form.dataset.commentForm)?.querySelector('textarea');if(updatedComposer)updatedComposer.focus({preventScroll:true});
+ const textarea=form.querySelector('textarea'),submit=form.querySelector('button[type="submit"]');
+ const body=textarea?.value.trim();if(!body||!submit)return;
+ if(submit.disabled)return;
+ submit.disabled=true;const originalLabel=submit.textContent;submit.textContent='Waa la dirayaa...';
+ try{
+  const {error}=await db.from('media_comments').insert({post_id:form.dataset.commentForm,user_id:currentUser.id,body});
+  if(error)throw error;
+  await loadMedia();$('comments-'+form.dataset.commentForm)?.classList.remove('hidden');
+  const updatedComposer=$('comments-'+form.dataset.commentForm)?.querySelector('textarea');
+  if(updatedComposer)updatedComposer.focus({preventScroll:true});
+ }catch(error){console.warn('GoGol comment send:',error);notice('Faallada lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
+ finally{submit.disabled=false;submit.textContent=originalLabel}
 });
 
 $('searchUsers').addEventListener('click',searchMadalUsers);
