@@ -1,7 +1,7 @@
 {
-  "version": "1.8.5",
+  "version": "1.8.6",
   "name": "MADAL",
-  "message": "MADAL 1.8.5 — Separate update screen before entering the app.",
+  "message": "MADAL 1.8.6 — Easier navigation, improved playback and polished usability.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
