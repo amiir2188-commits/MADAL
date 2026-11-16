@@ -126,8 +126,7 @@ async function liveShowRoom(session,title,role){
   liveLocalTracks=await LiveKitCreateTracks();
   for(const track of liveLocalTracks) {
    await liveRoom.localParticipant.publishTrack(track);
-   const preview=track.attach();preview.autoplay=true;preview.playsInline=true;
-   liveEl("gLiveStage").append(preview);
+   if(track.kind==="video"){const preview=track.attach();preview.autoplay=true;preview.playsInline=true;liveEl("gLiveStage").append(preview)}
   }
   liveStatus("🔴 Waxaad si toos ah u baahinaysaa: "+title);
   liveEl("gLiveMic").classList.remove("hidden");liveEl("gLiveCamera").classList.remove("hidden");
