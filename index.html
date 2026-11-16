@@ -544,44 +544,49 @@ $('allFeed').addEventListener('click',async e=>{
  if(share){const post=allPosts.find(p=>String(p.id)===share.dataset.share),postId=share.dataset.share,shareUrl=location.href.split('#')[0]+'#post-'+encodeURIComponent(postId);document.querySelector('.share-sheet')?.remove();const sheet=document.createElement('div');sheet.className='share-sheet';sheet.innerHTML='<div class="share-sheet-card"><div class="share-sheet-head"><strong>La wadaag GoGol</strong><button type="button" class="secondary" data-share-close>Xir</button></div><div class="share-sheet-actions"><button type="button" data-copy-link>🔗 Copy link</button><button type="button" data-share-save>☆ Save</button><button type="button" data-system-share>↗ App-yada kale</button></div>'+(currentUser?'<input type="search" placeholder="Raadi akoon aad u dirto..." data-share-search><div class="share-sheet-list" data-share-users>Waa la soo raadinayaa...</div>':'<p class="muted">Linkiga waad koobiyeeyn kartaa ama waxaad kula wadaagi kartaa app kale.</p>')+'</div>';document.body.appendChild(sheet);const list=sheet.querySelector('[data-share-users]');const search=sheet.querySelector('[data-share-search]');let people=[];const copyLink=async()=>{try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(shareUrl)}else{const field=document.createElement('textarea');field.value=shareUrl;field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();const ok=document.execCommand('copy');field.remove();if(!ok)throw new Error('copy failed')}notice('Linkiga waa la koobiyeeyay.')}catch(_){notice('Copy link ma shaqayn. Isku day inaad browser-ka ku furto.')}};const loadPeople=async q=>{if(!currentUser||!list)return;const {data,error}=await db.from('madal_profiles').select('id,username,display_name,avatar_url').neq('id',currentUser.id).or('username.ilike.%'+q+'%,display_name.ilike.%'+q+'%').limit(25);if(error){list.textContent='Akoonada lama soo heli karin.';return}people=data||[];list.innerHTML=people.map(person=>'<div class="share-person"><span class="creator-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</span><span><strong>'+escapeHtml(person.display_name||person.username||'GoGol User')+'</strong><br><small>@'+escapeHtml(person.username||'user')+'</small></span><button type="button" data-send-to="'+escapeHtml(person.id)+'">Dir</button></div>').join('')||'Akoon lama helin.'};if(currentUser)await loadPeople('');search?.addEventListener('input',()=>loadPeople(search.value.trim()));sheet.addEventListener('click',async ev=>{if(ev.target===sheet||ev.target.closest('[data-share-close]')){sheet.remove();return}if(ev.target.closest('[data-copy-link]')){await copyLink();return}if(ev.target.closest('[data-share-save]')){const wasSaved=favoritePostIds.has(postId);const result=wasSaved?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id):await db.from('media_favorites').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});if(result.error){notice('Save lama suurtagelin: '+result.error.message)}else{wasSaved?favoritePostIds.delete(postId):favoritePostIds.add(postId);notice(wasSaved?'Waa laga saaray Saved.':'Muuqaalka waa la kaydiyey.');sheet.querySelector('[data-share-save]').textContent=wasSaved?'☆ Save':'★ Saved'}return}if(ev.target.closest('[data-system-share]')){try{if(navigator.share)await navigator.share({title:post?.title||'GoGol',text:post?.description||'Fiiri muuqaalkan GoGol',url:shareUrl});else{await navigator.clipboard.writeText(shareUrl);notice('Linkiga waa la koobiyeeyay.')}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu ma shaqayn.')}return}const send=ev.target.closest('[data-send-to]');if(send){send.disabled=true;const {error}=await db.from('madal_messages').insert({sender_id:currentUser.id,recipient_id:send.dataset.sendTo,body:'Fiiri muuqaalkan GoGol: '+shareUrl});if(error){notice('Muuqaalka lama dirin: '+error.message);send.disabled=false}else{notice('Muuqaalka waa loo diray akoonka.');send.textContent='La diray'}}});return}
  if(!like&&!follow&&!repost&&!favorite&&!privacy)return;
  if(!currentUser){location.href='./account.html';return}
- if(like){
-  const postId=like.dataset.like;
-  const wasLiked=likedPostIds.has(postId);
-  like.disabled=true;
-  const result=wasLiked
-   ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
-   :await db.from('media_likes').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true}).select('post_id');
-  like.disabled=false;
-  if(result.error){console.warn('GoGol like request failed:',result.error);notice('Like-ga lama kaydin: '+(result.error.message||'Fadlan mar kale isku day.'))}else{if(wasLiked){likedPostIds.delete(postId);likesByPost[postId]=Math.max(0,(likesByPost[postId]||1)-1)}else{likedPostIds.add(postId);if((result.data||[]).length)likesByPost[postId]=(likesByPost[postId]||0)+1}like.classList.toggle('is-liked',!wasLiked);like.querySelector('span').textContent=wasLiked?'♡':'♥';like.querySelector('small').textContent=likesByPost[postId]||0;}
- }
- if(repost){
-  const postId=repost.dataset.repost;
-  const result=repostedPostIds.has(postId)
-   ?await db.from('media_reposts').delete().eq('post_id',postId).eq('user_id',currentUser.id)
-   :await db.from('media_reposts').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});
-  if(result.error)notice('Repost ma shaqayn: '+result.error.message);else await loadMedia();
- }
- if(favorite){
-  const postId=favorite.dataset.favorite;
-  const result=favoritePostIds.has(postId)
-   ?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id)
-   :await db.from('media_favorites').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});
-  if(result.error)notice('Kaydintu ma shaqayn: '+result.error.message);else{const wasSaved=favoritePostIds.has(postId);if(wasSaved){favoritePostIds.delete(postId);favoriteCountsByPost[postId]=Math.max(0,(favoriteCountsByPost[postId]||1)-1)}else{favoritePostIds.add(postId);favoriteCountsByPost[postId]=(favoriteCountsByPost[postId]||0)+1}favorite.classList.toggle('is-saved',!wasSaved);favorite.querySelector('span').textContent=wasSaved?'☆':'★';favorite.querySelector('small').textContent=favoriteCountsByPost[postId];}
- }
- if(privacy){
-  const postId=privacy.dataset.private,post=allPosts.find(p=>String(p.id)===postId);
-  if(post){
-   const {error}=await db.from('media_posts').update({is_private:!post.is_private}).eq('id',postId).eq('user_id',currentUser.id);
-   if(error)notice('Privacy lama beddelin: '+error.message);else await loadMedia();
+ const actionButton=like||follow||repost||favorite||privacy;
+ if(actionButton.disabled)return;
+ actionButton.disabled=true;
+ try{
+  if(like){
+   const postId=like.dataset.like;
+   const wasLiked=likedPostIds.has(postId);
+   const result=wasLiked
+    ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
+    :await db.from('media_likes').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true}).select('post_id');
+   if(result.error){console.warn('GoGol like request failed:',result.error);notice('Like-ga lama kaydin: '+(result.error.message||'Fadlan mar kale isku day.'))}else{if(wasLiked){likedPostIds.delete(postId);likesByPost[postId]=Math.max(0,(likesByPost[postId]||1)-1)}else{likedPostIds.add(postId);if((result.data||[]).length)likesByPost[postId]=(likesByPost[postId]||0)+1}like.classList.toggle('is-liked',!wasLiked);like.querySelector('span').textContent=wasLiked?'♡':'♥';like.querySelector('small').textContent=likesByPost[postId]||0;}
   }
- }
- if(follow){
-  const target=follow.dataset.follow;
-  const result=followsByUser.has(target)
-   ?await db.from('user_follows').delete().eq('follower_id',currentUser.id).eq('following_id',target)
-   :await db.from('user_follows').upsert({follower_id:currentUser.id,following_id:target},{onConflict:'follower_id,following_id',ignoreDuplicates:true});
-  if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else await loadMedia();
- }
+  if(repost){
+   const postId=repost.dataset.repost;
+   const result=repostedPostIds.has(postId)
+    ?await db.from('media_reposts').delete().eq('post_id',postId).eq('user_id',currentUser.id)
+    :await db.from('media_reposts').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});
+   if(result.error)notice('Repost ma shaqayn: '+result.error.message);else await loadMedia();
+  }
+  if(favorite){
+   const postId=favorite.dataset.favorite;
+   const wasSaved=favoritePostIds.has(postId);
+   const result=wasSaved
+    ?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id)
+    :await db.from('media_favorites').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});
+   if(result.error)notice('Kaydintu ma shaqayn: '+result.error.message);else{if(wasSaved){favoritePostIds.delete(postId);favoriteCountsByPost[postId]=Math.max(0,(favoriteCountsByPost[postId]||1)-1)}else{favoritePostIds.add(postId);favoriteCountsByPost[postId]=(favoriteCountsByPost[postId]||0)+1}favorite.classList.toggle('is-saved',!wasSaved);favorite.querySelector('span').textContent=wasSaved?'☆':'★';favorite.querySelector('small').textContent=favoriteCountsByPost[postId];}
+  }
+  if(privacy){
+   const postId=privacy.dataset.private,post=allPosts.find(p=>String(p.id)===postId);
+   if(post){
+    const {error}=await db.from('media_posts').update({is_private:!post.is_private}).eq('id',postId).eq('user_id',currentUser.id);
+    if(error)notice('Privacy lama beddelin: '+error.message);else await loadMedia();
+   }
+  }
+  if(follow){
+   const target=follow.dataset.follow;
+   const result=followsByUser.has(target)
+    ?await db.from('user_follows').delete().eq('follower_id',currentUser.id).eq('following_id',target)
+    :await db.from('user_follows').upsert({follower_id:currentUser.id,following_id:target},{onConflict:'follower_id,following_id',ignoreDuplicates:true});
+   if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else await loadMedia();
+  }
+ }catch(error){console.warn('GoGol social action failed:',error);notice('Ficilka lama dhamaystirin: '+(error.message||'Fadlan mar kale isku day.'))}
+ finally{actionButton.disabled=false}
 });
 $('allFeed').addEventListener('submit',async e=>{
  const form=e.target.closest('[data-comment-form]');if(!form)return;
