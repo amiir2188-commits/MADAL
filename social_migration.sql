@@ -105,7 +105,7 @@ create table if not exists public.madal_messages (
   id uuid primary key default gen_random_uuid(),
   sender_id uuid not null references auth.users(id) on delete cascade,
   recipient_id uuid not null references auth.users(id) on delete cascade,
-  body text not null check (char_length(body) between 1 and 2000),
+  body text not null check (char_length(body) between 1 and 4000),
   created_at timestamptz not null default now(),
   read_at timestamptz,
   constraint madal_no_self_message check (sender_id <> recipient_id)
@@ -119,6 +119,14 @@ drop policy if exists "MADAL messages sender insert" on public.madal_messages;
 create policy "MADAL messages sender insert" on public.madal_messages
 for insert to authenticated
 with check (auth.uid() = sender_id and sender_id <> recipient_id);
+-- Recipients can mark incoming messages as read, but cannot rewrite message content.
+drop policy if exists "MADAL messages recipient mark read" on public.madal_messages;
+create policy "MADAL messages recipient mark read" on public.madal_messages
+for update to authenticated
+using (auth.uid() = recipient_id)
+with check (auth.uid() = recipient_id);
+revoke update on table public.madal_messages from authenticated;
+grant update (read_at) on table public.madal_messages to authenticated;
 drop policy if exists "MADAL messages recipient mark read" on public.madal_messages;
 create index if not exists madal_messages_conversation_idx
 on public.madal_messages(sender_id, recipient_id, created_at desc);
