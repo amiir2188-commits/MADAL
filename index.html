@@ -20,23 +20,23 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 /* MADAL vertical short-video experience */
 #home{margin:0 -14px 0}
 #home>.section-title{display:none}
-#home .feed-tabs{height:58px;display:grid;grid-template-columns:62px minmax(0,1fr) minmax(0,1fr) 42px;align-items:center;justify-content:stretch;gap:2px;padding:0 10px;margin:0;background:#100a19;overflow:visible}
-#home .feed-tabs .feed-search{width:38px;height:38px;min-width:38px;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;font-size:20px;display:grid;place-items:center;margin-left:4px}
+#home .feed-tabs{height:calc(58px + env(safe-area-inset-top));display:grid;grid-template-columns:48px minmax(0,.78fr) minmax(0,1.05fr) minmax(0,1fr) minmax(0,1fr) 38px;align-items:end;justify-content:stretch;gap:2px;padding:env(safe-area-inset-top) 8px 0;margin:0;background:#100a19;overflow:visible}
+#home .feed-tabs .feed-search{width:36px;height:38px;min-width:36px;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;font-size:25px;display:grid;place-items:center;margin-left:0}
 #home .feed-tabs .feed-search:active{background:#38234d}
-#home .feed-tabs button{min-width:0;padding:8px 4px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:13px;font-weight:750;position:relative;white-space:nowrap}
+#home .feed-tabs button{min-width:0;padding:8px 2px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:12px;font-weight:750;position:relative;white-space:nowrap;overflow:hidden;text-overflow:clip}
 #home .feed-tabs button.active{background:transparent;color:#fff}
 #home .feed-tabs button.active:after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px;background:#fff}
 #home #videoSearch{display:none}
-#allFeed{height:calc(100dvh - 112px);min-height:360px;overflow-y:auto;overscroll-behavior-y:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
+#allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:360px;overflow-y:auto;overscroll-behavior-y:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
 #allFeed::-webkit-scrollbar{display:none}
-.video-slide{position:relative;min-height:360px;height:calc(100dvh - 112px);scroll-snap-align:start;scroll-snap-stop:always;background:#050308;overflow:hidden;border:0;border-radius:0;margin:0;padding:0}
+.video-slide{position:relative;min-height:360px;height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));scroll-snap-align:start;scroll-snap-stop:always;background:#050308;overflow:hidden;border:0;border-radius:0;margin:0;padding:0}
 .video-slide .slide-media{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;margin:0;background:#050308}
 .video-slide .slide-shade{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#08050dcc);pointer-events:none}
 .video-slide .video-controls{position:absolute;z-index:5;inset:0;display:grid;place-items:center;pointer-events:none}.video-slide .video-controls button{pointer-events:auto;width:76px;height:76px;border:1px solid #ffffff70;border-radius:50%;background:#09051299;color:#fff;font-size:34px;display:grid;place-items:center;padding-left:5px;backdrop-filter:blur(10px);box-shadow:0 5px 24px #0006;opacity:0;transform:scale(.86);transition:opacity .18s,transform .18s}.video-slide.is-paused .video-controls button{opacity:1;transform:scale(1)}.video-slide .video-controls button:active{transform:scale(.94)}
 .video-slide .slide-info{position:absolute;left:12px;right:62px;bottom:18px;z-index:2;text-shadow:0 1px 4px #000}.video-slide .slide-info h3{font-size:15px;margin:0 0 5px;font-weight:850}.video-slide .slide-info p{font-size:12px;margin:4px 0;max-width:100%;overflow-wrap:anywhere}.video-slide .slide-info .hashtags{font-size:12px;font-weight:750;color:#fff;margin-top:5px}.video-slide .slide-actions{position:absolute;right:7px;bottom:22px;z-index:3;display:flex;flex-direction:column;gap:7px;align-items:center;max-height:80%;overflow:auto;scrollbar-width:none}.video-slide .slide-actions button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:40px;min-height:40px;border:0;border-radius:22px;background:transparent;color:white;padding:2px;font-size:9px;font-weight:750;text-shadow:0 1px 3px #000}.video-slide .slide-actions button span{display:block;font-size:20px;line-height:1.05}.video-slide .slide-actions .creator-follow,.video-slide .slide-actions .creator-avatar-only{position:relative;min-width:40px;min-height:44px;padding:0;background:transparent;overflow:visible}.creator-avatar{width:36px;height:36px;border:1.5px solid #fff;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#8751c9,#f18bd4);font-size:14px;font-weight:850;box-shadow:0 2px 8px #0008}.creator-avatar img{width:100%;height:100%;object-fit:cover}.creator-plus{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#ff3158;color:#fff;border:1px solid #fff;font-size:12px;font-weight:900;line-height:1}.video-slide .comment-panel{position:absolute;z-index:4;left:0;right:0;bottom:0;max-height:55%;overflow:auto;background:#100a19f5;padding:14px;border-radius:18px 18px 0 0}
 .video-slide .comment-panel.hidden{display:none}
 .video-slide .muted{color:#e0d5e9}
-@media(max-width:480px){#home{margin:0 -14px 0}#allFeed{height:calc(100dvh - 112px);min-height:360px}.video-slide{height:calc(100dvh - 112px);min-height:360px}}
+@media(max-width:480px){#home{margin:0 -14px 0}#allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:360px}.video-slide{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:360px}}
 
 .feed-card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:13px}.media{width:100%;max-height:520px;border-radius:12px;background:#050308;margin-top:10px}.feed-card audio{width:100%;margin-top:12px}
 .social-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.social-actions button,.comment-form button{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel2);color:#fff;font-weight:650}.comment-panel{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}.comment-item{padding:7px 0;border-bottom:1px solid #38254a;font-size:13px}.comment-form textarea{min-height:58px}
@@ -111,9 +111,35 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 .video-slide .comment-panel{max-height:min(68dvh,620px);padding:16px 14px calc(12px + env(safe-area-inset-bottom));overscroll-behavior:contain}.video-slide .comment-panel>div{max-height:calc(68dvh - 100px);overflow:auto}.video-slide .comment-form{display:flex;align-items:center;gap:9px;position:sticky;bottom:0;padding:9px 0 0;background:#100a19}.video-slide .comment-form textarea{flex:1;min-width:0;min-height:42px;max-height:110px;height:42px;resize:none;border-radius:24px;background:#251833;border:1px solid #54356f;padding:10px 14px;margin:0;font-size:14px;line-height:20px}.video-slide .comment-form button{flex:none;width:43px;height:43px;padding:0;border:0;border-radius:50%;background:linear-gradient(135deg,#a72aff,#6824ef);font-size:20px}.video-slide .comment-form textarea:focus{outline:2px solid #a45bff;outline-offset:1px}
 @media(max-width:480px){#profile{padding-left:10px;padding-right:10px}#profile .profile-hero{padding-left:4px;padding-right:4px}#profile .profile-avatar{width:104px;height:104px}#profile .profile-stats{gap:24px}}
 /* MADAL English navigation, matching the supplied reference */\n#home .feed-tabs{display:flex!important;align-items:center;justify-content:space-between;gap:8px;height:58px;padding:0 12px;background:#08070b!important}\n#home .feed-tabs button{flex:0 1 auto;white-space:nowrap;font-size:14px;padding:9px 7px;color:#c9c4d0}\n#home .feed-tabs button.active:after{background:#fff;left:20%;right:20%;bottom:1px}\n#home .feed-tabs .live-entry{font-size:12px;font-weight:950;color:#fff;border:0;border-radius:8px;background:linear-gradient(135deg,#a22bff,#f52e85);padding:7px 9px}\n#home .feed-tabs .feed-search{flex:0 0 38px;font-size:26px;color:#fff}\n.bottom{background:#050505f5!important;border-top:1px solid #ffffff22!important;padding:7px 3px calc(7px + env(safe-area-inset-bottom))!important}\n.bottom button{color:#f4f1f7!important;font-size:11px!important;font-weight:750;min-height:54px}\n.bottom button span{font-size:25px!important;line-height:1.15!important}\n.bottom button.active{color:#fff!important}\n.bottom button.active span{color:#fff;text-shadow:0 0 12px #b82cff}\n.bottom button.create-tab span{width:54px;height:42px;margin:0 auto 2px;border-radius:14px;background:linear-gradient(100deg,#26d9e9 0 12%,#fff 12% 88%,#ff2b87 88%);color:#100817!important;font-size:31px!important;display:grid;place-items:center;text-shadow:none}\n@media(max-width:380px){#home .feed-tabs{gap:3px;padding:0 7px}#home .feed-tabs button{font-size:12px;padding:8px 4px}}\n
+
+/* GoGol For You controls aligned to the requested creator-feed reference */
+#home .feed-tabs{background:linear-gradient(180deg,#090909e8,#09090988);position:relative;z-index:6}
+#home .feed-tabs .live-entry{font-size:23px!important;color:#fff!important}
+#home .feed-tabs button.active:after{bottom:1px;left:20%;right:20%}
+.video-slide .slide-actions{right:10px;bottom:112px;gap:13px;max-height:65%;overflow:visible}
+.video-slide .slide-actions button{min-width:54px;min-height:56px;font-size:11px;gap:3px}
+.video-slide .slide-actions button span{font-size:30px;line-height:1}
+.video-slide .slide-actions button[data-like] span{font-size:34px}
+.video-slide .slide-actions button[data-comments] span{font-size:31px}
+.video-slide .slide-actions button[data-favorite] span{font-size:32px}
+.video-slide .slide-actions button.share-action span{width:48px;height:48px;font-size:31px;background:transparent;border:0;backdrop-filter:none}
+.video-slide .slide-actions .creator-follow,.video-slide .slide-actions .creator-avatar-only{min-width:58px;min-height:64px}
+.video-slide .creator-avatar{width:50px;height:50px;border:2px solid #fff}
+.video-slide .creator-plus{width:22px;height:22px;font-size:17px;bottom:-5px}
+.video-slide .slide-info{left:16px;right:78px;bottom:22px;max-width:calc(100% - 96px)}
+.video-slide .slide-info h3{font-size:20px}
+.video-slide .slide-info p{font-size:15px;line-height:1.35}
+.video-slide .slide-info .hashtags{font-size:14px}
+.video-slide .repost-chip{position:absolute;left:16px;bottom:122px;z-index:3;display:flex;align-items:center;gap:8px;min-height:38px;padding:5px 12px;border:1px solid #ffffff55;border-radius:24px;background:#ffffffdf;color:#111;font-size:13px;font-weight:750;text-shadow:none;box-shadow:0 2px 9px #0004}
+.video-slide .repost-chip span{font-size:21px;line-height:1}
+.video-slide .repost-chip small{font-size:11px;color:#333}
+.video-slide .repost-chip.is-reposted{background:#d9f7ff}
+.video-slide .comment-panel{z-index:8}
+@media(max-width:380px){#home .feed-tabs button{font-size:10px;padding-left:1px;padding-right:1px}.video-slide .slide-actions{right:5px;gap:8px}.video-slide .slide-info{right:72px}.video-slide .repost-chip{bottom:116px}}
+
 /* For You full-screen creator layout */
 #home .video-slide{isolation:isolate}.video-slide .slide-actions button.is-saved{color:#ffd45c}.video-slide .slide-actions button.is-saved span{color:#ffd45c}.video-slide .slide-actions button[data-comments] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-actions button[data-favorite] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-info{max-width:calc(100% - 92px);padding:0 0 4px}.video-slide .slide-info h3{font-weight:900;letter-spacing:.1px}.video-slide .slide-info p{line-height:1.35;text-shadow:0 1px 4px #000,0 1px 9px #000}
-@media(max-width:480px){#allFeed{height:calc(100dvh - 122px)}.video-slide{height:calc(100dvh - 122px)}.video-slide .slide-actions{right:9px;bottom:22px;gap:10px}.video-slide .slide-actions button{min-height:48px}.video-slide .slide-info{left:14px;right:78px;bottom:18px}}
+@media(max-width:480px){#allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide .slide-actions{right:9px;bottom:22px;gap:10px}.video-slide .slide-actions button{min-height:48px}.video-slide .slide-info{left:14px;right:78px;bottom:18px}}
 </style>
 </head>
 <body>
@@ -132,7 +158,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
-<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Video feed navigation"><button type="button" class="live-entry" id="liveEntry">▣ LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Video feed navigation"><button type="button" class="live-entry" id="liveEntry" aria-label="LIVE">▣</button><button type="button" data-feed-tab="stem">STEM</button><button type="button" data-feed-tab="community">Community</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli GoGol</h2>
@@ -188,7 +214,7 @@ const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
-let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
+let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const MADAL_VERSION="1.9.5";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
@@ -241,7 +267,7 @@ async function card(p){
   const authorProfile=authorProfiles[author]||{},avatar=authorProfile.avatar_url?'<img src="'+escapeHtml(authorProfile.avatar_url)+'" alt="">':escapeHtml((authorProfile.display_name||authorProfile.username||'M').trim()[0].toUpperCase());
   const followButton=currentUser && author && author!==currentUser.id?'<button type="button" class="creator-follow" data-follow="'+escapeHtml(author)+'" aria-label="'+(followsByUser.has(author)?'Jooji raacista':'Raac qofkan')+'"><span class="creator-avatar">'+avatar+'</span><span class="creator-plus">'+(followsByUser.has(author)?'✓':'+')+'</span></button>':'<span class="creator-avatar creator-avatar-only">'+avatar+'</span>';
   const commentItems=comments.map(c=>'<p class="comment-item"><strong>'+escapeHtml(String(c.user_id||'').slice(0,8))+'</strong> '+escapeHtml(c.body)+' <span class="muted small">'+(c.created_at?new Date(c.created_at).toLocaleDateString('so-SO'):'')+'</span></p>').join('')||'<p class="muted small">Weli faallo lama qorin.</p>';
-  social='<div class="slide-actions">'+followButton+'<button type="button" class="'+(liked?'is-liked':'')+'" data-like="'+escapeHtml(postId)+'" aria-label="Like"><span>'+(liked?'♥':'♡')+'</span><small>'+likes+'</small></button><button type="button" data-comments="'+escapeHtml(postId)+'" aria-label="Faallo"><span>💬</span><small>'+comments.length+'</small></button><button type="button" class="share-action" data-share="'+escapeHtml(postId)+'" aria-label="Share"><span>➦</span><small>Share</small></button><button type="button" class="'+(favorite?'is-saved':'')+'" data-favorite="'+escapeHtml(postId)+'" aria-label="Save"><span>'+(favorite?'★':'☆')+'</span><small>'+(favoriteCountsByPost[postId]||0)+'</small></button>'+(currentUser&&author===currentUser.id?'<button type="button" data-private="'+escapeHtml(postId)+'" aria-label="Privacy"><span>🔒</span><small>Private</small></button>':'')+'</div><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" rows="1" inputmode="text" enterkeyhint="send" maxlength="1000" placeholder="Faallo qor..." required></textarea><button class="primary" type="submit" aria-label="Dir faallada">➤</button></form></div>';
+  social='<div class="slide-actions">'+followButton+'<button type="button" class="'+(liked?'is-liked':'')+'" data-like="'+escapeHtml(postId)+'" aria-label="Like"><span>'+(liked?'♥':'♡')+'</span><small>'+likes+'</small></button><button type="button" data-comments="'+escapeHtml(postId)+'" aria-label="Faallo"><span>💬</span><small>'+comments.length+'</small></button><button type="button" class="'+(favorite?'is-saved':'')+'" data-favorite="'+escapeHtml(postId)+'" aria-label="Save"><span>'+(favorite?'★':'☆')+'</span><small>'+(favoriteCountsByPost[postId]||0)+'</small></button><button type="button" class="share-action" data-share="'+escapeHtml(postId)+'" aria-label="Share"><span>➦</span><small>'+(p.share_count||'Share')+'</small></button></div><button type="button" class="repost-chip '+(reposted?'is-reposted':'')+'" data-repost="'+escapeHtml(postId)+'" aria-label="Repost"><span>⟳</span><b>'+(reposted?'Reposted':'Repost')+'</b><small>'+(repostCountsByPost[postId]||0)+'</small></button><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" rows="1" inputmode="text" enterkeyhint="send" maxlength="1000" placeholder="Faallo qor..." required></textarea><button class="primary" type="submit" aria-label="Dir faallada">➤</button></form></div>';
  }
  const authorName=escapeHtml(p.display_name||p.username||'GoGol Creator');
  const slidePlayer=player.replace('class="media"','class="slide-media"').replace('<video class="slide-media" controls playsinline','<video class="slide-media" autoplay loop playsinline').replace(' preload="metadata"',' preload="metadata"');
@@ -250,7 +276,7 @@ async function card(p){
  const tagSource=String(p.description||p.caption||'')+' '+String(p.title||p.name||'');
  const hashtags=[...new Set(tagSource.match(/#[\\p{L}\\p{N}_]+/gu)||[])].slice(0,8);
  const cleanDesc=desc.replace(/#[\\p{L}\\p{N}_]+/gu,'').trim();
- return '<article class="video-slide" data-slide="'+escapeHtml(postId)+'">'+slidePlayer+'<div class="slide-shade"></div><div class="video-controls"><button type="button" data-video-toggle="'+escapeHtml(postId)+'" aria-label="Jooji ama sii wad">⏸</button></div><div class="slide-info"><h3>'+authorName+'</h3>'+(title?'<p>'+title+'</p>':'')+(cleanDesc?'<p>'+cleanDesc+'</p>':'')+(hashtags.length?'<p class="hashtags">'+hashtags.map(escapeHtml).join(' ')+'</p>':'')+'</div>'+actionMarkup+'</article>';
+ return '<article class="video-slide" data-slide="'+escapeHtml(postId)+'">'+slidePlayer+'<div class="slide-shade"></div><div class="video-controls"><button type="button" data-video-toggle="'+escapeHtml(postId)+'" aria-label="Jooji ama sii wad">⏸</button></div><div class="slide-info"><h3>'+authorName+(p.is_verified?' <span class="verified">✓</span>':'')+'</h3>'+(title?'<p>'+title+'</p>':'')+(cleanDesc?'<p>'+cleanDesc+'</p>':'')+(hashtags.length?'<p class="hashtags">'+hashtags.map(escapeHtml).join(' ')+'</p>':'')+'</div>'+actionMarkup+'</article>';
 }
 const madalViewedPosts=new Set();
 try{JSON.parse(localStorage.getItem('madal_viewed_posts')||'[]').forEach(id=>madalViewedPosts.add(String(id)))}catch(_){}
@@ -269,6 +295,8 @@ async function renderFeed(){
  let posts=allPosts.filter(p=>(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))&&(!p.is_private||String(p.user_id)===String(currentUser?.id))).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
  await loadSocialData(posts);
  if(activeFeedTab==='following')posts=posts.filter(p=>currentUser&&followsByUser.has(String(p.user_id)));
+ if(activeFeedTab==='stem')posts=posts.filter(p=>/stem|science|technology|engineering|math|saynis|teknooloji|xisaab/i.test([p.category,p.topic,p.title,p.description,p.caption].filter(Boolean).join(' ')));
+ if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
  if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>';return}
  $('allFeed').innerHTML='';
  for(const p of posts){const html=await card(p);$('allFeed').insertAdjacentHTML('beforeend',html)}
@@ -312,7 +340,7 @@ $('discoverResults').addEventListener('click',async e=>{
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
 document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
 async function loadSocialData(posts){
- socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();favoritePostIds=new Set();
+ socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();repostCountsByPost={};favoritePostIds=new Set();
  const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
  if(!ids.length)return;
  const {data:session}=await db.auth.getSession();currentUser=session?.session?.user||currentUser;
@@ -320,7 +348,7 @@ async function loadSocialData(posts){
   db.from('media_likes').select('post_id,user_id').in('post_id',ids),
   db.from('media_comments').select('id,post_id,user_id,body,created_at').in('post_id',ids).order('created_at',{ascending:true}),
   authors.length?db.from('user_follows').select('follower_id,following_id').in('following_id',authors):Promise.resolve({data:[],error:null}),
-  currentUser?db.from('media_reposts').select('post_id,user_id').in('post_id',ids).eq('user_id',currentUser.id):Promise.resolve({data:[],error:null}),
+  db.from('media_reposts').select('post_id,user_id').in('post_id',ids),
   db.from('media_favorites').select('post_id,user_id').in('post_id',ids),
   authors.length?db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',authors):Promise.resolve({data:[],error:null})
  ]);
@@ -333,7 +361,7 @@ async function loadSocialData(posts){
  for(const like of likesResult.data||[]){likesByPost[like.post_id]=(likesByPost[like.post_id]||0)+1;if(currentUser&&like.user_id===currentUser.id)likedPostIds.add(like.post_id)}
  for(const comment of commentsResult.data||[]){(commentsByPost[comment.post_id]??=[]).push(comment)}
  for(const follow of followsResult.data||[]){followerCounts[follow.following_id]=(followerCounts[follow.following_id]||0)+1;if(currentUser&&follow.follower_id===currentUser.id)followsByUser.add(follow.following_id)}
- for(const row of repostsResult.data||[])repostedPostIds.add(row.post_id);
+ for(const row of repostsResult.data||[]){repostCountsByPost[row.post_id]=(repostCountsByPost[row.post_id]||0)+1;if(currentUser&&row.user_id===currentUser.id)repostedPostIds.add(row.post_id);}
  favoriteCountsByPost={};for(const row of favoritesResult.data||[]){favoriteCountsByPost[row.post_id]=(favoriteCountsByPost[row.post_id]||0)+1;if(currentUser&&row.user_id===currentUser.id)favoritePostIds.add(row.post_id);}
 }
 $('allFeed').addEventListener('click',async e=>{
