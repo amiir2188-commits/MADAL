@@ -486,6 +486,8 @@ async function recordMadalView(postId){
  const post=allPosts.find(item=>String(item.id)===id);
  if(post&&typeof data==='number')post.view_count=data;
 }
+const reducedMotionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
+function shouldAutoplayVideos(){return preference("autoplay",true)&&!reducedMotionQuery.matches}
 let feedVideoObserver=null,feedRenderToken=0;
 async function renderFeed(){
  const renderToken=++feedRenderToken;
@@ -507,11 +509,11 @@ async function renderFeed(){
  feedVideoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   const video=entry.target.querySelector('video');
   if(!video)return;
-  if(entry.isIntersecting){if(preference("autoplay",true))video.play().then(()=>entry.target.classList.remove("is-paused")).catch(()=>entry.target.classList.add("is-paused"));else entry.target.classList.add("is-paused");recordMadalView(entry.target.dataset.slide);}
+  if(entry.isIntersecting){if(shouldAutoplayVideos())video.play().then(()=>entry.target.classList.remove("is-paused")).catch(()=>entry.target.classList.add("is-paused"));else entry.target.classList.add("is-paused");recordMadalView(entry.target.dataset.slide);}
   else{video.pause();entry.target.classList.remove("is-paused");}
  }),{root:$('allFeed'),threshold:0.65});
  $('allFeed').querySelectorAll('.video-slide').forEach(slide=>feedVideoObserver.observe(slide));
- $('allFeed').querySelectorAll('.video-slide video').forEach(video=>{video.muted=!preference("video_sound",false);video.volume=1;const slide=video.closest('.video-slide');video.addEventListener('click',()=>{if(video.paused){video.play().then(()=>slide?.classList.remove('is-paused')).catch(()=>slide?.classList.add('is-paused'));}else{video.pause();slide?.classList.add('is-paused');}});video.addEventListener('play',()=>{slide?.classList.remove('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="Ⅱ"});video.addEventListener('pause',()=>{slide?.classList.add('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"});if(!preference("autoplay",true)){slide?.classList.add("is-paused");const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"}});
+ $('allFeed').querySelectorAll('.video-slide video').forEach(video=>{video.muted=!preference("video_sound",false);video.volume=1;const slide=video.closest('.video-slide');video.addEventListener('click',()=>{if(video.paused){video.play().then(()=>slide?.classList.remove('is-paused')).catch(()=>slide?.classList.add('is-paused'));}else{video.pause();slide?.classList.add('is-paused');}});video.addEventListener('play',()=>{slide?.classList.remove('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="Ⅱ"});video.addEventListener('pause',()=>{slide?.classList.add('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"});if(!shouldAutoplayVideos()){slide?.classList.add("is-paused");const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"}});
 }
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
 let activeDiscoverTab='all',discoverTimer=null,discoverSearchToken=0;
@@ -857,7 +859,8 @@ $('settingsEditProfile').addEventListener('click',()=>{showPage("profile");$('pr
 $('settingsLogout').addEventListener('click',()=>$('logout').click());
 function syncSettings(){$('dataSaverSetting').checked=preference("data_saver",false);$('appAlertsSetting').checked=preference("app_alerts",true);$('autoplaySetting').checked=preference("autoplay",true);$('videoSoundSetting').checked=preference("video_sound",false);$('settingsVersion').textContent=MADAL_VERSION}
 $('dataSaverSetting').addEventListener('change',e=>{savePreference("data_saver",e.target.checked);document.querySelectorAll(".media,.slide-media").forEach(v=>v.preload=e.target.checked?"none":"metadata");notice(e.target.checked?"Keydinta xogta internetka waa la daaray.":"Keydinta xogta internetka waa la damiyey.")});
-$('autoplaySetting').addEventListener('change',e=>{savePreference("autoplay",e.target.checked);if(e.target.checked){const active=[...document.querySelectorAll(".video-slide")].find(slide=>{const r=slide.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4});const video=active?.querySelector("video");if(video)video.play().catch(()=>active.classList.add("is-paused"));}else document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")});notice(e.target.checked?"Ciyaar toos ah waa la daaray.":"Ciyaar toos ah waa la damiyey.")});
+$('autoplaySetting').addEventListener('change',e=>{savePreference("autoplay",e.target.checked);if(shouldAutoplayVideos()){const active=[...document.querySelectorAll(".video-slide")].find(slide=>{const r=slide.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4});const video=active?.querySelector("video");if(video)video.play().catch(()=>active.classList.add("is-paused"));}else document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")});notice(e.target.checked?"Ciyaar toos ah waa la daaray.":"Ciyaar toos ah waa la damiyey.")});
+reducedMotionQuery.addEventListener?.('change',()=>{if(reducedMotionQuery.matches)document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")})});
 $('videoSoundSetting').addEventListener('change',e=>{savePreference("video_sound",e.target.checked);document.querySelectorAll(".video-slide video").forEach(video=>video.muted=!e.target.checked);notice(e.target.checked?"Codka fiidiyowyada waa la daaray.":"Codka fiidiyowyada waa la damiyey.")});
 $('appAlertsSetting').addEventListener('change',e=>{savePreference("app_alerts",e.target.checked);if(e.target.checked)notice("Ogeysiisyada gudaha GoGol waa la daaray.");});
 $('editAvatarFile').addEventListener('change',()=>{const file=$('editAvatarFile').files[0];if(!file)return;if(!file.type.startsWith('image/')){notice('Fadlan dooro sawir sax ah.');$('editAvatarFile').value='';return}if(file.size>5*1024*1024){notice('Sawirku ha ka weynaan 5 MB.');$('editAvatarFile').value='';return}const preview=URL.createObjectURL(file);$('avatarPreview').src=preview;$('editAvatarUrl').value=''});
