@@ -1,7 +1,7 @@
 {
-  "version": "1.10.10",
+  "version": "1.10.11",
   "name": "GoGol",
-  "message": "GoGol 1.10.10 — raadinta ammaan badan iyo ilaalinta natiijooyinka fariimaha.",
+  "message": "GoGol 1.10.11 — fariimaha iyo inbox-ka oo leh ilaalin codsiyada is-dulsaaran.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
