@@ -226,6 +226,11 @@ html,body,main,.page,#home,#profile,#discover,#upload,#messages,#notifications,#
 .inbox-star{border:0;background:transparent;color:#888;font-size:20px;padding:5px}
 .inbox-star.is-starred{color:#ffd34f}
 .inbox-empty{padding:20px 8px;text-align:center;color:#999}
+/* GoGol 1.10.0 — native language settings */
+.language-card select{min-width:145px;max-width:52%;background:#171717;color:#fff;border:1px solid #444;border-radius:12px;padding:11px;font:inherit}
+.language-card .settings-row{align-items:center}
+html[dir="rtl"] body{text-align:initial}
+html[dir="rtl"] .bottom{direction:rtl}
 </style>
 </head>
 <body>
@@ -277,7 +282,7 @@ html,body,main,.page,#home,#profile,#discover,#upload,#messages,#notifications,#
 <div class="profile-tabs"><button type="button" class="active" data-profile-tab="videos">▦ Videos</button><button type="button" data-profile-tab="reposts">↗ Reposts</button><button type="button" data-profile-tab="liked">♥ Liked</button><button type="button" data-profile-tab="favorites">★ Favorites</button><button type="button" data-profile-tab="private">🔒 Private</button></div>
 <div id="myVideos" class="profile-grid"><div class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div></div>
 </section>
-<section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax GoGol qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha GoGol</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ku saabsan MADAL</h3><p class="muted">Nooca GoGol: <strong id="settingsVersion">1.8.6</strong></p><p class="muted">GoGol — madasha fiidiyowyada Soomaaliyeed.</p></div></section>
+<section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card language-card"><h3>🌐 Language / Luqadda</h3><p class="muted" id="languageHelp">Choose the language used across GoGol. You can change it anytime.</p><label class="settings-row" for="languageSetting"><span><strong id="languageLabel">App language</strong><small id="languageCurrent">Somali</small></span><select id="languageSetting" aria-label="Choose app language"><option value="so">Soomaali</option><option value="en">English</option><option value="ar">العربية</option><option value="om">Afaan Oromoo</option><option value="sw">Kiswahili</option><option value="fr">Français</option></select></label></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax GoGol qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha GoGol</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ku saabsan MADAL</h3><p class="muted">Nooca GoGol: <strong id="settingsVersion">1.8.6</strong></p><p class="muted">GoGol — madasha fiidiyowyada Soomaaliyeed.</p></div></section>
 <section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
 <section id="messages" class="page hidden">
 <div class="inbox-heading"><h2>Inbox</h2><button type="button" id="inboxSearchFocus" aria-label="Search messages">⌕</button><button type="button" id="inboxMenu" aria-label="More options">•••</button></div>
@@ -305,7 +310,58 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.9";
+const MADAL_VERSION="1.10.0";
+
+/* GoGol language preferences and live interface translation */
+const GOGOL_LANGUAGES={
+ so:{name:'Soomaali',dir:'ltr',t:{}},
+ en:{name:'English',dir:'ltr',t:{
+ 'Dejinta':'Settings','Dib u noqo':'Back','Akoonka':'Account','Wax ka beddel profile-ka':'Edit profile','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Your name, username, bio and profile photo.','Fur':'Open','Ka bax akoonka':'Log out','Ka bax GoGol qalabkan.':'Log out of GoGol on this device.','Ka bax':'Log out','Fiidiyowga iyo codka':'Video and audio','Si toos ah u ciyaar':'Autoplay','Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.':'Play videos automatically when they appear on screen.','Codka fiidiyowyada':'Video sound','Codka ha furnaado marka fiidiyow la ciyaarayo.':'Keep video sound on during playback.','Keydi xogta internetka':'Data saver','Yaree rarista fiidiyowyada marka ay suurtagal tahay.':'Reduce video data usage when possible.','Ogeysiisyada':'Notifications','Ogeysiisyada gudaha GoGol':'GoGol notifications','Daar ama dami fariimaha ogeysiiska ee app-ka.':'Turn in-app notifications on or off.','Ku saabsan MADAL':'About GoGol','Language / Luqadda':'Language','Choose the language used across GoGol. You can change it anytime.':'Choose the language used across GoGol. You can change it anytime.','App language':'App language','Home':'Home','Friends':'Friends','Inbox':'Inbox','Profile':'Profile','Search':'Search','Create':'Create','Activity':'Activity','Main':'Main','Requests':'Requests','Unread':'Unread','Starred':'Starred','Sign up':'Sign up','Log in':'Log in','Your conversations will appear here.':'Your conversations will appear here.','Find people by username':'Find people by username','Raadi':'Search','Close':'Close','Send':'Send','Write a message...':'Write a message...'
+ }},
+ ar:{name:'العربية',dir:'rtl',t:{
+ 'Dejinta':'الإعدادات','Dib u noqo':'رجوع','Akoonka':'الحساب','Wax ka beddel profile-ka':'تعديل الملف الشخصي','Magaca, username-ka, isbarashada iyo sawirkaaga.':'اسمك واسم المستخدم والنبذة والصورة الشخصية.','Fur':'فتح','Ka bax akoonka':'تسجيل الخروج','Ka bax GoGol qalabkan.':'تسجيل الخروج من هذا الجهاز.','Ka bax':'تسجيل الخروج','Fiidiyowga iyo codka':'الفيديو والصوت','Si toos ah u ciyaar':'التشغيل التلقائي','Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.':'تشغيل الفيديو تلقائياً عند ظهوره على الشاشة.','Codka fiidiyowyada':'صوت الفيديو','Codka ha furnaado marka fiidiyow la ciyaarayo.':'إبقاء صوت الفيديو قيد التشغيل.','Keydi xogta internetka':'توفير البيانات','Yaree rarista fiidiyowyada marka ay suurtagal tahay.':'تقليل استهلاك بيانات الفيديو قدر الإمكان.','Ogeysiisyada':'الإشعارات','Ogeysiisyada gudaha GoGol':'إشعارات GoGol','Daar ama dami fariimaha ogeysiiska ee app-ka.':'تشغيل إشعارات التطبيق أو إيقافها.','Ku saabsan MADAL':'حول GoGol','Language / Luqadda':'اللغة','Choose the language used across GoGol. You can change it anytime.':'اختر اللغة المستخدمة في GoGol. يمكنك تغييرها في أي وقت.','App language':'لغة التطبيق','Home':'الرئيسية','Friends':'الأصدقاء','Inbox':'الرسائل','Profile':'الملف الشخصي','Search':'بحث','Create':'إنشاء','Activity':'النشاط','Main':'الرئيسية','Requests':'الطلبات','Unread':'غير مقروء','Starred':'المميزة','Close':'إغلاق','Send':'إرسال','Write a message...':'اكتب رسالة...'
+ }},
+ om:{name:'Afaan Oromoo',dir:'ltr',t:{
+ 'Dejinta':'Qindaa’ina','Dib u noqo':'Duubatti','Akoonka':'Herrega','Wax ka beddel profile-ka':'Piroofaayilii gulaali','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Maqaa, maqaa fayyadamaa, ibsa fi suuraa kee.','Fur':'Bani','Ka bax akoonka':'Herrega keessaa ba’i','Ka bax GoGol qalabkan.':'Meesha kana irraa GoGol keessaa ba’i.','Ka bax':'Ba’i','Fiidiyowga iyo codka':'Viidiyoo fi sagalee','Si toos ah u ciyaar':'Ofumaan taphachiisi','Codka fiidiyowyada':'Sagalee viidiyoo','Keydi xogta internetka':'Daataa qusadhu','Ogeysiisyada':'Beeksisa','Ku saabsan MADAL':'Waa’ee GoGol','Language / Luqadda':'Afaan','App language':'Afaan appii','Home':'Mana','Friends':'Hiriyoota','Inbox':'Ergaa','Profile':'Piroofaayilii','Search':'Barbaadi','Create':'Uumi','Activity':'Sochii','Main':'Ijoo','Requests':'Gaaffii','Unread':'Hin dubbifamne','Starred':'Urjii'
+ }},
+ sw:{name:'Kiswahili',dir:'ltr',t:{
+ 'Dejinta':'Mipangilio','Dib u noqo':'Rudi nyuma','Akoonka':'Akaunti','Wax ka beddel profile-ka':'Hariri wasifu','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Jina lako, jina la mtumiaji, wasifu na picha.','Fur':'Fungua','Ka bax akoonka':'Ondoka kwenye akaunti','Ka bax GoGol qalabkan.':'Ondoka kwenye GoGol kwenye kifaa hiki.','Ka bax':'Ondoka','Fiidiyowga iyo codka':'Video na sauti','Si toos ah u ciyaar':'Cheza kiotomatiki','Codka fiidiyowyada':'Sauti ya video','Keydi xogta internetka':'Hifadhi data','Ogeysiisyada':'Arifa','Ogeysiisyada gudaha GoGol':'Arifa za GoGol','Ku saabsan MADAL':'Kuhusu GoGol','Language / Luqadda':'Lugha','App language':'Lugha ya programu','Home':'Nyumbani','Friends':'Marafiki','Inbox':'Ujumbe','Profile':'Wasifu','Search':'Tafuta','Create':'Unda','Activity':'Shughuli','Main':'Kuu','Requests':'Maombi','Unread':'Haijasomwa','Starred':'Zilizowekwa alama','Close':'Funga','Send':'Tuma'
+ }},
+ fr:{name:'Français',dir:'ltr',t:{
+ 'Dejinta':'Paramètres','Dib u noqo':'Retour','Akoonka':'Compte','Wax ka beddel profile-ka':'Modifier le profil','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Votre nom, identifiant, bio et photo de profil.','Fur':'Ouvrir','Ka bax akoonka':'Se déconnecter','Ka bax GoGol qalabkan.':'Se déconnecter de GoGol sur cet appareil.','Ka bax':'Déconnexion','Fiidiyowga iyo codka':'Vidéo et audio','Si toos ah u ciyaar':'Lecture automatique','Codka fiidiyowyada':'Son des vidéos','Keydi xogta internetka':'Économiseur de données','Ogeysiisyada':'Notifications','Ogeysiisyada gudaha GoGol':'Notifications GoGol','Ku saabsan MADAL':'À propos de GoGol','Language / Luqadda':'Langue','App language':'Langue de l’application','Home':'Accueil','Friends':'Amis','Inbox':'Messages','Profile':'Profil','Search':'Rechercher','Create':'Créer','Activity':'Activité','Main':'Principal','Requests':'Demandes','Unread':'Non lus','Starred':'Favoris','Close':'Fermer','Send':'Envoyer'
+ }}
+};
+let gogolLanguage='so';
+try{const saved=localStorage.getItem('gogol_language');if(GOGOL_LANGUAGES[saved])gogolLanguage=saved}catch(_){}
+function translateGoGolText(root=document.body){
+ const dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};
+ if(!Object.keys(dict).length)return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ for(const node of nodes){const raw=node.nodeValue,trim=raw.trim();if(dict[trim])node.nodeValue=raw.replace(trim,dict[trim])}
+ root.querySelectorAll?.('[placeholder]').forEach(el=>{if(!el.dataset.gogolOriginalPlaceholder)el.dataset.gogolOriginalPlaceholder=el.placeholder;const original=el.dataset.gogolOriginalPlaceholder;if(dict[original])el.placeholder=dict[original]});
+}
+function applyGoGolLanguage(){
+ const lang=GOGOL_LANGUAGES[gogolLanguage]||GOGOL_LANGUAGES.so;
+ document.documentElement.lang=gogolLanguage;
+ document.documentElement.dir=lang.dir;
+ const picker=$('languageSetting');if(picker)picker.value=gogolLanguage;
+ const label=$('languageCurrent');if(label)label.textContent=lang.name;
+ translateGoGolText();
+}
+const languagePicker=$('languageSetting');
+if(languagePicker)languagePicker.addEventListener('change',()=>{
+ const next=languagePicker.value;if(!GOGOL_LANGUAGES[next])return;
+ gogolLanguage=next;
+ try{localStorage.setItem('gogol_language',next)}catch(_){}
+ applyGoGolLanguage();
+ const msg={so:'Luqadda GoGol waa la beddelay.',en:'GoGol language updated.',ar:'تم تغيير لغة GoGol.',om:'Afaan GoGol jijjiirameera.',sw:'Lugha ya GoGol imebadilishwa.',fr:'La langue de GoGol a été modifiée.'};
+ if(typeof notice==='function'){const old=preference('app_alerts',true);if(old){$('notice').textContent=msg[next];$('notice').classList.remove('hidden')}}
+});
+applyGoGolLanguage();
+const languageObserver=new MutationObserver(records=>{for(const record of records){for(const node of record.addedNodes){if(node.nodeType===Node.TEXT_NODE){const dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};const trim=node.nodeValue.trim();if(dict[trim])node.nodeValue=node.nodeValue.replace(trim,dict[trim])}else if(node.nodeType===Node.ELEMENT_NODE)translateGoGolText(node)}}});
+languageObserver.observe(document.body,{childList:true,subtree:true});
+
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
