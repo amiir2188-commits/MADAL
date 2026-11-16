@@ -50,6 +50,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .upload-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
 .upload-preview{width:100%;max-height:360px;object-fit:contain;border-radius:12px;background:#050308;margin:10px 0}
 .upload-file-input{display:none!important}
+.photo-editor{margin:8px 0 14px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#100a19}.photo-filters{display:flex;gap:7px;overflow-x:auto;padding:8px 0 3px}.photo-filters button{flex:none;border:1px solid var(--line);border-radius:20px;padding:8px 12px;background:#241832;color:#fff;font-size:12px;font-weight:750}.photo-filters button.active{background:linear-gradient(110deg,#8751c9,#bd5ea8);border-color:transparent}.camera-studio{position:fixed;inset:0;z-index:1500;background:#07040c;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 14px calc(14px + env(safe-area-inset-bottom));gap:12px}.camera-studio.hidden{display:none!important}.camera-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;overflow:hidden;border-radius:20px;background:#120b1c}.camera-stage video{width:100%;height:100%;object-fit:cover;transform:scaleX(1);filter:var(--camera-filter,none)}.camera-stage .camera-hint{position:absolute;left:12px;right:12px;bottom:12px;text-align:center;color:#fff;text-shadow:0 1px 5px #000;font-size:12px;pointer-events:none}.camera-toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center}.camera-toolbar button,.camera-capture{border:1px solid #ffffff35;border-radius:14px;background:#241832;color:#fff;padding:11px 13px;font-weight:750}.camera-capture{width:76px;height:76px;border-radius:50%;border:5px solid #ffffffdd;background:linear-gradient(135deg,#b47aff,#f18bd4);color:#180d25;font-size:12px;font-weight:950}.camera-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 0}.camera-filters button{flex:none;border:1px solid #ffffff40;border-radius:18px;background:#ffffff18;color:#fff;padding:7px 11px;font-size:12px}.camera-filters button.active{background:#bd83ff;color:#180d25;border-color:#bd83ff}.camera-flash-overlay{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:1600;transition:opacity .12s}.camera-flash-overlay.flash{opacity:1}.camera-top-note{color:#cdb8e0;text-align:center;font-size:12px}
 input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e0915;color:white;margin:6px 0 12px;font:inherit}textarea{min-height:90px;resize:vertical}label{font-size:13px;color:var(--muted)}
 .bottom{position:fixed;z-index:8;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:0;background:#100a19f5;border-top:1px solid var(--line);padding:7px 2px calc(7px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
 .bottom button{flex:1;min-width:0;border:0;background:none;color:var(--muted);font-size:10px;line-height:1.3;padding:4px 1px;white-space:nowrap}.bottom button span{display:block;font-size:20px;line-height:1.25;margin-bottom:2px}.bottom button.active{color:var(--purple)}
@@ -111,6 +112,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
   <button id="welcomeStart" class="welcome-start" type="button">Bilow MADAL</button>
  </div>
 </div>
+<div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera MADAL"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">MADAL CAMERA</span><button type="button" id="switchCamera">🔄 Rog</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Portrait</button><button type="button" data-camera-filter="warm">Warm</button><button type="button" data-camera-filter="cool">Cool</button><button type="button" data-camera-filter="mono">Mono</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Gallery</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
 <header><div class="brand">MADAL</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
@@ -120,12 +122,13 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <h2 class="section-title">➕ Soo geli MADAL</h2>
 <div class="feed-card"><p class="muted">Dooro waxa aad rabto inaad bulshada la wadaagto.</p>
 <div class="upload-choice"><button type="button" class="active" data-upload-kind="video">🎬 Fiidiyow</button><button type="button" data-upload-kind="image">🖼️ Sawir</button></div>
-<div class="upload-methods"><button type="button" id="cameraPick">📷 Camera</button><button type="button" id="galleryPick">🖼️ Gallery</button></div>
+<div class="upload-methods"><button type="button" id="cameraPick">📷 Fur Camera MADAL</button><button type="button" id="galleryPick">🖼️ Ka dooro Gallery</button></div>
 <form id="uploadForm">
 <input id="mediaFile" class="upload-file-input" type="file" accept="video/*" capture="environment">
 <input id="galleryFile" class="upload-file-input" type="file" accept="video/*">
 <img id="uploadImagePreview" class="upload-preview hidden" alt="Hordhaca sawirka">
 <video id="uploadVideoPreview" class="upload-preview hidden" controls playsinline></video>
+<div id="photoEditor" class="photo-editor hidden"><strong>✨ Qurxi sawirkaaga</strong><p class="muted small">Dooro filter; isbeddelka waxaa lagu kaydinayaa sawirka aad soo gelinayso.</p><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Vivid</button><button type="button" data-photo-filter="portrait">Portrait</button><button type="button" data-photo-filter="warm">Warm</button><button type="button" data-photo-filter="cool">Cool</button><button type="button" data-photo-filter="mono">Madow/Caddaan</button><button type="button" data-photo-filter="soft">Soft</button></div></div>
 <p id="selectedMediaName" class="muted small">Weli waxba lama dooran.</p>
 <label for="title">Cinwaanka</label><input id="title" maxlength="120" placeholder="Cinwaanka ama qoraalka" required>
 <label for="description">Faahfaahin</label><textarea id="description" maxlength="1000" placeholder="Wax yar nooga sheeg..."></textarea>
@@ -169,7 +172,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), favoritePostIds=new Set(), authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.8.6";
+const MADAL_VERSION="1.9.0";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -548,42 +551,128 @@ async function refreshProfile(){
  }
 }
 $('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday MADAL.')}});
-let uploadKind='video';
+let uploadKind='video',capturedUploadFile=null,activePhotoFilter='none';
+const PHOTO_FILTERS={none:'none',vivid:'contrast(1.18) saturate(1.28) brightness(1.04)',portrait:'contrast(1.06) saturate(1.12) brightness(1.08)',warm:'sepia(.18) saturate(1.2) contrast(1.04)',cool:'saturate(1.08) hue-rotate(9deg) brightness(1.04)',mono:'grayscale(1) contrast(1.12)',soft:'brightness(1.08) saturate(.88) contrast(.94)'};
+let cameraStream=null,cameraFacing='environment',cameraRecorder=null,cameraChunks=[],cameraTorchOn=false,screenFlashOn=false;
+function setPhotoFilter(name){
+ activePhotoFilter=PHOTO_FILTERS[name]?name:'none';
+ document.querySelectorAll('[data-photo-filter]').forEach(b=>b.classList.toggle('active',b.dataset.photoFilter===activePhotoFilter));
+ $('uploadImagePreview').style.filter=PHOTO_FILTERS[activePhotoFilter];
+}
+document.querySelectorAll('[data-photo-filter]').forEach(b=>b.addEventListener('click',()=>setPhotoFilter(b.dataset.photoFilter)));
 function setUploadKind(kind){
- uploadKind=kind;
+ uploadKind=kind;capturedUploadFile=null;
  document.querySelectorAll('[data-upload-kind]').forEach(b=>b.classList.toggle('active',b.dataset.uploadKind===kind));
  const accept=kind==='image'?'image/*':'video/*';
  $('mediaFile').accept=accept;$('galleryFile').accept=accept;
- $('uploadLimit').textContent=kind==='image'?'Sawir: ugu badnaan 15 MB.':'Fiidiyow: ugu badnaan 250 MB.';
- $('uploadImagePreview').classList.add('hidden');$('uploadVideoPreview').classList.add('hidden');
+ $('mediaFile').capture='environment';
+ $('uploadLimit').textContent=kind==='image'?'Sawir: ugu badnaan 15 MB. Filters-ka waxaa lagu kaydinayaa sawirka.':'Fiidiyow: ugu badnaan 250 MB.';
+ $('uploadImagePreview').classList.add('hidden');$('uploadVideoPreview').classList.add('hidden');$('photoEditor').classList.add('hidden');
  $('mediaFile').value='';$('galleryFile').value='';$('selectedMediaName').textContent='Weli waxba lama dooran.';
+ setPhotoFilter('none');
 }
 document.querySelectorAll('[data-upload-kind]').forEach(b=>b.addEventListener('click',()=>setUploadKind(b.dataset.uploadKind)));
-$('cameraPick').addEventListener('click',()=>{$('galleryFile').value='';$('mediaFile').click()});
+$('cameraPick').addEventListener('click',()=>{ $('galleryFile').value=''; openCameraStudio(); });
 $('galleryPick').addEventListener('click',()=>{$('mediaFile').value='';$('galleryFile').click()});
-function selectedUploadFile(){return $('mediaFile').files[0]||$('galleryFile').files[0]||null}
+$('cameraGallery').addEventListener('click',()=>{$('closeCamera').click();$('galleryFile').value='';$('galleryFile').click()});
+function selectedUploadFile(){return capturedUploadFile||$('mediaFile').files[0]||$('galleryFile').files[0]||null}
 function previewUploadFile(file){
  if(!file)return;
  const isImage=file.type.startsWith('image/');
  if(uploadKind==='image'&&!isImage){notice('Fadlan dooro sawir.');return}
  if(uploadKind==='video'&&!file.type.startsWith('video/')){notice('Fadlan dooro fiidiyow.');return}
+ capturedUploadFile=file;
  $('selectedMediaName').textContent=file.name;
  const url=URL.createObjectURL(file);
  $('uploadImagePreview').classList.toggle('hidden',!isImage);
  $('uploadVideoPreview').classList.toggle('hidden',isImage);
- if(isImage)$('uploadImagePreview').src=url;else $('uploadVideoPreview').src=url;
+ $('photoEditor').classList.toggle('hidden',!isImage);
+ if(isImage){$('uploadImagePreview').src=url;$('uploadImagePreview').style.filter=PHOTO_FILTERS[activePhotoFilter]}
+ else $('uploadVideoPreview').src=url;
 }
 $('mediaFile').addEventListener('change',()=>previewUploadFile($('mediaFile').files[0]));
 $('galleryFile').addEventListener('change',()=>previewUploadFile($('galleryFile').files[0]));
+function stopCameraTracks(){if(cameraStream){cameraStream.getTracks().forEach(track=>track.stop());cameraStream=null}cameraTorchOn=false}
+async function openCameraStudio(){
+ if(!navigator.mediaDevices?.getUserMedia){notice('Camera gudaha app-kan lama heli karo; dooro Gallery ama isticmaal camera-ga telefoonka.');$('mediaFile').click();return}
+ try{
+  stopCameraTracks();
+  const video={facingMode:{ideal:cameraFacing},width:{ideal:1920},height:{ideal:1080}};
+  try{cameraStream=await navigator.mediaDevices.getUserMedia({video,audio:uploadKind==='video'})}
+  catch(_){cameraStream=await navigator.mediaDevices.getUserMedia({video,audio:false})}
+  $('cameraPreview').srcObject=cameraStream;
+  $('cameraPreview').style.transform=cameraFacing==='user'?'scaleX(-1)':'scaleX(1)';
+  $('cameraStudio').classList.remove('hidden');
+  $('captureMediaButton').textContent=uploadKind==='image'?'SAWIR':'DUUB';
+  $('cameraHint').textContent=uploadKind==='image'?'Sawirkaaga qaado, kadib filter dooro.':'Bilow duubista fiidiyowgaaga.';
+  $('cameraNote').textContent='Tayada ugu fiican ee camera-ga telefoonka ayaa la adeegsanayaa.';
+  $('torchToggle').textContent='⚡ Iftiin';
+  await $('cameraPreview').play().catch(()=>{});
+ }catch(error){stopCameraTracks();notice('Camera lama furin: oggolow camera permission-ka telefoonka.');$('mediaFile').click()}
+}
+function closeCameraStudio(){if(cameraRecorder?.state==='recording')cameraRecorder.stop();stopCameraTracks();$('cameraStudio').classList.add('hidden')}
+$('closeCamera').addEventListener('click',closeCameraStudio);
+$('switchCamera').addEventListener('click',async()=>{cameraFacing=cameraFacing==='environment'?'user':'environment';await openCameraStudio()});
+$('torchToggle').addEventListener('click',async()=>{
+ const track=cameraStream?.getVideoTracks()[0];let supported=false;
+ try{const caps=track?.getCapabilities?.();supported=!!caps?.torch;if(supported){cameraTorchOn=!cameraTorchOn;await track.applyConstraints({advanced:[{torch:cameraTorchOn}]});$('torchToggle').textContent=cameraTorchOn?'⚡ Iftiin ON':'⚡ Iftiin OFF';return}}catch(error){console.warn('MADAL torch:',error)}
+ screenFlashOn=!screenFlashOn;$('cameraPreview').style.filter=screenFlashOn?'brightness(1.55)':'none';
+ $('torchToggle').textContent=screenFlashOn?'☀️ Iftiin ON':'⚡ Iftiin';
+ $('cameraNote').textContent='Flash-ka dambe telefoonkaagu ma taageerin; iftiinka shaashadda ayaa la isticmaalayaa.';
+});
+document.querySelectorAll('[data-camera-filter]').forEach(b=>b.addEventListener('click',()=>{
+ const filter=b.dataset.cameraFilter;document.querySelectorAll('[data-camera-filter]').forEach(x=>x.classList.toggle('active',x===b));
+ $('cameraPreview').style.setProperty('--camera-filter',PHOTO_FILTERS[filter]||'none');
+}));
+function flashScreen(){const layer=$('cameraFlashOverlay');layer.classList.add('flash');setTimeout(()=>layer.classList.remove('flash'),170)}
+$('captureMediaButton').addEventListener('click',async()=>{
+ if(!cameraStream)return;
+ if(uploadKind==='image'){
+  flashScreen();
+  const video=$('cameraPreview'),canvas=document.createElement('canvas');
+  canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;
+  const ctx=canvas.getContext('2d');ctx.filter=PHOTO_FILTERS[activeCameraFilter()]||'none';
+  if(cameraFacing==='user'){ctx.translate(canvas.width,0);ctx.scale(-1,1)}
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  canvas.toBlob(blob=>{if(!blob){notice('Sawirka lama diyaarin. Isku day mar kale.');return}
+   capturedUploadFile=new File([blob],'madal-camera-'+Date.now()+'.jpg',{type:'image/jpeg',lastModified:Date.now()});
+   closeCameraStudio();previewUploadFile(capturedUploadFile);notice('Sawirka waa la qaaday. Hadda dooro filter ama soo geli.');
+  },'image/jpeg',.94);
+  return;
+ }
+ if(cameraRecorder?.state==='recording'){cameraRecorder.stop();$('captureMediaButton').textContent='DUUB';return}
+ try{
+  cameraChunks=[];
+  const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(t=>window.MediaRecorder?.isTypeSupported?.(t));
+  cameraRecorder=new MediaRecorder(cameraStream,mime?{mimeType:mime}:undefined);
+  cameraRecorder.ondataavailable=e=>{if(e.data?.size)cameraChunks.push(e.data)};
+  cameraRecorder.onstop=()=>{const type=cameraRecorder.mimeType||'video/webm',blob=new Blob(cameraChunks,{type});capturedUploadFile=new File([blob],'madal-camera-'+Date.now()+'.webm',{type,lastModified:Date.now()});closeCameraStudio();previewUploadFile(capturedUploadFile);notice('Fiidiyowga waa la duubay. Ku dar cinwaan kadibna soo geli.')};
+  cameraRecorder.start();$('captureMediaButton').textContent='JOOJI';$('cameraHint').textContent='🔴 Waa la duubayaa... taabo JOOJI markaad dhamayso.';
+ }catch(error){notice('Duubista video-ga lama bilaabi karin: '+error.message)}
+});
+function activeCameraFilter(){return document.querySelector('[data-camera-filter].active')?.dataset.cameraFilter||'none'}
+async function applyPhotoFilter(file){
+ if(uploadKind!=='image'||activePhotoFilter==='none')return file;
+ const image=new Image(),url=URL.createObjectURL(file);
+ try{
+  await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url});
+  const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
+  const ctx=canvas.getContext('2d');ctx.filter=PHOTO_FILTERS[activePhotoFilter];ctx.drawImage(image,0,0);
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.94));
+  if(!blob)throw new Error('Filter-ka sawirka lama samayn karin.');
+  return new File([blob],(file.name.replace(/\.[^.]+$/,'')||'madal-photo')+'-MADAL.jpg',{type:'image/jpeg',lastModified:Date.now()});
+ }finally{URL.revokeObjectURL(url)}
+}
 $('uploadForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!currentUser){notice('Marka hore fadlan MADAL ku soo gal.');location.href='./account.html';return}
- const file=selectedUploadFile();if(!file){notice('Marka hore Camera ama Gallery ka dooro fayl.');return}
+ let file=selectedUploadFile();if(!file){notice('Marka hore Camera ama Gallery ka dooro fayl.');return}
  const valid=uploadKind==='image'?file.type.startsWith('image/'):file.type.startsWith('video/');
  if(!valid){notice(uploadKind==='image'?'Fadlan dooro sawir sax ah.':'Fadlan dooro fiidiyow sax ah.');return}
  const maxSize=uploadKind==='image'?15*1024*1024:250*1024*1024;
  if(file.size>maxSize){notice(uploadKind==='image'?'Sawirku ha ka weynaan 15 MB.':'Fiidiyowgu wuu ka weyn yahay 250 MB.');return}
  const button=$('uploadButton');button.disabled=true;button.textContent='Waa la soo gelinayaa...';
  try{
+  if(uploadKind==='image')file=await applyPhotoFilter(file);
   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
   const path=currentUser.id+'/'+Date.now()+'-'+safeName;
   const {error:uploadError}=await db.storage.from('madal-media').upload(path,file,{contentType:file.type,upsert:false});
@@ -591,7 +680,7 @@ $('uploadForm').addEventListener('submit',async e=>{
   const record={user_id:currentUser.id,title:$('title').value.trim(),description:$('description').value.trim(),media_type:uploadKind,mime_type:file.type,storage_path:path,status:'published'};
   const {error:insertError}=await db.from('media_posts').insert(record);
   if(insertError){await db.storage.from('madal-media').remove([path]);throw insertError}
-  $('uploadForm').reset();setUploadKind('video');$('selectedMediaName').textContent='Weli waxba lama dooran.';notice('Waa lagu guulaystay soo gelinta!');await loadMedia();showPage('home');
+  $('uploadForm').reset();setUploadKind('video');capturedUploadFile=null;$('selectedMediaName').textContent='Weli waxba lama dooran.';notice('Waa lagu guulaystay soo gelinta!');await loadMedia();showPage('home');
  }catch(err){console.error(err);notice('Soo gelintu way fashilantay: '+err.message)}
  finally{button.disabled=false;button.textContent='Soo geli MADAL'}
 });
