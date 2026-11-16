@@ -1,17 +1,32 @@
-MADAL BACKEND STARTER — SUPABASE
+GOGOL — HAGAAHA BACKEND-KA SUPABASE
 
-1. Fur https://supabase.com oo samee account iyo project cusub oo MADAL ah.
-2. Fur SQL Editor > New query.
-3. Copy garee dhammaan supabase_schema.sql, ku dheji, kadib Run.
-4. Fur Project Settings > API. Nuqul ka samee Project URL iyo anon/public key. HA isticmaalin service_role/secret key.
-5. Fur index.html, raadi PASTE_SUPABASE_PROJECT_URL_HERE iyo PASTE_SUPABASE_ANON_KEY_HERE, kuna beddel labada xogood.
-6. Ku beddel index.html-ka GitHub repo-ga MADAL, kuna dar manifest.webmanifest, sw.js, iyo icons/ (root-ka repo-ga).
-7. Sug GitHub Pages inuu publish gareeyo. Chrome ka fur website-ka, isdiiwaangeli, kadib tijaabi upload.
+GoGol wuxuu adeegsadaa Supabase Authentication iyo database-ka si uu u maareeyo akoonnada iyo xogta app-ka.
 
-Nooca koowaad:
-- Account, login, qiso/podcast upload, playback iyo download oggolaansho ku xiran.
-- Ugu badnaan 250 MB faylkiiba.
-- PWA; wali ma aha APK native.
-- Comments, shared likes, 9:16 clip editor, admin/moderation iyo reports wali ma jiraan.
-- Video badan/waaweyn waxay u baahan karaan kharash kaydin/hosting.
-- Qofku waa inuu xaq u leeyahay muuqaalka uu soo gelinayo.
+1. Fur mashruuca Supabase ee GoGol.
+2. Hubi Project URL iyo publishable/anon key-ga. Client-ka app-ka waxaa loo isticmaali karaa publishable/anon key oo keliya; WALIGAA ha gelin service_role ama secret key gudaha HTML/JavaScript ama APK.
+3. Haddii aad samaynayso database cusub, dib u eeg supabase_schema.sql oo hubi waxa uu abuurayo ka hor fulinta.
+4. Haddii aad isticmaalayso database hore u jiray, ha ku celin schema buuxa si indho la'aan ah. Isbarbar dhig jadwallada iyo policies-ka jira, kadib dib u eeg migrations-ka ku jira supabase/migrations/ oo dabaq kuwa loo baahan yahay, sida:
+   - social v2
+   - message read receipts
+   - media/message compatibility
+   - user safety and moderation
+5. Daar Phone Auth iyo SMS provider haddii aad rabto diiwaangelin/gelitaan telefoon +252.
+6. Tijaabi akoon cusub, login, gelitaanka xogta, upload iyo RLS adigoo adeegsanaya akoonno tijaabo ah.
+
+ADEEGYADA APP-KA EE HADDAN
+- Akoon iyo login email/password; telefoon +252 haddii SMS provider la habeeyo.
+- Soo gelin iyo daawasho fiidiyow.
+- Likes, comments, follows iyo feed tabs.
+- Raadinta profiles iyo fariimo gaar ah.
+- Wadaagis, repost iyo favorites.
+- For You ranking ku salaysan engagement iyo freshness.
+
+BADBAADO IYO XADIDAADO
+- Report/block waxay u baahan yihiin migration-ka user safety/moderation iyo RLS policies-kiisa in lagu rakibo database-ka. In faylka SQL uu repo-ga ku jiro macnaheedu ma aha in production database-ka lagu dabaqay.
+- Stories iyo Live streaming weli ma aha adeegyo dhamaystiran.
+- Ma jiro admin moderation dashboard oo la xaqiijiyey inuu diyaar yahay.
+- APK-ga la qaybiyo waa beta/debug-signed, mana aha Play Store build.
+- Kaydinta iyo bandwidth-ka fiidiyowyada waxay ku xiran yihiin qorshaha iyo dejinta Supabase/storage.
+- Hubi in qofka soo gelinaya uu xaq u leeyahay media-ga.
+
+DIGNIIN: SQL migrations-ka production-ka ha lagu dabaqin ilaa la hubiyo schema-ga hadda jira, la sameeyo backup, lana fahmo saameyntooda. Daabacaadda webka ama APK-gu iskood uma beddelaan database-ka.
