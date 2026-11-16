@@ -30,15 +30,15 @@ jobs:
       - name: Build web update bundle
         run: |
           mkdir -p www
-          cp index.html account.html update.js www/
-          cp manifest.webmanifest version.json sw.js www/
+          cp index.html account.html update.js live.js www/
+          cp manifest.webmanifest version.json sw.js www/\n          node --check live.js
           cp -r icons www/ 2>/dev/null || true
           npm init -y
           npm install @capacitor/core @capawesome/capacitor-live-update
           npm install --save-dev esbuild
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
           cd www && zip -r ../madal-web.zip . && cd ..
-          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json'
+          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json|live.js'
 
       - name: Read MADAL version
         id: version
