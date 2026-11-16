@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.35';
+const MADAL_VERSION='1.10.36';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -922,7 +922,7 @@ async function loadMyProfile(){
     const {data:posts,error:postsError}=await db.from('media_posts').select('*').in('id',ids);
     if(token!==profileLoadToken||currentUser?.id!==userId)return;
     if(postsError){notice('Muuqaalada qaybtaan lama soo rari karin: '+postsError.message);own=ids.map(id=>allPosts.find(p=>String(p.id)===String(id))).filter(Boolean)}
-    else{const byId=new Map((posts||[]).map(post=>[String(post.id),post]));own=ids.map(id=>byId.get(String(id))).filter(Boolean)}
+    else{const byId=new Map((posts||[]).map(post=>[String(post.id),post]));own=ids.map(id=>byId.get(String(id))).filter(Boolean).filter(post=>!post.is_private||String(post.user_id)===userId)}
    }
   }
  }
@@ -1028,7 +1028,7 @@ async function loadActivity(){
   ownIds.length?db.from('media_reposts').select('post_id,user_id,created_at').in('post_id',ownIds).neq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50):Promise.resolve({data:[],error:null}),
   db.from('madal_messages').select('sender_id,body,created_at').eq('recipient_id',currentUser.id).order('created_at',{ascending:false}).limit(30)
  ]);
- if(token!==activityLoadToken||!currentUser)return;
+ if(token!==activityLoadToken||currentUser?.id!==userId)return;
  if(likes.error||followers.error||comments.error||reposts.error||incomingMessages.error){host.textContent='Ogeysiisyada lama soo rari karin. Hubi social_migration.sql iyo madal_social_v2_migration.sql.';return}
  const ids=[...new Set([...(likes.data||[]).map(x=>x.user_id),...(followers.data||[]).map(x=>x.follower_id),...(comments.data||[]).map(x=>x.user_id),...(reposts.data||[]).map(x=>x.user_id),...(incomingMessages.data||[]).map(x=>x.sender_id)])];
  let profiles={};
