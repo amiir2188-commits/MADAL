@@ -1,4 +1,4 @@
-name: Build MADAL Android APK
+name: Build GoGol Android APK
 
 on:
   workflow_dispatch:
@@ -15,11 +15,11 @@ concurrency:
 
 jobs:
   build:
-    name: Build MADAL APK
+    name: Build GoGol APK
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout MADAL
+      - name: Checkout GoGol
         uses: actions/checkout@v7
 
       - name: Setup Node.js
@@ -34,7 +34,7 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Prepare MADAL
+      - name: Prepare GoGol
         run: |
           test -f index.html
           test -f account.html
@@ -51,7 +51,7 @@ jobs:
           npm install @capacitor/core @capacitor/android @capawesome/capacitor-live-update
           npm install --save-dev esbuild
           npm install --save-dev @capacitor/cli @capacitor/assets
-          npx cap init MADAL com.madal.app --web-dir www
+          npx cap init GoGol com.madal.app --web-dir www
           node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
           node <<'NODE'
@@ -72,15 +72,15 @@ jobs:
           }
           fs.writeFileSync(file, manifest);
           NODE
-          MADAL_VERSION="$(node -e "console.log(require('./version.json').version)")"
-          MADAL_VERSION_CODE="$(node -e "const [a,b,c]=require('./version.json').version.split('.').map(Number);console.log(a*1000000+b*1000+c)")"
-          export MADAL_VERSION MADAL_VERSION_CODE
+          GOGOL_VERSION="$(node -e "console.log(require('./version.json').version)")"
+          GOGOL_VERSION_CODE="$(node -e "const [a,b,c]=require('./version.json').version.split('.').map(Number);console.log(a*1000000+b*1000+c)")"
+          export GOGOL_VERSION GOGOL_VERSION_CODE
           node <<'NODE'
           const fs = require('fs');
           const file = 'android/app/build.gradle';
           let gradle = fs.readFileSync(file, 'utf8');
-          gradle = gradle.replace(/versionCode\s+\d+/, 'versionCode ' + process.env.MADAL_VERSION_CODE);
-          gradle = gradle.replace(/versionName\s+["'][^"']+["']/, 'versionName "' + process.env.MADAL_VERSION + '"');
+          gradle = gradle.replace(/versionCode\s+\d+/, 'versionCode ' + process.env.GOGOL_VERSION_CODE);
+          gradle = gradle.replace(/versionName\s+["'][^"']+["']/, 'versionName "' + process.env.GOGOL_VERSION + '"');
           fs.writeFileSync(file, gradle);
           NODE
           npx capacitor-assets generate --android
@@ -98,7 +98,7 @@ jobs:
             for (const block of blocks) new Function(block[1]);
             if (!blocks.length) throw new Error('No inline JavaScript found in ' + file);
           }
-          console.log('MADAL inline JavaScript syntax is valid.');
+          console.log('GoGol inline JavaScript syntax is valid.');
           NODE
 
       - name: Build APK
@@ -123,11 +123,11 @@ jobs:
           VERSION=$(node -e "console.log(require('./version.json').version)")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Publish MADAL release assets
+      - name: Publish GoGol release assets
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          name: MADAL ${{ steps.version.outputs.version }}
+          name: GoGol ${{ steps.version.outputs.version }}
           target_commitish: main
           generate_release_notes: true
           make_latest: true
@@ -136,9 +136,9 @@ jobs:
             android/app/build/outputs/apk/debug/app-debug.apk
             madal-web.zip
 
-      - name: Upload MADAL APK
+      - name: Upload GoGol APK
         uses: actions/upload-artifact@v7
         with:
-          name: MADAL-Android-APK
+          name: GoGol-Android-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
