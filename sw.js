@@ -1,11 +1,11 @@
-const CACHE_NAME = 'madal-app-v1.6.0';
+const CACHE_NAME = 'madal-app-v1.8.2';
 const APP_FILES = ['./','./index.html','./account.html','./manifest.webmanifest','./version.json','./icon-only.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES)).catch(error=>console.warn('MADAL cache install:',error)));
  self.skipWaiting();
 });
 self.addEventListener('activate',event=>{
- event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('madal-shell-')&&key!==CACHE_NAME).map(key=>caches.delete(key)))));
+ event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>(key.startsWith('madal-shell-')||key.startsWith('madal-app-'))&&key!==CACHE_NAME).map(key=>caches.delete(key)))));
  self.clients.claim();
 });
 self.addEventListener('fetch',event=>{
