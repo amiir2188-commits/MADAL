@@ -40,7 +40,8 @@ a{color:#c4a5ff}
 <div id="emailVerify" style="display:none"><p>Koodh xaqiijin oo 6 lambar ah ayaa emailkaaga loo diray.</p><input id="emailCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Geli koodhka 6-da lambar ah ee emailka" aria-label="Koodhka xaqiijinta emailka"><button id="verifyEmail" type="button">Xaqiiji emailka</button></div>
 <div id="phoneVerify" style="display:none"><p>Koodh xaqiijin oo 6 lambar ah ayaa SMS lagugu soo diray.</p><input id="phoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Geli koodhka 6-da lambar ah ee SMS-ka" aria-label="Koodhka xaqiijinta SMS-ka"><button id="verifyPhone" type="button">Xaqiiji telefoonka</button></div>
 <input id="password" type="password" placeholder="Furaha sirta ah (ugu yaraan 8 xaraf)" minlength="8" autocomplete="new-password" required aria-label="Furaha sirta ah">
-<button id="submit" type="submit">Sign up</button>
+<div id="policyConsentWrap" style="margin:12px 0;display:flex;align-items:flex-start;gap:10px;text-align:left"><input id="policyConsent" type="checkbox" required style="width:20px;min-width:20px;margin:3px 0" aria-label="Aqbal shuruudaha iyo siyaasadda asturnaanta"><label for="policyConsent" style="font-size:14px;line-height:1.5">Waxaan aqbalay <a href="./terms.html" target="_blank" rel="noopener">Shuruudaha Isticmaalka</a> iyo <a href="./privacy.html" target="_blank" rel="noopener">Siyaasadda Asturnaanta</a>.</label></div>
+<button id="submit" type="submit">Isdiiwaangeli</button>
 </form>
 <p id="status" role="status" aria-live="polite"></p>
 <p><a href="./index.html">Ku noqo GoGol</a></p>
@@ -59,6 +60,8 @@ function mode(value){
  document.getElementById("status").textContent="";
  document.getElementById("phoneVerify").style.display="none";
  document.getElementById("emailVerify").style.display="none";
+ document.getElementById("policyConsentWrap").style.display=value==="signup"?"flex":"none";
+ document.getElementById("policyConsent").required=value==="signup";
  document.getElementById("name").required=value==="signup";
  document.getElementById("username").required=value==="signup";
  document.getElementById("password").autocomplete=value==="signup"?"new-password":"current-password";
@@ -97,10 +100,10 @@ document.getElementById("verifyPhone").addEventListener("click",async()=>{
  try{
   const {data,error}=await db.auth.verifyOtp({phone,token,type:"sms"});
   if(error)throw error;
-  if(!data.session)throw new Error("Verification is incomplete. Please try again.");
+  if(!data.session)throw new Error("Xaqiijintu ma dhammaan. Fadlan mar kale isku day.");
   status.textContent="Telefoonka waa la xaqiijiyey. GoGol ayaa furmaya...";
   setTimeout(()=>location.replace("./index.html"),800);
- }catch(error){status.textContent="Error: "+(error.message||"The code could not be verified.");}
+ }catch(error){status.textContent="Khalad: "+(error.message||"Koodhka lama xaqiijin karin.");}
  finally{btn.disabled=false;}
 });
 
@@ -114,6 +117,7 @@ document.getElementById("form").addEventListener("submit",async e=>{
   const phone=normalizeSomaliPhone(identity);
   const password=document.getElementById("password").value;
   if(currentMode==="signup"){
+   if(!document.getElementById("policyConsent").checked)throw new Error("Waa inaad aqbashaa shuruudaha isticmaalka iyo siyaasadda asturnaanta.");
    const name=document.getElementById("name").value.trim();
    const username=document.getElementById("username").value.trim().toLowerCase().replace(/^@/,"");
    if(!/^[a-z0-9_]{3,24}$/.test(username))throw new Error("Magaca isticmaaluhu waa inuu ka koobnaadaa 3–24 xaraf, tirooyin ama _.");
