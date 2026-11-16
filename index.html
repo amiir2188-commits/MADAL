@@ -123,12 +123,12 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
   <button id="welcomeStart" class="welcome-start" type="button">Bilow GoGol</button>
  </div>
 </div>
-<div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera MADAL"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">KAMARADDA MADAL</span><button type="button" id="switchCamera">🔄 Beddel kamarad</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Weji Qurux</button><button type="button" data-camera-filter="warm">Diirran</button><button type="button" data-camera-filter="cool">Qabow</button><button type="button" data-camera-filter="mono">Madow/Caddaan</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Daar iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Sawirrada</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
+<div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera GoGol"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">KAMARADDA GoGol</span><button type="button" id="switchCamera">🔄 Beddel kamarad</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Weji Qurux</button><button type="button" data-camera-filter="warm">Diirran</button><button type="button" data-camera-filter="cool">Qabow</button><button type="button" data-camera-filter="mono">Madow/Caddaan</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Daar iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Sawirrada</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
 <section id="home" class="page"><div class="tabs feed-tabs" aria-label="Video feed navigation"><button type="button" class="live-entry" id="liveEntry">▣ LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
-<section id="discover" class="page hidden"><h2 class="section-title">Raadi MADAL</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
+<section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli GoGol</h2>
 <div class="feed-card"><p class="muted">Dooro waxa aad rabto inaad bulshada la wadaagto.</p>
@@ -139,7 +139,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <input id="galleryFile" class="upload-file-input" type="file" accept="video/*">
 <img id="uploadImagePreview" class="upload-preview hidden" alt="Hordhaca sawirka">
 <video id="uploadVideoPreview" class="upload-preview hidden" controls playsinline></video>
-<div id="photoEditor" class="photo-editor hidden"><strong>✨ Istuudiyaha Qurxinta Sawirka</strong><p class="muted small">Taabo shaandheeye ama hagaaji iftiinka, midabka iyo cabbirka. Isbeddellada waxaa lagu kaydinayaa sawirka aad MADAL soo gelinayso.</p><label>Shaandheeyeyaasha</label><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Nadiif</button><button type="button" data-photo-filter="portrait">Weji Qurux</button><button type="button" data-photo-filter="warm">Diirran</button><button type="button" data-photo-filter="cool">Qabow</button><button type="button" data-photo-filter="mono">Madow iyo Caddaan</button><button type="button" data-photo-filter="soft">Jilicsan</button><button type="button" data-photo-filter="night">Habeen</button><button type="button" data-photo-filter="gold">Dahab</button></div><div class="editor-tools"><label for="editBrightness">☀ Iftiin <output id="brightnessValue">100%</output></label><input id="editBrightness" type="range" min="50" max="160" value="100"><label for="editContrast">Kala duwanaanshaha <output id="contrastValue">100%</output></label><input id="editContrast" type="range" min="60" max="160" value="100"><label for="editSaturation">Xoojinta midabka <output id="saturationValue">100%</output></label><input id="editSaturation" type="range" min="0" max="180" value="100"><label for="editWarmth">Diirimaadka <output id="warmthValue">0</output></label><input id="editWarmth" type="range" min="-40" max="40" value="0"><div class="row editor-actions"><button type="button" id="rotatePhoto">↻ Wareeji</button><button type="button" id="resetPhotoEdit">Dib u celi</button><label for="editCrop">Qaabka sawirka</label><select id="editCrop"><option value="original">Asalka</option><option value="square">Labajibbaaran</option><option value="portrait">Dheer (4:5)</option></select></div><label for="photoCaption">Qoraal sawirka saar (ikhtiyaari)</label><input id="photoCaption" maxlength="80" placeholder="Qor eray ama fariin..."></div><p class="muted small">Talo: HD Nadiif wuxuu hagaajiyaa muuqaalka; tayada ugu dambaysa waxay ku xiran tahay sawirka asalka ah.</p></div>
+<div id="photoEditor" class="photo-editor hidden"><strong>✨ Istuudiyaha Qurxinta Sawirka</strong><p class="muted small">Taabo shaandheeye ama hagaaji iftiinka, midabka iyo cabbirka. Isbeddellada waxaa lagu kaydinayaa sawirka aad GoGol soo gelinayso.</p><label>Shaandheeyeyaasha</label><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Nadiif</button><button type="button" data-photo-filter="portrait">Weji Qurux</button><button type="button" data-photo-filter="warm">Diirran</button><button type="button" data-photo-filter="cool">Qabow</button><button type="button" data-photo-filter="mono">Madow iyo Caddaan</button><button type="button" data-photo-filter="soft">Jilicsan</button><button type="button" data-photo-filter="night">Habeen</button><button type="button" data-photo-filter="gold">Dahab</button></div><div class="editor-tools"><label for="editBrightness">☀ Iftiin <output id="brightnessValue">100%</output></label><input id="editBrightness" type="range" min="50" max="160" value="100"><label for="editContrast">Kala duwanaanshaha <output id="contrastValue">100%</output></label><input id="editContrast" type="range" min="60" max="160" value="100"><label for="editSaturation">Xoojinta midabka <output id="saturationValue">100%</output></label><input id="editSaturation" type="range" min="0" max="180" value="100"><label for="editWarmth">Diirimaadka <output id="warmthValue">0</output></label><input id="editWarmth" type="range" min="-40" max="40" value="0"><div class="row editor-actions"><button type="button" id="rotatePhoto">↻ Wareeji</button><button type="button" id="resetPhotoEdit">Dib u celi</button><label for="editCrop">Qaabka sawirka</label><select id="editCrop"><option value="original">Asalka</option><option value="square">Labajibbaaran</option><option value="portrait">Dheer (4:5)</option></select></div><label for="photoCaption">Qoraal sawirka saar (ikhtiyaari)</label><input id="photoCaption" maxlength="80" placeholder="Qor eray ama fariin..."></div><p class="muted small">Talo: HD Nadiif wuxuu hagaajiyaa muuqaalka; tayada ugu dambaysa waxay ku xiran tahay sawirka asalka ah.</p></div>
 <p id="selectedMediaName" class="muted small">Weli waxba lama dooran.</p>
 <label for="title">Cinwaanka qoraalka</label><input id="title" maxlength="120" placeholder="Cinwaanka ama qoraalka" required>
 <label for="description">Faahfaahin dheeraad ah</label><textarea id="description" maxlength="1000" placeholder="Wax yar nooga sheeg..."></textarea>
@@ -147,7 +147,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <button class="primary" id="uploadButton" type="submit">Soo geli GoGol</button>
 </form></div></section>
 <section id="profile" class="page hidden">
-<div class="profile-masthead"><div class="profile-brand"><span class="profile-brand-mark">▶</span><span><strong>MADAL</strong><small>Podcast • Qisooyin • Bulsho</small></span></div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">•••</button></div></div>
+<div class="profile-masthead"><div class="profile-brand"><img class="profile-brand-mark" src="./gogol-logo.svg" alt="GoGol"><span><strong>GoGol</strong><small>Podcast • Qisooyin • Bulsho</small></span></div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">•••</button></div></div>
 <div class="profile-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div>
 <div class="feed-card profile-hero">
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
@@ -184,7 +184,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), favoritePostIds=new Set(), authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.3";
+const MADAL_VERSION="1.9.4";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -215,7 +215,7 @@ function postPath(p){return p.storage_path||p.file_path||p.path||''}
 async function mediaUrl(p){
  const path=postPath(p);if(!path)return p.media_url||p.url||'';
  const {data,error}=await db.storage.from('madal-media').createSignedUrl(path,3600);
- if(error){console.warn('MADAL media URL:',error.message);return ''}
+ if(error){console.warn('GoGol media URL:',error.message);return ''}
  return data?.signedUrl||'';
 }
 function isVideo(p){
@@ -264,7 +264,7 @@ async function renderFeed(){
  let posts=allPosts.filter(p=>(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))&&(!p.is_private||String(p.user_id)===String(currentUser?.id))).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
  await loadSocialData(posts);
  if(activeFeedTab==='following')posts=posts.filter(p=>currentUser&&followsByUser.has(String(p.user_id)));
- if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee MADAL wax soo geliya!')+'</div>';return}
+ if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>';return}
  $('allFeed').innerHTML='';
  for(const p of posts){const html=await card(p);$('allFeed').insertAdjacentHTML('beforeend',html)}
  const videoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
@@ -293,7 +293,7 @@ async function searchDiscover(){
  if(peopleError)host.innerHTML='<p class="muted">Raadinta dadka: '+escapeHtml(peopleError.message)+'</p>';
  let html='';
  if(people.length)html+='<h3 class="section-title">Dadka</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</div><div class="user-meta"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followsByUser.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
- if(videos.length)html+='<h3 class="section-title">Fiidiyowyada</h3>'+videos.map(post=>'<div class="discover-post" data-open-post="'+escapeHtml(post.id)+'"><strong>'+escapeHtml(post.title||'GoGol')+'</strong><small>' + escapeHtml(post.description||'Fiidiyow MADAL')+'</small></div>').join('');
+ if(videos.length)html+='<h3 class="section-title">Fiidiyowyada</h3>'+videos.map(post=>'<div class="discover-post" data-open-post="'+escapeHtml(post.id)+'"><strong>'+escapeHtml(post.title||'GoGol')+'</strong><small>' + escapeHtml(post.description||'Fiidiyow GoGol')+'</small></div>').join('');
  if(!html)html+='<div class="empty">Wax natiijo ah lama helin.</div>';
  host.innerHTML=html;
 }
@@ -350,7 +350,7 @@ $('allFeed').addEventListener('click',async e=>{
   const result=likedPostIds.has(postId)
    ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
    :await db.from('media_likes').insert({post_id:postId,user_id:currentUser.id});
-  if(result.error){console.warn('MADAL like request failed:',result.error);notice('Like-ga lama kaydin. Fadlan mar kale isku day.')}else await loadMedia();
+  if(result.error){console.warn('GoGol like request failed:',result.error);notice('Like-ga lama kaydin. Fadlan mar kale isku day.')}else await loadMedia();
  }
  if(repost){
   const postId=repost.dataset.repost;
@@ -486,7 +486,7 @@ async function loadMyProfile(){
  for(const post of own){
   const url=await mediaUrl(post);
   const tile=document.createElement('div');tile.className='profile-tile';
-  tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'" style="width:100%;height:100%;object-fit:cover">'):'<div class="empty">Muuqaal</div>')+'<span class="tile-views">▶ '+Number(post.view_count||0).toLocaleString('en-US')+'</span><span class="tile-title">'+escapeHtml(post.title||'Muuqaal MADAL')+'</span>';
+  tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'" style="width:100%;height:100%;object-fit:cover">'):'<div class="empty">Muuqaal</div>')+'<span class="tile-views">▶ '+Number(post.view_count||0).toLocaleString('en-US')+'</span><span class="tile-title">'+escapeHtml(post.title||'Muuqaal GoGol')+'</span>';
   $('myVideos').appendChild(tile);
  }
 }
@@ -544,7 +544,7 @@ async function loadActivity(){
  let profiles={};
  if(ids.length){const p=await db.from('madal_profiles').select('id,username,display_name').in('id',ids);for(const row of p.data||[])profiles[row.id]=row}
  const events=[...(likes.data||[]).map(x=>({...x,kind:'like',actor:x.user_id})),...(followers.data||[]).map(x=>({...x,kind:'follow',actor:x.follower_id})),...(comments.data||[]).map(x=>({...x,kind:'comment',actor:x.user_id})),...(reposts.data||[]).map(x=>({...x,kind:'repost',actor:x.user_id})),...(incomingMessages.data||[]).map(x=>({...x,kind:'message',actor:x.sender_id}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
- host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'GoGol User',display_name:'Qof MADAL ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':ev.kind==='follow'?'＋':ev.kind==='comment'?'💬':ev.kind==='repost'?'↗':'✉')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa Like saaray muuqaalkaaga':ev.kind==='follow'?'ayaa ku Follow gareeyay':ev.kind==='comment'?'ayaa faallo ka bixiyey muuqaalkaaga':ev.kind==='repost'?'ayaa Repost gareeyey muuqaalkaaga':'wuxuu kuu soo diray fariin')+(post?' · '+escapeHtml(post.title):ev.kind==='message'?' · '+escapeHtml(ev.body):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
+ host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'GoGol User',display_name:'Qof GoGol ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':ev.kind==='follow'?'＋':ev.kind==='comment'?'💬':ev.kind==='repost'?'↗':'✉')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa Like saaray muuqaalkaaga':ev.kind==='follow'?'ayaa ku Follow gareeyay':ev.kind==='comment'?'ayaa faallo ka bixiyey muuqaalkaaga':ev.kind==='repost'?'ayaa Repost gareeyey muuqaalkaaga':'wuxuu kuu soo diray fariin')+(post?' · '+escapeHtml(post.title):ev.kind==='message'?' · '+escapeHtml(ev.body):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
 }
 async function refreshProfile(){
  const {data}=await db.auth.getSession();currentUser=data?.session?.user||null;
@@ -569,7 +569,7 @@ $('profileFriends').addEventListener('click',()=>showPage('discover'));
 $('profileNotifications').addEventListener('click',()=>showPage('notifications'));
 $('profileSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
 $('profileAvatar').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('profileEditor').classList.remove('hidden');$('profileEditor').scrollIntoView({behavior:'smooth',block:'start'})});
-$('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday MADAL.')}});
+$('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday GoGol.')}});
 let uploadKind='video',capturedUploadFile=null,activePhotoFilter='none';
 const PHOTO_FILTERS={none:'none',vivid:'contrast(1.18) saturate(1.28) brightness(1.04)',portrait:'contrast(1.06) saturate(1.12) brightness(1.08)',warm:'sepia(.18) saturate(1.2) contrast(1.04)',cool:'saturate(1.08) hue-rotate(9deg) brightness(1.04)',mono:'grayscale(1) contrast(1.12)',soft:'brightness(1.08) saturate(.88) contrast(.94)',night:'brightness(1.22) contrast(1.12) saturate(1.12)',gold:'sepia(.28) saturate(1.3) contrast(1.08)'};
 let photoRotation=0;
@@ -693,7 +693,7 @@ async function applyPhotoFilter(file){
  }finally{URL.revokeObjectURL(url)}
 }
 $('uploadForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!currentUser){notice('Marka hore fadlan MADAL ku soo gal.');location.href='./account.html';return}
+ e.preventDefault();if(!currentUser){notice('Marka hore fadlan GoGol ku soo gal.');location.href='./account.html';return}
  let file=selectedUploadFile();if(!file){notice('Marka hore Camera ama Gallery ka dooro fayl.');return}
  const valid=uploadKind==='image'?file.type.startsWith('image/'):file.type.startsWith('video/');
  if(!valid){notice(uploadKind==='image'?'Fadlan dooro sawir sax ah.':'Fadlan dooro fiidiyow sax ah.');return}
@@ -711,19 +711,19 @@ $('uploadForm').addEventListener('submit',async e=>{
   if(insertError){await db.storage.from('madal-media').remove([path]);throw insertError}
   $('uploadForm').reset();setUploadKind('video');capturedUploadFile=null;$('selectedMediaName').textContent='Weli waxba lama dooran.';notice('Waa lagu guulaystay soo gelinta!');await loadMedia();showPage('home');
  }catch(err){console.error(err);notice('Soo gelintu way fashilantay: '+err.message)}
- finally{button.disabled=false;button.textContent='Soo geli MADAL'}
+ finally{button.disabled=false;button.textContent='Soo geli GoGol'}
 });
 db.auth.onAuthStateChange((event,session)=>{if(!session?.user){if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}activeChatUser=null;$('conversationPanel')?.classList.add('hidden')}refreshProfile()});
 $('shareButton').addEventListener('click',async()=>{
  const shareData={title:'GoGol — Fiidiyowyo',text:'Ku soo biir GoGol: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
- try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga MADAL waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
+ try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga GoGol waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
 });
 // Update checks are handled by the standalone first-screen updater (update.js).
 setInterval(()=>{if(document.visibilityState==='visible')loadMedia()},5*60*1000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadMedia()});
 try{
  db.channel('madal-live-posts').on('postgres_changes',{event:'INSERT',schema:'public',table:'media_posts',filter:'status=eq.published'},payload=>{
-  if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa MADAL lagu soo daray!')}
+  if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa GoGol lagu soo daray!')}
  }).subscribe();
 }catch(err){console.warn('MADAL live feed:',err)}
 refreshProfile();loadMedia();
