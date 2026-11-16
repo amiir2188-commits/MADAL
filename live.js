@@ -172,7 +172,7 @@ function liveAddChat(name,message){
 function liveUpdateViewerCount(){
  if(!liveRoom)return;
  const remote=liveRoom.remoteParticipants.size;
- liveEl("gLiveViewers").textContent="Daawadayaal: "+Math.max(0,remote-(liveRole==="viewer"?1:0));
+ liveEl("gLiveViewers").textContent="Daawadayaal: "+remote;
 }
 async function liveSendChat(event){
  event.preventDefault();
@@ -196,6 +196,16 @@ async function liveStart(){
  try{
   const user=await liveUser();
   const title=liveEl("gLiveTitle").value.trim()||"GoGol LIVE";
+  const {data:previous,error:previousError}=await liveDb.from("madal_live_sessions")
+   .select("id,last_heartbeat_at").eq("host_id",user.id).eq("status","live").maybeSingle();
+  if(previousError) throw new Error("Xaaladda LIVE hore lama hubin karin.");
+  if(previous){
+   const age=Date.now()-new Date(previous.last_heartbeat_at).getTime();
+   if(age<=180000) throw new Error("Waxaad hore u leedahay LIVE socda. Jooji ka hor intaadan mid kale bilaabin.");
+   const {error:closeError}=await liveDb.from("madal_live_sessions")
+    .update({status:"ended",ended_at:new Date().toISOString()}).eq("id",previous.id);
+   if(closeError) throw new Error("LIVE-gii hore wuu dhacay, balse lama xirin. Fadlan mar kale isku day.");
+  }
   const roomName="gogol-"+crypto.randomUUID();
   const {data:session,error}=await liveDb.from("madal_live_sessions")
    .insert({host_id:user.id,room_name:roomName,title,status:"live"}).select("id,host_id,title,started_at").single();
