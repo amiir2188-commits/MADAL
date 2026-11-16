@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
       .order("expires_at", { ascending: true })
       .limit(500);
     if (readError) throw new Error(`Unable to read expired Stories: ${readError.message}`);
-    if (!expired?.length) return json({ success: true, deleted: 0, remainingBatch: false });
+    if (!expired?.length) {\n      const staleCutoff = new Date(Date.now() - 90000).toISOString();\n      const { data: stale, error: staleError } = await admin.from("madal_live_sessions")\n        .update({ status: "ended", ended_at: cutoff })\n        .eq("status", "live").lt("last_heartbeat_at", staleCutoff).select("id");\n      if (staleError) throw new Error(`Unable to end abandoned LIVE sessions: ${staleError.message}`);\n      return json({ success: true, deleted: 0, endedLiveSessions: stale?.length || 0, remainingBatch: false });\n    }
 
     const paths = expired.map((story) => story.storage_path).filter(Boolean);
     for (let i = 0; i < paths.length; i += 100) {
@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     const { error: deleteError } = await admin.from("madal_stories").delete().in("id", ids);
     if (deleteError) throw new Error(`Unable to delete expired Story rows: ${deleteError.message}`);
 
-    return json({ success: true, deleted: ids.length, remainingBatch: ids.length === 500 });
+    const staleCutoff = new Date(Date.now() - 90000).toISOString();\n    const { data: stale, error: staleError } = await admin.from("madal_live_sessions")\n      .update({ status: "ended", ended_at: cutoff })\n      .eq("status", "live").lt("last_heartbeat_at", staleCutoff).select("id");\n    if (staleError) throw new Error(`Unable to end abandoned LIVE sessions: ${staleError.message}`);\n\n    return json({ success: true, deleted: ids.length, endedLiveSessions: stale?.length || 0, remainingBatch: ids.length === 500 });
   } catch (error) {
     console.error("GoGol expired Story cleanup failed:", error);
     return json({ error: error instanceof Error ? error.message : "Cleanup failed" }, 500);
