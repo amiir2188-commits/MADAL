@@ -9,7 +9,7 @@ if (isNative) {
 }
 
 const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/GoGol/main/version.json';
-const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/GoGol/releases/latest/download/GoGol-web.zip';
+const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/GoGol/releases/latest/download/madal-web.zip';
 const notice = document.getElementById('updateNotice');
 const button = document.getElementById('applyUpdate');
 const message = document.getElementById('updateMessage');
