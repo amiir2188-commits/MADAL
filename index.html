@@ -325,11 +325,11 @@ html[dir="rtl"] .bottom{direction:rtl}
 <script>
 const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);\nwindow.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.56';
+const MADAL_VERSION='1.10.57';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1453,6 +1453,6 @@ if(isIOS && !window.matchMedia('(display-mode: standalone)').matches) installBut
 if('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
 
 </script>
-<script type="module" src="./update.js"></script>
+<script type="module" src="./update.js"></script>\n<script type="module" src="./live.js"></script>
 </body>
 </html>
