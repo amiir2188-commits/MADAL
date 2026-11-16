@@ -6,6 +6,7 @@ let liveLocalTracks = [];
 let liveSessionId = null;
 let liveRole = null;
 let liveKitModule = null;
+let liveHeartbeat = null;
 
 const liveStyle = document.createElement("style");
 liveStyle.textContent = `
@@ -68,20 +69,21 @@ const liveSDK = async () => {
 };
 const liveOpen = async () => {
  liveDialog.classList.add("open");
+ liveEl("gLiveMic").classList.remove("hidden");liveEl("gLiveCamera").classList.remove("hidden");
  liveEl("gLiveHome").classList.remove("hidden");
  liveEl("gLiveRoomView").classList.add("hidden");
  await liveLoadSessions();
 };
 const liveClose = async () => {
- if(liveRoom) await liveLeave(false);
+ if(liveRoom) await liveLeave(liveRole==="host");
  liveDialog.classList.remove("open");
 };
 async function liveLoadSessions(){
  const list=liveEl("gLiveList");
  list.textContent="Waa la raadinayaa...";
  const {data,error}=await liveDb.from("madal_live_sessions")
-  .select("id,host_id,title,started_at")
-  .eq("status","live").order("started_at",{ascending:false}).limit(30);
+  .select("id,host_id,title,started_at,last_heartbeat_at")
+  .eq("status","live").gt("last_heartbeat_at",new Date(Date.now()-90000).toISOString()).order("started_at",{ascending:false}).limit(30);
  if(error){list.textContent="LIVE-yada lama soo rari karin. Hubi in migration 009 la rakibay.";return}
  list.replaceChildren();
  if(!data?.length){list.textContent="Hadda LIVE socda ma jiro. Adiga ayaa noqon kara qofka ugu horreeya!";return}
@@ -128,8 +130,11 @@ async function liveShowRoom(session,title,role){
    liveEl("gLiveStage").append(preview);
   }
   liveStatus("🔴 Waxaad si toos ah u baahinaysaa: "+title);
+  liveEl("gLiveMic").classList.remove("hidden");liveEl("gLiveCamera").classList.remove("hidden");
+  liveHeartbeat=setInterval(()=>{liveDb.from("madal_live_sessions").update({last_heartbeat_at:new Date().toISOString()}).eq("id",session.id).then(({error})=>{if(error)console.warn("GoGol LIVE heartbeat:",error.message)})},20000);
  }else{
   liveStatus("🔴 LIVE: "+title+" • Waad daawanaysaa");
+  liveEl("gLiveMic").classList.add("hidden");liveEl("gLiveCamera").classList.add("hidden");
   for(const participant of liveRoom.remoteParticipants.values()){
    for(const publication of participant.trackPublications.values()){
     if(publication.track){const node=publication.track.attach();node.autoplay=true;node.playsInline=true;liveEl("gLiveStage").append(node)}
@@ -151,7 +156,7 @@ async function liveStart(){
    .insert({host_id:user.id,room_name:roomName,title,status:"live"}).select("id,host_id,title,started_at").single();
   if(error) throw new Error("LIVE session lama abuuri karin. Hubi migration 009.");
   try{await liveShowRoom(session,title,"host")}
-  catch(error){await liveDb.from("madal_live_sessions").update({status:"ended",ended_at:new Date().toISOString()}).eq("id",session.id);throw error}
+  catch(error){await liveLeave(false);await liveDb.from("madal_live_sessions").update({status:"ended",ended_at:new Date().toISOString()}).eq("id",session.id);throw error}
  }catch(error){alert(error.message||"LIVE lama bilaabi karin.");await liveLoadSessions()}
  finally{button.disabled=false}
 }
@@ -161,6 +166,7 @@ async function liveJoin(session){
 }
 async function liveLeave(endSession=true){
  const sessionId=liveSessionId, role=liveRole;
+ if(liveHeartbeat){clearInterval(liveHeartbeat);liveHeartbeat=null}
  liveRole=null;liveSessionId=null;
  if(liveRoom){try{await liveRoom.disconnect()}catch{}liveRoom=null}
  for(const track of liveLocalTracks){try{track.stop()}catch{}}
