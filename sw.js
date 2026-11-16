@@ -1,4 +1,4 @@
-const CACHE_NAME = 'madal-app-v1.8.3';
+const CACHE_NAME = 'madal-app-v1.8.4';
 const APP_FILES = ['./','./index.html','./account.html','./manifest.webmanifest','./version.json','./icon-only.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES)).catch(error=>console.warn('MADAL cache install:',error)));
