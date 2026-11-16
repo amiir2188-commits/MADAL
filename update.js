@@ -4,12 +4,12 @@ if (isNative) {
   try {
     ({ LiveUpdate } = await import('@capawesome/capacitor-live-update'));
   } catch (error) {
-    console.warn('MADAL live update plugin is unavailable:', error);
+    console.warn('GoGol live update plugin is unavailable:', error);
   }
 }
 
-const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/MADAL/main/version.json';
-const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip';
+const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/GoGol/main/version.json';
+const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/GoGol/releases/latest/download/GoGol-web.zip';
 const notice = document.getElementById('updateNotice');
 const button = document.getElementById('applyUpdate');
 const message = document.getElementById('updateMessage');
@@ -19,7 +19,7 @@ let checking = false;
 function showUpdate(version) {
   if (!notice || !button) return;
   notice.classList.remove('hidden');
-  if (message) message.textContent = 'MADAL ' + version + ' waa diyaar. Taabo Update App si aad u cusboonaysiiso ka hor intaadan gelin app-ka caadiga ah. APK kale looma baahna.';
+  if (message) message.textContent = 'GoGol ' + version + ' waa diyaar. Taabo Update App si aad u cusboonaysiiso ka hor intaadan gelin app-ka caadiga ah. APK kale looma baahna.';
   button.classList.remove('hidden');
   button.textContent = 'Update App';
 }
@@ -32,7 +32,7 @@ async function checkNativeUpdate() {
     const response = await fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' });
     if (!response.ok) return;
     const latest = await response.json();
-    const current = window.MADAL_VERSION || '0.0.0';
+    const current = window.GoGol_VERSION || '0.0.0';
     if (!latest.version || latest.version === current) return;
     latestBundle = {
       version: String(latest.version),
@@ -40,7 +40,7 @@ async function checkNativeUpdate() {
     };
     showUpdate(latestBundle.version);
   } catch (error) {
-    console.warn('MADAL live update check:', error);
+    console.warn('GoGol live update check:', error);
   } finally {
     checking = false;
   }
@@ -77,7 +77,7 @@ if (button) {
         location.reload();
       }
     } catch (error) {
-      console.error('MADAL update failed:', error);
+      console.error('GoGol update failed:', error);
       if (message) message.textContent = 'Cusboonaysiintu way fashilantay. Internet-ka hubi oo mar kale isku day.';
       button.disabled = false;
       button.textContent = 'Mar kale isku day';
