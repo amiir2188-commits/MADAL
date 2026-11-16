@@ -4,4 +4,7 @@ project_id = "nxtnfdyksskofjbvface"
 verify_jwt = true
 
 [functions.cleanup-expired-stories]
-verify_jwt = false\n\n[functions.live-token]\nverify_jwt = true\n
+verify_jwt = false
+
+[functions.live-token]
+verify_jwt = true
