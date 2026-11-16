@@ -555,7 +555,7 @@ document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventL
 let socialLoadToken=0,blockedUserIds=new Set();
 async function loadSocialData(posts,renderToken=null){
  const token=++socialLoadToken;
- socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();repostCountsByPost={};favoritePostIds=new Set();favoriteCountsByPost={};authorProfiles={};
+ socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();repostCountsByPost={};favoritePostIds=new Set();favoriteCountsByPost={};authorProfiles={};blockedUserIds=new Set();
  const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
  if(!ids.length){if(token===socialLoadToken)socialReady=true;return;}
  const {data:session}=await db.auth.getSession();
