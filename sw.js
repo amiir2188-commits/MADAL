@@ -1,5 +1,5 @@
 const CACHE_NAME = 'gogol-app-v1.10.57';
-const APP_FILES = ['./','./index.html','./account.html','./manifest.webmanifest','./version.json','./gogol-logo.svg'];
+const APP_FILES = ['./','./index.html','./account.html','./manifest.webmanifest','./version.json','./gogol-logo.svg','./live.js'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES)).catch(error=>console.warn('MADAL cache install:',error)));
  self.skipWaiting();
