@@ -304,7 +304,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 <section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
 <section id="messages" class="page hidden">
 <div class="inbox-heading"><h2>Inbox</h2><button type="button" id="inboxSearchFocus" aria-label="Search messages">⌕</button><button type="button" id="inboxMenu" aria-label="More options">•••</button></div>
-<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div><div id="storyTray" class="story-tray" aria-label="Stories" aria-live="polite"></div><input id="storyFile" aria-label="Dooro sawir ama fiidiyow Story-ga" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" hidden><div id="storyViewer" class="story-viewer hidden" role="dialog" aria-modal="true" aria-label="Daawo Story"><div class="story-viewer-panel"><div class="story-viewer-head"><strong id="storyViewerAuthor">GoGol</strong><button type="button" id="storyViewerClose">Xir ✕</button></div><div id="storyViewerContent" style="display:flex;flex:1;min-height:0"></div><p id="storyViewerCaption" class="story-viewer-caption"></p><div class="story-viewer-actions"><button type="button" id="storyViewerDelete" class="secondary hidden">Tirtir Story</button></div></div></div>
+<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div><div id="storyTray" class="story-tray" aria-label="Stories" aria-live="polite"></div><input id="storyFile" aria-label="Dooro sawir ama fiidiyow Story-ga" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" hidden><div id="storyViewer" class="story-viewer hidden" role="dialog" aria-modal="true" aria-label="Daawo Story"><div class="story-viewer-panel"><div class="story-viewer-head"><strong id="storyViewerAuthor">GoGol</strong><button type="button" id="storyViewerClose">Xir ✕</button></div><div id="storyViewerContent" style="display:flex;flex:1;min-height:0"></div><p id="storyViewerCaption" class="story-viewer-caption"></p><div class="story-viewer-actions" style="justify-content:space-between;gap:8px"><div><button type="button" id="storyViewerPrev" class="secondary">‹ Hore</button> <button type="button" id="storyViewerNext" class="secondary">Xiga ›</button></div><button type="button" id="storyViewerDelete" class="secondary hidden">Tirtir Story</button></div></div></div>
 <div class="inbox-filters" role="group" aria-label="Inbox filters"><button class="active" type="button" data-inbox-filter="main">Main</button><button type="button" data-inbox-filter="requests">Requests</button><button type="button" data-inbox-filter="unread">Unread</button><button type="button" data-inbox-filter="starred">Starred</button></div>
 <div id="inboxConversations" class="inbox-conversations" aria-live="polite"><p class="muted">Your conversations will appear here.</p></div>
 <button type="button" class="inbox-activity" id="inboxActivity"><span class="inbox-activity-icon">ϟ</span><span><strong>Activity &amp; new followers</strong><small>Likes, comments, follows and updates</small></span><span class="inbox-chevron">›</span></button>
@@ -1125,7 +1125,7 @@ async function refreshProfile(){
  }
 }
 
-let activeStories=[];
+let activeStories=[],activeStoryGroup=[],activeStoryIndex=0;
 function storyName(story){return story.storyProfile?.display_name||story.storyProfile?.username||'GoGol User'}
 async function loadStories(){
  const tray=$('storyTray');if(!tray)return;
@@ -1142,13 +1142,16 @@ async function showStory(story){
  const url=await mediaUrl(story);if(!url){notice('Story-ga lama furi karin. Hubi migration-ka Supabase 008.');return}
  $('storyViewerAuthor').textContent=storyName(story);$('storyViewerCaption').textContent=story.caption||'';
  $('storyViewerDelete').classList.toggle('hidden',story.user_id!==currentUser?.id);$('storyViewerDelete').dataset.storyId=story.id;
+ $('storyViewerPrev').disabled=activeStoryIndex<=0;$('storyViewerNext').disabled=activeStoryIndex>=activeStoryGroup.length-1;
  $('storyViewerContent').innerHTML=story.mime_type.startsWith('video/')?'<video class="story-viewer-media" src="'+escapeHtml(url)+'" controls autoplay playsinline></video>':'<img class="story-viewer-media" src="'+escapeHtml(url)+'" alt="Story">';
  $('storyViewer').classList.remove('hidden');
 }
 function closeStoryViewer(){$('storyViewerContent').innerHTML='';$('storyViewer').classList.add('hidden')}
 $('storyViewerClose').addEventListener('click',closeStoryViewer);
 $('storyViewer').addEventListener('click',e=>{if(e.target===$('storyViewer'))closeStoryViewer()});
-$('storyTray').addEventListener('click',e=>{const b=e.target.closest('[data-story-user]');if(!b)return;const item=activeStories.find(x=>x.user_id===b.dataset.storyUser);if(item)showStory(item)});
+$('storyTray').addEventListener('click',e=>{const b=e.target.closest('[data-story-user]');if(!b)return;activeStoryGroup=activeStories.filter(x=>x.user_id===b.dataset.storyUser);activeStoryIndex=0;if(activeStoryGroup[0])showStory(activeStoryGroup[0])});
+$('storyViewerPrev').addEventListener('click',()=>{if(activeStoryIndex>0){activeStoryIndex--;showStory(activeStoryGroup[activeStoryIndex])}});
+$('storyViewerNext').addEventListener('click',()=>{if(activeStoryIndex<activeStoryGroup.length-1){activeStoryIndex++;showStory(activeStoryGroup[activeStoryIndex])}});
 $('storyViewerDelete').addEventListener('click',async()=>{
  const id=$('storyViewerDelete').dataset.storyId,story=activeStories.find(x=>x.id===id);if(!story||story.user_id!==currentUser?.id)return;
  const b=$('storyViewerDelete');b.disabled=true;
