@@ -151,6 +151,7 @@ jobs:
           const supabaseConfig = fs.readFileSync('supabase/config.toml', 'utf8');
           const liveClient = fs.readFileSync('live.js', 'utf8');
           const liveMigration = fs.readFileSync('supabase/migrations/20261116000900_live_streaming.sql', 'utf8');
+          const liveLimitsMigration = fs.readFileSync('supabase/migrations/20261116001000_live_session_limits.sql', 'utf8');
           const liveTokenFunction = fs.readFileSync('supabase/functions/live-token/index.ts', 'utf8');
           if (!html.includes("db.functions.invoke('delete-account')")) throw new Error('Settings must call the secure account-deletion Edge Function');
           if (!deletionMigration.includes('create table if not exists public.madal_account_deletion_requests')) throw new Error('Account-deletion request migration is missing');
@@ -172,11 +173,12 @@ jobs:
           }
           if (!supabaseConfig.includes('[functions.cleanup-expired-stories]') || !supabaseConfig.includes('verify_jwt = false')) throw new Error('Scheduled cleanup endpoint must be configured for its own CRON_SECRET authentication');
           if (!html.includes('<script type="module" src="./live.js"></script>')) throw new Error('GoGol LIVE client module is not connected to the app');
-          for (const marker of ['livekit-client@2', 'madal_live_sessions', 'gLiveStart', 'gLiveEnd']) {
+          for (const marker of ['livekit-client@2', 'madal_live_sessions', 'gLiveStart', 'gLiveEnd', 'gLiveChatForm', 'publishData', 'gLiveViewers', 'last_heartbeat_at']) {
             if (!liveClient.includes(marker)) throw new Error('GoGol LIVE client feature is missing: ' + marker);
           }
           if (!liveMigration.includes('create table if not exists public.madal_live_sessions')) throw new Error('GoGol LIVE database migration is missing');
-          for (const marker of ['new AccessToken', 'LIVEKIT_API_SECRET', 'canPublish: body.role === "host"', 'canSubscribe: true']) {
+          if (!liveLimitsMigration.includes('madal_live_sessions_one_active_per_host_idx')) throw new Error('GoGol LIVE active-session limit migration is missing');
+          for (const marker of ['new AccessToken', 'LIVEKIT_API_SECRET', 'canPublish: body.role === "host"', 'canSubscribe: true', 'canPublishData: true']) {
             if (!liveTokenFunction.includes(marker)) throw new Error('GoGol LIVE token security is missing: ' + marker);
           }
           if (!supabaseConfig.includes('[functions.live-token]') || !supabaseConfig.includes('verify_jwt = true')) throw new Error('GoGol LIVE token function must require JWT verification');
