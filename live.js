@@ -83,7 +83,7 @@ async function liveLoadSessions(){
  list.textContent="Waa la raadinayaa...";
  const {data,error}=await liveDb.from("madal_live_sessions")
   .select("id,host_id,title,started_at,last_heartbeat_at")
-  .eq("status","live").gt("last_heartbeat_at",new Date(Date.now()-90000).toISOString()).order("started_at",{ascending:false}).limit(30);
+  .eq("status","live").gt("last_heartbeat_at",new Date(Date.now()-180000).toISOString()).order("started_at",{ascending:false}).limit(30);
  if(error){list.textContent="LIVE-yada lama soo rari karin. Hubi in migration 009 la rakibay.";return}
  list.replaceChildren();
  if(!data?.length){list.textContent="Hadda LIVE socda ma jiro. Adiga ayaa noqon kara qofka ugu horreeya!";return}
