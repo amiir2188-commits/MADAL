@@ -18,6 +18,7 @@ WAXYAABAHA NOOCA BETA-GA KU JIRA
 - Raadinta dadka, profiles iyo fariimo gaar ah.
 - Wadaagis, repost iyo kaydinta waxyaabaha la jecleystay.
 - Ogeysiisyo ku saabsan cusboonaysiinta web-content-ka.
+- Aasaaska amniga Stories: sawirro/fiidiyowyo ku dhacaya 24 saac kadib (waxay u baahan yihiin migration-ka 008 iyo interface-ka Stories).
 - Bogagga asturnaanta, xeerarka bulshada iyo shuruudaha isticmaalka.
 - Aqbalid cad oo shuruudaha iyo siyaasadda asturnaanta ah marka akoon cusub la samaynayo.
 - Tirtiridda joogtada ah ee akoonka, fariimaha iyo faylasha isticmaalaha (waxay u baahan tahay migration-ka Supabase iyo Edge Function la daabacay).
