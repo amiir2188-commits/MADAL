@@ -4,10 +4,10 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 ## Latest verified release
 
-**Android and Web: GoGol 1.10.54**
+**Android and Web: GoGol 1.10.55**
 
-- [Download GoGol 1.10.54 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/app-debug.apk)
-- [Download GoGol 1.10.54 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/madal-web.zip)
+- [Download GoGol 1.10.55 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.55/app-debug.apk)
+- [Download GoGol 1.10.55 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.55/madal-web.zip)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
 The Android APK is a beta/debug-signed build distributed directly; it is not a Play Store release.
@@ -26,7 +26,7 @@ The Android APK is a beta/debug-signed build distributed directly; it is not a P
 - Secure account deletion from Settings (requires the matching Supabase migration and deployed Edge Function).
 - 24-hour Stories: upload, view with previous/next navigation, and delete photo/video updates (requires Supabase migration 008).
 
-This is still a beta. Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. The current release is not a Play Store production release. The Stories client and database migration are implemented; Stories become available after applying migration 008. Live streaming is not implemented yet. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
+This is still a beta. Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. The current release is not a Play Store production release. The Stories client and database migration are implemented; Stories become available after applying migration 008 and deploying the scheduled cleanup function. Live streaming is not implemented yet. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
 
 ## Supabase setup
 
@@ -35,6 +35,8 @@ This is still a beta. Some social and safety features depend on the matching Sup
 3. For an existing database, review and apply only the migrations that match its current schema, in order. The profile/avatar, message read-receipt, media/message compatibility, user safety/moderation, photo album, social post-visibility, account deletion, and 24-hour Stories migrations are separate SQL files under `supabase/migrations/`.
 4. Deploy the account deletion function with `supabase functions deploy delete-account`. Keep the Supabase service-role key only in the Edge Function environment; never put it in client code.
 5. Enable Phone Auth and configure an SMS provider if phone-number sign-in is required.
+
+6. Deploy the expired-Stories cleanup function with `supabase functions deploy cleanup-expired-stories`, then set a strong random `CRON_SECRET` using `supabase secrets set CRON_SECRET=...`. In Supabase Dashboard Cron, schedule a POST to `/functions/v1/cleanup-expired-stories` every 15 minutes with `Authorization: Bearer <CRON_SECRET>` and `Content-Type: application/json`. The function deletes expired media from `madal-media` before deleting their database rows; it processes up to 500 per run. Never expose this secret in the app.
 
 Applying SQL is an administrator action and is not performed automatically by publishing the app. Back up the database and review migration contents before applying them to a production project. Report/block features require the user-safety migration and its RLS policies to be installed.
 
