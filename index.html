@@ -137,6 +137,12 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 .video-slide .comment-panel{z-index:8}
 @media(max-width:380px){#home .feed-tabs button{font-size:10px;padding-left:1px;padding-right:1px}.video-slide .slide-actions{right:5px;gap:8px}.video-slide .slide-info{right:72px}.video-slide .repost-chip{bottom:116px}}
 
+/* TikTok-style follow badge and liked-heart state */
+.video-slide .creator-plus{background:#25c9f7!important;color:#07131b!important;border:2px solid #fff!important;box-shadow:0 1px 6px #0008;font-weight:950}
+.video-slide .slide-actions button.is-liked{color:#fe2c55!important}
+.video-slide .slide-actions button.is-liked span{color:#fe2c55!important;font-size:36px!important;text-shadow:0 0 12px #fe2c5570!important;animation:gogol-heart-pop .22s ease-out}
+.video-slide .slide-actions button[data-like]:active span{transform:scale(1.24)}
+@keyframes gogol-heart-pop{0%{transform:scale(.72)}65%{transform:scale(1.22)}100%{transform:scale(1)}}
 /* For You full-screen creator layout */
 #home .video-slide{isolation:isolate}.video-slide .slide-actions button.is-saved{color:#ffd45c}.video-slide .slide-actions button.is-saved span{color:#ffd45c}.video-slide .slide-actions button[data-comments] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-actions button[data-favorite] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-info{max-width:calc(100% - 92px);padding:0 0 4px}.video-slide .slide-info h3{font-weight:900;letter-spacing:.1px}.video-slide .slide-info p{line-height:1.35;text-shadow:0 1px 4px #000,0 1px 9px #000}
 @media(max-width:480px){#allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide .slide-actions{right:9px;bottom:22px;gap:10px}.video-slide .slide-actions button{min-height:48px}.video-slide .slide-info{left:14px;right:78px;bottom:18px}}
