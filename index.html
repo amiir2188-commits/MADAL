@@ -497,15 +497,16 @@ async function renderFeed(){
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
 let activeDiscoverTab='all',discoverTimer=null,discoverSearchToken=0;
 document.querySelectorAll('[data-discover-tab]').forEach(button=>button.addEventListener('click',()=>{activeDiscoverTab=button.dataset.discoverTab;document.querySelectorAll('[data-discover-tab]').forEach(b=>b.classList.toggle('active',b===button));searchDiscover()}));
+function safeLikeTerm(value){return String(value||'').slice(0,64).replace(/[\\%_]/g,char=>'\\'+char)}
 $('discoverSearch').addEventListener('input',()=>{clearTimeout(discoverTimer);discoverTimer=setTimeout(searchDiscover,250)});
 async function searchDiscover(){
- const token=++discoverSearchToken,host=$('discoverResults'),q=$('discoverSearch').value.trim().replace(/^@/,'');
+ const token=++discoverSearchToken,host=$('discoverResults'),q=$('discoverSearch').value.trim().replace(/^@/,'').slice(0,64),likeTerm=safeLikeTerm(q);
  const tab=activeDiscoverTab;
  if(q.length<2){host.innerHTML='<div class="empty">Geli ugu yaraan 2 xaraf si raadintu u bilaabato.</div>';return}
  host.innerHTML='<div class="empty">Waa la raadinayaa...</div>';
  let people=[],peopleError=null;
  if(tab!=='videos'){
-  const [byName,byHandle]=await Promise.all([db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('username','%'+q+'%').limit(20),db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('display_name','%'+q+'%').limit(20)]);
+  const [byName,byHandle]=await Promise.all([db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('username','%'+likeTerm+'%').limit(20),db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('display_name','%'+likeTerm+'%').limit(20)]);
   if(token!==discoverSearchToken)return;
   peopleError=byName.error||byHandle.error;people=[...(byName.data||[]),...(byHandle.data||[])].filter((person,index,array)=>array.findIndex(x=>x.id===person.id)===index).slice(0,20);
  }
@@ -630,12 +631,15 @@ $('allFeed').addEventListener('submit',async e=>{
 
 $('searchUsers').addEventListener('click',searchMadalUsers);
 $('messageSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchMadalUsers()}});
+let messageSearchToken=0;
 async function searchMadalUsers(){
+ const token=++messageSearchToken;
  if(!currentUser){notice('Marka hore soo gal si aad fariin u dirto.');location.href='./account.html';return}
- const query=$('messageSearch').value.trim().toLowerCase().replace(/^@/,'');
+ const query=$('messageSearch').value.trim().toLowerCase().replace(/^@/,'').slice(0,64);
  if(query.length<2){$('userResults').textContent='Geli ugu yaraan 2 xaraf oo username ah.';return}
  $('userResults').textContent='Waa la raadinayaa...';
- const {data,error}=await db.from('madal_profiles').select('id,username,display_name').ilike('username','%'+query+'%').neq('id',currentUser.id).limit(12);
+ const {data,error}=await db.from('madal_profiles').select('id,username,display_name').ilike('username','%'+safeLikeTerm(query)+'%').neq('id',currentUser.id).limit(12);
+ if(token!==messageSearchToken)return;
  if(error){$('userResults').textContent='Raadintu ma shaqayn: '+error.message+' — hubi inaad socodsiisay supabase_schema.sql.';return}
  if(!data?.length){$('userResults').textContent='Qof username-kan leh lama helin.';return}
  $('userResults').innerHTML=data.map(user=>'<button type="button" class="secondary" data-chat-user="'+escapeHtml(user.id)+'">@'+escapeHtml(user.username)+' · '+escapeHtml(user.display_name)+'</button>').join('');
