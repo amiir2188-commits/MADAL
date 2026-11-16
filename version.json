@@ -1,7 +1,7 @@
 {
-  "version": "1.10.57",
+  "version": "1.10.58",
   "name": "GoGol",
-  "message": "Initial LiveKit live video streaming beta integration",
+  "message": "LIVE chat, viewer count, heartbeat and session-limit improvements",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
