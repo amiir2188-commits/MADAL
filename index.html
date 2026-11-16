@@ -50,7 +50,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .upload-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
 .upload-preview{width:100%;max-height:360px;object-fit:contain;border-radius:12px;background:#050308;margin:10px 0}
 .upload-file-input{display:none!important}
-.photo-editor{margin:8px 0 14px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#100a19}.photo-filters{display:flex;gap:7px;overflow-x:auto;padding:8px 0 3px}.photo-filters button{flex:none;border:1px solid var(--line);border-radius:20px;padding:8px 12px;background:#241832;color:#fff;font-size:12px;font-weight:750}.photo-filters button.active{background:linear-gradient(110deg,#8751c9,#bd5ea8);border-color:transparent}.camera-studio{position:fixed;inset:0;z-index:1500;background:#07040c;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 14px calc(14px + env(safe-area-inset-bottom));gap:12px}.camera-studio.hidden{display:none!important}.camera-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;overflow:hidden;border-radius:20px;background:#120b1c}.camera-stage video{width:100%;height:100%;object-fit:cover;transform:scaleX(1);filter:var(--camera-filter,none)}.camera-stage .camera-hint{position:absolute;left:12px;right:12px;bottom:12px;text-align:center;color:#fff;text-shadow:0 1px 5px #000;font-size:12px;pointer-events:none}.camera-toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center}.camera-toolbar button,.camera-capture{border:1px solid #ffffff35;border-radius:14px;background:#241832;color:#fff;padding:11px 13px;font-weight:750}.camera-capture{width:76px;height:76px;border-radius:50%;border:5px solid #ffffffdd;background:linear-gradient(135deg,#b47aff,#f18bd4);color:#180d25;font-size:12px;font-weight:950}.camera-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 0}.camera-filters button{flex:none;border:1px solid #ffffff40;border-radius:18px;background:#ffffff18;color:#fff;padding:7px 11px;font-size:12px}.camera-filters button.active{background:#bd83ff;color:#180d25;border-color:#bd83ff}.camera-flash-overlay{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:1600;transition:opacity .12s}.camera-flash-overlay.flash{opacity:1}.camera-top-note{color:#cdb8e0;text-align:center;font-size:12px}
+.photo-editor{margin:8px 0 14px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#100a19}.editor-tools{display:grid;gap:5px;margin-top:12px}.editor-tools label{display:flex;justify-content:space-between;gap:8px;color:#e8dcf4;font-weight:650;margin-top:5px}.editor-tools input[type=range]{accent-color:var(--purple);padding:0;margin:2px 0 8px}.editor-tools output{color:#d9baff;font-variant-numeric:tabular-nums}.editor-actions{gap:7px;margin:8px 0}.editor-actions button{flex:1;border:1px solid var(--line);border-radius:10px;background:#241832;color:white;padding:10px;font-weight:700}.editor-actions label{flex:1;display:block}.editor-actions select{margin:3px 0 0;padding:9px}.photo-filters{display:flex;gap:7px;overflow-x:auto;padding:8px 0 3px}.photo-filters button{flex:none;border:1px solid var(--line);border-radius:20px;padding:8px 12px;background:#241832;color:#fff;font-size:12px;font-weight:750}.photo-filters button.active{background:linear-gradient(110deg,#8751c9,#bd5ea8);border-color:transparent}.camera-studio{position:fixed;inset:0;z-index:1500;background:#07040c;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 14px calc(14px + env(safe-area-inset-bottom));gap:12px}.camera-studio.hidden{display:none!important}.camera-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;overflow:hidden;border-radius:20px;background:#120b1c}.camera-stage video{width:100%;height:100%;object-fit:cover;transform:scaleX(1);filter:var(--camera-filter,none)}.camera-stage .camera-hint{position:absolute;left:12px;right:12px;bottom:12px;text-align:center;color:#fff;text-shadow:0 1px 5px #000;font-size:12px;pointer-events:none}.camera-toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center}.camera-toolbar button,.camera-capture{border:1px solid #ffffff35;border-radius:14px;background:#241832;color:#fff;padding:11px 13px;font-weight:750}.camera-capture{width:76px;height:76px;border-radius:50%;border:5px solid #ffffffdd;background:linear-gradient(135deg,#b47aff,#f18bd4);color:#180d25;font-size:12px;font-weight:950}.camera-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 0}.camera-filters button{flex:none;border:1px solid #ffffff40;border-radius:18px;background:#ffffff18;color:#fff;padding:7px 11px;font-size:12px}.camera-filters button.active{background:#bd83ff;color:#180d25;border-color:#bd83ff}.camera-flash-overlay{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:1600;transition:opacity .12s}.camera-flash-overlay.flash{opacity:1}.camera-top-note{color:#cdb8e0;text-align:center;font-size:12px}
 input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e0915;color:white;margin:6px 0 12px;font:inherit}textarea{min-height:90px;resize:vertical}label{font-size:13px;color:var(--muted)}
 .bottom{position:fixed;z-index:8;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:0;background:#100a19f5;border-top:1px solid var(--line);padding:7px 2px calc(7px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
 .bottom button{flex:1;min-width:0;border:0;background:none;color:var(--muted);font-size:10px;line-height:1.3;padding:4px 1px;white-space:nowrap}.bottom button span{display:block;font-size:20px;line-height:1.25;margin-bottom:2px}.bottom button.active{color:var(--purple)}
@@ -128,7 +128,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <input id="galleryFile" class="upload-file-input" type="file" accept="video/*">
 <img id="uploadImagePreview" class="upload-preview hidden" alt="Hordhaca sawirka">
 <video id="uploadVideoPreview" class="upload-preview hidden" controls playsinline></video>
-<div id="photoEditor" class="photo-editor hidden"><strong>✨ Qurxi sawirkaaga</strong><p class="muted small">Dooro filter; isbeddelka waxaa lagu kaydinayaa sawirka aad soo gelinayso.</p><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Vivid</button><button type="button" data-photo-filter="portrait">Portrait</button><button type="button" data-photo-filter="warm">Warm</button><button type="button" data-photo-filter="cool">Cool</button><button type="button" data-photo-filter="mono">Madow/Caddaan</button><button type="button" data-photo-filter="soft">Soft</button></div></div>
+<div id="photoEditor" class="photo-editor hidden"><strong>✨ Istuudiyaha Qurxinta Sawirka</strong><p class="muted small">Taabo shaandheeye ama hagaaji iftiinka, midabka iyo cabbirka. Isbeddellada waxaa lagu kaydinayaa sawirka aad MADAL soo gelinayso.</p><label>Shaandheeyeyaasha</label><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Nadiif</button><button type="button" data-photo-filter="portrait">Weji Qurux</button><button type="button" data-photo-filter="warm">Diirran</button><button type="button" data-photo-filter="cool">Qabow</button><button type="button" data-photo-filter="mono">Madow iyo Caddaan</button><button type="button" data-photo-filter="soft">Jilicsan</button><button type="button" data-photo-filter="night">Habeen</button><button type="button" data-photo-filter="gold">Dahab</button></div><div class="editor-tools"><label for="editBrightness">☀ Iftiin <output id="brightnessValue">100%</output></label><input id="editBrightness" type="range" min="50" max="160" value="100"><label for="editContrast">Kala duwanaanshaha <output id="contrastValue">100%</output></label><input id="editContrast" type="range" min="60" max="160" value="100"><label for="editSaturation">Xoojinta midabka <output id="saturationValue">100%</output></label><input id="editSaturation" type="range" min="0" max="180" value="100"><label for="editWarmth">Diirimaadka <output id="warmthValue">0</output></label><input id="editWarmth" type="range" min="-40" max="40" value="0"><div class="row editor-actions"><button type="button" id="rotatePhoto">↻ Wareeji</button><button type="button" id="resetPhotoEdit">Dib u celi</button><label for="editCrop">Qaabka sawirka</label><select id="editCrop"><option value="original">Asalka</option><option value="square">Labajibbaaran</option><option value="portrait">Dheer (4:5)</option></select></div><label for="photoCaption">Qoraal sawirka saar (ikhtiyaari)</label><input id="photoCaption" maxlength="80" placeholder="Qor eray ama fariin..."></div><p class="muted small">Talo: HD Nadiif wuxuu hagaajiyaa muuqaalka; tayada ugu dambaysa waxay ku xiran tahay sawirka asalka ah.</p></div>
 <p id="selectedMediaName" class="muted small">Weli waxba lama dooran.</p>
 <label for="title">Cinwaanka</label><input id="title" maxlength="120" placeholder="Cinwaanka ama qoraalka" required>
 <label for="description">Faahfaahin</label><textarea id="description" maxlength="1000" placeholder="Wax yar nooga sheeg..."></textarea>
@@ -172,7 +172,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), favoritePostIds=new Set(), authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.0";
+const MADAL_VERSION="1.9.1";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -552,14 +552,16 @@ async function refreshProfile(){
 }
 $('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday MADAL.')}});
 let uploadKind='video',capturedUploadFile=null,activePhotoFilter='none';
-const PHOTO_FILTERS={none:'none',vivid:'contrast(1.18) saturate(1.28) brightness(1.04)',portrait:'contrast(1.06) saturate(1.12) brightness(1.08)',warm:'sepia(.18) saturate(1.2) contrast(1.04)',cool:'saturate(1.08) hue-rotate(9deg) brightness(1.04)',mono:'grayscale(1) contrast(1.12)',soft:'brightness(1.08) saturate(.88) contrast(.94)'};
+const PHOTO_FILTERS={none:'none',vivid:'contrast(1.18) saturate(1.28) brightness(1.04)',portrait:'contrast(1.06) saturate(1.12) brightness(1.08)',warm:'sepia(.18) saturate(1.2) contrast(1.04)',cool:'saturate(1.08) hue-rotate(9deg) brightness(1.04)',mono:'grayscale(1) contrast(1.12)',soft:'brightness(1.08) saturate(.88) contrast(.94)',night:'brightness(1.22) contrast(1.12) saturate(1.12)',gold:'sepia(.28) saturate(1.3) contrast(1.08)'};
+let photoRotation=0;
+function photoAdjustments(){return {brightness:Number($('editBrightness')?.value||100),contrast:Number($('editContrast')?.value||100),saturation:Number($('editSaturation')?.value||100),warmth:Number($('editWarmth')?.value||0)}}
+function updatePhotoPreview(){const a=photoAdjustments(),filter=PHOTO_FILTERS[activePhotoFilter];$('uploadImagePreview').style.filter=[filter,`brightness(${a.brightness}%)`,`contrast(${a.contrast}%)`,`saturate(${a.saturation}%)`].filter(Boolean).join(' ');$('uploadImagePreview').style.transform=`rotate(${photoRotation}deg)`;$('brightnessValue').textContent=a.brightness+'%';$('contrastValue').textContent=a.contrast+'%';$('saturationValue').textContent=a.saturation+'%';$('warmthValue').textContent=String(a.warmth)}
 let cameraStream=null,cameraFacing='environment',cameraRecorder=null,cameraChunks=[],cameraTorchOn=false,screenFlashOn=false;
-function setPhotoFilter(name){
- activePhotoFilter=PHOTO_FILTERS[name]?name:'none';
- document.querySelectorAll('[data-photo-filter]').forEach(b=>b.classList.toggle('active',b.dataset.photoFilter===activePhotoFilter));
- $('uploadImagePreview').style.filter=PHOTO_FILTERS[activePhotoFilter];
-}
+function setPhotoFilter(name){activePhotoFilter=PHOTO_FILTERS[name]?name:'none';document.querySelectorAll('[data-photo-filter]').forEach(b=>b.classList.toggle('active',b.dataset.photoFilter===activePhotoFilter));updatePhotoPreview()}
 document.querySelectorAll('[data-photo-filter]').forEach(b=>b.addEventListener('click',()=>setPhotoFilter(b.dataset.photoFilter)));
+['editBrightness','editContrast','editSaturation','editWarmth'].forEach(id=>$(id).addEventListener('input',updatePhotoPreview));
+$('rotatePhoto').addEventListener('click',()=>{photoRotation=(photoRotation+90)%360;updatePhotoPreview()});
+$('resetPhotoEdit').addEventListener('click',()=>{activePhotoFilter='none';photoRotation=0;['editBrightness','editContrast','editSaturation'].forEach(id=>$(id).value=100);$('editWarmth').value=0;$('editCrop').value='original';$('photoCaption').value='';setPhotoFilter('none')});
 function setUploadKind(kind){
  uploadKind=kind;capturedUploadFile=null;
  document.querySelectorAll('[data-upload-kind]').forEach(b=>b.classList.toggle('active',b.dataset.uploadKind===kind));
@@ -569,7 +571,7 @@ function setUploadKind(kind){
  $('uploadLimit').textContent=kind==='image'?'Sawir: ugu badnaan 15 MB. Filters-ka waxaa lagu kaydinayaa sawirka.':'Fiidiyow: ugu badnaan 250 MB.';
  $('uploadImagePreview').classList.add('hidden');$('uploadVideoPreview').classList.add('hidden');$('photoEditor').classList.add('hidden');
  $('mediaFile').value='';$('galleryFile').value='';$('selectedMediaName').textContent='Weli waxba lama dooran.';
- setPhotoFilter('none');
+ setPhotoFilter('none');photoRotation=0;['editBrightness','editContrast','editSaturation'].forEach(id=>$(id).value=100);$('editWarmth').value=0;$('editCrop').value='original';$('photoCaption').value='';
 }
 document.querySelectorAll('[data-upload-kind]').forEach(b=>b.addEventListener('click',()=>setUploadKind(b.dataset.uploadKind)));
 $('cameraPick').addEventListener('click',()=>{ $('galleryFile').value=''; openCameraStudio(); });
@@ -587,7 +589,7 @@ function previewUploadFile(file){
  $('uploadImagePreview').classList.toggle('hidden',!isImage);
  $('uploadVideoPreview').classList.toggle('hidden',isImage);
  $('photoEditor').classList.toggle('hidden',!isImage);
- if(isImage){$('uploadImagePreview').src=url;$('uploadImagePreview').style.filter=PHOTO_FILTERS[activePhotoFilter]}
+ if(isImage){$('uploadImagePreview').src=url;updatePhotoPreview()}
  else $('uploadVideoPreview').src=url;
 }
 $('mediaFile').addEventListener('change',()=>previewUploadFile($('mediaFile').files[0]));
@@ -652,15 +654,23 @@ $('captureMediaButton').addEventListener('click',async()=>{
 });
 function activeCameraFilter(){return document.querySelector('[data-camera-filter].active')?.dataset.cameraFilter||'none'}
 async function applyPhotoFilter(file){
- if(uploadKind!=='image'||activePhotoFilter==='none')return file;
  const image=new Image(),url=URL.createObjectURL(file);
  try{
   await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url});
-  const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
-  const ctx=canvas.getContext('2d');ctx.filter=PHOTO_FILTERS[activePhotoFilter];ctx.drawImage(image,0,0);
-  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.94));
-  if(!blob)throw new Error('Filter-ka sawirka lama samayn karin.');
-  return new File([blob],(file.name.replace(/\.[^.]+$/,'')||'madal-photo')+'-MADAL.jpg',{type:'image/jpeg',lastModified:Date.now()});
+  const a=photoAdjustments(),rotation=((photoRotation%360)+360)%360,rad=rotation*Math.PI/180;
+  const crop=$('editCrop').value;let sw=image.naturalWidth,sh=image.naturalHeight;
+  if(crop==='square'){const side=Math.min(sw,sh);sw=side;sh=side}
+  else if(crop==='portrait'){const ratio=4/5;if(sw/sh>ratio)sw=sh*ratio;else sh=sw/ratio}
+  const outW=Math.max(1,Math.round(Math.abs(sw*Math.cos(rad))+Math.abs(sh*Math.sin(rad))));
+  const outH=Math.max(1,Math.round(Math.abs(sw*Math.sin(rad))+Math.abs(sh*Math.cos(rad))));
+  const canvas=document.createElement('canvas');canvas.width=outW;canvas.height=outH;
+  const ctx=canvas.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,outW,outH);ctx.translate(outW/2,outH/2);ctx.rotate(rad);
+  const warm=a.warmth;ctx.filter=[PHOTO_FILTERS[activePhotoFilter],`brightness(${a.brightness}%)`,`contrast(${a.contrast}%)`,`saturate(${a.saturation}%)`,warm>0?`sepia(${warm/100})`:warm<0?`hue-rotate(${Math.abs(warm)}deg)`:''].filter(Boolean).join(' ');
+  ctx.drawImage(image,(image.naturalWidth-sw)/2,(image.naturalHeight-sh)/2,sw,sh,-sw/2,-sh/2,sw,sh);
+  const caption=$('photoCaption').value.trim();if(caption){ctx.filter='none';const size=Math.max(22,Math.round(outW*.055));ctx.font='bold '+size+'px system-ui, sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.lineWidth=Math.max(3,size*.12);ctx.strokeStyle='#000b';ctx.fillStyle='#fff';ctx.strokeText(caption,outW/2,outH-size*.8);ctx.fillText(caption,outW/2,outH-size*.8)}
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.96));
+  if(!blob)throw new Error('Sawirka lama kaydin karin. Isku day mar kale.');
+  return new File([blob],(file.name.replace(/\.[^.]+$/,'')||'sawir')+'-MADAL.jpg',{type:'image/jpeg',lastModified:Date.now()});
  }finally{URL.revokeObjectURL(url)}
 }
 $('uploadForm').addEventListener('submit',async e=>{
