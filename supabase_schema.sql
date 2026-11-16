@@ -32,7 +32,7 @@ create policy "MADAL delete own files" on storage.objects for delete to authenti
 
 -- Migration for an existing MADAL database: enable video-only uploads.
 alter table public.media_posts drop constraint if exists media_posts_media_type_check;
-alter table public.media_posts add constraint media_posts_media_type_check check (media_type in ('video','qiso','podcast'));
+alter table public.media_posts add constraint media_posts_media_type_check check (media_type in ('video','image','qiso','podcast'));
 
 
 -- MADAL social features migration: likes, comments, and follows.
@@ -142,7 +142,7 @@ create table if not exists public.madal_messages (
   id uuid primary key default gen_random_uuid(),
   sender_id uuid not null references auth.users(id) on delete cascade,
   recipient_id uuid not null references auth.users(id) on delete cascade,
-  body text not null check (char_length(body) between 1 and 2000),
+  body text not null check (char_length(body) between 1 and 4000),
   created_at timestamptz not null default now(),
   read_at timestamptz,
   constraint madal_no_self_message check (sender_id <> recipient_id)
@@ -162,6 +162,15 @@ on public.madal_messages(sender_id, recipient_id, created_at desc);
 create index if not exists madal_messages_recipient_unread_idx
 on public.madal_messages(recipient_id, read_at)
 where read_at is null;
+
+-- Recipients may update only the read receipt on incoming messages.
+drop policy if exists "MADAL messages recipient mark read" on public.madal_messages;
+create policy "MADAL messages recipient mark read"
+on public.madal_messages for update to authenticated
+using (auth.uid() = recipient_id)
+with check (auth.uid() = recipient_id);
+revoke update on table public.madal_messages from authenticated;
+grant update (read_at) on table public.madal_messages to authenticated;
 
 
 -- Enable realtime events for the feed and private messages when the default
