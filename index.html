@@ -643,13 +643,15 @@ async function loadInbox(){
  ]);
  if(profilesResult.error){host.innerHTML='<p class="inbox-empty">People in your conversations could not be loaded.</p>';return}
  const profiles=new Map((profilesResult.data||[]).map(profile=>[profile.id,profile]));
+ if(followsResult.error){host.innerHTML='<p class="inbox-empty">Inbox filters could not be loaded. Please try again.</p>';console.warn('GoGol inbox follows:',followsResult.error.message);return}
  const followed=new Set((followsResult.data||[]).map(row=>row.following_id));
  const stars=inboxStarIds();
+ const isRequest=row=>row.message.sender_id===row.id&&!followed.has(row.id);
  let rows=ids.map(id=>({id,message:latest.get(id),profile:profiles.get(id)})).filter(row=>row.profile);
  if(activeInboxFilter==='unread')rows=rows.filter(row=>row.message.recipient_id===me&&!row.message.read_at);
- if(activeInboxFilter==='requests')rows=rows.filter(row=>row.message.sender_id===row.id&&!followed.has(row.id));
+ if(activeInboxFilter==='requests')rows=rows.filter(isRequest);
  if(activeInboxFilter==='starred')rows=rows.filter(row=>stars.has(row.id));
- if(activeInboxFilter==='main')rows=rows.filter(row=>followed.has(row.id)||!stars.has(row.id));
+ if(activeInboxFilter==='main')rows=rows.filter(row=>!isRequest(row));
  host.innerHTML=rows.map(row=>{
   const profile=row.profile,message=row.message,unread=message.recipient_id===me&&!message.read_at;
   const avatar=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((profile.display_name||profile.username||'G').trim()[0].toUpperCase());
