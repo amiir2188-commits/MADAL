@@ -122,7 +122,11 @@ async function liveShowRoom(session,title,role){
  await liveRoom.connect(credentials.server_url,credentials.token);
  if(role==="host"){
   liveLocalTracks=await LiveKitCreateTracks();
-  for(const track of liveLocalTracks) await liveRoom.localParticipant.publishTrack(track);
+  for(const track of liveLocalTracks) {
+   await liveRoom.localParticipant.publishTrack(track);
+   const preview=track.attach();preview.autoplay=true;preview.playsInline=true;
+   liveEl("gLiveStage").append(preview);
+  }
   liveStatus("🔴 Waxaad si toos ah u baahinaysaa: "+title);
  }else{
   liveStatus("🔴 LIVE: "+title+" • Waad daawanaysaa");
