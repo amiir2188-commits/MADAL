@@ -119,7 +119,7 @@ jobs:
             if (!migration.includes('create table if not exists public.' + table)) throw new Error('Missing safety migration table: ' + table);
           }
           const controls = [...html.matchAll(/<(?:input|textarea|select)\b[^>]*>/gi)].map(match => match[0]);
-          const unlabeled = controls.filter(tag => !/\baria-label\\s*=|\baria-labelledby\\s*=/.test(tag));
+          const unlabeled = controls.filter(tag => !tag.includes('aria-label=') && !tag.includes('aria-labelledby='));
           if (unlabeled.length) throw new Error('Found form controls without explicit accessible labels: ' + unlabeled.join(' | '));
           console.log('GoGol version, safety migration, controls and accessibility labels are consistent.');
           NODE
