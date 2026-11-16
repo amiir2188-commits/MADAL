@@ -1,7 +1,7 @@
 {
-  "version": "1.10.28",
+  "version": "1.10.29",
   "name": "GoGol",
-  "message": "Feed pagination-ka waa la adkeeyay: kala-horreynta xogtu waa mid deggan marka waqtiyada la soo geliyo is le'eg yihiin, badhanka sii-rarkana waa la hagaajiyay.",
+  "message": "Soo rarista bogga xiga hadda waxay ilaalisaa booska scroll-ka ee daawaduhu joogay, si feed-ku uusan dib ugu boodin marka muuqaalada cusub la keeno.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }

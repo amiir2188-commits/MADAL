@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.28';
+const MADAL_VERSION='1.10.29';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -868,7 +868,9 @@ async function loadMedia({append=false}={}){
  if(append){const seen=new Set(allPosts.map(post=>String(post.id)));allPosts.push(...page.filter(post=>!seen.has(String(post.id))))}
  else allPosts=page;
  mediaLoadingMore=false;
+ const feedScrollTop=append?$('allFeed').scrollTop:0;
  await renderFeed();if(token!==mediaLoadToken)return;
+ if(append)$('allFeed').scrollTop=feedScrollTop;
  if(!append&&currentUser){await loadMyProfile();if(token!==mediaLoadToken)return;await loadActivity()}
 }
 let profileLoadToken=0;
