@@ -634,21 +634,26 @@ $('allFeed').addEventListener('click',async e=>{
  }catch(error){console.warn('GoGol social action failed:',error);notice('Ficilka lama dhamaystirin: '+(error.message||'Fadlan mar kale isku day.'))}
  finally{actionButton.disabled=false}
 });
+let commentSubmitToken=0;
 $('allFeed').addEventListener('submit',async e=>{
  const form=e.target.closest('[data-comment-form]');if(!form)return;
  e.preventDefault();if(!currentUser){location.href='./account.html';return}
  const textarea=form.querySelector('textarea'),submit=form.querySelector('button[type="submit"]');
  const body=textarea?.value.trim();if(!body||!submit)return;
  if(submit.disabled)return;
+ const token=++commentSubmitToken,userId=currentUser.id,postId=form.dataset.commentForm;
  submit.disabled=true;const originalLabel=submit.textContent;submit.textContent='Waa la dirayaa...';
  try{
-  const {error}=await db.from('media_comments').insert({post_id:form.dataset.commentForm,user_id:currentUser.id,body});
+  const {error}=await db.from('media_comments').insert({post_id:postId,user_id:userId,body});
+  if(token!==commentSubmitToken||currentUser?.id!==userId)return;
   if(error)throw error;
-  await loadMedia();$('comments-'+form.dataset.commentForm)?.classList.remove('hidden');
+  await loadMedia();
+  if(token!==commentSubmitToken||currentUser?.id!==userId)return;
+  $('comments-'+postId)?.classList.remove('hidden');
   const updatedComposer=$('comments-'+form.dataset.commentForm)?.querySelector('textarea');
   if(updatedComposer)updatedComposer.focus({preventScroll:true});
  }catch(error){console.warn('GoGol comment send:',error);notice('Faallada lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
- finally{submit.disabled=false;submit.textContent=originalLabel}
+ finally{if(token===commentSubmitToken){submit.disabled=false;submit.textContent=originalLabel}}
 });
 
 $('searchUsers').addEventListener('click',searchMadalUsers);
@@ -657,11 +662,12 @@ let messageSearchToken=0;
 async function searchMadalUsers(){
  const token=++messageSearchToken;
  if(!currentUser){notice('Marka hore soo gal si aad fariin u dirto.');location.href='./account.html';return}
+ const userId=currentUser.id;
  const query=$('messageSearch').value.trim().toLowerCase().replace(/^@/,'').slice(0,64);
  if(query.length<2){$('userResults').textContent='Geli ugu yaraan 2 xaraf oo username ah.';return}
  $('userResults').textContent='Waa la raadinayaa...';
- const {data,error}=await db.from('madal_profiles').select('id,username,display_name').ilike('username','%'+safeLikeTerm(query)+'%').neq('id',currentUser.id).limit(12);
- if(token!==messageSearchToken)return;
+ const {data,error}=await db.from('madal_profiles').select('id,username,display_name').ilike('username','%'+safeLikeTerm(query)+'%').neq('id',userId).limit(12);
+ if(token!==messageSearchToken||currentUser?.id!==userId)return;
  if(error){$('userResults').textContent='Raadintu ma shaqayn: '+error.message+' — hubi inaad socodsiisay supabase_schema.sql.';return}
  if(!data?.length){$('userResults').textContent='Qof username-kan leh lama helin.';return}
  $('userResults').innerHTML=data.map(user=>'<button type="button" class="secondary" data-chat-user="'+escapeHtml(user.id)+'">@'+escapeHtml(user.username)+' · '+escapeHtml(user.display_name)+'</button>').join('');
@@ -737,8 +743,10 @@ async function openConversation(userId){
  $('conversationTitle').textContent='@'+user.username;
  $('conversationPanel').classList.remove('hidden');
  await loadConversation();
+ if(openToken!==conversationOpenToken||activeChatUser?.id!==user.id||currentUser?.id!==me)return;
  if(chatChannel)await db.removeChannel(chatChannel);
- chatChannel=db.channel('madal-chat-'+currentUser.id+'-'+user.id)
+ if(openToken!==conversationOpenToken||activeChatUser?.id!==user.id||currentUser?.id!==me)return;
+ chatChannel=db.channel('madal-chat-'+me+'-'+user.id)
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'madal_messages',filter:'recipient_id=eq.'+currentUser.id},payload=>{
    if(payload.new?.sender_id===activeChatUser?.id)loadConversation();
   }).subscribe();
@@ -1088,6 +1096,7 @@ db.auth.onAuthStateChange((event,session)=>{
  if(String(nextUserId||'')!==String(previousUserId||'')){
   socialLoadToken++;activityLoadToken++;profileLoadToken++;profileRefreshToken++;
   inboxLoadToken++;conversationOpenToken++;conversationLoadToken++;messageSearchToken++;
+  commentSubmitToken++;
   if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}
   activeChatUser=null;
   $('conversationPanel')?.classList.add('hidden');
