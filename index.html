@@ -628,6 +628,7 @@ $('allFeed').addEventListener('click',async e=>{
    const result=followsByUser.has(target)
     ?await db.from('user_follows').delete().eq('follower_id',currentUser.id).eq('following_id',target)
     :await db.from('user_follows').upsert({follower_id:currentUser.id,following_id:target},{onConflict:'follower_id,following_id',ignoreDuplicates:true});
+   if(currentUser?.id!==actionUserId)return;
    if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else await loadMedia();
   }
  }catch(error){console.warn('GoGol social action failed:',error);notice('Ficilka lama dhamaystirin: '+(error.message||'Fadlan mar kale isku day.'))}
@@ -1057,6 +1058,7 @@ async function applyPhotoFilter(file){
 }
 $('uploadForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!currentUser){notice('Marka hore fadlan GoGol ku soo gal.');location.href='./account.html';return}
+ const uploaderId=currentUser.id;
  let file=selectedUploadFile();if(!file){notice('Marka hore Camera ama Gallery ka dooro fayl.');return}
  const allowedImageTypes=['image/jpeg','image/png','image/webp','image/gif'];
  const allowedVideoTypes=['video/mp4','video/webm','video/quicktime'];
@@ -1067,12 +1069,13 @@ $('uploadForm').addEventListener('submit',async e=>{
  const button=$('uploadButton');button.disabled=true;button.textContent='Waa la soo gelinayaa...';
  try{
   if(uploadKind==='image')file=await applyPhotoFilter(file);
+  if(currentUser?.id!==uploaderId)throw new Error('Akoonka waa isbeddelay. Dib u dooro faylka oo isku day mar kale.');
   if(uploadKind==='image'&&file.size>15*1024*1024)throw new Error('Sawirka la farsameeyey ha ka weynaan 15 MB. Yaree cabbirka ama dooro sawir kale.');
   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  const path=currentUser.id+'/'+Date.now()+'-'+safeName;
+  const path=uploaderId+'/'+Date.now()+'-'+safeName;
   const {error:uploadError}=await db.storage.from('madal-media').upload(path,file,{contentType:file.type,upsert:false});
   if(uploadError)throw uploadError;
-  const record={user_id:currentUser.id,title:$('title').value.trim(),description:$('description').value.trim(),media_type:uploadKind,mime_type:file.type,storage_path:path,status:'published'};
+  const record={user_id:uploaderId,title:$('title').value.trim(),description:$('description').value.trim(),media_type:uploadKind,mime_type:file.type,storage_path:path,status:'published'};
   const {error:insertError}=await db.from('media_posts').insert(record);
   if(insertError){await db.storage.from('madal-media').remove([path]);throw insertError}
   $('uploadForm').reset();setUploadKind('video');capturedUploadFile=null;$('selectedMediaName').textContent='Weli waxba lama dooran.';notice('Waa lagu guulaystay soo gelinta!');await loadMedia();showPage('home');
