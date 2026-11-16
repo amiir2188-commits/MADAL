@@ -407,8 +407,18 @@ function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function postType(p){return String(p.media_type||p.type||p.category||'').toLowerCase()}
 function postPath(p){return p.storage_path||p.file_path||p.path||''}
 const mediaUrlCache=new Map(),mediaUrlPending=new Map();
+let mediaUrlGeneration=0,mediaUrlOwnerId=String(currentUser?.id||'anonymous');
+function resetMediaUrlSession(user){
+ const nextOwner=String(user?.id||'anonymous');
+ if(nextOwner===mediaUrlOwnerId)return;
+ mediaUrlOwnerId=nextOwner;
+ mediaUrlGeneration++;
+ mediaUrlCache.clear();
+ mediaUrlPending.clear();
+}
 async function mediaUrl(p){
  const path=postPath(p);if(!path)return p.media_url||p.url||'';
+ const generation=mediaUrlGeneration;
  const key=String(currentUser?.id||'anonymous')+'|'+path,cached=mediaUrlCache.get(key);
  if(cached&&cached.expiresAt>Date.now())return cached.url;
  if(cached)mediaUrlCache.delete(key);
@@ -418,10 +428,10 @@ async function mediaUrl(p){
    const {data,error}=await db.storage.from('madal-media').createSignedUrl(path,3600);
    if(error){console.warn('GoGol media URL:',error.message);return ''}
    const url=data?.signedUrl||'';
-   if(url){mediaUrlCache.set(key,{url,expiresAt:Date.now()+50*60*1000});if(mediaUrlCache.size>250)mediaUrlCache.delete(mediaUrlCache.keys().next().value)}
+   if(url&&generation===mediaUrlGeneration){mediaUrlCache.set(key,{url,expiresAt:Date.now()+50*60*1000});if(mediaUrlCache.size>250)mediaUrlCache.delete(mediaUrlCache.keys().next().value)}
    return url;
   }catch(error){console.warn('GoGol media URL:',error?.message||error);return ''}
-  finally{mediaUrlPending.delete(key)}
+  finally{if(mediaUrlPending.get(key)===request)mediaUrlPending.delete(key)}
  })();
  mediaUrlPending.set(key,request);
  return request;
@@ -1040,7 +1050,7 @@ $('uploadForm').addEventListener('submit',async e=>{
  }catch(err){console.error(err);notice('Soo gelintu way fashilantay: '+err.message)}
  finally{button.disabled=false;button.textContent='Soo geli GoGol'}
 });
-db.auth.onAuthStateChange((event,session)=>{if(!session?.user){if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}activeChatUser=null;$('conversationPanel')?.classList.add('hidden')}refreshProfile()});
+db.auth.onAuthStateChange((event,session)=>{resetMediaUrlSession(session?.user||null);if(!session?.user){if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}activeChatUser=null;$('conversationPanel')?.classList.add('hidden')}refreshProfile()});
 $('shareButton').addEventListener('click',async()=>{
  const shareData={title:'GoGol — Fiidiyowyo',text:'Ku soo biir GoGol: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
  try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga GoGol waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
