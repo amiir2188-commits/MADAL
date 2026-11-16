@@ -1,7 +1,7 @@
 {
-  "version": "1.10.22",
+  "version": "1.10.23",
   "name": "GoGol",
-  "message": "GoGol 1.10.22 — hagaajinta OTP, amniga warbixinnada iyo accessibility.",
+  "message": "GoGol 1.10.23 — xasuusta faylasha preview-ga iyo sii-daynta URL-yada.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
