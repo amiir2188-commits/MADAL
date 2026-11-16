@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
     room: session.room_name,
     canPublish: body.role === "host",
     canSubscribe: true,
-    canPublishData: false,
+    canPublishData: true,
   });
 
   return reply({ token: await token.toJwt(), server_url: livekitUrl, title: session.title });
