@@ -54,6 +54,24 @@ jobs:
           npx cap init MADAL com.madal.app --web-dir www
           node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
+          node <<'NODE'
+          const fs = require('fs');
+          const file = 'android/app/src/main/AndroidManifest.xml';
+          let manifest = fs.readFileSync(file, 'utf8');
+          const declarations = [
+            '<uses-permission android:name="android.permission.CAMERA" />',
+            '<uses-permission android:name="android.permission.RECORD_AUDIO" />',
+            '<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />',
+            '<uses-feature android:name="android.hardware.camera" android:required="false" />',
+            '<uses-feature android:name="android.hardware.camera.flash" android:required="false" />'
+          ];
+          for (const declaration of declarations) {
+            if (!manifest.includes(declaration)) {
+              manifest = manifest.replace(/<manifest\\b[^>]*>/, tag => tag + '\\n    ' + declaration);
+            }
+          }
+          fs.writeFileSync(file, manifest);
+          NODE
           MADAL_VERSION="$(node -e "console.log(require('./version.json').version)")"
           MADAL_VERSION_CODE="$(node -e "const [a,b,c]=require('./version.json').version.split('.').map(Number);console.log(a*1000000+b*1000+c)")"
           export MADAL_VERSION MADAL_VERSION_CODE
