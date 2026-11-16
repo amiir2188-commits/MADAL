@@ -311,7 +311,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION="1.10.4";
+const MADAL_VERSION='1.10.5';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -691,7 +691,11 @@ async function loadConversation(){
   return '<div class="message-bubble '+(mine?'mine':'')+'"><strong>'+(mine?'Adiga':'@'+escapeHtml(activeChatUser.username))+'</strong><p>'+escapeHtml(message.body)+'</p><small>'+new Date(message.created_at).toLocaleString('so-SO')+'</small></div>';
  }).join('')||'<p class="muted">Wada sheekaysigu waa cusub yahay. Dir fariinta koowaad.</p>';
  $('messageList').scrollTop=$('messageList').scrollHeight;
-
+ if((data||[]).some(message=>message.recipient_id===me&&!message.read_at)){
+  const {error:readError}=await db.from('madal_messages').update({read_at:new Date().toISOString()}).eq('sender_id',other).eq('recipient_id',me).is('read_at',null);
+  if(readError)console.warn('GoGol read receipt:',readError.message);
+  else loadInbox();
+ }
 }
 $('messageForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!currentUser){location.href='./account.html';return}
