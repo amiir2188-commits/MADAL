@@ -1,14 +1,14 @@
 GOGOL — APP BULSHO FIIDIYOW AH
-Nooca ugu dambeeya ee Android iyo Web ee la xaqiijiyey: 1.10.53
+Nooca ugu dambeeya ee Android iyo Web ee la xaqiijiyey: 1.10.54
 
 GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo, laguna isticmaalo Android iyo web.
 
 SOO DEJINTA
 APK Android:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.53/app-debug.apk
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/app-debug.apk
 
 Sii-daynta iyo dhammaan faylasha:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.53/madal-web.zip
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/madal-web.zip
 
 WAXYAABAHA NOOCA BETA-GA KU JIRA
 - Daawashada iyo soo gelinta sawirro iyo fiidiyowyo; album sawirro badan (ilaa 10 sawir).
@@ -18,7 +18,7 @@ WAXYAABAHA NOOCA BETA-GA KU JIRA
 - Raadinta dadka, profiles iyo fariimo gaar ah.
 - Wadaagis, repost iyo kaydinta waxyaabaha la jecleystay.
 - Ogeysiisyo ku saabsan cusboonaysiinta web-content-ka.
-- Stories: soo geli, daawo, tirtir sawirro/fiidiyowyo; waxay dhacayaan 24 saac kadib (waxay u baahan yihiin migration-ka Supabase 008).
+- Stories: soo geli, daawo, u gudub Hore/Xiga, tirtir sawirro/fiidiyowyo; waxay dhacayaan 24 saac kadib (waxay u baahan yihiin migration-ka Supabase 008).
 - Bogagga asturnaanta, xeerarka bulshada iyo shuruudaha isticmaalka.
 - Aqbalid cad oo shuruudaha iyo siyaasadda asturnaanta ah marka akoon cusub la samaynayo.
 - Tirtiridda joogtada ah ee akoonka, fariimaha iyo faylasha isticmaalaha (waxay u baahan tahay migration-ka Supabase iyo Edge Function la daabacay).
