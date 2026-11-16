@@ -67,7 +67,7 @@ jobs:
           ];
           for (const declaration of declarations) {
             if (!manifest.includes(declaration)) {
-              manifest = manifest.replace(/<manifest\\b[^>]*>/, tag => tag + '\\n    ' + declaration);
+              manifest = manifest.replace(/<manifest\b[^>]*>/, tag => tag + '\n    ' + declaration);
             }
           }
           fs.writeFileSync(file, manifest);
