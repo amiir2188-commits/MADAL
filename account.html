@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090512">
-<title>MADAL - Akoon</title>
+<title>GoGol - Akoon</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;padding:25px;display:grid;place-items:center;background:#090512;color:white;font-family:Arial,sans-serif}
@@ -24,13 +24,13 @@ a{color:#c4a5ff}
 </head>
 <body>
 <main>
-<h1>MADAL</h1>
+<h1>GoGol</h1>
 <p>Fiidiyowyada Soomaaliyeed halkaan ayay ku kulmaan.</p>
 <div class="tabs">
 <button type="button" onclick="mode('signup')">Akoon samee</button>
 <button type="button" onclick="mode('login')">Soo gal</button>
 </div>
-<h2 id="heading">Ku soo biir MADAL</h2>
+<h2 id="heading">Ku soo biir GoGol</h2>
 <form id="form">
 <div id="extra">
 <input id="name" placeholder="Magacaaga" autocomplete="name" required>
@@ -43,7 +43,7 @@ a{color:#c4a5ff}
 <button id="submit" type="submit">Samee akoon</button>
 </form>
 <p id="status" role="status" aria-live="polite"></p>
-<p><a href="./index.html">Ku noqo MADAL</a></p>
+<p><a href="./index.html">Ku noqo GoGol</a></p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -54,7 +54,7 @@ let currentMode="signup";
 function mode(value){
  currentMode=value;
  document.getElementById("extra").style.display=value==="signup"?"block":"none";
- document.getElementById("heading").textContent=value==="signup"?"Ku soo biir MADAL":"Ku soo dhowow MADAL";
+ document.getElementById("heading").textContent=value==="signup"?"Ku soo biir GoGol":"Ku soo dhowow GoGol";
  document.getElementById("submit").textContent=value==="signup"?"Samee akoon":"Soo gal";
  document.getElementById("status").textContent="";
  document.getElementById("phoneVerify").style.display="none";
@@ -81,7 +81,7 @@ document.getElementById("verifyEmail").addEventListener("click",async()=>{
   const {data,error}=await db.auth.verifyOtp({email,token,type:"signup"});
   if(error)throw error;
   if(!data.session)throw new Error("Xaqiijinta lama dhammaystirin. Mar kale isku day.");
-  status.textContent="Email-ka waa la xaqiijiyey. MADAL ayaa furmaya...";
+  status.textContent="Email-ka waa la xaqiijiyey. GoGol ayaa furmaya...";
   setTimeout(()=>location.replace("./index.html"),800);
  }catch(error){status.textContent="Cilad: "+(error.message||"Koodhka lama xaqiijin.");}
  finally{btn.disabled=false;}
@@ -98,7 +98,7 @@ document.getElementById("verifyPhone").addEventListener("click",async()=>{
   const {data,error}=await db.auth.verifyOtp({phone,token,type:"sms"});
   if(error)throw error;
   if(!data.session)throw new Error("Xaqiijinta lama dhammaystirin. Mar kale isku day.");
-  status.textContent="Lambarka waa la xaqiijiyey. MADAL ayaa furmaya...";
+  status.textContent="Lambarka waa la xaqiijiyey. GoGol ayaa furmaya...";
   setTimeout(()=>location.replace("./index.html"),800);
  }catch(error){status.textContent="Cilad: "+(error.message||"Koodhka lama xaqiijin.");}
  finally{btn.disabled=false;}
@@ -126,7 +126,7 @@ document.getElementById("form").addEventListener("submit",async e=>{
    }
    if(error)throw error;
    if(data.session){
-    status.textContent="Hambalyo! Akoonkaaga waa diyaar. MADAL ayaa furmaya...";
+    status.textContent="Hambalyo! Akoonkaaga waa diyaar. GoGol ayaa furmaya...";
     setTimeout(()=>location.replace("./index.html"),900);
    }else if(!isEmail){
     document.getElementById("phoneVerify").style.display="block";
@@ -141,7 +141,7 @@ document.getElementById("form").addEventListener("submit",async e=>{
    const {data,error}=await db.auth.signInWithPassword(credentials);
    if(error)throw error;
    if(!data.session)throw new Error("Soo geliddu ma dhammaystirmin. Mar kale isku day.");
-   status.textContent="Waad ku guulaysatay soo gelidda! MADAL ayaa furmaya...";
+   status.textContent="Waad ku guulaysatay soo gelidda! GoGol ayaa furmaya...";
    setTimeout(()=>location.replace("./index.html"),700);
   }
  }catch(error){status.textContent="Cilad: "+(error.message||"Fadlan mar kale isku day.");}
