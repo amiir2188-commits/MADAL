@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.29';
+const MADAL_VERSION='1.10.30';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -563,7 +563,7 @@ async function searchDiscover(){
 }
 $('discoverResults').addEventListener('click',async e=>{
  const follow=e.target.closest('[data-discover-follow]'),message=e.target.closest('[data-discover-message]'),post=e.target.closest('[data-open-post]');
- if(follow){if(!currentUser){location.href='./account.html';return}const id=follow.dataset.discoverFollow;const result=followsByUser.has(id)?await db.from('user_follows').delete().eq('follower_id',currentUser.id).eq('following_id',id):await db.from('user_follows').upsert({follower_id:currentUser.id,following_id:id},{onConflict:'follower_id,following_id',ignoreDuplicates:true});if(currentUser?.id!==actionUserId)return;
+ if(follow){if(!currentUser){location.href='./account.html';return}const id=follow.dataset.discoverFollow,userId=currentUser.id;const result=followsByUser.has(id)?await db.from('user_follows').delete().eq('follower_id',userId).eq('following_id',id):await db.from('user_follows').upsert({follower_id:userId,following_id:id},{onConflict:'follower_id,following_id',ignoreDuplicates:true});if(currentUser?.id!==userId)return;
    if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else{await loadSocialData(allPosts);searchDiscover()}return}
  if(message){if(!currentUser){location.href='./account.html';return}showPage('messages');openConversation(message.dataset.discoverMessage);return}
  if(post){$('videoSearch').value=allPosts.find(p=>String(p.id)===post.dataset.openPost)?.title||'';activeFeedTab='for_you';document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b.dataset.feedTab==='for_you'));showPage('home');await renderFeed()}

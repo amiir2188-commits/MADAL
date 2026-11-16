@@ -128,6 +128,7 @@ jobs:
           if (!html.includes(".order('id',{ascending:false})")) throw new Error('Feed pagination needs a stable tie-breaker');
           if (!html.includes("data-load-more")) throw new Error('Feed pagination control is missing');
           if (!html.includes("const feedScrollTop=append?$('allFeed').scrollTop:0")) throw new Error('Feed pagination must preserve the reader scroll position');
+          if (!html.includes("const id=follow.dataset.discoverFollow,userId=currentUser.id")) throw new Error('Discover follow handler must capture the active user ID safely');
           if (!html.includes('function releaseUploadPreviewUrl()')) throw new Error('Upload preview object URLs must be released');
           if (!html.includes('releaseUploadPreviewUrl();')) throw new Error('Upload flow must release preview URLs');
           for (const marker of ['function clearUploadSelection()', 'clearUploadSelection();', 'function closeCameraStudio(cancelRecording=false)', "addEventListener('click',()=>closeCameraStudio(true))"]) {
