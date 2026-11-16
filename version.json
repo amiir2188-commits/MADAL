@@ -1,7 +1,7 @@
 {
-  "version": "1.10.12",
+  "version": "1.10.13",
   "name": "GoGol",
-  "message": "GoGol 1.10.12 — ilaalinta xogta inbox-ka, ogeysiisyada iyo beddelka akoonka.",
+  "message": "GoGol 1.10.13 — waafajinta Supabase, kaydinta media URL iyo fariimaha.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
