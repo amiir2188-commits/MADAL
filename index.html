@@ -9,6 +9,13 @@
 <title>GoGol — Somali Videos &amp; Stories</title>
 <style>
 :root{color-scheme:dark;--bg:#090512;--panel:#171020;--panel2:#21152f;--line:#38254a;--purple:#b47aff;--pink:#f18bd4;--muted:#b9acc7}
+/* Accessibility and resilient connectivity */
+:focus-visible{outline:3px solid #d6b5ff!important;outline-offset:3px!important}
+.skip-link{position:fixed;z-index:10001;top:8px;left:8px;padding:12px 16px;border-radius:10px;background:#fff;color:#170d22;font-weight:800;transform:translateY(-160%);transition:transform .15s}
+.skip-link:focus{transform:translateY(0)}
+#offlineNotice{position:fixed;z-index:9998;top:calc(8px + env(safe-area-inset-top));left:12px;right:12px;max-width:680px;margin:auto;padding:12px 16px;border:1px solid #795b24;border-radius:14px;background:#2a210f;color:#ffe5a3;box-shadow:0 8px 30px #0008;text-align:center;font-weight:700}
+#offlineNotice[data-state="online"]{border-color:#276b4a;background:#10271c;color:#baf5d0}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font:15px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif;padding-bottom:86px}
 header{display:none!important;position:sticky;top:0;z-index:10;background:#100a19ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:8px 14px;min-height:54px;display:flex;align-items:center;justify-content:space-between}
 .brand{font-weight:950;font-size:25px;letter-spacing:2px;color:var(--purple)}.tag{display:none}.header-search{width:42px;height:42px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:#fff;font-size:25px;cursor:pointer}.header-search:active{background:#38234d}
@@ -234,6 +241,8 @@ html[dir="rtl"] .bottom{direction:rtl}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#allFeed">U gudub fiidiyowyada</a>
+<div id="offlineNotice" class="hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 <div id="appBoot" role="status" aria-live="polite"><img class="boot-logo" src="./gogol-logo.svg" alt="GoGol"><div class="boot-name">GoGol</div><div class="boot-track" aria-hidden="true"></div><div class="boot-caption">Loading your community…</div></div>
 <div id="updateNotice" class="update-screen hidden" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateMessage"><div class="update-content"><div class="update-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div><p class="update-kicker">GoGol • CUSBOONAYSIIN</p><h1 id="updateTitle">Update cusub ayaa diyaar ah!</h1><p id="updateMessage" class="update-copy">Nooc cusub oo GoGol ah ayaa diyaar ah.</p><div class="update-note">Cusboonaysii hadda si aad u hesho hagaajinta iyo muuqaalada cusub.</div><button id="applyUpdate" class="update-start" type="button">Update App</button></div></div>
 <div id="welcomeScreen" class="welcome-screen hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeCopy">
@@ -1107,6 +1116,30 @@ $('shareButton').addEventListener('click',async()=>{
  const shareData={title:'GoGol — Fiidiyowyo',text:'Ku soo biir GoGol: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
  try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga GoGol waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
 });
+// Connectivity status: clearly explain offline state without interrupting drafts or playback.
+const offlineNotice=$('offlineNotice');
+let connectivityNoticeTimer=null;
+function updateConnectivityStatus(){
+ if(!offlineNotice)return;
+ if(connectivityNoticeTimer){clearTimeout(connectivityNoticeTimer);connectivityNoticeTimer=null}
+ if(!navigator.onLine){
+  offlineNotice.dataset.state='offline';
+  offlineNotice.textContent='Internet ma jiro. Qaar ka mid ah adeegyada GoGol ma shaqayn karaan; isku day marka xiriirku soo noqdo.';
+  offlineNotice.classList.remove('hidden');
+  return;
+ }
+ if(offlineNotice.dataset.state==='offline'){
+  offlineNotice.dataset.state='online';
+  offlineNotice.textContent='Internet-ku wuu soo noqday. GoGol hadda wuu isku dayi karaa inuu xogta cusboonaysiiyo.';
+  offlineNotice.classList.remove('hidden');
+  connectivityNoticeTimer=setTimeout(()=>offlineNotice.classList.add('hidden'),4500);
+ }else{
+  offlineNotice.classList.add('hidden');
+ }
+}
+window.addEventListener('offline',updateConnectivityStatus);
+window.addEventListener('online',updateConnectivityStatus);
+updateConnectivityStatus();
 // Update checks are handled by the standalone first-screen updater (update.js).
 setInterval(()=>{if(document.visibilityState==='visible')loadMedia()},5*60*1000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadMedia()});
