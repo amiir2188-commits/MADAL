@@ -181,9 +181,25 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 /* For You full-screen creator layout */
 #home .video-slide{isolation:isolate}.video-slide .slide-actions button.is-saved{color:#ffd45c}.video-slide .slide-actions button.is-saved span{color:#ffd45c}.video-slide .slide-actions button[data-comments] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-actions button[data-favorite] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-info{max-width:calc(100% - 92px);padding:0 0 4px}.video-slide .slide-info h3{font-weight:900;letter-spacing:.1px}.video-slide .slide-info p{line-height:1.35;text-shadow:0 1px 4px #000,0 1px 9px #000}
 @media(max-width:480px){#allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide .slide-actions{right:9px;bottom:22px;gap:10px}.video-slide .slide-actions button{min-height:48px}.video-slide .slide-info{left:14px;right:78px;bottom:18px}}
+
+/* GoGol pure-black finish and native-feeling startup loader */
+:root{--bg:#000;--panel:#111;--panel2:#1b1b1b;--line:#292929;--muted:#aaa;color-scheme:dark}
+html,body{background:#000!important}
+main,.page,#profile,#discover,#upload,#messages,#notifications,#settings{background-color:#000!important}
+.feed-card,.inbox-filters button{background:#111!important;border-color:#292929!important}
+.bottom{background:#000!important}
+#appBoot{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;background:#000;color:#fff;transition:opacity .25s ease,visibility .25s ease}
+#appBoot.boot-hidden{opacity:0;visibility:hidden;pointer-events:none}
+#appBoot .boot-logo{width:76px;height:76px;border-radius:22px;object-fit:contain}
+#appBoot .boot-name{font-size:24px;font-weight:900;letter-spacing:2px}
+#appBoot .boot-track{width:54px;height:54px;border-radius:50%;border:4px solid #333;border-top-color:#fff;border-right-color:#aaa;animation:gogolSpin .8s linear infinite}
+#appBoot .boot-caption{font-size:12px;color:#aaa;letter-spacing:.5px}
+@keyframes gogolSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#appBoot .boot-track{animation-duration:2.5s}}
 </style>
 </head>
 <body>
+<div id="appBoot" role="status" aria-live="polite"><img class="boot-logo" src="./gogol-logo.svg" alt="GoGol"><div class="boot-name">GoGol</div><div class="boot-track" aria-hidden="true"></div><div class="boot-caption">Loading your community…</div></div>
 <div id="updateNotice" class="update-screen hidden" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateMessage"><div class="update-content"><div class="update-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div><p class="update-kicker">GoGol • CUSBOONAYSIIN</p><h1 id="updateTitle">Update cusub ayaa diyaar ah!</h1><p id="updateMessage" class="update-copy">Nooc cusub oo GoGol ah ayaa diyaar ah.</p><div class="update-note">Cusboonaysii hadda si aad u hesho hagaajinta iyo muuqaalada cusub.</div><button id="applyUpdate" class="update-start" type="button">Update App</button></div></div>
 <div id="welcomeScreen" class="welcome-screen hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeCopy">
  <div class="welcome-content">
@@ -258,7 +274,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.7";
+const MADAL_VERSION="1.9.8";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -809,7 +825,14 @@ try{
   if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa GoGol lagu soo daray!')}
  }).subscribe();
 }catch(err){console.warn('MADAL live feed:',err)}
-refreshProfile();loadMedia();
+/* GoGol startup loading indicator */
+const appBoot=$('appBoot');
+let appBootHidden=false;
+function finishAppBoot(){if(appBootHidden)return;appBootHidden=true;appBoot?.classList.add('boot-hidden');setTimeout(()=>appBoot?.remove(),350)}
+const bootSafetyTimer=setTimeout(finishAppBoot,12000);
+
+Promise.allSettled([refreshProfile(),loadMedia()]).then(()=>{clearTimeout(bootSafetyTimer);finishAppBoot()});
+
 let installPrompt=null;
 const installButton=$('installButton');
 window.addEventListener('beforeinstallprompt',event=>{
