@@ -48,13 +48,15 @@ Deno.serve(async (req) => {
     auth: { persistSession: false, autoRefreshToken: false },
   });
   const { data: session, error } = await admin.from("madal_live_sessions")
-    .select("id,host_id,room_name,title,status")
+    .select("id,host_id,room_name,title,status,last_heartbeat_at")
     .eq("id", body.session_id)
     .maybeSingle();
   if (error || !session) return reply({ error: "LIVE-kan lama helin." }, 404);
   if (session.status !== "live") return reply({ error: "LIVE-kan waa dhammaaday." }, 410);
 
   const isHost = session.host_id === authData.user.id;
+  const heartbeatAge = Date.now() - new Date(session.last_heartbeat_at).getTime();
+  if (body.role === "viewer" && heartbeatAge > 90000) return reply({ error: "Baahiyuhu hadda ma muuqdo. Dib u cusboonaysii LIVE-yada." }, 410);
   if (body.role === "host" && !isHost) return reply({ error: "Kaliya qofka bilaabay LIVE-ga ayaa baahin kara." }, 403);
   if (body.role === "viewer" && isHost) return reply({ error: "Martigeliyaha hore ayuu ugu jiraa LIVE-ga." }, 400);
 
