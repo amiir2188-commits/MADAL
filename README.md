@@ -1,8 +1,10 @@
-# MADAL
+# GoGol
 
-MADAL is a Somali-first, video-focused social app for Android.
+GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android.
 
 ## Current beta features
+
+Latest release: **GoGol 1.10.22**. Recent fixes include six-digit SMS verification validation, safer moderation-report deletion behavior, and accessible account form labels.
 - Watch and upload videos.
 - Create an account and sign in with email/password.
 - Phone-number sign-in using Somalia's +252 format (requires Phone Auth and an SMS provider in Supabase).
