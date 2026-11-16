@@ -320,7 +320,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.26';
+const MADAL_VERSION='1.10.27';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -517,13 +517,14 @@ async function renderFeed(){
  if(activeFeedTab==='following')posts=posts.filter(p=>currentUser&&followsByUser.has(String(p.user_id)));
  if(activeFeedTab==='stem')posts=posts.filter(p=>/stem|science|technology|engineering|math|saynis|teknooloji|xisaab/i.test([p.category,p.topic,p.title,p.description,p.caption].filter(Boolean).join(' ')));
  if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
- if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>';return}
+ if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan muuqaallo cusub oo dadka aad raacdo soo geliyeen.':mediaHasMore?'Qaybtan weli wax muuqaal ah kama muuqdaan. Soo rar qaybta xigta.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>'+(mediaHasMore?feedLoadMoreButton():'');return}
  $('allFeed').innerHTML='';
  for(let start=0;start<posts.length;start+=8){
   const batch=await Promise.all(posts.slice(start,start+8).map(post=>card(post)));
   if(renderToken!==feedRenderToken)return;
   $('allFeed').insertAdjacentHTML('beforeend',batch.join(''));
  }
+ if(mediaHasMore)$('allFeed').insertAdjacentHTML('beforeend',feedLoadMoreButton());
  if(feedVideoObserver)feedVideoObserver.disconnect();
  feedVideoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   const video=entry.target.querySelector('video');
@@ -604,6 +605,7 @@ async function loadSocialData(posts,renderToken=null){
  favoriteCountsByPost={};for(const row of favoritesResult.data||[]){favoriteCountsByPost[row.post_id]=(favoriteCountsByPost[row.post_id]||0)+1;if(socialUserId&&row.user_id===socialUserId)favoritePostIds.add(row.post_id);}
 }
 $('allFeed').addEventListener('click',async e=>{
+ const loadMore=e.target.closest('[data-load-more]');if(loadMore){await loadMedia({append:true});return}
  const videoToggle=e.target.closest('[data-video-toggle]');
  if(videoToggle){const slide=videoToggle.closest('.video-slide'),video=slide?.querySelector('video');if(video){if(video.paused){await video.play().then(()=>{slide.classList.remove('is-paused');videoToggle.textContent="Ⅱ"}).catch(()=>{});}else{video.pause();slide.classList.add('is-paused');videoToggle.textContent="▶";}}return}
  const like=e.target.closest('[data-like]');
@@ -842,15 +844,31 @@ $('messageForm').addEventListener('submit',async e=>{
  finally{button.disabled=false}
 });
 
-let mediaLoadToken=0;
-async function loadMedia(){
+const mediaPageSize=24;
+let mediaLoadToken=0,mediaOffset=0,mediaHasMore=true,mediaLoadingMore=false;
+function feedLoadMoreButton(){return '<div class="feed-load-more"><button type="button" class="secondary" data-load-more '+(mediaLoadingMore?'disabled':'')+'>'+(mediaLoadingMore?'Waa la soo rarayaa...':'Soo rar muuqaallo kale')+'</button></div>'}
+async function loadMedia({append=false}={}){
+ if(append&&(!mediaHasMore||mediaLoadingMore))return;
  const token=++mediaLoadToken;
- $('allFeed').textContent='Waa la soo rarayaa...';
- const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false});
+ if(!append){mediaOffset=0;mediaHasMore=true;mediaLoadingMore=false;allPosts=[];$('allFeed').textContent='Waa la soo rarayaa...'}
+ else{mediaLoadingMore=true;const button=$('allFeed').querySelector('[data-load-more]');if(button){button.disabled=true;button.textContent='Waa la soo rarayaa...'}}
+ const from=append?mediaOffset:0,to=from+mediaPageSize-1;
+ const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false}).range(from,to);
  if(token!==mediaLoadToken)return;
- if(error){console.error(error);$('allFeed').innerHTML='<div class="empty">Weli lama soo rari karin waxyaabaha. Hubi isku xirka Supabase iyo rukhsadaha akhriska.</div>';notice('Xogta GoGol lama soo rari karin: '+error.message);return}
- allPosts=data||[];await renderFeed();if(token!==mediaLoadToken)return;
- if(currentUser){await loadMyProfile();if(token!==mediaLoadToken)return;await loadActivity()}
+ if(error){
+  console.error(error);mediaLoadingMore=false;
+  if(!append)$('allFeed').innerHTML='<div class="empty">Weli lama soo rari karin waxyaabaha. Hubi isku xirka Supabase iyo rukhsadaha akhriska.</div>';
+  else await renderFeed();
+  notice('Xogta GoGol lama soo rari karin: '+error.message);return
+ }
+ const page=data||[];
+ mediaOffset=from+page.length;
+ mediaHasMore=page.length===mediaPageSize;
+ if(append){const seen=new Set(allPosts.map(post=>String(post.id)));allPosts.push(...page.filter(post=>!seen.has(String(post.id))))}
+ else allPosts=page;
+ mediaLoadingMore=false;
+ await renderFeed();if(token!==mediaLoadToken)return;
+ if(!append&&currentUser){await loadMyProfile();if(token!==mediaLoadToken)return;await loadActivity()}
 }
 let profileLoadToken=0;
 async function loadMyProfile(){
