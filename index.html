@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.37';
+const MADAL_VERSION='1.10.38';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1237,6 +1237,7 @@ $('uploadForm').addEventListener('submit',async e=>{
   const path=uploaderId+'/'+Date.now()+'-'+safeName;
   const {error:uploadError}=await db.storage.from('madal-media').upload(path,file,{contentType:file.type,upsert:false});
   if(uploadError)throw uploadError;
+  if(currentUser?.id!==uploaderId){const {error:cleanupError}=await db.storage.from('madal-media').remove([path]);if(cleanupError)console.warn('GoGol orphan upload cleanup:',cleanupError.message);throw new Error('Akoonka waa isbeddelay intii faylku socday. Soo geli mar kale adigoo akoonka saxda ah ku jira.')}
   const record={user_id:uploaderId,title:$('title').value.trim(),description:$('description').value.trim(),media_type:uploadKind,mime_type:file.type,storage_path:path,status:'published'};
   const {error:insertError}=await db.from('media_posts').insert(record);
   if(insertError){await db.storage.from('madal-media').remove([path]);throw insertError}
