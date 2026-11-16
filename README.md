@@ -4,10 +4,10 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 ## Latest verified release
 
-**Android and Web: GoGol 1.10.53**
+**Android and Web: GoGol 1.10.54**
 
-- [Download GoGol 1.10.53 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.53/app-debug.apk)
-- [Download GoGol 1.10.53 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.53/madal-web.zip)
+- [Download GoGol 1.10.54 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/app-debug.apk)
+- [Download GoGol 1.10.54 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/madal-web.zip)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
 The Android APK is a beta/debug-signed build distributed directly; it is not a Play Store release.
@@ -24,7 +24,7 @@ The Android APK is a beta/debug-signed build distributed directly; it is not a P
 - Somali account sign-up and sign-in interface with required privacy-policy and terms consent.
 - Privacy policy, community guidelines, and terms pages.
 - Secure account deletion from Settings (requires the matching Supabase migration and deployed Edge Function).
-- 24-hour Stories: upload, view, and delete photo/video updates (requires Supabase migration 008).
+- 24-hour Stories: upload, view with previous/next navigation, and delete photo/video updates (requires Supabase migration 008).
 
 This is still a beta. Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. The current release is not a Play Store production release. The Stories client and database migration are implemented; Stories become available after applying migration 008. Live streaming is not implemented yet. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
 
