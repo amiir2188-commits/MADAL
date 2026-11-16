@@ -46,9 +46,23 @@ create table if not exists public.media_likes (
 );
 alter table public.media_likes enable row level security;
 drop policy if exists "MADAL likes readable" on public.media_likes;
-create policy "MADAL likes readable" on public.media_likes for select to anon, authenticated using (true);
+create policy "MADAL likes readable" on public.media_likes
+for select to anon, authenticated
+using (exists (
+  select 1 from public.media_posts p
+  where p.id = media_likes.post_id
+    and (p.status = 'published' or p.user_id = auth.uid())
+));
 drop policy if exists "MADAL like own" on public.media_likes;
-create policy "MADAL like own" on public.media_likes for insert to authenticated with check (auth.uid() = user_id);
+create policy "MADAL like own" on public.media_likes
+for insert to authenticated
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1 from public.media_posts p
+    where p.id = media_likes.post_id and p.status = 'published'
+  )
+);
 drop policy if exists "MADAL unlike own" on public.media_likes;
 create policy "MADAL unlike own" on public.media_likes for delete to authenticated using (auth.uid() = user_id);
 create index if not exists media_likes_post_id_idx on public.media_likes(post_id);
@@ -62,9 +76,23 @@ create table if not exists public.media_comments (
 );
 alter table public.media_comments enable row level security;
 drop policy if exists "MADAL comments readable" on public.media_comments;
-create policy "MADAL comments readable" on public.media_comments for select to anon, authenticated using (true);
+create policy "MADAL comments readable" on public.media_comments
+for select to anon, authenticated
+using (exists (
+  select 1 from public.media_posts p
+  where p.id = media_comments.post_id
+    and (p.status = 'published' or p.user_id = auth.uid())
+));
 drop policy if exists "MADAL comment own" on public.media_comments;
-create policy "MADAL comment own" on public.media_comments for insert to authenticated with check (auth.uid() = user_id);
+create policy "MADAL comment own" on public.media_comments
+for insert to authenticated
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1 from public.media_posts p
+    where p.id = media_comments.post_id and p.status = 'published'
+  )
+);
 drop policy if exists "MADAL delete own comment" on public.media_comments;
 create policy "MADAL delete own comment" on public.media_comments for delete to authenticated using (auth.uid() = user_id);
 create index if not exists media_comments_post_created_idx on public.media_comments(post_id, created_at desc);

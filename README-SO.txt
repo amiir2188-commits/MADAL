@@ -25,7 +25,7 @@ Qaar ka mid ah adeegyada bulshada iyo badbaadadu waxay ku xiran yihiin in jadwal
 HABAYNTA SUPABASE
 1. Hubi Project URL iyo publishable/anon key-ga app-ka. Ha gelin service-role ama secret key gudaha app-ka.
 2. Haddii database cusub yahay, dib u eeg supabase_schema.sql ka hor inta aan lagu fulin Supabase SQL Editor.
-3. Haddii database hore u jiro, marka hore hubi schema-giisa; kadib dib u eeg oo keliya migrations-ka ku habboon, kuna dabaq kala-horrayntooda. Faylasha dheeraadka ah waxay ku jiraan supabase/migrations/.
+3. Haddii database hore u jiro, marka hore hubi schema-giisa; kadib dib u eeg oo keliya migrations-ka ku habboon, kuna dabaq kala-horrayntooda. Faylasha dheeraadka ah waxay ku jiraan supabase/migrations/. Migration-ka social post visibility wuxuu hubiyaa in likes/faallooyinka aanay ka muuqan posts qarsoon.
 4. Si telefoonka +252 loogu galo, daar Phone Auth oo habeey adeeg SMS.
 
 SQL migrations si otomaatig ah looma fuliyo marka app-ka la daabaco. Kahor production, kaydso database-ka oo dib u eeg SQL-ga. Report iyo block waxay u baahan yihiin migration-ka user safety/moderation iyo RLS policies-kiisa.
