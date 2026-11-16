@@ -563,7 +563,8 @@ async function refreshProfile(){
   $('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">Soo gal si aad u aragto profile-kaaga.</div>';
  }
 }
-\nconst liveEntry=$("liveEntry");if(liveEntry)liveEntry.addEventListener("click",()=>{showPage("upload");notice("LIVE streaming wali waa la diyaarinayaa. Camera iyo Gallery waad isticmaali kartaa hadda.")});\n$('profileCreate').addEventListener('click',()=>showPage('upload'));
+const liveEntry=$("liveEntry");if(liveEntry)liveEntry.addEventListener("click",()=>{showPage("upload");notice("LIVE streaming wali waa la diyaarinayaa. Camera iyo Gallery waad isticmaali kartaa hadda.")});
+$('profileCreate').addEventListener('click',()=>showPage('upload'));
 $('profileFriends').addEventListener('click',()=>showPage('discover'));
 $('profileNotifications').addEventListener('click',()=>showPage('notifications'));
 $('profileSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
