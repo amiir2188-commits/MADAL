@@ -127,6 +127,8 @@ jobs:
           if (!html.includes(".range(from,to)")) throw new Error('Feed must load media in bounded pages');
           if (!html.includes(".order('id',{ascending:false})")) throw new Error('Feed pagination needs a stable tie-breaker');
           if (!html.includes("data-load-more")) throw new Error('Feed pagination control is missing');
+          if (!html.includes('class="album-strip"') || !html.includes('album-hint')) throw new Error('Multi-photo album carousel is missing');
+          if (!html.includes(".eq('album_id',p.album_id)")) throw new Error('Album viewer must load the complete published album');
           if (!html.includes("const feedScrollTop=append?$('allFeed').scrollTop:0")) throw new Error('Feed pagination must preserve the reader scroll position');
           if (!html.includes("const id=follow.dataset.discoverFollow,userId=currentUser.id")) throw new Error('Discover follow handler must capture the active user ID safely');
           if (!html.includes('function releaseUploadPreviewUrl()')) throw new Error('Upload preview object URLs must be released');
