@@ -90,7 +90,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 </div>
 <header><div class="brand">MADAL</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
-<div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status">MADAL waa la cusboonaysiiyey. <button id="applyUpdate" class="primary" type="button">Soo dejiso cusboonaysiinta</button></div>
+<div id="notice" class="status hidden" role="status"></div><div id="updateNotice" class="status hidden" role="status" aria-live="polite"><strong>⬆ MADAL update cusub ayaa diyaar ah!</strong><p id="updateMessage">Cusboonaysii app-kaaga adigoon APK cusub soo dejisan.</p><button id="applyUpdate" class="primary" type="button">Update App</button></div>
 <section id="home" class="page"><div class="tabs feed-tabs" aria-label="Dooro waxa aad daawanayso"><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Raadi" title="Raadi">🔍</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow cinwaan ama faahfaahin..."><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi MADAL</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..."><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Fiidiyowyada</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta MADAL.</div></div></section>
 <section id="upload" class="page hidden">
@@ -146,7 +146,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), favoritePostIds=new Set(), authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.8.2";
+const MADAL_VERSION="1.8.3";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -584,7 +584,7 @@ async function checkMadalUpdate(){
   const latest=await response.json();
   if(latest.version && latest.version!==MADAL_VERSION){
    $('updateNotice').classList.remove('hidden');
-   $('updateNotice').firstChild.textContent='MADAL nooc cusub ('+latest.version+') ayaa diyaar ah. ';
+   $('updateNotice').firstChild.textContent='MADAL update cusub ('+latest.version+') ayaa diyaar ah. ';
   }
  }catch(err){console.warn('MADAL version check:',err)}
 }
