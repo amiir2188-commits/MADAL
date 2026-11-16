@@ -110,6 +110,41 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 /* MADAL comment composer, stays reachable above the mobile keyboard */
 .video-slide .comment-panel{max-height:min(68dvh,620px);padding:16px 14px calc(12px + env(safe-area-inset-bottom));overscroll-behavior:contain}.video-slide .comment-panel>div{max-height:calc(68dvh - 100px);overflow:auto}.video-slide .comment-form{display:flex;align-items:center;gap:9px;position:sticky;bottom:0;padding:9px 0 0;background:#100a19}.video-slide .comment-form textarea{flex:1;min-width:0;min-height:42px;max-height:110px;height:42px;resize:none;border-radius:24px;background:#251833;border:1px solid #54356f;padding:10px 14px;margin:0;font-size:14px;line-height:20px}.video-slide .comment-form button{flex:none;width:43px;height:43px;padding:0;border:0;border-radius:50%;background:linear-gradient(135deg,#a72aff,#6824ef);font-size:20px}.video-slide .comment-form textarea:focus{outline:2px solid #a45bff;outline-offset:1px}
 @media(max-width:480px){#profile{padding-left:10px;padding-right:10px}#profile .profile-hero{padding-left:4px;padding-right:4px}#profile .profile-avatar{width:104px;height:104px}#profile .profile-stats{gap:24px}}
+/* GoGol TikTok-inspired Inbox, profile and persistent navigation */
+#messages{padding:0 0 18px}
+.inbox-heading{display:flex;align-items:center;gap:14px;padding:12px 4px 14px}
+.inbox-heading h2{font-size:24px;margin:0 auto 0 0;font-weight:850}
+.inbox-heading button{width:38px;height:38px;border:0;background:transparent;color:#fff;font-size:27px}
+#messages .inbox-story-row{display:flex;gap:14px;overflow-x:auto;padding:8px 0 16px;scrollbar-width:none}
+#messages .inbox-story-row::-webkit-scrollbar{display:none}
+#messages .profile-story{flex:0 0 88px}
+#messages .story-ring{width:76px;height:76px;border:3px solid #19d7d2;background:#111}
+#messages .profile-story:nth-child(2) .story-ring{border-color:#f12d89}
+#messages .profile-story:nth-child(3) .story-ring{border-color:#20d7a2}
+.inbox-filters{display:flex;gap:8px;overflow-x:auto;padding:8px 0 14px;scrollbar-width:none}
+.inbox-filters button{flex:none;border:0;border-radius:12px;background:#242424;color:#fff;padding:10px 15px;font-weight:750}
+.inbox-filters button.active{background:#153d49;color:#28d5e8}
+.inbox-activity{width:100%;display:flex;align-items:center;gap:13px;text-align:left;padding:14px 4px;margin:2px 0 10px;border:0;border-bottom:1px solid #ffffff1c;background:transparent;color:#fff}
+.inbox-activity-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:#f12b83;font-size:28px;font-weight:900}
+.inbox-activity strong,.inbox-activity small{display:block}
+.inbox-activity small{color:#aaa;font-size:13px;margin-top:2px}
+.inbox-chevron{margin-left:auto;font-size:28px;color:#999}
+.inbox-search-card{margin-top:10px}
+#profile>.profile-masthead{padding:10px 4px 12px}
+#profile .profile-brand{display:none}
+#profile>.profile-masthead{justify-content:flex-end}
+#profile .profile-top{flex-direction:row-reverse;justify-content:space-between;gap:18px}
+#profile .profile-avatar{width:116px;height:116px;aspect-ratio:1;border-radius:50%;object-fit:cover;overflow:hidden;flex:0 0 116px}
+#profile .profile-main{flex:1;min-width:0}
+#profile .profile-edit-pencil{top:8px;right:auto;left:8px}
+#profile .profile-hero{padding-top:14px}
+.bottom{background:#050505f5!important;border-top:1px solid #ffffff22!important;padding:7px 3px calc(7px + env(safe-area-inset-bottom))!important}
+.bottom button{color:#f4f1f7!important;font-size:11px!important;font-weight:750;min-height:54px}
+.bottom button span{font-size:25px!important;line-height:1.15!important}
+.bottom button.active{color:#fff!important}
+.bottom button.active span{color:#fff;text-shadow:0 0 12px #b82cff}
+.bottom button.create-tab span{width:54px;height:42px;margin:0 auto 2px;border-radius:14px;background:linear-gradient(100deg,#26d9e9 0 12%,#fff 12% 88%,#ff2b87 88%);color:#100817!important;font-size:31px!important;display:grid;place-items:center;text-shadow:none}
+@media(max-width:380px){#home .feed-tabs{gap:3px;padding:0 7px}#home .feed-tabs button{font-size:12px;padding:8px 4px}}
 /* MADAL English navigation, matching the supplied reference */\n#home .feed-tabs{display:flex!important;align-items:center;justify-content:space-between;gap:8px;height:58px;padding:0 12px;background:#08070b!important}\n#home .feed-tabs button{flex:0 1 auto;white-space:nowrap;font-size:14px;padding:9px 7px;color:#c9c4d0}\n#home .feed-tabs button.active:after{background:#fff;left:20%;right:20%;bottom:1px}\n#home .feed-tabs .live-entry{font-size:12px;font-weight:950;color:#fff;border:0;border-radius:8px;background:linear-gradient(135deg,#a22bff,#f52e85);padding:7px 9px}\n#home .feed-tabs .feed-search{flex:0 0 38px;font-size:26px;color:#fff}\n.bottom{background:#050505f5!important;border-top:1px solid #ffffff22!important;padding:7px 3px calc(7px + env(safe-area-inset-bottom))!important}\n.bottom button{color:#f4f1f7!important;font-size:11px!important;font-weight:750;min-height:54px}\n.bottom button span{font-size:25px!important;line-height:1.15!important}\n.bottom button.active{color:#fff!important}\n.bottom button.active span{color:#fff;text-shadow:0 0 12px #b82cff}\n.bottom button.create-tab span{width:54px;height:42px;margin:0 auto 2px;border-radius:14px;background:linear-gradient(100deg,#26d9e9 0 12%,#fff 12% 88%,#ff2b87 88%);color:#100817!important;font-size:31px!important;display:grid;place-items:center;text-shadow:none}\n@media(max-width:380px){#home .feed-tabs{gap:3px;padding:0 7px}#home .feed-tabs button{font-size:12px;padding:8px 4px}}\n
 
 /* GoGol For You controls aligned to the requested creator-feed reference */
@@ -185,7 +220,6 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 </form></div></section>
 <section id="profile" class="page hidden">
 <div class="profile-masthead"><div class="profile-brand"><img class="profile-brand-mark" src="./gogol-logo.svg" alt="GoGol"><span><strong>GoGol</strong><small>Podcast • Qisooyin • Bulsho</small></span></div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">•••</button></div></div>
-<div class="profile-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div>
 <div class="feed-card profile-hero">
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
 <div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">GoGol User <span id="profileVerified" class="verified hidden" title="GoGol Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small">GoGol Creator</p></div></div>
@@ -200,15 +234,18 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax GoGol qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha GoGol</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox"></label></div><div class="feed-card"><h3>Ku saabsan MADAL</h3><p class="muted">Nooca GoGol: <strong id="settingsVersion">1.8.6</strong></p><p class="muted">GoGol — madasha fiidiyowyada Soomaaliyeed.</p></div></section>
 <section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
 <section id="messages" class="page hidden">
-<h2 class="section-title">✉️ Fariimaha</h2>
-<div class="feed-card">
-<label for="messageSearch">Raadi qof adigoo adeegsanaya username</label>
+<div class="inbox-heading"><h2>Inbox</h2><button type="button" id="inboxSearchFocus" aria-label="Search messages">⌕</button><button type="button" id="inboxMenu" aria-label="More options">•••</button></div>
+<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div>
+<div class="inbox-filters"><button class="active" type="button">Main</button><button type="button" id="inboxRequests">Requests ›</button><button type="button" id="inboxUnread">Unread</button><button type="button" id="inboxStarred">Starred</button></div>
+<button type="button" class="inbox-activity" id="inboxActivity"><span class="inbox-activity-icon">ϟ</span><span><strong>Activity &amp; new followers</strong><small>Likes, comments, follows and updates</small></span><span class="inbox-chevron">›</span></button>
+<div class="feed-card inbox-search-card">
+<label for="messageSearch">Find people by username</label>
 <div class="row"><input id="messageSearch" placeholder="Tusaale: amiir01"><button id="searchUsers" class="secondary" type="button">Raadi</button></div>
-<div id="userResults" class="muted small">Raadi qof si aad ula bilowdo wada sheekaysi.</div>
+<div id="userResults" class="muted small">Search for someone to start a conversation.</div>
 \n<div id="conversationPanel" class="hidden">
-<div class="row"><h3 id="conversationTitle"></h3><button id="closeConversation" class="secondary" type="button">Xir</button></div>
+<div class="row"><h3 id="conversationTitle"></h3><button id="closeConversation" class="secondary" type="button">Close</button></div>
 <div id="messageList" class="message-list"></div>
-<form id="messageForm" class="comment-form"><textarea id="messageBody" maxlength="2000" placeholder="Fariintaada qor..." required></textarea><button class="primary" type="submit">Dir fariinta</button></form>
+<form id="messageForm" class="comment-form"><textarea id="messageBody" maxlength="2000" placeholder="Write a message..." required></textarea><button class="primary" type="submit">Send</button></form>
 </div>
 </div>
 </section>
@@ -221,7 +258,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.5";
+const MADAL_VERSION="1.9.7";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
@@ -609,6 +646,10 @@ const liveEntry=$("liveEntry");if(liveEntry)liveEntry.addEventListener("click",(
 $('profileCreate').addEventListener('click',()=>showPage('upload'));
 $('profileFriends').addEventListener('click',()=>showPage('discover'));
 $('profileNotifications').addEventListener('click',()=>showPage('notifications'));
+$('inboxActivity').addEventListener('click',()=>showPage('notifications'));
+$('inboxSearchFocus').addEventListener('click',()=>{$('messageSearch').focus();$('messageSearch').scrollIntoView({behavior:'smooth',block:'center'})});
+$('inboxMenu').addEventListener('click',()=>{syncSettings();showPage('settings')});
+['inboxRequests','inboxUnread','inboxStarred'].forEach(id=>$(id).addEventListener('click',()=>notice('This Inbox filter is coming soon.')));
 $('profileSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
 $('profileAvatar').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('profileEditor').classList.remove('hidden');$('profileEditor').scrollIntoView({behavior:'smooth',block:'start'})});
 $('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday GoGol.')}});
