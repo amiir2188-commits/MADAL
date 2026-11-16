@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.44';
+const MADAL_VERSION='1.10.45';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -585,7 +585,7 @@ $('discoverResults').addEventListener('click',async e=>{
 
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
 document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;profileDisplayLimit=activeProfileTab==='videos'||activeProfileTab==='photos'||activeProfileTab==='private'?60:100;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
-$('profileLoadMore').addEventListener('click',async()=>{if(!currentUser||!profileHasMore)return;const userId=currentUser.id,button=$('profileLoadMore');button.disabled=true;button.textContent='Waa la soo rarayaa...';profileDisplayLimit+=activeProfileTab==='videos'||activeProfileTab==='private'?60:100;await loadMyProfile();if(currentUser?.id===userId&&profileHasMore){button.disabled=false;button.textContent='Soo rar waxyaabo dheeraad ah'}});
+$('profileLoadMore').addEventListener('click',async()=>{if(!currentUser||!profileHasMore)return;const userId=currentUser.id,button=$('profileLoadMore');button.disabled=true;button.textContent='Waa la soo rarayaa...';profileDisplayLimit+=activeProfileTab==='videos'||activeProfileTab==='photos'||activeProfileTab==='private'?60:100;await loadMyProfile();if(currentUser?.id===userId&&profileHasMore){button.disabled=false;button.textContent='Soo rar waxyaabo dheeraad ah'}});
 let socialLoadToken=0,blockedUserIds=new Set();
 async function loadSocialData(posts,renderToken=null){
  const token=++socialLoadToken;
