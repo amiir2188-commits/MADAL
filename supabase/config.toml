@@ -2,3 +2,6 @@ project_id = "nxtnfdyksskofjbvface"
 
 [functions.delete-account]
 verify_jwt = true
+
+[functions.cleanup-expired-stories]
+verify_jwt = false
