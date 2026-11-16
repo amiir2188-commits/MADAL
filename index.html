@@ -20,10 +20,10 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 /* MADAL vertical short-video experience */
 #home{margin:0 -14px 0}
 #home>.section-title{display:none}
-#home .feed-tabs{height:54px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px;align-items:center;justify-content:stretch;gap:0;padding:0 14px;margin:0;background:#100a19;overflow:visible}
+#home .feed-tabs{height:58px;display:grid;grid-template-columns:62px minmax(0,1fr) minmax(0,1fr) 42px;align-items:center;justify-content:stretch;gap:2px;padding:0 10px;margin:0;background:#100a19;overflow:visible}
 #home .feed-tabs .feed-search{width:38px;height:38px;min-width:38px;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;font-size:20px;display:grid;place-items:center;margin-left:4px}
 #home .feed-tabs .feed-search:active{background:#38234d}
-#home .feed-tabs button{min-width:0;padding:8px 5px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:14px;font-weight:750;position:relative}
+#home .feed-tabs button{min-width:0;padding:8px 4px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:13px;font-weight:750;position:relative;white-space:nowrap}
 #home .feed-tabs button.active{background:transparent;color:#fff}
 #home .feed-tabs button.active:after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px;background:#fff}
 #home #videoSearch{display:none}
@@ -133,7 +133,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <h2 class="section-title">➕ Soo geli MADAL</h2>
 <div class="feed-card"><p class="muted">Dooro waxa aad rabto inaad bulshada la wadaagto.</p>
 <div class="upload-choice"><button type="button" class="active" data-upload-kind="video">🎬 Fiidiyow</button><button type="button" data-upload-kind="image">🖼️ Sawir</button></div>
-<div class="upload-methods"><button type="button" id="cameraPick">📷 Fur Camera MADAL</button><button type="button" id="galleryPick">🖼️ Ka dooro Gallery</button></div>
+<div class="upload-methods"><button type="button" id="cameraPick">📷 Camera</button><button type="button" id="galleryPick">🖼️ Gallery</button></div>
 <form id="uploadForm">
 <input id="mediaFile" class="upload-file-input" type="file" accept="video/*" capture="environment">
 <input id="galleryFile" class="upload-file-input" type="file" accept="video/*">
@@ -153,7 +153,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
 <div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">MADAL User <span id="profileVerified" class="verified hidden" title="MADAL Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small">MADAL Creator</p></div></div>
 <p id="profileBio" class="profile-bio">Ku soo biir bulshada MADAL.</p>
-<div class="profile-stats"><div><strong id="myFollowingCount">0</strong><span>La raaco</span></div><div><strong id="myFollowerCount">0</strong><span>Raacayaal</span></div><div><strong id="myLikeCount">0</strong><span>Jeclaysi</span></div></div>
+<div class="profile-stats"><div><strong id="myFollowingCount">0</strong><span>Following</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div><div><strong id="myLikeCount">0</strong><span>Likes</span></div></div>
 <div class="row profile-buttons"><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html" id="profileLogin" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a></div>
 </div>
 <div id="profileEditor" class="feed-card hidden"><h3>Wax ka beddel profile-ka</h3><form id="profileForm"><label>Magaca muuqda</label><input id="editDisplayName" maxlength="60" required><label>Username</label><input id="editUsername" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" required><label>Bio / Isbarasho</label><textarea id="editBio" maxlength="160" placeholder="Naftaada wax yar ka sheeg..."></textarea><label>Sawirka profile-ka</label><div class="avatar-picker"><img id="avatarPreview" class="avatar-preview" alt="Hordhaca sawirka profile-ka"><input id="editAvatarFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></div><p class="muted small">Ka dooro sawir Gallery-ga telefoonkaaga (PNG, JPG ama WebP; ugu badnaan 5 MB).</p><button id="removeAvatar" class="secondary" type="button">Ka saar sawirka profile-ka</button><input id="editAvatarUrl" type="url" placeholder="Ama geli link sawir (ikhtiyaari)"><button class="primary" type="submit">Kaydi profile-ka</button></form></div>
@@ -184,7 +184,7 @@ const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), favoritePostIds=new Set(), authorProfiles={}, socialReady=false;
-const MADAL_VERSION="1.9.1";
+const MADAL_VERSION="1.9.3";
 window.MADAL_VERSION=MADAL_VERSION;
 const $=id=>document.getElementById(id);
 const welcomeScreen=$('welcomeScreen');
