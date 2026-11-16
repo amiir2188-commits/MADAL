@@ -648,7 +648,7 @@ $('userResults').addEventListener('click',e=>{
  const button=e.target.closest('[data-chat-user]');if(button)openConversation(button.dataset.chatUser);
 });
 $('closeConversation').addEventListener('click',()=>{
- activeChatUser=null;$('conversationPanel').classList.add('hidden');
+ conversationOpenToken++;conversationLoadToken++;activeChatUser=null;$('conversationPanel').classList.add('hidden');
  if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}
 });
 
@@ -660,7 +660,9 @@ function toggleInboxStar(userId){
  try{localStorage.setItem('gogol_inbox_stars_v1',JSON.stringify([...stars]))}catch(_){}
  loadInbox();
 }
+let inboxLoadToken=0,conversationOpenToken=0,conversationLoadToken=0;
 async function loadInbox(){
+ const token=++inboxLoadToken;
  const host=$('inboxConversations');if(!host)return;
  if(!currentUser){host.innerHTML='<p class="inbox-empty">Log in to see your messages.</p>';return}
  host.innerHTML='<p class="inbox-empty">Loading conversations…</p>';
@@ -669,6 +671,7 @@ async function loadInbox(){
   .select('sender_id,recipient_id,body,created_at,read_at')
   .or('sender_id.eq.'+me+',recipient_id.eq.'+me)
   .order('created_at',{ascending:false}).limit(250);
+ if(token!==inboxLoadToken)return;
  if(error){host.innerHTML='<p class="inbox-empty">Messages could not be loaded. Check your connection and try again.</p>';console.warn('GoGol inbox:',error.message);return}
  const latest=new Map(),unreadPeople=new Set();
   for(const message of messages||[]){
@@ -703,9 +706,11 @@ async function loadInbox(){
 }
 async function openConversation(userId){
  if(!currentUser)return;
+ const openToken=++conversationOpenToken;
  const {data:user,error}=await db.from('madal_profiles').select('id,username,display_name').eq('id',userId).maybeSingle();
+ if(openToken!==conversationOpenToken)return;
  if(error||!user){notice('Akoonka lama helin.');return}
- activeChatUser=user;
+ activeChatUser=user;conversationLoadToken++;
  $('conversationTitle').textContent='@'+user.username;
  $('conversationPanel').classList.remove('hidden');
  await loadConversation();
@@ -717,9 +722,11 @@ async function openConversation(userId){
 }
 async function loadConversation(){
  if(!activeChatUser||!currentUser)return;
+ const token=++conversationLoadToken;
  const me=currentUser.id,other=activeChatUser.id;
  const filter='and(sender_id.eq.'+me+',recipient_id.eq.'+other+'),and(sender_id.eq.'+other+',recipient_id.eq.'+me+')';
  const {data,error}=await db.from('madal_messages').select('id,sender_id,recipient_id,body,created_at,read_at').or(filter).order('created_at',{ascending:false}).limit(300);
+ if(token!==conversationLoadToken||activeChatUser?.id!==other||currentUser?.id!==me)return;
  if(error){$('messageList').textContent='Fariimaha lama soo rari karin: '+error.message;return}
  $('messageList').innerHTML=(data||[]).slice().reverse().map(message=>{
   const mine=message.sender_id===me;
@@ -728,6 +735,7 @@ async function loadConversation(){
  $('messageList').scrollTop=$('messageList').scrollHeight;
  if((data||[]).some(message=>message.recipient_id===me&&!message.read_at)){
   const {error:readError}=await db.from('madal_messages').update({read_at:new Date().toISOString()}).eq('sender_id',other).eq('recipient_id',me).is('read_at',null);
+  if(token!==conversationLoadToken||activeChatUser?.id!==other||currentUser?.id!==me)return;
   if(readError)console.warn('GoGol read receipt:',readError.message);
   else loadInbox();
  }
@@ -735,11 +743,12 @@ async function loadConversation(){
 $('messageForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!currentUser){location.href='./account.html';return}
  if(!activeChatUser){notice('Marka hore dooro qof aad la sheekaysato.');return}
- const body=$('messageBody').value.trim();if(!body)return;
+ const body=$('messageBody').value.trim().slice(0,4000);if(!body)return;
  const button=e.submitter||$('messageForm').querySelector('button[type="submit"]');
  button.disabled=true;
  try{
-  const {error}=await db.from('madal_messages').insert({sender_id:currentUser.id,recipient_id:activeChatUser.id,body});
+  const recipientId=activeChatUser.id,senderId=currentUser.id;
+  const {error}=await db.from('madal_messages').insert({sender_id:senderId,recipient_id:recipientId,body});
   if(error)throw error;
   $('messageBody').value='';
   await loadConversation();
