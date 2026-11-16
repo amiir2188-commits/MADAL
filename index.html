@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.32';
+const MADAL_VERSION='1.10.33';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -804,9 +804,9 @@ async function loadInbox(){
 }
 async function openConversation(userId){
  if(!currentUser)return;
- const openToken=++conversationOpenToken;
+ const me=currentUser.id,openToken=++conversationOpenToken;
  const {data:user,error}=await db.from('madal_profiles').select('id,username,display_name').eq('id',userId).maybeSingle();
- if(openToken!==conversationOpenToken)return;
+ if(openToken!==conversationOpenToken||currentUser?.id!==me)return;
  if(error||!user){notice('Akoonka lama helin.');return}
  activeChatUser=user;conversationLoadToken++;
  $('conversationTitle').textContent='@'+user.username;
