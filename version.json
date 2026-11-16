@@ -1,7 +1,7 @@
 {
-  "version": "1.10.45",
+  "version": "1.10.46",
   "name": "GoGol",
-  "message": "Hagaaji tirada waxyaabaha dheeraadka ah ee profile Photos iyo Private.",
+  "message": "Ku dar soo gelinta album sawirro badan leh (ilaa 10 sawir).",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
