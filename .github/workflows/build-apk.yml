@@ -120,6 +120,7 @@ jobs:
             if (!migration.includes('create table if not exists public.' + table)) throw new Error('Missing safety migration table: ' + table);
           }
           if (!account.includes('!/^[0-9]{6}$/.test(token)')) throw new Error('Phone OTP must accept exactly six digits');
+          if (!html.includes('async function renderFeed()')) throw new Error('Feed renderer must be async to await social data');
           for (const marker of ['function rankForYouPosts(posts)', "activeFeedTab==='for_you'&&!query"]) {
             if (!html.includes(marker)) throw new Error('Missing For You ranking safeguard: ' + marker);
           }

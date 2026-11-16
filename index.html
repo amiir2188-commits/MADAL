@@ -506,7 +506,7 @@ async function rankForYouPosts(posts){
   return {post,index,score,createdAt:Number.isFinite(createdAt)?createdAt:0};
  }).sort((a,b)=>b.score-a.score||b.createdAt-a.createdAt||a.index-b.index).map(item=>item.post);
 }
-function renderFeed(){
+async function renderFeed(){
  const renderToken=++feedRenderToken;
  const query=$('videoSearch')?.value.trim().toLowerCase()||'';
  let posts=allPosts.filter(p=>(isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'))&&(!p.is_private||String(p.user_id)===String(currentUser?.id))).filter(p=>!query||[p.title,p.description,p.caption].some(value=>String(value||'').toLowerCase().includes(query)));
