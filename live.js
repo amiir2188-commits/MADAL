@@ -7,6 +7,7 @@ let liveSessionId = null;
 let liveRole = null;
 let liveKitModule = null;
 let liveHeartbeat = null;
+let liveLastChatAt = 0;
 
 const liveStyle = document.createElement("style");
 liveStyle.textContent = `
@@ -25,6 +26,10 @@ liveStyle.textContent = `
 .g-live-dot{width:11px;height:11px;flex:none;border-radius:50%;background:#ff3158;box-shadow:0 0 12px #ff3158}
 .g-live-item>div{flex:1;min-width:0}.g-live-item small{display:block;color:#b9acc7;margin-top:4px}
 .g-live-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.g-live-actions button{flex:1;min-width:100px}
+.g-live-stats{font-size:12px;color:#d9baff;margin:8px 0;font-weight:800}
+.g-live-chat{height:170px;overflow:auto;border:1px solid #38254a;border-radius:12px;background:#120b1c;padding:9px;margin-top:10px}
+.g-live-chat-line{font-size:13px;padding:4px 0;overflow-wrap:anywhere}.g-live-chat-line strong{color:#d9baff;margin-right:6px}
+.g-live-chat-form{display:flex;gap:7px;margin-top:8px}.g-live-chat-form input{flex:1;min-width:0;margin:0}.g-live-chat-form button{flex:none}
 `;
 document.head.append(liveStyle);
 
@@ -47,6 +52,9 @@ liveDialog.innerHTML = `
  <div id="gLiveRoomView" class="hidden">
   <div class="g-live-stage" id="gLiveStage"><p class="muted">Ku xirmaya...</p></div>
   <p id="gLiveRoomStatus" class="g-live-status" role="status">Diyaar garow...</p>
+  <div id="gLiveViewers" class="g-live-stats">Daawadayaal: 0</div>
+  <div id="gLiveChat" class="g-live-chat" aria-live="polite" aria-label="Wadahadalka LIVE"><p class="muted">Ku soo dhawoow wada sheekaysiga LIVE.</p></div>
+  <form id="gLiveChatForm" class="g-live-chat-form"><input id="gLiveChatInput" maxlength="300" aria-label="Fariin LIVE" placeholder="Qor fariin..." autocomplete="off"><button type="submit" class="g-live-btn g-live-primary">Dir</button></form>
   <div class="g-live-actions">
    <button type="button" id="gLiveMic" class="g-live-btn">🎙️ Codka</button>
    <button type="button" id="gLiveCamera" class="g-live-btn">📷 Camera</button>
@@ -121,7 +129,18 @@ async function liveShowRoom(session,title,role){
  liveRoom.on(RoomEvent.TrackSubscribed,(track)=>{const node=track.attach();node.autoplay=true;node.playsInline=true;liveEl("gLiveStage").append(node)});
  liveRoom.on(RoomEvent.TrackUnsubscribed,(track)=>track.detach().forEach(node=>node.remove()));
  liveRoom.on(RoomEvent.Disconnected,()=>{if(liveRole)liveStatus("Xiriirkii LIVE wuu go'ay.")});
+ liveRoom.on(RoomEvent.DataReceived,(payload,participant)=>{
+  try{
+   const packet=JSON.parse(new TextDecoder().decode(payload));
+   if(packet?.type==="chat"&&typeof packet.text==="string"&&packet.text.trim().length>0&&packet.text.length<=300)
+    liveAddChat(participant?.name||participant?.identity?.slice(0,8)||"Qof",packet.text.trim());
+  }catch(error){console.warn("GoGol LIVE chat packet:",error)}
+ });
+ liveRoom.on(RoomEvent.ParticipantConnected,liveUpdateViewerCount);
+ liveRoom.on(RoomEvent.ParticipantDisconnected,liveUpdateViewerCount);
  await liveRoom.connect(credentials.server_url,credentials.token);
+ liveEl("gLiveChat").replaceChildren();
+ liveUpdateViewerCount();
  if(role==="host"){
   liveLocalTracks=await LiveKitCreateTracks();
   for(const track of liveLocalTracks) {
@@ -140,6 +159,33 @@ async function liveShowRoom(session,title,role){
    }
   }
  }
+}
+function liveAddChat(name,message){
+ const list=liveEl("gLiveChat");
+ const line=document.createElement("div");line.className="g-live-chat-line";
+ const author=document.createElement("strong");author.textContent=name+": ";
+ const body=document.createElement("span");body.textContent=message;
+ line.append(author,body);list.append(line);
+ while(list.children.length>50)list.firstElementChild.remove();
+ list.scrollTop=list.scrollHeight;
+}
+function liveUpdateViewerCount(){
+ if(!liveRoom)return;
+ const remote=liveRoom.remoteParticipants.size;
+ liveEl("gLiveViewers").textContent="Daawadayaal: "+Math.max(0,remote-(liveRole==="viewer"?1:0));
+}
+async function liveSendChat(event){
+ event.preventDefault();
+ const field=liveEl("gLiveChatInput"),message=field.value.trim();
+ if(!message||!liveRoom)return;
+ if(Date.now()-liveLastChatAt<800)return;
+ liveLastChatAt=Date.now();
+ try{
+  const packet={type:"chat",text:message.slice(0,300)};
+  await liveRoom.localParticipant.publishData(new TextEncoder().encode(JSON.stringify(packet)),{reliable:true,topic:"gogol-live-chat"});
+  liveAddChat(liveRoom.localParticipant.name||"Aniga",packet.text);
+  field.value="";
+ }catch(error){alert("Fariinta lama dirin: "+error.message)}
 }
 async function LiveKitCreateTracks(){
  const {createLocalTracks}=await liveSDK();
@@ -170,6 +216,7 @@ async function liveLeave(endSession=true){
  if(liveRoom){try{await liveRoom.disconnect()}catch{}liveRoom=null}
  for(const track of liveLocalTracks){try{track.stop()}catch{}}
  liveLocalTracks=[];
+ liveEl("gLiveChat").replaceChildren();liveEl("gLiveViewers").textContent="Daawadayaal: 0";
  if(endSession&&role==="host"&&sessionId){
   const {error}=await liveDb.from("madal_live_sessions")
    .update({status:"ended",ended_at:new Date().toISOString()}).eq("id",sessionId);
@@ -182,6 +229,7 @@ async function liveLeave(endSession=true){
 liveEl("gLiveClose").addEventListener("click",liveClose);
 liveEl("gLiveStart").addEventListener("click",liveStart);
 liveEl("gLiveEnd").addEventListener("click",()=>liveLeave(true));
+liveEl("gLiveChatForm").addEventListener("submit",liveSendChat);
 liveEl("gLiveMic").addEventListener("click",async()=>{
  if(!liveRoom)return;
  const enabled=liveRoom.localParticipant.isMicrophoneEnabled;
