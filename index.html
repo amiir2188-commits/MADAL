@@ -490,7 +490,7 @@ async function recordMadalView(postId){
 const reducedMotionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
 function shouldAutoplayVideos(){return preference("autoplay",true)&&!reducedMotionQuery.matches}
 let feedVideoObserver=null,feedRenderToken=0;
-async function rankForYouPosts(posts){
+function rankForYouPosts(posts){
  const now=Date.now();
  return posts.map((post,index)=>{
   const createdAt=Date.parse(post.created_at||'');
