@@ -311,7 +311,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.8';
+const MADAL_VERSION='1.10.9';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -406,11 +406,25 @@ document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function postType(p){return String(p.media_type||p.type||p.category||'').toLowerCase()}
 function postPath(p){return p.storage_path||p.file_path||p.path||''}
+const mediaUrlCache=new Map(),mediaUrlPending=new Map();
 async function mediaUrl(p){
  const path=postPath(p);if(!path)return p.media_url||p.url||'';
- const {data,error}=await db.storage.from('madal-media').createSignedUrl(path,3600);
- if(error){console.warn('GoGol media URL:',error.message);return ''}
- return data?.signedUrl||'';
+ const key=String(currentUser?.id||'anonymous')+'|'+path,cached=mediaUrlCache.get(key);
+ if(cached&&cached.expiresAt>Date.now())return cached.url;
+ if(cached)mediaUrlCache.delete(key);
+ if(mediaUrlPending.has(key))return mediaUrlPending.get(key);
+ const request=(async()=>{
+  try{
+   const {data,error}=await db.storage.from('madal-media').createSignedUrl(path,3600);
+   if(error){console.warn('GoGol media URL:',error.message);return ''}
+   const url=data?.signedUrl||'';
+   if(url){mediaUrlCache.set(key,{url,expiresAt:Date.now()+50*60*1000});if(mediaUrlCache.size>250)mediaUrlCache.delete(mediaUrlCache.keys().next().value)}
+   return url;
+  }catch(error){console.warn('GoGol media URL:',error?.message||error);return ''}
+  finally{mediaUrlPending.delete(key)}
+ })();
+ mediaUrlPending.set(key,request);
+ return request;
 }
 function isVideo(p){
  const mime=String(p.mime_type||'').toLowerCase(),path=postPath(p);
@@ -514,9 +528,9 @@ $('discoverResults').addEventListener('click',async e=>{
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
 document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
 async function loadSocialData(posts,renderToken=null){
- socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();repostCountsByPost={};favoritePostIds=new Set();
+ socialReady=false;likesByPost={};likedPostIds=new Set();commentsByPost={};followsByUser=new Set();followerCounts={};repostedPostIds=new Set();repostCountsByPost={};favoritePostIds=new Set();favoriteCountsByPost={};authorProfiles={};
  const ids=posts.map(p=>p.id).filter(Boolean),authors=[...new Set(posts.map(p=>p.user_id).filter(Boolean))];
- if(!ids.length)return;
+ if(!ids.length){socialReady=true;return;}
  const {data:session}=await db.auth.getSession();currentUser=session?.session?.user||currentUser;
  const [likesResult,commentsResult,followsResult,repostsResult,favoritesResult,profilesResult]=await Promise.all([
   db.from('media_likes').select('post_id,user_id').in('post_id',ids),
