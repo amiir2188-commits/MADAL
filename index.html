@@ -768,7 +768,7 @@ async function loadInbox(){
   .select('sender_id,recipient_id,body,created_at,read_at')
   .or('sender_id.eq.'+me+',recipient_id.eq.'+me)
   .order('created_at',{ascending:false}).limit(250);
- if(token!==inboxLoadToken)return;
+ if(token!==inboxLoadToken||currentUser?.id!==me)return;
  if(error){host.innerHTML='<p class="inbox-empty">Messages could not be loaded. Check your connection and try again.</p>';console.warn('GoGol inbox:',error.message);return}
  const latest=new Map(),unreadPeople=new Set();
   for(const message of messages||[]){
@@ -926,10 +926,13 @@ async function loadMyProfile(){
    }
   }
  }
+ const {data:countRows,error:countRowsError}=await db.from('media_posts').select('id').eq('user_id',userId).eq('status','published').order('created_at',{ascending:false}).limit(500);
+ if(token!==profileLoadToken||currentUser?.id!==userId)return;
+ const countPostIds=(countRowsError?allPosts.filter(p=>String(p.user_id)===userId):countRows||[]).map(p=>p.id).filter(Boolean);
  const [followers,following,likes]=await Promise.all([
   db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',userId),
   db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',userId),
-  own.length?db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',own.map(p=>p.id).filter(Boolean)):Promise.resolve({count:0,error:null})
+  countPostIds.length?db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',countPostIds):Promise.resolve({count:0,error:null})
  ]);
  if(token!==profileLoadToken||currentUser?.id!==userId)return;
  $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;$('myLikeCount').textContent=likes.count??0;

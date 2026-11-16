@@ -1,7 +1,7 @@
 {
-  "version": "1.10.34",
+  "version": "1.10.35",
   "name": "GoGol",
-  "message": "Profile-ka hadda si toos ah ayuu uga soo qaataa muuqaallada akoonka, Likes, Reposts iyo Favorites; ogeysiisyaduna waxay tixgeliyaan muuqaalladaadii hore ee aan ku jirin bogga koowaad.",
+  "message": "La saxay hubinta akoonka marka Inbox la soo rarayo; tirada Likes-ka profile-kuna hadda waxay ku salaysan tahay muuqaallada uu qofku isagu soo geliyey.",
   "updated_at": "2026-11-16",
   "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip"
 }
