@@ -8,6 +8,7 @@ create table if not exists public.madal_live_sessions (
   title text not null default 'GoGol LIVE' check (char_length(title) between 1 and 100),
   status text not null default 'live' check (status in ('live','ended')),
   started_at timestamptz not null default now(),
+  last_heartbeat_at timestamptz not null default now(),
   ended_at timestamptz
 );
 
@@ -27,6 +28,17 @@ drop policy if exists "GoGol hosts create own LIVE sessions" on public.madal_liv
 create policy "GoGol hosts create own LIVE sessions"
   on public.madal_live_sessions for insert to authenticated
   with check (auth.uid() = host_id and status = 'live' and ended_at is null);
+
+drop policy if exists "GoGol hosts heartbeat own LIVE sessions" on public.madal_live_sessions;
+create policy "GoGol hosts heartbeat own LIVE sessions"
+  on public.madal_live_sessions for update to authenticated
+  using (auth.uid() = host_id and status = 'live')
+  with check (
+    auth.uid() = host_id
+    and status = 'live'
+    and last_heartbeat_at >= now() - interval '1 minute'
+    and last_heartbeat_at <= now() + interval '1 minute'
+  );
 
 drop policy if exists "GoGol hosts end own LIVE sessions" on public.madal_live_sessions;
 create policy "GoGol hosts end own LIVE sessions"
