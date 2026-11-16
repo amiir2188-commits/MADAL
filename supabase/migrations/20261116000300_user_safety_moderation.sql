@@ -37,8 +37,6 @@ create table if not exists public.madal_moderation_reports (
   post_id uuid references public.media_posts(id) on delete set null,
   reason text not null check (reason in ('spam','harassment','hate','violence','nudity','misinformation','other')),
   created_at timestamptz not null default now(),
-  constraint madal_moderation_reports_target_required
-    check (reported_user_id is not null or post_id is not null),
   constraint madal_moderation_reports_not_self
     check (reported_user_id is null or reported_user_id <> reporter_id)
 );
@@ -55,7 +53,11 @@ create policy "GoGol users read own reports"
 drop policy if exists "GoGol users submit reports" on public.madal_moderation_reports;
 create policy "GoGol users submit reports"
   on public.madal_moderation_reports for insert to authenticated
-  with check (auth.uid() = reporter_id);
+  with check (
+    auth.uid() = reporter_id
+    and (reported_user_id is not null or post_id is not null)
+    and (reported_user_id is null or reported_user_id <> reporter_id)
+  );
 
 create index if not exists madal_moderation_reports_created_idx
   on public.madal_moderation_reports(created_at desc);
