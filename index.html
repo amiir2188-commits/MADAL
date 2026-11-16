@@ -333,13 +333,21 @@ const GOGOL_LANGUAGES={
 };
 let gogolLanguage='so';
 try{const saved=localStorage.getItem('gogol_language');if(GOGOL_LANGUAGES[saved])gogolLanguage=saved}catch(_){}
+const gogolOriginalText=new WeakMap();
 function translateGoGolText(root=document.body){
  const dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};
- if(!Object.keys(dict).length)return;
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
- for(const node of nodes){const raw=node.nodeValue,trim=raw.trim();if(dict[trim])node.nodeValue=raw.replace(trim,dict[trim])}
- root.querySelectorAll?.('[placeholder]').forEach(el=>{if(!el.dataset.gogolOriginalPlaceholder)el.dataset.gogolOriginalPlaceholder=el.placeholder;const original=el.dataset.gogolOriginalPlaceholder;if(dict[original])el.placeholder=dict[original]});
+ for(const node of nodes){
+  if(!gogolOriginalText.has(node))gogolOriginalText.set(node,node.nodeValue);
+  const original=gogolOriginalText.get(node),trim=original.trim();
+  node.nodeValue=dict[trim]?original.replace(trim,dict[trim]):original;
+ }
+ root.querySelectorAll?.('[placeholder]').forEach(el=>{
+  if(!el.dataset.gogolOriginalPlaceholder)el.dataset.gogolOriginalPlaceholder=el.placeholder;
+  const original=el.dataset.gogolOriginalPlaceholder;
+  el.placeholder=dict[original]||original;
+ });
 }
 function applyGoGolLanguage(){
  const lang=GOGOL_LANGUAGES[gogolLanguage]||GOGOL_LANGUAGES.so;
@@ -359,7 +367,15 @@ if(languagePicker)languagePicker.addEventListener('change',()=>{
  if(typeof notice==='function'){const old=preference('app_alerts',true);if(old){$('notice').textContent=msg[next];$('notice').classList.remove('hidden')}}
 });
 applyGoGolLanguage();
-const languageObserver=new MutationObserver(records=>{for(const record of records){for(const node of record.addedNodes){if(node.nodeType===Node.TEXT_NODE){const dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};const trim=node.nodeValue.trim();if(dict[trim])node.nodeValue=node.nodeValue.replace(trim,dict[trim])}else if(node.nodeType===Node.ELEMENT_NODE)translateGoGolText(node)}}});
+const languageObserver=new MutationObserver(records=>{
+ for(const record of records)for(const node of record.addedNodes){
+  if(node.nodeType===Node.TEXT_NODE){
+   if(!gogolOriginalText.has(node))gogolOriginalText.set(node,node.nodeValue);
+   const original=gogolOriginalText.get(node),trim=original.trim(),dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};
+   node.nodeValue=dict[trim]?original.replace(trim,dict[trim]):original;
+  }else if(node.nodeType===Node.ELEMENT_NODE)translateGoGolText(node);
+ }
+});
 languageObserver.observe(document.body,{childList:true,subtree:true});
 
 window.MADAL_VERSION=MADAL_VERSION;
