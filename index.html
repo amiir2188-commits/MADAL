@@ -36,6 +36,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 #home #videoSearch{display:none}
 #allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:360px;overflow-y:auto;overscroll-behavior-y:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
 #allFeed::-webkit-scrollbar{display:none}
+.feed-load-more{min-height:84px;display:grid;place-items:center;padding:16px;scroll-snap-align:end}.feed-load-more button{min-height:44px;padding:10px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:#fff;font-weight:750}.feed-load-more button:disabled{opacity:.65;cursor:wait}
 .video-slide{position:relative;min-height:360px;height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));scroll-snap-align:start;scroll-snap-stop:always;background:#050308;overflow:hidden;border:0;border-radius:0;margin:0;padding:0}
 .video-slide .slide-media{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;margin:0;background:#050308}
 .video-slide .slide-shade{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#08050dcc);pointer-events:none}
@@ -320,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.27';
+const MADAL_VERSION='1.10.28';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -846,14 +847,14 @@ $('messageForm').addEventListener('submit',async e=>{
 
 const mediaPageSize=24;
 let mediaLoadToken=0,mediaOffset=0,mediaHasMore=true,mediaLoadingMore=false;
-function feedLoadMoreButton(){return '<div class="feed-load-more"><button type="button" class="secondary" data-load-more '+(mediaLoadingMore?'disabled':'')+'>'+(mediaLoadingMore?'Waa la soo rarayaa...':'Soo rar muuqaallo kale')+'</button></div>'}
+function feedLoadMoreButton(){return '<div class="feed-load-more" aria-live="polite"><button type="button" class="secondary" data-load-more aria-label="Soo rar 24 muuqaal oo kale" '+(mediaLoadingMore?'disabled':'')+'>'+(mediaLoadingMore?'Waa la soo rarayaa...':'Soo rar muuqaallo kale')+'</button></div>'}
 async function loadMedia({append=false}={}){
  if(append&&(!mediaHasMore||mediaLoadingMore))return;
  const token=++mediaLoadToken;
  if(!append){mediaOffset=0;mediaHasMore=true;mediaLoadingMore=false;allPosts=[];$('allFeed').textContent='Waa la soo rarayaa...'}
  else{mediaLoadingMore=true;const button=$('allFeed').querySelector('[data-load-more]');if(button){button.disabled=true;button.textContent='Waa la soo rarayaa...'}}
  const from=append?mediaOffset:0,to=from+mediaPageSize-1;
- const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false}).range(from,to);
+ const {data,error}=await db.from('media_posts').select('*').eq('status','published').order('created_at',{ascending:false}).order('id',{ascending:false}).range(from,to);
  if(token!==mediaLoadToken)return;
  if(error){
   console.error(error);mediaLoadingMore=false;

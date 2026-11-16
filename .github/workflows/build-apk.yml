@@ -125,6 +125,7 @@ jobs:
           if (!/\bfunction\s+rankForYouPosts\s*\(/.test(html)) throw new Error('Missing synchronous For You ranking function');
           if (!html.includes("activeFeedTab==='for_you'&&!query")) throw new Error('For You ranking is not connected to its feed tab');
           if (!html.includes(".range(from,to)")) throw new Error('Feed must load media in bounded pages');
+          if (!html.includes(".order('id',{ascending:false})")) throw new Error('Feed pagination needs a stable tie-breaker');
           if (!html.includes("data-load-more")) throw new Error('Feed pagination control is missing');
           if (!html.includes('function releaseUploadPreviewUrl()')) throw new Error('Upload preview object URLs must be released');
           if (!html.includes('releaseUploadPreviewUrl();')) throw new Error('Upload flow must release preview URLs');

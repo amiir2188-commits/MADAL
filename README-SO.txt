@@ -1,14 +1,14 @@
 GOGOL — APP BULSHO FIIDIYOW AH
-Nooca hadda la xaqiijiyey: 1.10.27
+Nooca hadda la xaqiijiyey: 1.10.28
 
 GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo, laguna isticmaalo Android iyo web.
 
 SOO DEJINTA
 APK Android:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.27/app-debug.apk
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.28/app-debug.apk
 
 Sii-daynta iyo dhammaan faylasha:
-https://github.com/amiir2188-commits/MADAL/releases/tag/v1.10.27
+https://github.com/amiir2188-commits/MADAL/releases/tag/v1.10.28
 
 WAXYAABAHA NOOCA BETA-GA KU JIRA
 - Daawashada iyo soo gelinta fiidiyowyada.
