@@ -122,6 +122,9 @@ jobs:
           if (!account.includes('!/^[0-9]{6}$/.test(token)')) throw new Error('Phone OTP must accept exactly six digits');
           if (!html.includes('function releaseUploadPreviewUrl()')) throw new Error('Upload preview object URLs must be released');
           if (!html.includes('releaseUploadPreviewUrl();')) throw new Error('Upload flow must release preview URLs');
+          for (const marker of ['function clearUploadSelection()', 'clearUploadSelection();', 'function closeCameraStudio(cancelRecording=false)', "addEventListener('click',()=>closeCameraStudio(true))"]) {
+            if (!html.includes(marker)) throw new Error('Missing upload/camera lifecycle safeguard: ' + marker);
+          }
           if (migration.includes('madal_moderation_reports_target_required')) throw new Error('Report target constraint must not block ON DELETE SET NULL');
           if (!migration.includes('and (reported_user_id is not null or post_id is not null)')) throw new Error('Report insert policy must require a target');
           const controls = [...html.matchAll(/<(?:input|textarea|select)\b[^>]*>/gi)].map(match => match[0]);
