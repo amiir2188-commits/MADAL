@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
       .limit(500);
     if (readError) throw new Error(`Unable to read expired Stories: ${readError.message}`);
     if (!expired?.length) {
-      const staleCutoff = new Date(Date.now() - 90000).toISOString();
+      const staleCutoff = new Date(Date.now() - 180000).toISOString();
       const { data: stale, error: staleError } = await admin.from("madal_live_sessions")
         .update({ status: "ended", ended_at: cutoff })
         .eq("status", "live").lt("last_heartbeat_at", staleCutoff).select("id");
@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
     const { error: deleteError } = await admin.from("madal_stories").delete().in("id", ids);
     if (deleteError) throw new Error(`Unable to delete expired Story rows: ${deleteError.message}`);
 
-    const staleCutoff = new Date(Date.now() - 90000).toISOString();
+    const staleCutoff = new Date(Date.now() - 180000).toISOString();
     const { data: stale, error: staleError } = await admin.from("madal_live_sessions")
       .update({ status: "ended", ended_at: cutoff })
       .eq("status", "live").lt("last_heartbeat_at", staleCutoff).select("id");
