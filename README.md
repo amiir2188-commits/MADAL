@@ -4,10 +4,10 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 ## Latest verified release
 
-**Android and Web: GoGol 1.10.51**
+**Android and Web: GoGol 1.10.52**
 
-- [Download GoGol 1.10.51 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.51/app-debug.apk)
-- [Download GoGol 1.10.51 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.51/madal-web.zip)
+- [Download GoGol 1.10.52 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.52/app-debug.apk)
+- [Download GoGol 1.10.52 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.52/madal-web.zip)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
 The Android APK is a beta/debug-signed build distributed directly; it is not a Play Store release.
@@ -31,9 +31,9 @@ This is still a beta. Some social and safety features depend on the matching Sup
 
 1. Configure the Supabase project URL and publishable/anon key for the app. Never put a service-role or secret key in client-side code.
 2. For a new database, review `supabase_schema.sql` before running it in the Supabase SQL Editor.
-3. For an existing database, review and apply only the migrations that match its current schema, in order. The social v2, message read-receipt, media/message compatibility, user safety/moderation, photo album, social post-visibility, and account deletion request migrations are separate SQL files under `supabase/migrations/`.
+3. For an existing database, review and apply only the migrations that match its current schema, in order. The profile/avatar, message read-receipt, media/message compatibility, user safety/moderation, photo album, social post-visibility, and account deletion migrations are separate SQL files under `supabase/migrations/`.
 4. Deploy the account deletion function with `supabase functions deploy delete-account`. Keep the Supabase service-role key only in the Edge Function environment; never put it in client code.
-4. Enable Phone Auth and configure an SMS provider if phone-number sign-in is required.
+5. Enable Phone Auth and configure an SMS provider if phone-number sign-in is required.
 
 Applying SQL is an administrator action and is not performed automatically by publishing the app. Back up the database and review migration contents before applying them to a production project. Report/block features require the user-safety migration and its RLS policies to be installed.
 

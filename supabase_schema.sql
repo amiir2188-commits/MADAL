@@ -151,6 +151,8 @@ create table if not exists public.madal_profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   username text not null unique,
   display_name text not null default 'MADAL User',
+  bio text not null default '',
+  avatar_url text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -161,6 +163,44 @@ drop policy if exists "MADAL profile insert own" on public.madal_profiles;
 create policy "MADAL profile insert own" on public.madal_profiles for insert to authenticated with check (auth.uid() = id);
 drop policy if exists "MADAL profile update own" on public.madal_profiles;
 create policy "MADAL profile update own" on public.madal_profiles for update to authenticated using (auth.uid() = id) with check (auth.uid() = id);
+
+alter table public.madal_profiles
+  drop constraint if exists madal_profiles_bio_length_check;
+alter table public.madal_profiles
+  add constraint madal_profiles_bio_length_check check (char_length(bio) <= 160);
+
+-- Public profile-photo storage; each account may manage only its own UUID folder.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('madal-avatars', 'madal-avatars', true, 5242880,
+        array['image/jpeg','image/png','image/webp','image/gif'])
+on conflict (id) do update
+set public = excluded.public,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "MADAL avatar images public read" on storage.objects;
+create policy "MADAL avatar images public read" on storage.objects
+for select to anon, authenticated using (bucket_id = 'madal-avatars');
+
+drop policy if exists "MADAL avatar upload own folder" on storage.objects;
+create policy "MADAL avatar upload own folder" on storage.objects
+for insert to authenticated with check (
+  bucket_id = 'madal-avatars'
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
+
+drop policy if exists "MADAL avatar update own folder" on storage.objects;
+create policy "MADAL avatar update own folder" on storage.objects
+for update to authenticated
+using (bucket_id = 'madal-avatars' and (storage.foldername(name))[1] = auth.uid()::text)
+with check (bucket_id = 'madal-avatars' and (storage.foldername(name))[1] = auth.uid()::text);
+
+drop policy if exists "MADAL avatar delete own folder" on storage.objects;
+create policy "MADAL avatar delete own folder" on storage.objects
+for delete to authenticated using (
+  bucket_id = 'madal-avatars'
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
 
 create or replace function public.madal_create_profile()
 returns trigger

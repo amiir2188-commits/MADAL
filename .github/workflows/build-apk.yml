@@ -140,7 +140,19 @@ jobs:
           const accountControls = [...account.matchAll(/<(?:input|textarea|select)\b[^>]*>/gi)].map(match => match[0]);
           const unlabeled = [...controls, ...accountControls].filter(tag => !tag.includes('aria-label=') && !tag.includes('aria-labelledby='));
           if (unlabeled.length) throw new Error('Found form controls without explicit accessible labels: ' + unlabeled.join(' | '));
-          console.log('GoGol version, safety migration, controls and accessibility labels are consistent.');
+          const deletionMigration = fs.readFileSync('supabase/migrations/20261116000600_account_deletion_requests.sql', 'utf8');
+          const profileMigration = fs.readFileSync('supabase/migrations/20261116000700_profile_storage.sql', 'utf8');
+          const deletionFunction = fs.readFileSync('supabase/functions/delete-account/index.ts', 'utf8');
+          if (!html.includes("db.functions.invoke('delete-account')")) throw new Error('Settings must call the secure account-deletion Edge Function');
+          if (!deletionMigration.includes('create table if not exists public.madal_account_deletion_requests')) throw new Error('Account-deletion request migration is missing');
+          for (const marker of ['authClient.auth.getUser()', 'SUPABASE_SERVICE_ROLE_KEY', 'admin.auth.admin.deleteUser(userId, false)', 'madal-media', 'madal-avatars']) {
+            if (!deletionFunction.includes(marker)) throw new Error('Account-deletion server safeguard missing: ' + marker);
+          }
+          if (html.includes('SUPABASE_SERVICE_ROLE_KEY') || account.includes('SUPABASE_SERVICE_ROLE_KEY')) throw new Error('Service-role secret must never be shipped to clients');
+          for (const marker of ['madal-avatars', 'MADAL avatar upload own folder', 'MADAL avatar images public read']) {
+            if (!profileMigration.includes(marker)) throw new Error('Profile/avatar migration is missing: ' + marker);
+          }
+          console.log('GoGol version, safety migrations, deletion endpoint, controls and accessibility labels are consistent.');
           NODE
 
       - name: Build APK
