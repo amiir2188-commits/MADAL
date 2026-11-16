@@ -43,7 +43,7 @@ jobs:
           cp icon-foreground.png assets/icon-foreground.png
           cp icon-background.png assets/icon-background.png
           cp splash.png assets/splash.png
-          cp index.html account.html update.js www/
+          cp index.html account.html update.js live.js www/
           cp manifest.webmanifest version.json www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
@@ -91,6 +91,7 @@ jobs:
 
       - name: Validate app JavaScript
         run: |
+          node --check live.js
           node <<'NODE'
           const fs = require('fs');
           for (const file of ['index.html', 'account.html']) {
@@ -148,6 +149,9 @@ jobs:
           const deletionFunction = fs.readFileSync('supabase/functions/delete-account/index.ts', 'utf8');
           const storyCleanupFunction = fs.readFileSync('supabase/functions/cleanup-expired-stories/index.ts', 'utf8');
           const supabaseConfig = fs.readFileSync('supabase/config.toml', 'utf8');
+          const liveClient = fs.readFileSync('live.js', 'utf8');
+          const liveMigration = fs.readFileSync('supabase/migrations/20261116000900_live_streaming.sql', 'utf8');
+          const liveTokenFunction = fs.readFileSync('supabase/functions/live-token/index.ts', 'utf8');
           if (!html.includes("db.functions.invoke('delete-account')")) throw new Error('Settings must call the secure account-deletion Edge Function');
           if (!deletionMigration.includes('create table if not exists public.madal_account_deletion_requests')) throw new Error('Account-deletion request migration is missing');
           for (const marker of ['authClient.auth.getUser()', 'SUPABASE_SERVICE_ROLE_KEY', 'admin.auth.admin.deleteUser(userId, false)', 'madal-media', 'madal-avatars']) {
@@ -167,7 +171,16 @@ jobs:
             if (!storyCleanupFunction.includes(marker)) throw new Error('Expired Stories cleanup safeguard missing: ' + marker);
           }
           if (!supabaseConfig.includes('[functions.cleanup-expired-stories]') || !supabaseConfig.includes('verify_jwt = false')) throw new Error('Scheduled cleanup endpoint must be configured for its own CRON_SECRET authentication');
-          console.log('GoGol version, safety migrations, account deletion, Stories, controls and accessibility labels are consistent.');
+          if (!html.includes('<script type="module" src="./live.js"></script>')) throw new Error('GoGol LIVE client module is not connected to the app');
+          for (const marker of ['livekit-client@2', 'madal_live_sessions', 'gLiveStart', 'gLiveEnd']) {
+            if (!liveClient.includes(marker)) throw new Error('GoGol LIVE client feature is missing: ' + marker);
+          }
+          if (!liveMigration.includes('create table if not exists public.madal_live_sessions')) throw new Error('GoGol LIVE database migration is missing');
+          for (const marker of ['new AccessToken', 'LIVEKIT_API_SECRET', 'canPublish: body.role === "host"', 'canSubscribe: true']) {
+            if (!liveTokenFunction.includes(marker)) throw new Error('GoGol LIVE token security is missing: ' + marker);
+          }
+          if (!supabaseConfig.includes('[functions.live-token]') || !supabaseConfig.includes('verify_jwt = true')) throw new Error('GoGol LIVE token function must require JWT verification');
+          console.log('GoGol version, safety migrations, account deletion, Stories, LIVE, controls and accessibility labels are consistent.');
           NODE
 
       - name: Build APK
@@ -184,7 +197,7 @@ jobs:
           test -s "$APK"
           "$AAPT" dump badging "$APK" | grep "package: name='com.madal.app'"
           "$APKSIGNER" verify --verbose "$APK"
-          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json'
+          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json|live.js'
 
       - name: Read MADAL version
         id: version
