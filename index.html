@@ -290,7 +290,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 </div>
 <div id="profileEditor" class="feed-card hidden"><h3>Wax ka beddel profile-ka</h3><form id="profileForm"><label>Magaca muuqda</label><input id="editDisplayName" maxlength="60" required aria-label="Magaca muuqda"><label>Username</label><input id="editUsername" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" required aria-label="Magaca isticmaalaha"><label>Bio / Isbarasho</label><textarea id="editBio" maxlength="160" placeholder="Naftaada wax yar ka sheeg..." aria-label="Isbarashada profile-ka"></textarea><label>Sawirka profile-ka</label><div class="avatar-picker"><img id="avatarPreview" class="avatar-preview" alt="Hordhaca sawirka profile-ka"><input id="editAvatarFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Dooro sawirka profile-ka"></div><p class="muted small">Ka dooro sawir Gallery-ga telefoonkaaga (PNG, JPG ama WebP; ugu badnaan 5 MB).</p><button id="removeAvatar" class="secondary" type="button">Ka saar sawirka profile-ka</button><input id="editAvatarUrl" type="url" placeholder="Ama geli link sawir (ikhtiyaari)" aria-label="Linkiga sawirka profile-ka"><button class="primary" type="submit">Kaydi profile-ka</button></form></div>
 <div class="profile-tabs"><button type="button" class="active" data-profile-tab="videos">▦ Videos</button><button type="button" data-profile-tab="reposts">↗ Reposts</button><button type="button" data-profile-tab="liked">♥ Liked</button><button type="button" data-profile-tab="favorites">★ Favorites</button><button type="button" data-profile-tab="private">🔒 Private</button></div>
-<div id="myVideos" class="profile-grid"><div class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div></div>
+<div id="myVideos" class="profile-grid"><div class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div></div><button id="profileLoadMore" class="secondary hidden" type="button" style="display:none;width:100%;margin:14px 0">Soo rar waxyaabo dheeraad ah</button>
 </section>
 <section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card language-card"><h3>🌐 Language / Luqadda</h3><p class="muted" id="languageHelp">Choose the language used across GoGol. You can change it anytime.</p><label class="settings-row" for="languageSetting"><span><strong id="languageLabel">App language</strong><small id="languageCurrent">Somali</small></span><select id="languageSetting" aria-label="Choose app language"><option value="so">Soomaali</option><option value="en">English</option><option value="ar">العربية</option><option value="om">Afaan Oromoo</option><option value="sw">Kiswahili</option><option value="fr">Français</option></select></label></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax GoGol qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card" id="privacySafetyCard"><h3>Amniga iyo asturnaanta</h3><p class="muted">Maamul dadka aad xannibtay. Waxaad dib u fasixi kartaa wakhti kasta.</p><div id="blockedUsersList" class="muted" aria-live="polite">Liiska waa la soo rarayaa...</div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox" aria-label="Daar ama dami ciyaarta tooska ah"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox" aria-label="Daar ama dami codka fiidiyowyada"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox" aria-label="Daar ama dami keydinta xogta internetka"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha GoGol</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox" aria-label="Daar ama dami ogeysiisyada"></label></div><div class="feed-card"><h3>Ku saabsan MADAL</h3><p class="muted">Nooca GoGol: <strong id="settingsVersion">1.8.6</strong></p><p class="muted">GoGol — madasha fiidiyowyada Soomaaliyeed.</p></div></section>
 <section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
@@ -321,7 +321,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.38';
+const MADAL_VERSION='1.10.39';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -582,7 +582,8 @@ $('discoverResults').addEventListener('click',async e=>{
 });
 
 document.querySelectorAll('[data-feed-tab]').forEach(button=>button.addEventListener('click',()=>{activeFeedTab=button.dataset.feedTab;document.querySelectorAll('[data-feed-tab]').forEach(b=>b.classList.toggle('active',b===button));renderFeed()}));
-document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
+document.querySelectorAll('[data-profile-tab]').forEach(button=>button.addEventListener('click',()=>{activeProfileTab=button.dataset.profileTab;profileDisplayLimit=activeProfileTab==='videos'||activeProfileTab==='private'?60:100;document.querySelectorAll('[data-profile-tab]').forEach(b=>b.classList.toggle('active',b===button));loadMyProfile()}));
+$('profileLoadMore').addEventListener('click',async()=>{if(!currentUser||!profileHasMore)return;const userId=currentUser.id,button=$('profileLoadMore');button.disabled=true;button.textContent='Waa la soo rarayaa...';profileDisplayLimit+=activeProfileTab==='videos'||activeProfileTab==='private'?60:100;await loadMyProfile();if(currentUser?.id===userId&&profileHasMore){button.disabled=false;button.textContent='Soo rar waxyaabo dheeraad ah'}});
 let socialLoadToken=0,blockedUserIds=new Set();
 async function loadSocialData(posts,renderToken=null){
  const token=++socialLoadToken;
@@ -885,7 +886,7 @@ async function loadMedia({append=false}={}){
  if(append)$('allFeed').scrollTop=feedScrollTop;
  if(!append&&currentUser){await loadMyProfile();if(token!==mediaLoadToken)return;await loadActivity()}
 }
-let profileLoadToken=0;
+let profileLoadToken=0,profileDisplayLimit=60,profileHasMore=false;
 async function loadMyProfile(){
  const token=++profileLoadToken,user=currentUser;
  if(!user){$('myVideos').innerHTML='<div class="empty">Soo gal si aad u aragto profile-kaaga.</div>';return}
@@ -905,18 +906,19 @@ async function loadMyProfile(){
  $('profileLogin').classList.add('hidden');
  let own=[];
  if(activeProfileTab==='videos'||activeProfileTab==='private'){
-  const {data:ownRows,error:ownError}=await db.from('media_posts').select('*').eq('user_id',userId).eq('status','published').order('created_at',{ascending:false}).order('id',{ascending:false}).limit(60);
+  const {data:ownRows,error:ownError}=await db.from('media_posts').select('*').eq('user_id',userId).eq('status','published').order('created_at',{ascending:false}).order('id',{ascending:false}).limit(profileDisplayLimit);
   if(token!==profileLoadToken||currentUser?.id!==userId)return;
-  if(ownError){console.warn('Profile media lookup:',ownError.message);own=allPosts.filter(p=>String(p.user_id)===userId)}
-  else own=ownRows||[];
+  if(ownError){console.warn('Profile media lookup:',ownError.message);own=allPosts.filter(p=>String(p.user_id)===userId);profileHasMore=false}
+  else{own=ownRows||[];profileHasMore=own.length>=profileDisplayLimit;}
   own=own.filter(p=>isVideo(p)||postType(p)==='image'||String(p.mime_type||'').startsWith('image/'));
   if(activeProfileTab==='private')own=own.filter(p=>p.is_private);
  }else{
   const table=activeProfileTab==='reposts'?'media_reposts':activeProfileTab==='liked'?'media_likes':'media_favorites';
-  const {data:rows,error:rowsError}=await db.from(table).select('post_id').eq('user_id',userId).order('created_at',{ascending:false}).limit(100);
+  const {data:rows,error:rowsError}=await db.from(table).select('post_id').eq('user_id',userId).order('created_at',{ascending:false}).limit(profileDisplayLimit);
   if(token!==profileLoadToken||currentUser?.id!==userId)return;
-  if(rowsError){notice('Qaybtan lama soo rari karin: '+rowsError.message);own=[]}
+  if(rowsError){notice('Qaybtan lama soo rari karin: '+rowsError.message);own=[];profileHasMore=false}
   else{
+   profileHasMore=(rows||[]).length>=profileDisplayLimit;
    const ids=[...new Set((rows||[]).map(x=>x.post_id).filter(Boolean))];
    if(ids.length){
     const {data:posts,error:postsError}=await db.from('media_posts').select('*').in('id',ids);
@@ -936,8 +938,10 @@ async function loadMyProfile(){
  ]);
  if(token!==profileLoadToken||currentUser?.id!==userId)return;
  $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;$('myLikeCount').textContent=likes.count??0;
- if(!own.length){$('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">'+(activeProfileTab==='videos'?'Weli muuqaal ma aadan soo gelin.':activeProfileTab==='reposts'?'Weli waxba ma aadan Repost gareyn.':activeProfileTab==='liked'?'Weli muuqaal Like ah ma jiro.':activeProfileTab==='favorites'?'Weli Favorites ma jiraan.':'Weli muuqaal Private ah ma jiro.')+'</div>';return}
+ if(!own.length){$('profileLoadMore').style.display='none';$('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">'+(activeProfileTab==='videos'?'Weli muuqaal ma aadan soo gelin.':activeProfileTab==='reposts'?'Weli waxba ma aadan Repost gareyn.':activeProfileTab==='liked'?'Weli muuqaal Like ah ma jiro.':activeProfileTab==='favorites'?'Weli Favorites ma jiraan.':'Weli muuqaal Private ah ma jiro.')+'</div>';return}
  $('myVideos').innerHTML='';
+ $('profileLoadMore').style.display=profileHasMore?'block':'none';
+ $('profileLoadMore').disabled=false;$('profileLoadMore').textContent='Soo rar waxyaabo dheeraad ah';
  for(const post of own){
   const url=await mediaUrl(post);
   if(token!==profileLoadToken||currentUser?.id!==userId)return;
