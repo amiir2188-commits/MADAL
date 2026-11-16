@@ -19,7 +19,7 @@ let checking = false;
 function showUpdate(version) {
   if (!notice || !button) return;
   notice.classList.remove('hidden');
-  if (message) message.textContent = 'MADAL ' + version + ' waa diyaar. Taabo Update App si aad u hesho muuqaalada iyo hagaajinta cusub; APK kale looma baahna.';
+  if (message) message.textContent = 'MADAL ' + version + ' waa diyaar. Taabo Update App si aad u cusboonaysiiso ka hor intaadan gelin app-ka caadiga ah. APK kale looma baahna.';
   button.classList.remove('hidden');
   button.textContent = 'Update App';
 }
