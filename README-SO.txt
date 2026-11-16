@@ -1,23 +1,24 @@
 GOGOL — APP BULSHO FIIDIYOW AH
-Nooca hadda la xaqiijiyey: 1.10.30
+Nooca hadda la xaqiijiyey: 1.10.48
 
 GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo, laguna isticmaalo Android iyo web.
 
 SOO DEJINTA
 APK Android:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.30/app-debug.apk
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.48/app-debug.apk
 
 Sii-daynta iyo dhammaan faylasha:
-https://github.com/amiir2188-commits/MADAL/releases/tag/v1.10.30
+https://github.com/amiir2188-commits/MADAL/releases/tag/v1.10.48
 
 WAXYAABAHA NOOCA BETA-GA KU JIRA
-- Daawashada iyo soo gelinta fiidiyowyada.
+- Daawashada iyo soo gelinta sawirro iyo fiidiyowyo; album sawirro badan (ilaa 10 sawir).
 - Samaysashada akoon iyo gelitaanka email/password.
 - Gelitaanka telefoonka +252 haddii Supabase Phone Auth iyo adeeg SMS la habeeyo.
 - Like, faallo, raacis iyo quudinta For You/Following.
 - Raadinta dadka, profiles iyo fariimo gaar ah.
 - Wadaagis, repost iyo kaydinta waxyaabaha la jecleystay.
 - Ogeysiisyo ku saabsan cusboonaysiinta web-content-ka.
+- Bogagga asturnaanta, xeerarka bulshada iyo shuruudaha isticmaalka.
 
 Qaar ka mid ah adeegyada bulshada iyo badbaadadu waxay ku xiran yihiin in jadwallada, siyaasadaha RLS iyo migrations-ka Supabase ee ku habboon la rakibo. Stories iyo baahinta tooska ah (Live) weli ma aha adeegyo dhamaystiran. For You hadda wuxuu adeegsadaa kala-hormarin ku salaysan falgalka iyo cusaybka; ma aha nidaam AI la tababaray.
 

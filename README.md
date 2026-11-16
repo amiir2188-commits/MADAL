@@ -4,25 +4,27 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 ## Latest verified release
 
-**GoGol 1.10.30**
+**GoGol 1.10.48**
 
-- [Download GoGol 1.10.30 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.30/app-debug.apk)
-- [Release notes and web bundle](https://github.com/amiir2188-commits/MADAL/releases/tag/v1.10.30)
+- [Download GoGol 1.10.48 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.48/app-debug.apk)
+- [Release notes and web bundle](https://github.com/amiir2188-commits/MADAL/releases/tag/v1.10.48)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
 The Android APK build and GitHub Pages deployment for this release completed successfully. The APK is a beta/debug-signed build distributed directly; it is not a Play Store release.
 
 ## Current beta capabilities
 
-- Browse and upload video posts.
+- Browse and upload photo and video posts, including multi-photo albums (up to 10 images).
 - Create an account and sign in with email and password.
 - Phone sign-in with Somalia's +252 numbers when Supabase Phone Auth and an SMS provider are configured.
 - Like and comment on posts, follow creators, and view For You and Following feeds.
 - Search creators, view profiles, and send private messages.
 - Share and repost content; save favorites.
 - In-app web-content update notifications.
+- Somali account sign-up and sign-in interface.
+- Privacy policy, community guidelines, and terms pages.
 
-Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. Stories and live streaming are not yet implemented as complete user-facing features. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
+This is still a beta. Some social and safety features depend on the matching Supabase tables, policies, and migrations being installed. The current release is not a Play Store production release. Stories and live streaming are not yet implemented as complete user-facing features. The For You feed uses a local engagement/freshness ranking; it is not represented as a trained AI recommendation system.
 
 ## Supabase setup
 
