@@ -121,8 +121,8 @@ jobs:
           }
           if (!account.includes('!/^[0-9]{6}$/.test(token)')) throw new Error('Phone OTP must accept exactly six digits');
           if (!html.includes('async function renderFeed()')) throw new Error('Feed renderer must be async to await social data');
-          if (/\\basync\\s+function\\s+rankForYouPosts\\s*\\(/.test(html)) throw new Error('For You ranking must be synchronous; renderFeed does not await it');
-          if (!/\\bfunction\\s+rankForYouPosts\\s*\\(/.test(html)) throw new Error('Missing synchronous For You ranking function');
+          if (/\basync\s+function\s+rankForYouPosts\s*\(/.test(html)) throw new Error('For You ranking must be synchronous; renderFeed does not await it');
+          if (!/\bfunction\s+rankForYouPosts\s*\(/.test(html)) throw new Error('Missing synchronous For You ranking function');
           if (!html.includes("activeFeedTab==='for_you'&&!query")) throw new Error('For You ranking is not connected to its feed tab');
           if (!html.includes('function releaseUploadPreviewUrl()')) throw new Error('Upload preview object URLs must be released');
           if (!html.includes('releaseUploadPreviewUrl();')) throw new Error('Upload flow must release preview URLs');
