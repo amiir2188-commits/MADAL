@@ -481,25 +481,28 @@ async function renderFeed(){
  $('allFeed').querySelectorAll('.video-slide video').forEach(video=>{video.muted=!preference("video_sound",false);video.volume=1;const slide=video.closest('.video-slide');video.addEventListener('click',()=>{if(video.paused){video.play().then(()=>slide?.classList.remove('is-paused')).catch(()=>slide?.classList.add('is-paused'));}else{video.pause();slide?.classList.add('is-paused');}});video.addEventListener('play',()=>{slide?.classList.remove('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="Ⅱ"});video.addEventListener('pause',()=>{slide?.classList.add('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"});if(!preference("autoplay",true)){slide?.classList.add("is-paused");const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"}});
 }
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
-let activeDiscoverTab='all',discoverTimer=null;
+let activeDiscoverTab='all',discoverTimer=null,discoverSearchToken=0;
 document.querySelectorAll('[data-discover-tab]').forEach(button=>button.addEventListener('click',()=>{activeDiscoverTab=button.dataset.discoverTab;document.querySelectorAll('[data-discover-tab]').forEach(b=>b.classList.toggle('active',b===button));searchDiscover()}));
 $('discoverSearch').addEventListener('input',()=>{clearTimeout(discoverTimer);discoverTimer=setTimeout(searchDiscover,250)});
 async function searchDiscover(){
- const host=$('discoverResults'),q=$('discoverSearch').value.trim().replace(/^@/,'');
+ const token=++discoverSearchToken,host=$('discoverResults'),q=$('discoverSearch').value.trim().replace(/^@/,'');
+ const tab=activeDiscoverTab;
  if(q.length<2){host.innerHTML='<div class="empty">Geli ugu yaraan 2 xaraf si raadintu u bilaabato.</div>';return}
  host.innerHTML='<div class="empty">Waa la raadinayaa...</div>';
  let people=[],peopleError=null;
- if(activeDiscoverTab!=='videos'){
+ if(tab!=='videos'){
   const [byName,byHandle]=await Promise.all([db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('username','%'+q+'%').limit(20),db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').ilike('display_name','%'+q+'%').limit(20)]);
+  if(token!==discoverSearchToken)return;
   peopleError=byName.error||byHandle.error;people=[...(byName.data||[]),...(byHandle.data||[])].filter((person,index,array)=>array.findIndex(x=>x.id===person.id)===index).slice(0,20);
  }
- const videos=activeDiscoverTab==='people'?[]:allPosts.filter(p=>!p.is_private||String(p.user_id)===String(currentUser?.id)).filter(p=>[p.title,p.description,p.caption,p.username,p.display_name].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()))).slice(0,30);
- if(peopleError)host.innerHTML='<p class="muted">Raadinta dadka: '+escapeHtml(peopleError.message)+'</p>';
+ if(token!==discoverSearchToken)return;
+ const videos=tab==='people'?[]:allPosts.filter(p=>!p.is_private||String(p.user_id)===String(currentUser?.id)).filter(p=>[p.title,p.description,p.caption,p.username,p.display_name].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()))).slice(0,30);
  let html='';
+ if(peopleError)html+='<p class="muted">Raadinta dadka: '+escapeHtml(peopleError.message)+'</p>';
  if(people.length)html+='<h3 class="section-title">Dadka</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</div><div class="user-meta"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followsByUser.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
  if(videos.length)html+='<h3 class="section-title">Fiidiyowyada</h3>'+videos.map(post=>'<div class="discover-post" data-open-post="'+escapeHtml(post.id)+'"><strong>'+escapeHtml(post.title||'GoGol')+'</strong><small>' + escapeHtml(post.description||'Fiidiyow GoGol')+'</small></div>').join('');
  if(!html)html+='<div class="empty">Wax natiijo ah lama helin.</div>';
- host.innerHTML=html;
+ if(token===discoverSearchToken)host.innerHTML=html;
 }
 $('discoverResults').addEventListener('click',async e=>{
  const follow=e.target.closest('[data-discover-follow]'),message=e.target.closest('[data-discover-message]'),post=e.target.closest('[data-open-post]');
