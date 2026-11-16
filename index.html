@@ -386,10 +386,13 @@ $('allFeed').addEventListener('click',async e=>{
  if(!currentUser){location.href='./account.html';return}
  if(like){
   const postId=like.dataset.like;
-  const result=likedPostIds.has(postId)
+  const wasLiked=likedPostIds.has(postId);
+  like.disabled=true;
+  const result=wasLiked
    ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
-   :await db.from('media_likes').insert({post_id:postId,user_id:currentUser.id});
-  if(result.error){console.warn('GoGol like request failed:',result.error);notice('Like-ga lama kaydin: '+(result.error.message||'Fadlan mar kale isku day.'))}else{const wasLiked=likedPostIds.has(postId);if(wasLiked){likedPostIds.delete(postId);likesByPost[postId]=Math.max(0,(likesByPost[postId]||1)-1)}else{likedPostIds.add(postId);likesByPost[postId]=(likesByPost[postId]||0)+1}like.classList.toggle('is-liked',!wasLiked);like.querySelector('span').textContent=wasLiked?'♡':'♥';like.querySelector('small').textContent=likesByPost[postId];}
+   :await db.from('media_likes').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true}).select('post_id');
+  like.disabled=false;
+  if(result.error){console.warn('GoGol like request failed:',result.error);notice('Like-ga lama kaydin: '+(result.error.message||'Fadlan mar kale isku day.'))}else{if(wasLiked){likedPostIds.delete(postId);likesByPost[postId]=Math.max(0,(likesByPost[postId]||1)-1)}else{likedPostIds.add(postId);if((result.data||[]).length)likesByPost[postId]=(likesByPost[postId]||0)+1}like.classList.toggle('is-liked',!wasLiked);like.querySelector('span').textContent=wasLiked?'♡':'♥';like.querySelector('small').textContent=likesByPost[postId]||0;}
  }
  if(repost){
   const postId=repost.dataset.repost;
