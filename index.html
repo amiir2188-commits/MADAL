@@ -325,7 +325,8 @@ html[dir="rtl"] .bottom{direction:rtl}
 <script>
 const SUPABASE_URL="https://nxtnfdyksskofjbvface.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_IGs6B3ozDGNZtAQaL4uZaQ_jXlMqOeJ";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);\nwindow.gogolSupabase=db;
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
