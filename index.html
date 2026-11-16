@@ -311,7 +311,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION="1.10.3";
+const MADAL_VERSION="1.10.4";
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -635,11 +635,13 @@ async function loadInbox(){
   .or('sender_id.eq.'+me+',recipient_id.eq.'+me)
   .order('created_at',{ascending:false}).limit(250);
  if(error){host.innerHTML='<p class="inbox-empty">Messages could not be loaded. Check your connection and try again.</p>';console.warn('GoGol inbox:',error.message);return}
- const latest=new Map();
- for(const message of messages||[]){
-  const other=message.sender_id===me?message.recipient_id:message.sender_id;
-  if(other&&!latest.has(other))latest.set(other,message);
- }
+ const latest=new Map(),unreadPeople=new Set();
+  for(const message of messages||[]){
+   const other=message.sender_id===me?message.recipient_id:message.sender_id;
+   if(!other)continue;
+   if(!latest.has(other))latest.set(other,message);
+   if(message.recipient_id===me&&!message.read_at)unreadPeople.add(other);
+  }
  const ids=[...latest.keys()];
  if(!ids.length){host.innerHTML='<p class="inbox-empty">No conversations yet. Search for a username below to start chatting.</p>';return}
  const [profilesResult,followsResult]=await Promise.all([
@@ -653,12 +655,12 @@ async function loadInbox(){
  const stars=inboxStarIds();
  const isRequest=row=>row.message.sender_id===row.id&&!followed.has(row.id);
  let rows=ids.map(id=>({id,message:latest.get(id),profile:profiles.get(id)})).filter(row=>row.profile);
- if(activeInboxFilter==='unread')rows=rows.filter(row=>row.message.recipient_id===me&&!row.message.read_at);
+ if(activeInboxFilter==='unread')rows=rows.filter(row=>unreadPeople.has(row.id));
  if(activeInboxFilter==='requests')rows=rows.filter(isRequest);
  if(activeInboxFilter==='starred')rows=rows.filter(row=>stars.has(row.id));
  if(activeInboxFilter==='main')rows=rows.filter(row=>!isRequest(row));
  host.innerHTML=rows.map(row=>{
-  const profile=row.profile,message=row.message,unread=message.recipient_id===me&&!message.read_at;
+  const profile=row.profile,message=row.message,unread=unreadPeople.has(row.id);
   const avatar=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((profile.display_name||profile.username||'G').trim()[0].toUpperCase());
   const preview=(message.sender_id===me?'You: ':'')+String(message.body||'');
   return '<div class="inbox-conversation" role="group"><button type="button" class="inbox-conversation" data-inbox-user="'+escapeHtml(row.id)+'"><span class="inbox-person-avatar">'+avatar+'</span><span class="inbox-conversation-copy"><strong>'+escapeHtml(profile.display_name||('@'+profile.username))+'</strong><small>'+escapeHtml(preview)+'</small></span><span class="inbox-conversation-meta">'+(unread?'<i class="inbox-unread-dot"></i>':'')+'<small>'+new Date(message.created_at).toLocaleDateString()+'</small></span></button><button type="button" class="inbox-star '+(stars.has(row.id)?'is-starred':'')+'" data-inbox-star="'+escapeHtml(row.id)+'" aria-label="'+(stars.has(row.id)?'Remove star':'Star conversation')+'">'+(stars.has(row.id)?'★':'☆')+'</button></div>';
@@ -682,6 +684,8 @@ async function loadConversation(){
  if(!activeChatUser||!currentUser)return;
  const me=currentUser.id,other=activeChatUser.id;
  const filter='and(sender_id.eq.'+me+',recipient_id.eq.'+other+'),and(sender_id.eq.'+other+',recipient_id.eq.'+me+')';
+ const {error:readError}=await db.from('madal_messages').update({read_at:new Date().toISOString()}).eq('sender_id',other).eq('recipient_id',me).is('read_at',null);
+ if(readError)console.warn('GoGol mark messages read:',readError.message);
  const {data,error}=await db.from('madal_messages').select('id,sender_id,recipient_id,body,created_at,read_at').or(filter).order('created_at',{ascending:false}).limit(300);
  if(error){$('messageList').textContent='Fariimaha lama soo rari karin: '+error.message;return}
  $('messageList').innerHTML=(data||[]).slice().reverse().map(message=>{
@@ -697,10 +701,13 @@ $('messageForm').addEventListener('submit',async e=>{
  const body=$('messageBody').value.trim();if(!body)return;
  const button=e.submitter||$('messageForm').querySelector('button[type="submit"]');
  button.disabled=true;
- const {error}=await db.from('madal_messages').insert({sender_id:currentUser.id,recipient_id:activeChatUser.id,body});
- if(error)notice('Fariinta lama dirin: '+error.message);
- else{$('messageBody').value='';await loadConversation()}
- button.disabled=false;
+ try{
+  const {error}=await db.from('madal_messages').insert({sender_id:currentUser.id,recipient_id:activeChatUser.id,body});
+  if(error)throw error;
+  $('messageBody').value='';
+  await loadConversation();
+ }catch(error){console.warn('GoGol message send:',error);notice('Fariinta lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
+ finally{button.disabled=false}
 });
 
 async function loadMedia(){
