@@ -72,7 +72,7 @@ const liveUser = async () => {
  return data.user;
 };
 const liveSDK = async () => {
- if(!liveKitModule) liveKitModule=await import("https://cdn.jsdelivr.net/npm/livekit-client@2/+esm");
+ if(!liveKitModule) liveKitModule=await import("https://cdn.jsdelivr.net/npm/livekit-client@2.24.1/+esm");
  return liveKitModule;
 };
 const liveOpen = async () => {
