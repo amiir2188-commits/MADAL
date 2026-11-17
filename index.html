@@ -538,6 +538,8 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 
 /* GoGol 1.10.75 — keep profile Photos in the creator's own media collection. */
 #profile [data-profile-tab="photos"].active{color:#fff}
+
+/* GoGol 1.10.76 — profile media tabs filter by media type before pagination. */
 </style>
 </head>
 <body>
@@ -626,7 +628,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.75';
+const MADAL_VERSION='1.10.76';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1287,7 +1289,12 @@ async function loadMyProfile(){
  $('profileLogin').classList.add('hidden');
  let own=[];
  if(activeProfileTab==='videos'||activeProfileTab==='photos'||activeProfileTab==='private'){
-  const {data:ownRows,error:ownError}=await db.from('media_posts').select('*').eq('user_id',userId).eq('status','published').order('created_at',{ascending:false}).order('id',{ascending:false}).limit(profileDisplayLimit);
+  let ownQuery=db.from('media_posts').select('*').eq('user_id',userId).eq('status','published');
+  // Filter media type in the database before pagination so older photos are not
+  // hidden behind a page of newer videos (and vice versa).
+  if(activeProfileTab==='videos')ownQuery=ownQuery.or('media_type.eq.video,mime_type.like.video/%');
+  if(activeProfileTab==='photos')ownQuery=ownQuery.or('media_type.eq.image,mime_type.like.image/%');
+  const {data:ownRows,error:ownError}=await ownQuery.order('created_at',{ascending:false}).order('id',{ascending:false}).limit(profileDisplayLimit);
   if(token!==profileLoadToken||currentUser?.id!==userId)return;
   if(ownError){console.warn('Profile media lookup:',ownError.message);own=allPosts.filter(p=>String(p.user_id)===userId);profileHasMore=false}
   else{own=ownRows||[];profileHasMore=own.length>=profileDisplayLimit;}
