@@ -65,12 +65,13 @@ jobs:
           test -f privacy.html
           test -f community-guidelines.html
           test -f terms.html
+          test -f gogol-logo.svg
           mkdir -p assets www
           cp icon-only.png assets/icon-only.png
           cp icon-foreground.png assets/icon-foreground.png
           cp icon-background.png assets/icon-background.png
           cp splash.png assets/splash.png
-          cp index.html account.html privacy.html community-guidelines.html terms.html update.js live.js www/
+          cp index.html account.html privacy.html community-guidelines.html terms.html update.js live.js gogol-logo.svg www/
           cp manifest.webmanifest version.json www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
@@ -296,7 +297,7 @@ jobs:
           test -s "$APK"
           "$AAPT" dump badging "$APK" | grep "package: name='com.madal.app'"
           "$APKSIGNER" verify --verbose "$APK"
-          unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js'
+          unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js|gogol-logo.svg'
 
       - name: Read MADAL version
         id: version
