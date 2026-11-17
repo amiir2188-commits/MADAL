@@ -1,6 +1,7 @@
 GOGOL — APP BULSHO FIIDIYOW IYO SAWIRRO AH
 
-Nooca Android iyo Web ee ugu dambeeyay ee CI-gu xaqiijiyey: 1.10.59
+APK-ga Android ee saldhigga ah: 1.10.59 (debug-signed build la xaqiijiyey)
+Web bundle-ka cusub: 1.10.60 (bogagga Terms/Privacy/Community waa lagu daray)
 GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo.
 
 SOO DEJINTA
@@ -8,7 +9,7 @@ APK Android:
 https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/app-debug.apk
 
 Web update bundle:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/madal-web.zip
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.60/madal-web.zip
 
 Dhammaan sii-daymaha:
 https://github.com/amiir2188-commits/MADAL/releases
@@ -25,7 +26,7 @@ WAXYAABAHA APP-KA KU JIRA
 - Codsi tirtirid akoon oo ammaan ah.
 
 CUSBOONAYSIINTA APP-KA
-APK-ga 1.10.59 waa saldhigga Android ee hadda lagu tijaabinayo in-app updates. Marka APK-gan la rakibo, isbeddellada HTML/CSS/JavaScript waxaa app-ka gudihiisa looga soo dejisan karaa iyada oo aan APK cusub la rakibin. Isbeddelada Android native ama plugins cusub weli waxay u baahan yihiin APK cusub. In-app update-ka waa in telefoon dhab ah lagu tijaabiyaa ka hor inta aan loo ballanqaadin inuu dhammaan qalabka si buuxda uga shaqaynayo.
+APK-ga 1.10.59 waa saldhigga Android ee hadda lagu tijaabinayo in-app updates. Web bundle-ka 1.10.60 wuxuu ku darayaa Terms, Privacy iyo Community pages. APK cusub si otomaatig ah looma beddelayo si aan loo khalkhal gelin saxiixa APK-ga saldhigga ah. Marka APK-gan la rakibo, isbeddellada HTML/CSS/JavaScript waxaa app-ka gudihiisa looga soo dejisan karaa iyada oo aan APK cusub la rakibin. Isbeddelada Android native ama plugins cusub weli waxay u baahan yihiin APK cusub. In-app update-ka waa in telefoon dhab ah lagu tijaabiyaa ka hor inta aan loo ballanqaadin inuu dhammaan qalabka si buuxda uga shaqaynayo.
 
 HABAYNTA SUPABASE
 - Project ID: nxtnfdyksskofjbvface.
