@@ -54,9 +54,6 @@ jobs:
           test -f supabase/functions/delete-account/index.ts
           test -f supabase/functions/cleanup-expired-stories/index.ts
           test -f supabase/functions/live-token/index.ts
-          test -n "$LIVEKIT_URL" || { echo "Missing LIVEKIT_URL secret"; exit 1; }
-          test -n "$LIVEKIT_API_KEY" || { echo "Missing LIVEKIT_API_KEY secret"; exit 1; }
-          test -n "$LIVEKIT_API_SECRET" || { echo "Missing LIVEKIT_API_SECRET secret"; exit 1; }
 
       - name: Link production project
         shell: bash
@@ -80,10 +77,17 @@ jobs:
 
       - name: Configure expired Stories cleanup secret
         shell: bash
-        run: supabase secrets set --project-ref "$SUPABASE_PROJECT_ID" "CRON_SECRET=$GOGOL_CRON_SECRET" "LIVEKIT_URL=$LIVEKIT_URL" "LIVEKIT_API_KEY=$LIVEKIT_API_KEY" "LIVEKIT_API_SECRET=$LIVEKIT_API_SECRET"
+        run: supabase secrets set --project-ref "$SUPABASE_PROJECT_ID" "CRON_SECRET=$GOGOL_CRON_SECRET"
 
-      - name: Report remaining manual Cron setup
+      - name: Configure optional LiveKit credentials
+        if: env.LIVEKIT_URL != '' && env.LIVEKIT_API_KEY != '' && env.LIVEKIT_API_SECRET != ''
+        shell: bash
+        run: supabase secrets set --project-ref "$SUPABASE_PROJECT_ID" "LIVEKIT_URL=$LIVEKIT_URL" "LIVEKIT_API_KEY=$LIVEKIT_API_KEY" "LIVEKIT_API_SECRET=$LIVEKIT_API_SECRET"
+
+      - name: Report optional service configuration
+        shell: bash
         run: |
-          echo "Backend migrations, account/story functions, and GoGol LIVE token function deployed."
+          echo "Core backend migrations and account/story/LIVE token functions deployed."
+          echo "LiveKit credentials: $([ -n "$LIVEKIT_URL" ] && [ -n "$LIVEKIT_API_KEY" ] && [ -n "$LIVEKIT_API_SECRET" ] && echo configured || echo not-configured)"
           echo "In Supabase Dashboard > Integrations > Cron, schedule POST /functions/v1/cleanup-expired-stories every 15 minutes."
           echo "Set Authorization: Bearer <the same GOGOL_CRON_SECRET> and Content-Type: application/json."
