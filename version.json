@@ -1,7 +1,7 @@
 {
-  "version": "1.10.69",
+  "version": "1.10.70",
   "name": "GoGol",
-  "message": "Redesign creator profile with TikTok-style avatar, stats, tabs and share controls",
+  "message": "Add TikTok-style full-screen photo viewer with swipe navigation",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.69/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.70/madal-web.zip"
 }
