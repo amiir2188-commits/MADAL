@@ -85,8 +85,14 @@ jobs:
           NODE
           node -e "require('sharp')('gogol-logo.svg').resize(1024,1024,{fit:'contain',background:{r:0,g:0,b:0,alpha:0}}).png().toFile('assets/icon-only.png').then(()=>require('sharp')('assets/icon-only.png').png().toFile('assets/icon-foreground.png'))"
           npx capacitor-assets generate --android
-          npx cap sync android
+          # Bundle the native live-update plugin before Capacitor copies web assets.
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
+          npx cap sync android
+          test -s android/app/src/main/assets/public/update.js
+          if grep -qE "from ['\"]@capawesome/capacitor-live-update['\"]|import\(['\"]@capawesome/capacitor-live-update['\"]\)" android/app/src/main/assets/public/update.js; then
+            echo "Unbundled native update plugin import found in Android assets."
+            exit 1
+          fi
           cd www && zip -r ../madal-web.zip . && cd ..
 
       - name: Validate app JavaScript
