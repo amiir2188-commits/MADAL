@@ -276,6 +276,24 @@ html[dir="rtl"] .bottom{direction:rtl}
 .bottom .create-tab svg{stroke:#190d25;stroke-width:2.5}
 @media(hover:hover){.bottom button:not(.active):hover{background:#ffffff0c;color:#fff}}
 @media(prefers-reduced-motion:reduce){.bottom button{transition:none}}
+
+/* GoGol TikTok-style four-tab navigation and compact For You header */
+.bottom{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-content:stretch;gap:0;padding:6px 8px calc(6px + env(safe-area-inset-bottom))!important;background:#080808f7!important;border-top:1px solid #ffffff24!important}
+.bottom button{display:flex;min-width:0;min-height:54px;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:3px 0;font-size:11px!important;font-weight:750;color:#a9a9ad!important}
+.bottom button svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bottom button span{display:block;font-size:11px!important;line-height:1.15!important;margin:0}
+.bottom button.active{color:#fff!important}
+.bottom button.active svg{stroke:#fff;filter:drop-shadow(0 0 5px #b82cff)}
+.bottom button.active span{text-shadow:0 0 10px #b82cff}
+#home .feed-tabs{display:grid!important;grid-template-columns:40px minmax(0,1fr) minmax(0,1fr) 40px!important;align-items:center!important;justify-content:stretch!important;gap:8px!important;height:58px!important;padding:0 12px!important;background:#08070b!important}
+#home .feed-tabs button{min-width:0!important;flex:initial!important;text-align:center;white-space:nowrap;font-size:14px!important;padding:9px 4px!important;color:#c9c4d0!important}
+#home .feed-tabs button.active{color:#fff!important}
+#home .feed-tabs button.active:after{left:24%!important;right:24%!important;bottom:1px!important}
+#home .feed-tabs .feed-search{width:38px!important;height:40px!important;min-width:38px!important;font-size:26px!important;color:#fff!important}
+#home .feed-tabs .home-create{width:36px!important;height:36px!important;min-width:36px!important;border-radius:10px!important;background:#fff!important;color:#090512!important;font-size:28px!important;font-weight:500!important;line-height:1!important;padding:0!important}
+#home .feed-tabs .home-create:after{display:none!important}
+#discover>.section-title{margin-top:8px}
+@media(max-width:380px){.bottom{padding-left:4px!important;padding-right:4px!important}#home .feed-tabs{gap:4px!important;padding:0 8px!important}#home .feed-tabs button{font-size:13px!important}}
 </style>
 </head>
 <body>
@@ -297,7 +315,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
-<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Videos and photos feed navigation"><button type="button" class="live-entry" id="liveEntry" aria-label="LIVE">▣</button><button type="button" data-feed-tab="stem">STEM</button><button type="button" data-feed-tab="community">Community</button><button type="button" data-feed-tab="photos">Photos</button><button type="button" data-feed-tab="videos">Videos</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button type="button" class="home-create" data-page="upload" aria-label="Create" title="Create">＋</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli GoGol</h2>
@@ -352,7 +370,6 @@ html[dir="rtl"] .bottom{direction:rtl}
 <nav class="bottom" aria-label="GoGol navigation">
 <button class="active" data-page="home" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10.5 9-7.5 9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></svg><span>Home</span></button>
 <button data-page="discover" aria-label="Friends"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V21M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM17 4.2a4 4 0 0 1 0 7.6M18 15.5a4 4 0 0 1 3 3.9V21"/></svg><span>Friends</span></button>
-<button class="create-tab" data-page="upload" aria-label="Create"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></button>
 <button data-page="messages" aria-label="Inbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg><span>Inbox</span></button>
 <button data-page="profile" aria-label="Profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg><span>Profile</span></button>
 </nav>
@@ -453,6 +470,7 @@ function showPage(page){
  clearNotice();window.scrollTo({top:0,behavior:'smooth'});
  if(page==='notifications')loadActivity();
  if(page==='messages')loadInbox();
+ if(page==='discover')loadFriends();
 }
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 $('headerSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
@@ -600,12 +618,32 @@ async function renderFeed(){
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
 let activeDiscoverTab='all',discoverTimer=null,discoverSearchToken=0,discoverVideoResults=[];
 document.querySelectorAll('[data-discover-tab]').forEach(button=>button.addEventListener('click',()=>{activeDiscoverTab=button.dataset.discoverTab;document.querySelectorAll('[data-discover-tab]').forEach(b=>b.classList.toggle('active',b===button));searchDiscover()}));
+async function loadFriends(token=++discoverSearchToken){
+ const host=$('discoverResults');
+ if(!host||$('discoverSearch').value.trim().length>=2)return;
+ host.innerHTML='<div class="empty">Dadka GoGol waa la soo raadinayaa...</div>';
+ const me=currentUser?.id||null;
+ const {data,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').limit(40);
+ if(token!==discoverSearchToken)return;
+ if(error){host.innerHTML='<div class="empty">Liiska Friends lama soo rari karin: '+escapeHtml(error.message)+'</div>';return}
+ const people=(data||[]).filter(person=>String(person.id)!==String(me||'')).slice(0,30);
+ if(!people.length){host.innerHTML='<div class="empty">Weli qof kale kuma jiro liiska Friends. Mar dambe isku day.</div>';return}
+ let followed=new Set(followsByUser);
+ if(me){
+  const ids=people.map(person=>person.id);
+  const result=await db.from('user_follows').select('following_id').eq('follower_id',me).in('following_id',ids);
+  if(token!==discoverSearchToken||currentUser?.id!==me)return;
+  if(!result.error)followed=new Set((result.data||[]).map(row=>row.following_id));
+  else console.warn('GoGol Friends follow status:',result.error.message);
+ }
+ host.innerHTML='<h3 class="section-title">Dadka aad la xiriiri karto</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'G')[0].toUpperCase()))+'</div><div class="user-meta"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small><small>'+escapeHtml(person.bio||'Ku soo biir bulshada GoGol.')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followed.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
+}
 function safeLikeTerm(value){return String(value||'').slice(0,64).replace(/[\\%_]/g,char=>'\\'+char)}
 $('discoverSearch').addEventListener('input',()=>{clearTimeout(discoverTimer);discoverTimer=setTimeout(searchDiscover,250)});
 async function searchDiscover(){
  const token=++discoverSearchToken,host=$('discoverResults'),q=$('discoverSearch').value.trim().replace(/^@/,'').slice(0,64),likeTerm=safeLikeTerm(q);
  const tab=activeDiscoverTab;
- if(q.length<2){host.innerHTML='<div class="empty">Geli ugu yaraan 2 xaraf si raadintu u bilaabato.</div>';return}
+ if(q.length<2){if(!q){await loadFriends(token)}else host.innerHTML='<div class="empty">Geli ugu yaraan 2 xaraf si raadintu u bilaabato.</div>';return}
  host.innerHTML='<div class="empty">Waa la raadinayaa...</div>';
  let people=[],peopleError=null;
  if(tab!=='videos'){
@@ -655,12 +693,14 @@ async function loadSocialData(posts,renderToken=null){
  if(token!==socialLoadToken||(renderToken!==null&&renderToken!==feedRenderToken))return;
  currentUser=session?.session?.user||null;
  const socialUserId=currentUser?.id||null;
+ // Favorites are private by design. Never query this table as an anonymous visitor:
+ // its RLS correctly denies anon, and must not prevent comments or likes loading.
  const [likesResult,commentsResult,followsResult,repostsResult,favoritesResult,profilesResult,blocksResult]=await Promise.all([
   db.from('media_likes').select('post_id,user_id').in('post_id',ids),
-  db.from('media_comments').select('id,post_id,user_id,body,created_at').in('post_id',ids).order('created_at',{ascending:true}),
+  db.from('media_comments').select('id,post_id,user_id,body,created_at').in('post_id',ids).order('created_at',{ascending:true}).limit(1000),
   authors.length?db.from('user_follows').select('follower_id,following_id').in('following_id',authors):Promise.resolve({data:[],error:null}),
   db.from('media_reposts').select('post_id,user_id').in('post_id',ids),
-  db.from('media_favorites').select('post_id,user_id').in('post_id',ids),
+  socialUserId?db.from('media_favorites').select('post_id,user_id').eq('user_id',socialUserId).in('post_id',ids):Promise.resolve({data:[],error:null}),
   authors.length?db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',authors):Promise.resolve({data:[],error:null}),
   socialUserId?db.from('madal_user_blocks').select('blocked_user_id').eq('blocker_id',socialUserId):Promise.resolve({data:[],error:null})
  ]);
@@ -668,16 +708,17 @@ async function loadSocialData(posts,renderToken=null){
  blockedUserIds=new Set((blocksResult.data||[]).map(row=>String(row.blocked_user_id)));
  if(blocksResult.error)console.warn('GoGol block list unavailable; apply 20261116000300_user_safety_moderation.sql:',blocksResult.error.message);
  authorProfiles={};for(const profile of profilesResult.data||[])authorProfiles[profile.id]=profile;
- if(likesResult.error||commentsResult.error||followsResult.error||repostsResult.error||favoritesResult.error){
-  console.warn('MADAL social tables are not ready. Run social_migration.sql and madal_social_v2_migration.sql.',likesResult.error||commentsResult.error||followsResult.error||repostsResult.error||favoritesResult.error);
-  return;
+ // Keep each social feature independent: a missing optional table must not disable
+ // favorites, comments, likes, or follows that are otherwise healthy.
+ for(const [feature,result] of [['likes',likesResult],['comments',commentsResult],['friends',followsResult],['reposts',repostsResult],['favorites',favoritesResult],['profiles',profilesResult]]){
+  if(result?.error)console.warn('GoGol '+feature+' data unavailable:',result.error.message);
  }
  socialReady=true;
- for(const like of likesResult.data||[]){likesByPost[like.post_id]=(likesByPost[like.post_id]||0)+1;if(socialUserId&&like.user_id===socialUserId)likedPostIds.add(like.post_id)}
- for(const comment of commentsResult.data||[]){(commentsByPost[comment.post_id]??=[]).push(comment)}
- for(const follow of followsResult.data||[]){followerCounts[follow.following_id]=(followerCounts[follow.following_id]||0)+1;if(socialUserId&&follow.follower_id===socialUserId)followsByUser.add(follow.following_id)}
- for(const row of repostsResult.data||[]){repostCountsByPost[row.post_id]=(repostCountsByPost[row.post_id]||0)+1;if(socialUserId&&row.user_id===socialUserId)repostedPostIds.add(row.post_id);}
- favoriteCountsByPost={};for(const row of favoritesResult.data||[]){favoriteCountsByPost[row.post_id]=(favoriteCountsByPost[row.post_id]||0)+1;if(socialUserId&&row.user_id===socialUserId)favoritePostIds.add(row.post_id);}
+ if(!likesResult.error)for(const like of likesResult.data||[]){likesByPost[like.post_id]=(likesByPost[like.post_id]||0)+1;if(socialUserId&&like.user_id===socialUserId)likedPostIds.add(like.post_id)}
+ if(!commentsResult.error)for(const comment of commentsResult.data||[]){(commentsByPost[comment.post_id]??=[]).push(comment)}
+ if(!followsResult.error)for(const follow of followsResult.data||[]){followerCounts[follow.following_id]=(followerCounts[follow.following_id]||0)+1;if(socialUserId&&follow.follower_id===socialUserId)followsByUser.add(follow.following_id)}
+ if(!repostsResult.error)for(const row of repostsResult.data||[]){repostCountsByPost[row.post_id]=(repostCountsByPost[row.post_id]||0)+1;if(socialUserId&&row.user_id===socialUserId)repostedPostIds.add(row.post_id);}
+ if(!favoritesResult.error)for(const row of favoritesResult.data||[]){favoriteCountsByPost[row.post_id]=(favoriteCountsByPost[row.post_id]||0)+1;if(socialUserId&&row.user_id===socialUserId)favoritePostIds.add(row.post_id);}
 }
 $('allFeed').addEventListener('click',async e=>{
  const loadMore=e.target.closest('[data-load-more]');if(loadMore){await loadMedia({append:true});return}
