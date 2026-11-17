@@ -37,7 +37,8 @@ HABAYNTA SUPABASE
 - Jadwalladii hore madal_follows iyo madal_shares lama tirtirayo, balse xogtooda si otomaatig ah looguma guurin jadwallada cusub.
 - Stories waxay u baahan yihiin migrations 008 iyo cleanup Edge Function + Cron.
 - LIVE waxay u baahan tahay migrations 009 iyo 010, LiveKit Cloud/server iyo secrets: LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET.
-- Workflow-ga GitHub Actions → Deploy GoGol Supabase backend wuxuu u baahan yahay SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD, GOGOL_CRON_SECRET iyo saddexda LiveKit secrets. Waxa kale oo uu u baahan yahay backup dib loo soo celin karo iyo oggolaanshaha production environment.
+- Workflow-ga GitHub Actions → Deploy GoGol Supabase backend wuxuu u baahan yahay SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD iyo GOGOL_CRON_SECRET. LiveKit secrets waa ikhtiyaari; haddii aan la dejin, qaybaha kale ee backend-ka waa la deploy-gareyn karaa, LIVE-na wuxuu sugayaa credentials.
+- Ka hor production deploy, samee backup database oo dib loo soo celin karo. CSV-yada public tables keligood kuma jiraan Auth users, Storage files, policies iyo schema oo dhan. Faylasha Storage-ka iyo xogta muhiimka ah meel ammaan ah ku hay.
 - Cleanup Cron-ka Stories waa in Supabase Dashboard laga jadwaleeyo 15 daqiiqo kasta, kadib deployment.
 
 XADIDAADAHA IYO TAYADA
@@ -48,3 +49,20 @@ XADIDAADAHA IYO TAYADA
 - Android package ID: com.madal.app; ha beddelin.
 - iPhone native IPA wali lama diyaarin.
 - Soo geli oo keliya waxyaabo aad leedahay ama aad fasax u haysato.
+
+
+SAxiixa JOOGTADA AH EE APK-GA (SI AAN MUSTAQBALKA LOO UNINSTALL-GAREYN)
+GitHub repo → Settings → Secrets and variables → Actions → New repository secret.
+Ku dar afartan secret:
+1. ANDROID_KEYSTORE_BASE64 — base64-ka faylka gogol-release.jks.
+2. ANDROID_KEYSTORE_PASSWORD — password-ka keystore-ka.
+3. ANDROID_KEY_ALIAS — alias-ka key-ga (tusaale: gogol).
+4. ANDROID_KEY_PASSWORD — password-ka key-ga.
+
+Keystore-ka ku samee kombiyuutar aad adigu maamusho adigoo adeegsanaya keytool:
+keytool -genkeypair -v -keystore gogol-release.jks -alias gogol -keyalg RSA -keysize 2048 -validity 10000
+Linux/macOS base64:
+base64 -w 0 gogol-release.jks > gogol-release-base64.txt
+Windows PowerShell:
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("gogol-release.jks"))
+Ha gelin gogol-release.jks ama password-yada GitHub repository-ga, hana ku wadaagin chat. Hayso laba nuqul oo ammaan ah oo keystore-ka ah; haddii lumo, APK-yada dambe laguma cusboonaysiin karo isla package-ka. Kadib secrets-ka geli, GitHub Actions → Build GoGol Android APK ku bilow publish_apk=true. Haddii aad hore u rakibtay APK-ga debug-signed ee 1.10.59, saxiix cusub awgiis uninstall ayaa loo baahan karaa ka hor rakibidda APK-ga release-ka cusub.
