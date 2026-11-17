@@ -343,6 +343,44 @@ body.photo-viewer-open{overflow:hidden!important}
 .gogol-photo-arrow[hidden]{display:none}
 #allFeed .album-strip img,#allFeed .video-slide>.slide-media:not(video),#myVideos .profile-tile img{cursor:zoom-in}
 @media(prefers-reduced-motion:no-preference){.gogol-photo-viewer.is-open .gogol-photo-main{animation:gogolPhotoIn .16s ease-out}@keyframes gogolPhotoIn{from{opacity:.7;transform:scale(.985)}to{opacity:1;transform:scale(1)}}}
+
+/* GoGol 1.10.71 — immersive TikTok-style direct messages */
+#messages{padding-left:12px!important;padding-right:12px!important}
+#messages .inbox-heading{position:sticky;top:0;z-index:5;background:#000f;padding:12px 2px 14px;backdrop-filter:blur(16px)}
+#messages .inbox-heading h2{font-size:25px;letter-spacing:-.5px}
+#messages .inbox-story-row{padding-top:10px;padding-bottom:12px}
+#messages .inbox-filters{border-bottom:1px solid #242424;margin:0 -12px 4px;padding:8px 12px 12px}
+#messages .inbox-filters button{border-radius:9px;background:#202020!important;color:#c8c8c8;padding:9px 14px;font-size:13px}
+#messages .inbox-filters button.active{background:#fff!important;color:#080808!important}
+#messages .inbox-conversations{gap:0;margin:0 -4px 12px}
+#messages .inbox-conversation{gap:12px;padding:13px 4px;border-bottom:1px solid #202020}
+#messages .inbox-person-avatar{width:56px;height:56px;border:0;background:linear-gradient(135deg,#25f4ee,#fe2c55);padding:2px}
+#messages .inbox-person-avatar img{border-radius:50%;border:2px solid #000}
+#messages .inbox-conversation-copy strong{font-size:14px;font-weight:800}
+#messages .inbox-conversation-copy small{font-size:12px;color:#aaa}
+#messages .inbox-star{font-size:21px}
+#messages .inbox-activity{border-bottom:1px solid #242424}
+#messages .inbox-search-card{background:#101010!important;border:1px solid #252525;border-radius:14px}
+#conversationPanel:not(.hidden){position:fixed!important;inset:0!important;z-index:3000!important;display:flex!important;flex-direction:column!important;gap:0!important;width:100%!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)!important;background:#000!important;border:0!important;border-radius:0!important;overflow:hidden!important}
+.chat-topbar{height:62px;min-height:62px;display:flex;align-items:center;gap:11px;padding:6px 12px;border-bottom:1px solid #252525;background:#080808}
+.chat-topbar>button{width:38px;height:40px;flex:none;border:0;border-radius:10px;background:transparent;color:#fff;font-size:30px;line-height:1}
+.chat-topbar .chat-more{font-size:21px}
+.chat-contact-mark{width:38px;height:38px;display:grid;place-items:center;flex:none;border-radius:50%;background:linear-gradient(135deg,#25f4ee,#fe2c55);border:2px solid #fff;color:#090909;font-weight:900}
+.chat-contact-copy{min-width:0;flex:1;display:flex;flex-direction:column;line-height:1.3}
+.chat-contact-copy strong{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-contact-copy small{font-size:11px;color:#999;margin-top:3px}
+#conversationPanel .message-list{flex:1;min-height:0;max-height:none!important;overflow-y:auto;overscroll-behavior:contain;margin:0!important;padding:18px 13px 22px!important;border:0!important;border-radius:0!important;background:#000;display:flex;flex-direction:column;gap:9px}
+#conversationPanel .message-bubble{width:fit-content;max-width:82%;margin:0;padding:10px 13px;border-radius:18px 18px 18px 5px;background:#242424;color:#fff;box-shadow:none}
+#conversationPanel .message-bubble.mine{align-self:flex-end;margin:0;background:#fe2c55;color:#fff;border-radius:18px 18px 5px 18px}
+#conversationPanel .message-bubble strong{font-size:11px;opacity:.72}
+#conversationPanel .message-bubble p{font-size:14px;line-height:1.45;margin:3px 0 5px}
+#conversationPanel .message-bubble small{display:block;text-align:right;font-size:10px;color:#ddd;opacity:.75}
+#conversationPanel .chat-composer{display:flex;align-items:flex-end;gap:9px;margin:0!important;padding:10px 12px calc(10px + env(safe-area-inset-bottom))!important;border:0!important;border-top:1px solid #252525!important;background:#080808!important}
+#conversationPanel .chat-composer textarea{flex:1;min-height:42px;max-height:120px;resize:none;margin:0!important;padding:11px 14px!important;border:1px solid #333!important;border-radius:22px!important;background:#202020!important;color:#fff!important;font-size:14px!important}
+#conversationPanel .chat-composer button{width:44px;height:44px;flex:none;margin:0;border:0;border-radius:50%;background:#fe2c55!important;color:#fff!important;font-size:19px;padding:0}
+#conversationPanel .chat-composer button:disabled{opacity:.55}
+@media(min-width:700px){#conversationPanel:not(.hidden){width:min(100%,720px)!important;left:50%!important;right:auto!important;transform:translateX(-50%);border-left:1px solid #292929!important;border-right:1px solid #292929!important;box-shadow:0 0 0 100vmax #000b}}
+
 </style>
 </head>
 <body>
@@ -408,10 +446,10 @@ body.photo-viewer-open{overflow:hidden!important}
 <label for="messageSearch">Find people by username</label>
 <div class="row"><input id="messageSearch" placeholder="Tusaale: amiir01" aria-label="Raadi fariimaha ama dadka"><button id="searchUsers" class="secondary" type="button">Raadi</button></div>
 <div id="userResults" class="muted small">Search for someone to start a conversation.</div>
-\n<div id="conversationPanel" class="hidden">
-<div class="row"><h3 id="conversationTitle"></h3><button id="closeConversation" class="secondary" type="button">Close</button></div>
-<div id="messageList" class="message-list"></div>
-<form id="messageForm" class="comment-form"><textarea id="messageBody" maxlength="2000" placeholder="Write a message..." required aria-label="Qor fariinta"></textarea><button class="primary" type="submit">Send</button></form>
+\n<div id="conversationPanel" class="hidden" role="dialog" aria-modal="true" aria-label="Wada sheekaysi">
+<div class="chat-topbar"><button id="closeConversation" type="button" aria-label="Ku noqo Inbox">‹</button><div class="chat-contact-mark">G</div><div class="chat-contact-copy"><strong id="conversationTitle">Wada sheekaysi</strong><small>GoGol messages</small></div><button class="chat-more" type="button" aria-label="Faahfaahin">•••</button></div>
+<div id="messageList" class="message-list" aria-live="polite"></div>
+<form id="messageForm" class="comment-form chat-composer"><textarea id="messageBody" maxlength="2000" placeholder="Fariin qor..." required aria-label="Qor fariinta" rows="1"></textarea><button class="primary" type="submit" aria-label="Dir fariinta">➤</button></form>
 </div>
 </div>
 </section>
@@ -431,7 +469,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.70';
+const MADAL_VERSION='1.10.71';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
