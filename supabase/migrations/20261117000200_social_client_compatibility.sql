@@ -21,6 +21,9 @@ alter table public.user_follows enable row level security;
 revoke all on table public.user_follows from anon, authenticated;
 grant select on table public.user_follows to anon, authenticated;
 grant insert, delete on table public.user_follows to authenticated;
+drop policy if exists "MADAL follows readable" on public.user_follows;
+drop policy if exists "MADAL follow self" on public.user_follows;
+drop policy if exists "MADAL unfollow self" on public.user_follows;
 drop policy if exists "GoGol follows public read" on public.user_follows;
 create policy "GoGol follows public read" on public.user_follows
   for select to anon, authenticated using (true);
@@ -45,6 +48,9 @@ alter table public.media_reposts enable row level security;
 revoke all on table public.media_reposts from anon, authenticated;
 grant select on table public.media_reposts to anon, authenticated;
 grant insert, delete on table public.media_reposts to authenticated;
+drop policy if exists "MADAL reposts readable" on public.media_reposts;
+drop policy if exists "MADAL repost own" on public.media_reposts;
+drop policy if exists "MADAL unrepost own" on public.media_reposts;
 drop policy if exists "GoGol visible reposts read" on public.media_reposts;
 create policy "GoGol visible reposts read" on public.media_reposts
   for select to anon, authenticated
@@ -84,6 +90,9 @@ create table if not exists public.media_favorites (
 alter table public.media_favorites enable row level security;
 revoke all on table public.media_favorites from anon, authenticated;
 grant select, insert, delete on table public.media_favorites to authenticated;
+drop policy if exists "MADAL favorites own read" on public.media_favorites;
+drop policy if exists "MADAL favorites own insert" on public.media_favorites;
+drop policy if exists "MADAL favorites own delete" on public.media_favorites;
 drop policy if exists "GoGol favorites own read" on public.media_favorites;
 create policy "GoGol favorites own read" on public.media_favorites
   for select to authenticated using (auth.uid() = user_id);
@@ -104,6 +113,51 @@ create policy "GoGol favorites own delete" on public.media_favorites
   for delete to authenticated using (auth.uid() = user_id);
 create index if not exists media_favorites_user_created_idx
   on public.media_favorites(user_id, created_at desc);
+
+-- Keep likes and comments from leaking metadata about private posts.
+drop policy if exists "MADAL likes readable" on public.media_likes;
+create policy "MADAL likes readable" on public.media_likes
+  for select to anon, authenticated
+  using (exists (
+    select 1 from public.media_posts p
+    where p.id = media_likes.post_id
+      and p.status = 'published'
+      and (not p.is_private or p.user_id = auth.uid())
+  ));
+drop policy if exists "MADAL like own" on public.media_likes;
+create policy "MADAL like own" on public.media_likes
+  for insert to authenticated
+  with check (
+    auth.uid() = user_id
+    and exists (
+      select 1 from public.media_posts p
+      where p.id = media_likes.post_id
+        and p.status = 'published'
+        and not p.is_private
+    )
+  );
+
+drop policy if exists "MADAL comments readable" on public.media_comments;
+create policy "MADAL comments readable" on public.media_comments
+  for select to anon, authenticated
+  using (exists (
+    select 1 from public.media_posts p
+    where p.id = media_comments.post_id
+      and p.status = 'published'
+      and (not p.is_private or p.user_id = auth.uid())
+  ));
+drop policy if exists "MADAL comment own" on public.media_comments;
+create policy "MADAL comment own" on public.media_comments
+  for insert to authenticated
+  with check (
+    auth.uid() = user_id
+    and exists (
+      select 1 from public.media_posts p
+      where p.id = media_comments.post_id
+        and p.status = 'published'
+        and not p.is_private
+    )
+  );
 
 -- Enforce private-post visibility in both the database and media storage.
 drop policy if exists "MADAL read published" on public.media_posts;
