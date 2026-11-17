@@ -20,6 +20,7 @@
 header{display:none!important;position:sticky;top:0;z-index:10;background:#100a19ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:8px 14px;min-height:54px;display:flex;align-items:center;justify-content:space-between}
 .brand{font-weight:950;font-size:25px;letter-spacing:2px;color:var(--purple)}.tag{display:none}.header-search{width:42px;height:42px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:#fff;font-size:25px;cursor:pointer}.header-search:active{background:#38234d}
 main{max-width:720px;margin:auto;padding:14px}
+.pwa-install-card{position:relative;margin:10px 0 14px;padding:16px;border:1px solid #76539b;border-radius:16px;background:linear-gradient(135deg,#211431,#120c1d);box-shadow:0 8px 28px #0003}.pwa-install-card h2{font-size:17px;margin:0 0 5px}.pwa-install-card p{font-size:13px;color:#d7c7e7;margin:5px 0 10px}.pwa-install-card .pwa-install-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.pwa-install-card button{min-height:44px;padding:10px 16px;border:0;border-radius:11px;background:linear-gradient(110deg,#a66be8,#e17ac5);color:#180d25;font-weight:850}.pwa-install-card .pwa-install-note{font-size:12px;color:#c6b4d7;margin-top:9px}
 h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.settings-row strong{display:block}.settings-row small{display:block;color:var(--muted);margin-top:3px}.settings-row input{width:22px;height:22px;accent-color:var(--purple);margin:0;flex:none}.settings-head{display:flex;align-items:center;gap:12px}.settings-head button{flex:none}
 .tabs{display:flex;gap:8px;overflow:auto;padding:13px 0}.tabs button,.action,.primary,.secondary{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:white;font-weight:650;cursor:pointer}
 .tabs button.active,.primary{background:linear-gradient(110deg,#8751c9,#bd5ea8);border:0}.secondary{background:transparent}
@@ -597,6 +598,12 @@ main{max-width:100%!important;margin:0!important;padding:0 0 calc(76px + env(saf
 <div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera GoGol"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">KAMARADDA GoGol</span><button type="button" id="switchCamera">🔄 Beddel kamarad</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Weji Qurux</button><button type="button" data-camera-filter="warm">Diirran</button><button type="button" data-camera-filter="cool">Qabow</button><button type="button" data-camera-filter="mono">Madow/Caddaan</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Daar iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Sawirrada</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
+<section id="pwaInstallGuide" class="pwa-install-card" aria-labelledby="pwaInstallTitle">
+ <h2 id="pwaInstallTitle">Ku rakib GoGol telefoonkaaga</h2>
+ <p>GoGol waxaad uga dhigan kartaa app caadi ah adigoo Chrome ka rakibaya; APK looma baahna.</p>
+ <div class="pwa-install-actions"><button type="button" id="pwaInstallAction">Ku rakib GoGol</button></div>
+ <p class="pwa-install-note" id="pwaInstallNote">Haddii badhanka rakibiddu uusan furmin: Chrome ka fur ⋮, dooro “Install app” ama “Add to Home screen”, kadib taabo Install.</p>
+</section>
 <div id="notice" class="status hidden" role="status"></div>
 <section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="GoGol LIVE">LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
@@ -1839,22 +1846,42 @@ Promise.allSettled([refreshProfile(),loadMedia()]).then(()=>{clearTimeout(bootSa
 
 let installPrompt=null;
 const installButton=$('installButton');
-window.addEventListener('beforeinstallprompt',event=>{
- event.preventDefault();installPrompt=event;installButton.classList.remove('hidden');
-});
-installButton.addEventListener('click',async()=>{
- if(installPrompt){
-  installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.classList.add('hidden');
- }else{
-  notice('iPhone: Safari ka fur GoGol, taabo Share, kadib dooro Add to Home Screen.');
- }
-});
-window.addEventListener('appinstalled',()=>{installButton.classList.add('hidden');notice('GoGol waa lagu rakibay telefoonkaaga!')});
+const pwaInstallGuide=$('pwaInstallGuide');
+const pwaInstallAction=$('pwaInstallAction');
+const pwaInstallNote=$('pwaInstallNote');
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-if(isIOS && !window.matchMedia('(display-mode: standalone)').matches) installButton.classList.remove('hidden');
+const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+if(isStandalone)pwaInstallGuide?.classList.add('hidden');
+window.addEventListener('beforeinstallprompt',event=>{
+ event.preventDefault();installPrompt=event;
+ if(pwaInstallAction)pwaInstallAction.textContent='Ku rakib hadda';
+ if(pwaInstallNote)pwaInstallNote.textContent='Taabo badhanka kore si GoGol loogu rakibo telefoonkaaga.';
+});
+async function startGoGolInstall(){
+ if(installPrompt){
+  const promptEvent=installPrompt;installPrompt=null;
+  await promptEvent.prompt();
+  const choice=await promptEvent.userChoice;
+  if(choice?.outcome==='accepted'){pwaInstallGuide?.classList.add('hidden');installButton?.classList.add('hidden');notice('GoGol rakibidda waa la bilaabay.');}
+  else if(pwaInstallAction)pwaInstallAction.textContent='Mar kale isku day';
+  return;
+ }
+ if(isIOS){
+  notice('Safari ka fur GoGol, taabo Share, kadib dooro Add to Home Screen.');
+ }else{
+  notice('Chrome ka fur menu-ga ⋮ ee kore, dooro Install app ama Add to Home screen, kadib taabo Install.');
+ }
+}
+pwaInstallAction?.addEventListener('click',startGoGolInstall);
+installButton?.addEventListener('click',startGoGolInstall);
+window.addEventListener('appinstalled',()=>{
+ pwaInstallGuide?.classList.add('hidden');installButton?.classList.add('hidden');
+ notice('GoGol waa lagu rakibay telefoonkaaga!');
+});
 if('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
 
 </script>
-<script type="module" src="./update.js"></script>\n<script type="module" src="./live.js"></script>
+<script type="module" src="./update.js"></script>
+<script type="module" src="./live.js"></script>
 </body>
 </html>

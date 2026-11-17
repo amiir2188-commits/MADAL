@@ -1,7 +1,7 @@
 {
-  "version": "1.10.82",
+  "version": "1.10.83",
   "name": "GoGol",
-  "message": "TikTok-style GoGol navigation and feed layout",
+  "message": "Chrome install guide, PWA install flow and script loading fixes",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.82/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.83/madal-web.zip"
 }
