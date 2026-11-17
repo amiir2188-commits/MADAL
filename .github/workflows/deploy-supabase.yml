@@ -65,6 +65,10 @@ jobs:
         shell: bash
         run: supabase link --project-ref "$SUPABASE_PROJECT_ID" --password "$SUPABASE_DB_PASSWORD"
 
+      - name: Inspect local and remote migration history
+        shell: bash
+        run: supabase migration list --linked
+
       - name: Preview database migrations
         shell: bash
         run: supabase db push --linked --dry-run
