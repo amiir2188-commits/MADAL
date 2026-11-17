@@ -111,13 +111,13 @@ returns table(coins bigint, diamonds bigint)
 language plpgsql
 security definer
 set search_path = public, pg_temp
-as $
+as $$
 begin
  if auth.uid() is null then raise exception 'Fadlan gal akoonkaaga.'; end if;
  insert into public.madal_live_wallets(user_id) values(auth.uid()) on conflict(user_id) do nothing;
  return query select w.coins,w.diamonds from public.madal_live_wallets w where w.user_id=auth.uid();
 end;
-$;
+$$;
 revoke all on function public.madal_get_live_wallet() from public, anon;
 grant execute on function public.madal_get_live_wallet() to authenticated;
 
