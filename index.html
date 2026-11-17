@@ -294,6 +294,40 @@ html[dir="rtl"] .bottom{direction:rtl}
 #home .feed-tabs .home-create:after{display:none!important}
 #discover>.section-title{margin-top:8px}
 @media(max-width:380px){.bottom{padding-left:4px!important;padding-right:4px!important}#home .feed-tabs{gap:4px!important;padding:0 8px!important}#home .feed-tabs button{font-size:13px!important}}
+
+/* TikTok-inspired creator profile layout */
+#profile{padding-top:0!important}
+.profile-tiktok-head{position:sticky;top:0;z-index:6;display:grid!important;grid-template-columns:40px 1fr 80px;align-items:center;min-height:50px;padding:5px 8px!important;background:#09070cf5!important;backdrop-filter:blur(14px)}
+.profile-tiktok-head .profile-current-handle{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;font-size:16px;font-weight:800;color:#fff}
+.profile-tiktok-head .profile-head-actions{display:flex;justify-content:flex-end;gap:4px}
+.profile-tiktok-head .profile-head-actions button{width:36px;height:36px;border:0;border-radius:10px;background:transparent;color:#fff;font-size:22px}
+.profile-head-spacer{width:36px}
+#profile .profile-hero{margin:0 -14px!important;padding:20px 16px 14px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;text-align:center}
+#profile .profile-edit-pencil{top:12px;left:auto;right:12px;width:38px;height:38px;border-radius:11px;font-size:17px;background:#21182a}
+#profile .profile-top{display:flex;flex-direction:column;gap:8px;text-align:center;margin:0 auto 10px;max-width:100%}
+#profile .profile-avatar{width:96px;height:96px;border:2px solid #fff;padding:2px;background:linear-gradient(135deg,#25f4ee,#fe2c55);box-shadow:0 0 0 2px #09070c}
+#profile .profile-avatar img{border-radius:50%}
+#profile .profile-main h2{font-size:20px;font-weight:850;margin:2px 0 3px}
+#profile .profile-main .muted{margin:2px 0}
+#profile .profile-creator-label{display:none}
+#profile .profile-bio{max-width:360px;margin:8px auto 14px;font-size:13px;line-height:1.5;color:#e7e2eb}
+#profile .profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:12px auto 14px;padding:10px 0;border:0;max-width:390px}
+#profile .profile-stats div{display:flex;flex-direction:column-reverse;align-items:center;gap:3px}
+#profile .profile-stats strong{font-size:18px;font-weight:850;color:#fff}
+#profile .profile-stats span{font-size:12px;color:#aaa}
+#profile .profile-buttons{display:flex;justify-content:center;gap:8px;margin:0 auto;max-width:390px}
+#profile .profile-buttons>*{flex:1;max-width:none;min-height:38px;padding:9px 10px;border-radius:7px;font-size:13px;font-weight:750}
+#profile .profile-buttons #profileLogin{max-width:240px}
+#profile .profile-buttons #profileShare{background:#24202a;border:0;color:#fff}
+#profile .profile-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin:0 -14px!important;padding:0 4px;border-bottom:1px solid #ffffff20;overflow:visible}
+#profile .profile-tabs button{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 1px 8px;border:0;border-bottom:2px solid transparent;color:#89858f;background:transparent;font-size:10px;font-weight:650;white-space:nowrap}
+#profile .profile-tabs button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#profile .profile-tabs button span{font-size:10px;line-height:1.1}
+#profile .profile-tabs button.active{color:#fff;border-bottom-color:#fff}
+#profile .profile-grid{margin:0 -14px!important;gap:2px!important}
+#profile .profile-tile{aspect-ratio:3/4;background:#18151c}
+#profile .profile-tile .tile-views{display:flex;align-items:center;gap:3px;background:#09070cbf}
+@media(max-width:360px){#profile .profile-tabs button span{font-size:9px}#profile .profile-tabs button svg{width:19px;height:19px}#profile .profile-avatar{width:86px;height:86px}}
 </style>
 </head>
 <body>
@@ -335,16 +369,16 @@ html[dir="rtl"] .bottom{direction:rtl}
 <button class="primary" id="uploadButton" type="submit">Soo geli GoGol</button>
 </form></div></section>
 <section id="profile" class="page hidden">
-<div class="profile-masthead"><div class="profile-brand"><img class="profile-brand-mark" src="./gogol-logo.svg" alt="GoGol"><span><strong>GoGol</strong><small>Videos • Photos • Community</small></span></div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">•••</button></div></div>
+<div class="profile-masthead profile-tiktok-head"><div class="profile-head-spacer"></div><div class="profile-current-handle" id="profileTopHandle">Profile</div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">☰</button></div></div>
 <div class="feed-card profile-hero">
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
-<div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">GoGol User <span id="profileVerified" class="verified hidden" title="GoGol Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small">GoGol Creator</p></div></div>
+<div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">GoGol User <span id="profileVerified" class="verified hidden" title="GoGol Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small profile-creator-label">GoGol Creator</p></div></div>
 <p id="profileBio" class="profile-bio">Ku soo biir bulshada GoGol.</p>
 <div class="profile-stats"><div><strong id="myFollowingCount">0</strong><span>Following</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div><div><strong id="myLikeCount">0</strong><span>Likes</span></div></div>
-<div class="row profile-buttons"><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html" id="profileLogin" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a></div>
+<div class="row profile-buttons"><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html" id="profileLogin" style="text-align:center;text-decoration:none">Soo gal / Akoon samee</a><button id="profileShare" class="secondary" type="button">Share profile</button></div>
 </div>
 <div id="profileEditor" class="feed-card hidden"><h3>Wax ka beddel profile-ka</h3><form id="profileForm"><label>Magaca muuqda</label><input id="editDisplayName" maxlength="60" required aria-label="Magaca muuqda"><label>Username</label><input id="editUsername" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" required aria-label="Magaca isticmaalaha"><label>Bio / Isbarasho</label><textarea id="editBio" maxlength="160" placeholder="Naftaada wax yar ka sheeg..." aria-label="Isbarashada profile-ka"></textarea><label>Sawirka profile-ka</label><div class="avatar-picker"><img id="avatarPreview" class="avatar-preview" alt="Hordhaca sawirka profile-ka"><input id="editAvatarFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Dooro sawirka profile-ka"></div><p class="muted small">Ka dooro sawir Gallery-ga telefoonkaaga (PNG, JPG ama WebP; ugu badnaan 5 MB).</p><button id="removeAvatar" class="secondary" type="button">Ka saar sawirka profile-ka</button><input id="editAvatarUrl" type="url" placeholder="Ama geli link sawir (ikhtiyaari)" aria-label="Linkiga sawirka profile-ka"><button class="primary" type="submit">Kaydi profile-ka</button></form></div>
-<div class="profile-tabs"><button type="button" class="active" data-profile-tab="videos">▦ Videos</button><button type="button" data-profile-tab="photos">▧ Photos</button><button type="button" data-profile-tab="reposts">↗ Reposts</button><button type="button" data-profile-tab="liked">♥ Liked</button><button type="button" data-profile-tab="favorites">★ Favorites</button><button type="button" data-profile-tab="private">🔒 Private</button></div>
+<div class="profile-tabs" aria-label="Profile content"><button type="button" class="active" data-profile-tab="videos" aria-label="Videos" title="Videos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Videos</span></button><button type="button" data-profile-tab="photos" aria-label="Photos" title="Photos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>Photos</span></button><button type="button" data-profile-tab="reposts" aria-label="Reposts" title="Reposts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/></svg><span>Reposts</span></button><button type="button" data-profile-tab="private" aria-label="Private" title="Private"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg><span>Private</span></button><button type="button" data-profile-tab="liked" aria-label="Liked" title="Liked"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.7c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.6Z"/></svg><span>Liked</span></button><button type="button" data-profile-tab="favorites" aria-label="Favorites" title="Favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg><span>Saved</span></button></div>
 <div id="myVideos" class="profile-grid"><div class="empty">Soo gal si aad u aragto fiidiyowyadaada.</div></div><button id="profileLoadMore" class="secondary hidden" type="button" style="display:none;width:100%;margin:14px 0">Soo rar waxyaabo dheeraad ah</button>
 </section>
 <section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card language-card"><h3>🌐 Language / Luqadda</h3><p class="muted" id="languageHelp">Choose the language used across GoGol. You can change it anytime.</p><label class="settings-row" for="languageSetting"><span><strong id="languageLabel">App language</strong><small id="languageCurrent">Somali</small></span><select id="languageSetting" aria-label="Choose app language"><option value="so">Soomaali</option><option value="en">English</option><option value="ar">العربية</option><option value="om">Afaan Oromoo</option><option value="sw">Kiswahili</option><option value="fr">Français</option></select></label></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax GoGol qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card" id="accountDeletionCard"><h3>Tirtir akoonkaaga</h3><p class="muted">Waxaad si joogto ah u tirtiri kartaa akoonkaaga, fariimahaaga, sawirradaada, fiidiyowyadaada iyo faylasha profile-ka. Tallaabadani lama soo celin karo.</p><button class="secondary" id="requestAccountDeletion" type="button">Tirtir akoonkayga</button><p id="accountDeletionStatus" class="muted small" role="status" aria-live="polite">Gal akoonkaaga si aad codsi u dirto.</p></div><div class="feed-card" id="privacySafetyCard"><h3>Amniga iyo asturnaanta</h3><p class="muted">Maamul dadka aad xannibtay. Waxaad dib u fasixi kartaa wakhti kasta.</p><div id="blockedUsersList" class="muted" aria-live="polite">Liiska waa la soo rarayaa...</div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox" aria-label="Daar ama dami ciyaarta tooska ah"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox" aria-label="Daar ama dami codka fiidiyowyada"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox" aria-label="Daar ama dami keydinta xogta internetka"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha GoGol</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox" aria-label="Daar ama dami ogeysiisyada"></label></div><div class="feed-card"><h3>Ku saabsan GoGol</h3><p class="muted">Nooca GoGol: <strong id="settingsVersion">1.10.51</strong></p><p class="muted">GoGol — madasha sawirrada, fiidiyowyada iyo bulshada.</p><p class="muted"><a href="./privacy.html">Siyaasadda asturnaanta</a> · <a href="./community-guidelines.html">Xeerarka bulshada</a> · <a href="./terms.html">Shuruudaha isticmaalka</a></p></div></section>
@@ -382,7 +416,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.68';
+const MADAL_VERSION='1.10.69';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1000,7 +1034,7 @@ async function loadMyProfile(){
  const username=profile?.username||user.user_metadata?.username||'user';
  $('profileName').textContent=name;
  if(profile?.is_verified){const badge=document.createElement('span');badge.className='verified';badge.title='GoGol Verified';badge.textContent='✓';$('profileName').appendChild(badge)}
- $('profileHandle').textContent='@'+username;
+ $('profileHandle').textContent='@'+username;$('profileTopHandle').textContent='@'+username;
  $('profileBio').textContent=profile?.bio||'Ku soo biir bulshada GoGol.';
  $('profileAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="Sawirka profile-ka">':escapeHtml((name.trim()[0]||'M').toUpperCase());
  $('storyAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((name.trim()[0]||'M').toUpperCase());
@@ -1056,6 +1090,7 @@ async function loadMyProfile(){
 }
 $('editProfile').addEventListener('click',()=>{$('profileEditor').classList.toggle('hidden')});
 $('profileMenu').addEventListener('click',()=>{syncSettings();showPage("settings")});
+$('profileShare').addEventListener('click',async()=>{const username=$('profileHandle').textContent||'GoGol';const url=location.origin+location.pathname+'#profile';const shareData={title:'GoGol '+username,text:'Iga raac '+username+' gudaha GoGol',url};try{if(navigator.share)await navigator.share(shareData);else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);notice('Linkiga profile-ka waa la koobiyeeyay.')}else notice('Linkiga profile-ka: '+url)}catch(error){if(error?.name!=='AbortError')notice('Profile-ka lama wadaagi karin. Mar kale isku day.')}});
 $('settingsBack').addEventListener('click',()=>showPage("profile"));
 $('settingsEditProfile').addEventListener('click',()=>{showPage("profile");$('profileEditor').classList.remove("hidden")});
 $('settingsLogout').addEventListener('click',()=>$('logout').click());
