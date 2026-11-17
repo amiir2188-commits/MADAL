@@ -220,8 +220,25 @@ jobs:
         run: |
           VERSION=$(node -e "console.log(require('./version.json').version)")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Protect existing release assets and require version bumps
+        id: release_guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v${{ steps.version.outputs.version }}"
+          if git rev-parse --verify "refs/tags/$TAG" >/dev/null 2>&1; then
+            if ! git diff --quiet "$TAG"...HEAD -- index.html account.html update.js live.js manifest.webmanifest sw.js gogol-logo.svg; then
+              echo "Client files changed but version.json was not bumped. Increase the app version before publishing."
+              exit 1
+            fi
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "Existing release found and client files are unchanged; preserving the existing APK signature."
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Publish GoGol release assets
+        if: steps.release_guard.outputs.publish == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
