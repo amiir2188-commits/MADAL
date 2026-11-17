@@ -2,12 +2,21 @@ name: Build GoGol Android APK
 
 on:
   workflow_dispatch:
+    inputs:
+      publish_apk:
+        description: "Publish an APK only when a native Android change is ready"
+        required: true
+        type: boolean
+        default: false
   push:
     branches:
       - main
     paths:
       - 'index.html'
       - 'account.html'
+      - 'privacy.html'
+      - 'community-guidelines.html'
+      - 'terms.html'
       - 'update.js'
       - 'live.js'
       - 'manifest.webmanifest'
@@ -53,12 +62,15 @@ jobs:
         run: |
           test -f index.html
           test -f account.html
+          test -f privacy.html
+          test -f community-guidelines.html
+          test -f terms.html
           mkdir -p assets www
           cp icon-only.png assets/icon-only.png
           cp icon-foreground.png assets/icon-foreground.png
           cp icon-background.png assets/icon-background.png
           cp splash.png assets/splash.png
-          cp index.html account.html update.js live.js www/
+          cp index.html account.html privacy.html community-guidelines.html terms.html update.js live.js www/
           cp manifest.webmanifest version.json www/ 2>/dev/null || true
           cp sw.js www/ 2>/dev/null || true
           cp -r icons www/ 2>/dev/null || true
@@ -121,7 +133,12 @@ jobs:
             for (const block of blocks) new Function(block[1]);
             if (!blocks.length) throw new Error('No inline JavaScript found in ' + file);
           }
-          console.log('GoGol inline JavaScript syntax is valid.');
+          for (const file of ['privacy.html', 'community-guidelines.html', 'terms.html']) {
+            if (!fs.existsSync(file)) throw new Error('Missing required policy page: ' + file);
+          }
+          if (!fs.readFileSync('account.html', 'utf8').includes('href="./terms.html"')) throw new Error('Account sign-up must link to the terms page');
+          if (!fs.readFileSync('account.html', 'utf8').includes('href="./privacy.html"')) throw new Error('Account sign-up must link to the privacy page');
+          console.log('GoGol inline JavaScript and policy pages are valid.');
           NODE
 
       - name: Validate GoGol release metadata and safety controls
@@ -228,7 +245,7 @@ jobs:
           test -s "$APK"
           "$AAPT" dump badging "$APK" | grep "package: name='com.madal.app'"
           "$APKSIGNER" verify --verbose "$APK"
-          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json|live.js'
+          unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js'
 
       - name: Read MADAL version
         id: version
@@ -242,7 +259,7 @@ jobs:
           set -euo pipefail
           TAG="v${{ steps.version.outputs.version }}"
           if git rev-parse --verify "refs/tags/$TAG" >/dev/null 2>&1; then
-            if ! git diff --quiet "$TAG"...HEAD -- index.html account.html update.js live.js manifest.webmanifest sw.js gogol-logo.svg; then
+            if ! git diff --quiet "$TAG"...HEAD -- index.html account.html privacy.html community-guidelines.html terms.html update.js live.js manifest.webmanifest sw.js gogol-logo.svg; then
               echo "Client files changed but version.json was not bumped. Increase the app version before publishing."
               exit 1
             fi
@@ -252,8 +269,8 @@ jobs:
             echo "publish=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish GoGol release assets
-        if: steps.release_guard.outputs.publish == 'true'
+      - name: Publish Android APK for a native release
+        if: inputs.publish_apk == true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
@@ -262,9 +279,7 @@ jobs:
           generate_release_notes: true
           make_latest: true
           overwrite_files: true
-          files: |
-            android/app/build/outputs/apk/debug/app-debug.apk
-            madal-web.zip
+          files: android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload GoGol APK
         uses: actions/upload-artifact@v7
