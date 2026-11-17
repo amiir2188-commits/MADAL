@@ -1,7 +1,7 @@
 {
-  "version": "1.10.68",
+  "version": "1.10.69",
   "name": "GoGol",
-  "message": "Fix favorites and comments loading; introduce TikTok-style four-tab navigation",
+  "message": "Redesign creator profile with TikTok-style avatar, stats, tabs and share controls",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.68/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.69/madal-web.zip"
 }
