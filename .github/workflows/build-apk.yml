@@ -261,7 +261,9 @@ jobs:
               }
               buildTypes {`);
             }
-            gradle = gradle.replace(/release\s*\{/, 'release { signingConfig signingConfigs.release');
+            const releaseBlock = /(buildTypes\s*\{\s*release\s*\{)/;
+            if (!releaseBlock.test(gradle)) throw new Error('Could not find Android release build type');
+            gradle = gradle.replace(releaseBlock, '$1\\n            signingConfig signingConfigs.release');
             fs.writeFileSync(file, gradle);
           NODE
             echo "variant=release" >> "$GITHUB_OUTPUT"
