@@ -542,6 +542,10 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 #profile [data-profile-tab="photos"].active{color:#fff}
 
 /* GoGol 1.10.76 — profile media tabs filter by media type before pagination. */
+
+.install-guide{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;margin:10px 0 14px;border:1px solid #65458a;border-radius:16px;background:linear-gradient(120deg,#241432,#171020)}
+.install-guide-copy{min-width:0}.install-guide strong{display:block;font-size:14px}.install-guide p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.45}.install-guide button{flex:none;min-height:42px;padding:9px 12px;white-space:nowrap}
+@media(max-width:420px){.install-guide{align-items:flex-start;flex-direction:column}.install-guide button{width:100%}}
 </style>
 
 <style id="gogol-tiktok-reference-refresh">
@@ -595,8 +599,12 @@ main{max-width:100%!important;margin:0!important;padding:0 0 calc(76px + env(saf
  </div>
 </div>
 <div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera GoGol"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">KAMARADDA GoGol</span><button type="button" id="switchCamera">🔄 Beddel kamarad</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Weji Qurux</button><button type="button" data-camera-filter="warm">Diirran</button><button type="button" data-camera-filter="cool">Qabow</button><button type="button" data-camera-filter="mono">Madow/Caddaan</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Daar iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Sawirrada</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
-<header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
+<header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
+<section id="installGuide" class="install-guide" aria-live="polite">
+ <div class="install-guide-copy"><strong>Ku rakib GoGol telefoonkaaga</strong><p id="installGuideText">Chrome ka fur GoGol, taabo ⋮, kadib dooro “Install app” ama “Add to Home screen”.</p></div>
+ <button id="installAction" class="primary" type="button">Sida loo rakibo</button>
+</section>
 <div id="notice" class="status hidden" role="status"></div>
 <section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="GoGol LIVE">LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
@@ -1838,20 +1846,37 @@ const bootSafetyTimer=setTimeout(finishAppBoot,12000);
 Promise.allSettled([refreshProfile(),loadMedia()]).then(()=>{clearTimeout(bootSafetyTimer);finishAppBoot()});
 
 let installPrompt=null;
-const installButton=$('installButton');
+const installGuide=$('installGuide');
+const installGuideText=$('installGuideText');
+const installAction=$('installAction');
+const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const isAndroid=/android/i.test(navigator.userAgent);
+const isChrome=/chrome\//i.test(navigator.userAgent)&&!/edg|opr|samsungbrowser/i.test(navigator.userAgent);
+if(isStandalone())installGuide?.remove();
 window.addEventListener('beforeinstallprompt',event=>{
- event.preventDefault();installPrompt=event;installButton.classList.remove('hidden');
+ event.preventDefault();installPrompt=event;
+ if(installGuideText)installGuideText.textContent='GoGol wuxuu diyaar u yahay rakibid. Taabo badhanka si aad ugu darto telefoonkaaga.';
+ if(installAction)installAction.textContent='Ku rakib GoGol';
 });
-installButton.addEventListener('click',async()=>{
+installAction?.addEventListener('click',async()=>{
  if(installPrompt){
-  installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.classList.add('hidden');
+  const promptEvent=installPrompt;installPrompt=null;
+  await promptEvent.prompt();
+  const choice=await promptEvent.userChoice;
+  if(choice?.outcome==='accepted'){installGuide?.remove();notice('GoGol waxaa loo diray rakibidda.');}
+  else if(installGuideText)installGuideText.textContent='Rakibidda lama dhammeystirin. Waxaad mar kale isku dayi kartaa menu-ga Chrome.';
+  return;
+ }
+ if(isAndroid&&isChrome){
+  notice('Chrome: taabo ⋮ ee kore, kadib dooro “Install app” ama “Add to Home screen”.');
+ }else if(isIOS){
+  notice('Safari: taabo Share, kadib dooro “Add to Home Screen”.');
  }else{
-  notice('iPhone: Safari ka fur GoGol, taabo Share, kadib dooro Add to Home Screen.');
+  notice('Fadlan linkiga GoGol ku fur Google Chrome si aad u rakibto.');
  }
 });
-window.addEventListener('appinstalled',()=>{installButton.classList.add('hidden');notice('GoGol waa lagu rakibay telefoonkaaga!')});
-const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-if(isIOS && !window.matchMedia('(display-mode: standalone)').matches) installButton.classList.remove('hidden');
+window.addEventListener('appinstalled',()=>{installGuide?.remove();notice('GoGol waa lagu rakibay telefoonkaaga!')});
 if('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
 
 </script>
