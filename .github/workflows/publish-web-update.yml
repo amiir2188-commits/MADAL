@@ -47,7 +47,7 @@ jobs:
       - name: Build web update bundle
         run: |
           mkdir -p www
-          cp index.html account.html privacy.html community-guidelines.html terms.html update.js live.js www/
+          cp index.html account.html privacy.html community-guidelines.html terms.html update.js live.js gogol-logo.svg www/
           cp manifest.webmanifest version.json sw.js www/
           node --check live.js
           cp -r icons www/ 2>/dev/null || true
@@ -56,7 +56,7 @@ jobs:
           npm install --save-dev esbuild
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
           cd www && zip -r ../madal-web.zip . && cd ..
-          unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js'
+          unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js|gogol-logo.svg'
 
       - name: Read MADAL version
         id: version
