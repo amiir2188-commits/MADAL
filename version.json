@@ -1,7 +1,7 @@
 {
-  "version": "1.10.83",
+  "version": "1.10.84",
   "name": "GoGol",
-  "message": "Chrome install guide, PWA install flow and script loading fixes",
+  "message": "GoGol PWA install improvements and version alignment",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.83/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.84/madal-web.zip"
 }
