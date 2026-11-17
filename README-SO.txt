@@ -26,7 +26,7 @@ WAXYAABAHA APP-KA KU JIRA
 - Codsi tirtirid akoon oo ammaan ah.
 
 CUSBOONAYSIINTA APP-KA
-APK-ga 1.10.59 waa saldhigga Android ee hadda lagu tijaabinayo in-app updates. Web bundle-ka 1.10.60 wuxuu ku darayaa Terms, Privacy iyo Community pages. APK cusub si otomaatig ah looma beddelayo si aan loo khalkhal gelin saxiixa APK-ga saldhigga ah. Marka APK-gan la rakibo, isbeddellada HTML/CSS/JavaScript waxaa app-ka gudihiisa looga soo dejisan karaa iyada oo aan APK cusub la rakibin. Isbeddelada Android native ama plugins cusub weli waxay u baahan yihiin APK cusub. In-app update-ka waa in telefoon dhab ah lagu tijaabiyaa ka hor inta aan loo ballanqaadin inuu dhammaan qalabka si buuxda uga shaqaynayo.
+APK-ga 1.10.59 waa saldhigga Android ee hadda lagu tijaabinayo in-app updates. Web bundle-ka 1.10.60 wuxuu ku darayaa Terms, Privacy iyo Community pages. Marka APK-ga saldhigga ah la rakibo, isbeddellada HTML/CSS/JavaScript waxaa app-ka gudihiisa looga soo dejisan karaa iyada oo aan APK cusub la rakibin. APK cusub waxaa la daabacaa oo keliya marka workflow-ga gacanta lagu bilaabo oo `publish_apk=true` la doorto. Stable release-signing keystore wali lama dejin; sidaas darteed APK-ga 1.10.59 ha ahaado saldhigga inta aan saxiix joogto ah la diyaarin. Isbeddelada Android native ama plugins cusub waxay u baahan yihiin APK cusub oo saxiix joogto ah leh. In-app update-ka waa in telefoon dhab ah lagu tijaabiyaa ka hor ballanqaad buuxa.
 
 HABAYNTA SUPABASE
 - Project ID: nxtnfdyksskofjbvface.
