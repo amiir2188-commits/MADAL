@@ -19,6 +19,13 @@ insert into public.madal_live_gift_catalog(code,title,emoji,coin_price,sort_orde
  ('lion','Libaax','🦁',500,60)
 on conflict (code) do update set title=excluded.title,emoji=excluded.emoji,coin_price=excluded.coin_price,sort_order=excluded.sort_order;
 
+alter table public.madal_live_gift_catalog enable row level security;
+revoke all on public.madal_live_gift_catalog from anon, authenticated;
+grant select on public.madal_live_gift_catalog to authenticated;
+drop policy if exists "GoGol authenticated users read gift catalog" on public.madal_live_gift_catalog;
+create policy "GoGol authenticated users read gift catalog" on public.madal_live_gift_catalog
+ for select to authenticated using (is_active=true);
+
 create table if not exists public.madal_live_wallets (
   user_id uuid primary key references auth.users(id) on delete cascade,
   coins bigint not null default 0 check (coins >= 0),
