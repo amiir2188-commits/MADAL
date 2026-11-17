@@ -152,6 +152,7 @@ jobs:
           const deletionMigration = fs.readFileSync('supabase/migrations/20261116000600_account_deletion_requests.sql', 'utf8');
           const profileMigration = fs.readFileSync('supabase/migrations/20261116000700_profile_storage.sql', 'utf8');
           const usernameMigration = fs.readFileSync('supabase/migrations/20261117000100_profile_username_conflicts.sql', 'utf8');
+          const socialCompatibilityMigration = fs.readFileSync('supabase/migrations/20261117000200_social_client_compatibility.sql', 'utf8');
           const storiesMigration = fs.readFileSync('supabase/migrations/20261116000800_stories.sql', 'utf8');
           const deletionFunction = fs.readFileSync('supabase/functions/delete-account/index.ts', 'utf8');
           const storyCleanupFunction = fs.readFileSync('supabase/functions/cleanup-expired-stories/index.ts', 'utf8');
@@ -171,6 +172,9 @@ jobs:
           }
           for (const marker of ['create or replace function public.madal_create_profile()', 'when unique_violation', 'candidate_username', 'return new;']) {
             if (!usernameMigration.includes(marker)) throw new Error('Username collision migration is missing safeguard: ' + marker);
+          }
+          for (const marker of ['add column if not exists is_private', 'add column if not exists is_verified', 'create table if not exists public.user_follows', 'create table if not exists public.media_reposts', 'create table if not exists public.media_favorites', 'create policy "MADAL read published"', 'create policy "MADAL play published"', 'madal_protect_verified_flag']) {
+            if (!socialCompatibilityMigration.includes(marker)) throw new Error('Social compatibility migration is missing safeguard: ' + marker);
           }
           for (const marker of ['create table if not exists public.madal_stories', 'interval \'24 hours\'', 'GoGol active stories readable', 'GoGol users create own stories', 'GoGol users delete own stories', 'GoGol read active story media']) {
             if (!storiesMigration.includes(marker)) throw new Error('Stories migration is missing: ' + marker);
