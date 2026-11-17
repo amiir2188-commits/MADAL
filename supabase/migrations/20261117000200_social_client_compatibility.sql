@@ -209,6 +209,7 @@ begin
   return new;
 end;
 $$;
+drop trigger if exists madal_verified_flag_guard on public.madal_profiles;
 drop trigger if exists gogol_verified_flag_guard on public.madal_profiles;
 create trigger gogol_verified_flag_guard
   before insert or update of is_verified on public.madal_profiles
