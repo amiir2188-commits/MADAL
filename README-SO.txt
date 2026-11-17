@@ -1,43 +1,49 @@
-GOGOL — APP BULSHO FIIDIYOW AH
-Nooca ugu dambeeya ee Android iyo Web ee la xaqiijiyey: 1.10.54
+GOGOL — APP BULSHO FIIDIYOW IYO SAWIRRO AH
 
-GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo, laguna isticmaalo Android iyo web.
+Nooca Android iyo Web ee ugu dambeeyay ee CI-gu xaqiijiyey: 1.10.59
+GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo.
 
 SOO DEJINTA
 APK Android:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/app-debug.apk
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/app-debug.apk
 
-Sii-daynta iyo dhammaan faylasha:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.54/madal-web.zip
+Web update bundle:
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/madal-web.zip
 
-WAXYAABAHA NOOCA BETA-GA KU JIRA
-- Daawashada iyo soo gelinta sawirro iyo fiidiyowyo; album sawirro badan (ilaa 10 sawir).
-- Samaysashada akoon iyo gelitaanka email/password.
-- Gelitaanka telefoonka +252 haddii Supabase Phone Auth iyo adeeg SMS la habeeyo.
-- Like, faallo, raacis iyo quudinta For You/Following.
-- Raadinta dadka, profiles iyo fariimo gaar ah.
-- Wadaagis, repost iyo kaydinta waxyaabaha la jecleystay.
-- Ogeysiisyo ku saabsan cusboonaysiinta web-content-ka.
-- Stories: soo geli, daawo, u gudub Hore/Xiga, tirtir sawirro/fiidiyowyo; waxay dhacayaan 24 saac kadib (waxay u baahan yihiin migration-ka Supabase 008).
-- Bogagga asturnaanta, xeerarka bulshada iyo shuruudaha isticmaalka.
-- Aqbalid cad oo shuruudaha iyo siyaasadda asturnaanta ah marka akoon cusub la samaynayo.
-- Tirtiridda joogtada ah ee akoonka, fariimaha iyo faylasha isticmaalaha (waxay u baahan tahay migration-ka Supabase iyo Edge Function la daabacay).
+Dhammaan sii-daymaha:
+https://github.com/amiir2188-commits/MADAL/releases
 
-Qaar ka mid ah adeegyada bulshada iyo badbaadadu waxay ku xiran yihiin in jadwallada, siyaasadaha RLS iyo migrations-ka Supabase ee ku habboon la rakibo. Stories interface-keeda iyo aasaaska server-ka waa la hirgeliyey; waxay shaqaynayaan marka migration-ka 008 la dabaqo. Live streaming wali lama hirgelin. For You hadda wuxuu adeegsadaa kala-hormarin ku salaysan falgalka iyo cusaybka; ma aha nidaam AI la tababaray.
+WAXYAABAHA APP-KA KU JIRA
+- Soo geli oo daawo sawirro iyo fiidiyowyo; album-ku wuxuu qaadi karaa ilaa 10 sawir.
+- Samee akoon, ku gal email/password; +252 wuxuu shaqaynayaa marka Phone Auth iyo adeeg SMS la habeeyo.
+- Like, faallo, Follow, For You iyo Following feeds.
+- Raadi dadka, eeg profiles, dir fariimo gaar ah.
+- Share, Repost iyo Save/Favorites.
+- Stories sawir/fiidiyow ah oo dhacaya 24 saac kadib.
+- GoGol LIVE beta: baahin camera/microphone, daawadayaal iyo LIVE chat.
+- Dejinta asturnaanta, block/report, bogagga shuruudaha iyo siyaasadda asturnaanta.
+- Codsi tirtirid akoon oo ammaan ah.
+
+CUSBOONAYSIINTA APP-KA
+APK-ga 1.10.59 waa saldhigga Android ee hadda lagu tijaabinayo in-app updates. Marka APK-gan la rakibo, isbeddellada HTML/CSS/JavaScript waxaa app-ka gudihiisa looga soo dejisan karaa iyada oo aan APK cusub la rakibin. Isbeddelada Android native ama plugins cusub weli waxay u baahan yihiin APK cusub. In-app update-ka waa in telefoon dhab ah lagu tijaabiyaa ka hor inta aan loo ballanqaadin inuu dhammaan qalabka si buuxda uga shaqaynayo.
 
 HABAYNTA SUPABASE
-1. Hubi Project URL iyo publishable/anon key-ga app-ka. Ha gelin service-role ama secret key gudaha app-ka.
-2. Haddii database cusub yahay, dib u eeg supabase_schema.sql ka hor inta aan lagu fulin Supabase SQL Editor.
-3. Haddii database hore u jiro, marka hore hubi schema-giisa; kadib dib u eeg oo keliya migrations-ka ku habboon, kuna dabaq kala-horrayntooda.
-4. Dib u eeg oo ku dabaq migration-ka profile/avatar iyo migrations-ka kale ee ku jira `supabase/migrations/`, adigoo kala-horrayn sax ah raacaya. Migration-ka account deletion wuxuu diyaariyaa jadwalka hawsha tirtirka. Migration-ka `20261116000800_stories.sql` wuxuu diyaariyaa Stories 24-saac ah.
-5. Daabac Edge Function-ka tirtirka akoonka adigoo adeegsanaya `supabase functions deploy delete-account`. Service-role key-ga ha gelin app-ka; wuxuu ku ekaanayaa deegaanka Edge Function-ka.
-6. Si telefoonka +252 loogu galo, daar Phone Auth oo habeey adeeg SMS.
+- Project ID: nxtnfdyksskofjbvface.
+- Ha gelin service-role key, database password ama secrets gudaha app-ka, GitHub code, ama chat.
+- Migrations-ka ku jira supabase/migrations waa in marka hore la eego, backup la xaqiijiyo, kadibna si sax ah loo dabaqo.
+- Migration 20261117000100 wuxuu hagaajiyaa samaynta profile-ka marka username hore loo qaatay.
+- Migration 20261117000200 wuxuu diyaariyaa user_follows, media_reposts, media_favorites, is_private iyo is_verified; wuxuu kaloo adkeeyaa RLS/private-post visibility.
+- Jadwalladii hore madal_follows iyo madal_shares lama tirtirayo, balse xogtooda si otomaatig ah looguma guurin jadwallada cusub.
+- Stories waxay u baahan yihiin migrations 008 iyo cleanup Edge Function + Cron.
+- LIVE waxay u baahan tahay migrations 009 iyo 010, LiveKit Cloud/server iyo secrets: LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET.
+- Workflow-ga GitHub Actions → Deploy GoGol Supabase backend wuxuu u baahan yahay SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD, GOGOL_CRON_SECRET iyo saddexda LiveKit secrets. Waxa kale oo uu u baahan yahay backup dib loo soo celin karo iyo oggolaanshaha production environment.
+- Cleanup Cron-ka Stories waa in Supabase Dashboard laga jadwaleeyo 15 daqiiqo kasta, kadib deployment.
 
-SQL migrations si otomaatig ah looma fuliyo marka app-ka la daabaco. Kahor production, kaydso database-ka oo dib u eeg SQL-ga. Report iyo block waxay u baahan yihiin migration-ka user safety/moderation iyo RLS policies-kiisa.
-
-OGOW
-- APK-gu waa beta/debug-signed build, mana aha Play Store release.
-- Android package ID: com.madal.app; ha beddelin si updates-ku ugu shaqeeyaan rakibaaddii hore.
-- Isbeddellada HTML/CSS/JavaScript waxaa si gooni ah loogu daabici karaa webka; isbeddellada Android native waxay u baahan yihiin APK cusub.
-- iPhone wali ma laha native IPA build.
-- Soo geli oo keliya muuqaal aad leedahay ama aad fasax u haysato.
+XADIDAADAHA IYO TAYADA
+- App-ku weli waa beta; CI build guulaystay macnaheedu ma aha in adeeg kasta telefoon dhab ah lagu tijaabiyey.
+- LIVE, messaging, uploads, privacy, OTA iyo laba qalab waa in end-to-end lagu tijaabiyaa.
+- For You wuxuu adeegsadaa engagement/freshness ranking; ma aha AI model la tababaray.
+- APK-gu waa debug-signed direct-distribution build, mana aha Play Store release.
+- Android package ID: com.madal.app; ha beddelin.
+- iPhone native IPA wali lama diyaarin.
+- Soo geli oo keliya waxyaabo aad leedahay ama aad fasax u haysato.
