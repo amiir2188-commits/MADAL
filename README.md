@@ -45,7 +45,7 @@ A manual GitHub Actions workflow is provided at **Actions → Deploy GoGol Supab
 
 1. Configure the Supabase project URL and publishable/anon key for the app. Never put a service-role or secret key in client-side code.
 2. For a new database, review `supabase_schema.sql` before running it in the Supabase SQL Editor.
-3. For an existing database, review and apply only the migrations that match its current schema, in order. The profile/avatar, message read-receipt, media/message compatibility, user safety/moderation, photo album, social post-visibility, account deletion, and 24-hour Stories migrations are separate SQL files under `supabase/migrations/`.
+3. For an existing database, review and apply only the migrations that match its current schema, in order. The profile/avatar, message read-receipt, media/message compatibility, user safety/moderation, photo album, social post-visibility, account deletion, 24-hour Stories, LIVE streaming/session-limit, and username-collision migrations are separate SQL files under `supabase/migrations/`. The username-collision migration prevents a duplicate requested username from aborting a new account sign-up; it preserves existing profile rows.
 4. Deploy the account deletion function with `supabase functions deploy delete-account`. Keep the Supabase service-role key only in the Edge Function environment; never put it in client code.
 5. Enable Phone Auth and configure an SMS provider if phone-number sign-in is required.
 
