@@ -481,6 +481,60 @@ input,textarea,select{scroll-margin-top:90px}
  #upload .feed-card{margin:8px;border-radius:14px}
 }
 
+
+/* GoGol 1.10.74 — consistent TikTok-inspired interaction states across every screen. */
+:root{--gg-tap:scale(.965);--gg-surface:#17171c;--gg-surface-2:#222228;--gg-line:#ffffff18}
+button,[role="button"],a{ -webkit-tap-highlight-color:transparent; touch-action:manipulation}
+button{transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .16s ease,opacity .16s ease}
+button:active:not(:disabled){transform:var(--gg-tap)}
+button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
+:where(button,input,textarea,select,[tabindex]):focus-visible{outline:2px solid var(--gg-accent,#fe2c55);outline-offset:3px}
+.page{min-height:calc(100dvh - 60px);animation:gogol-page-in .18s ease-out}
+@keyframes gogol-page-in{from{opacity:.72;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.feed-card,.discover-user,.activity-item,.inbox-item,.message-row,.profile-tile{border-color:var(--gg-line)}
+[data-feed-tab],[data-discover-tab],[data-profile-tab],[data-inbox-filter],[data-upload-kind]{position:relative;min-height:42px}
+[data-feed-tab].active:after,[data-discover-tab].active:after,[data-profile-tab].active:after,[data-inbox-filter].active:after{content:"";position:absolute;left:22%;right:22%;bottom:0;height:2px;border-radius:3px;background:var(--gg-accent,#fe2c55)}
+#discover .discover-user{display:flex;align-items:center;gap:11px;padding:12px;margin:8px 12px;background:var(--gg-surface,#17171c);border:1px solid var(--gg-line);border-radius:15px}
+#discover .discover-user .user-meta{min-width:0;flex:1}
+#discover .discover-user .user-meta strong,#discover .discover-user .user-meta small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#discover .discover-user button{min-width:68px;min-height:38px;border-radius:9px}
+#notifications .activity-item{display:flex;gap:12px;align-items:flex-start;padding:14px 12px;border-bottom:1px solid var(--gg-line)}
+#notifications .activity-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:50%;background:var(--gg-surface-2,#222228)}
+#messages [data-inbox-filter]{padding:8px 13px;border-radius:0 0 2px 2px}
+#messages [data-inbox-filter].active{color:#fff}
+#profile .profile-tabs{display:flex;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain}
+#profile .profile-tabs::-webkit-scrollbar{display:none}
+#profile .profile-tabs button{flex:1 0 auto;min-width:64px}
+#upload .upload-choice button,#upload .upload-methods button{font-weight:700;letter-spacing:.01em}
+#upload .upload-choice button.active{box-shadow:inset 0 0 0 1px var(--gg-accent,#fe2c55)}
+#upload .photo-filters{display:flex;gap:8px;overflow-x:auto;padding:4px 1px 10px;scrollbar-width:none}
+#upload .photo-filters button{flex:0 0 auto;min-height:38px;padding:0 13px;border-radius:20px;background:var(--gg-surface-2,#222228);border:1px solid var(--gg-line)}
+#upload .photo-filters button.active{border-color:var(--gg-accent,#fe2c55);background:color-mix(in srgb,var(--gg-accent,#fe2c55) 18%,transparent)}
+.share-sheet{position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-end;justify-content:center;background:#0009;backdrop-filter:blur(5px)}
+.share-sheet-card{width:min(100%,560px);max-height:82dvh;overflow:auto;padding:18px 16px max(20px,env(safe-area-inset-bottom));border-radius:22px 22px 0 0;background:#17171c;border:1px solid var(--gg-line);animation:gogol-sheet-in .2s ease-out}
+@keyframes gogol-sheet-in{from{transform:translateY(24px);opacity:.6}to{transform:translateY(0);opacity:1}}
+.share-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.share-sheet-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0}
+.share-sheet-actions button{min-height:46px;border-radius:12px;background:var(--gg-surface-2,#222228);color:#fff}
+.share-sheet-list{display:grid;gap:8px}
+.share-person{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--gg-line)}
+.share-person>span:nth-child(2){flex:1;min-width:0}
+.share-person button{min-height:36px;border-radius:9px}
+.story-chip{min-width:68px;max-width:84px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.story-chip strong{max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+.story-ring{width:58px;height:58px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#fe2c55,#25c9f7)}
+.story-ring img{width:100%;height:100%;border:2px solid #111;border-radius:50%;object-fit:cover}
+#storyViewer{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+#storyViewer .story-viewer-media{max-width:100%;max-height:82dvh;object-fit:contain}
+#conversationPanel{overscroll-behavior:contain}
+.chat-composer textarea{min-height:42px;max-height:120px}
+@media(max-width:480px){
+ .share-sheet-card{padding-left:14px;padding-right:14px}
+ #discover .discover-user{margin-left:8px;margin-right:8px;padding:10px}
+ #discover .discover-user button{min-width:58px;padding-inline:9px}
+}
+@media(prefers-reduced-motion:reduce){.page,.share-sheet-card{animation:none!important}button{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -569,7 +623,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.73';
+const MADAL_VERSION='1.10.74';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
