@@ -5,6 +5,19 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'index.html'
+      - 'account.html'
+      - 'update.js'
+      - 'live.js'
+      - 'manifest.webmanifest'
+      - 'version.json'
+      - 'sw.js'
+      - 'gogol-logo.svg'
+      - 'icon-*.png'
+      - 'icons/**'
+      - 'supabase/**'
+      - '.github/workflows/build-apk.yml'
 
 permissions:
   contents: write
