@@ -61,6 +61,12 @@ begin
 
   return new;
 end;
-$$;
+$;
+
+-- Ensure new Auth users continue to receive a public profile through this function.
+drop trigger if exists madal_auth_user_profile on auth.users;
+create trigger madal_auth_user_profile
+  after insert on auth.users
+  for each row execute function public.madal_create_profile();
 
 commit;
