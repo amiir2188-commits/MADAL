@@ -1,7 +1,7 @@
 {
-  "version": "1.10.76",
+  "version": "1.10.77",
   "name": "GoGol",
-  "message": "Fix creator profile video and photo tabs so media-type filtering happens before pagination",
+  "message": "Add TikTok-style five-tab navigation, dedicated Create tab and connect the home LIVE entry to the real LIVE flow",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.76/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.77/madal-web.zip"
 }
