@@ -5,6 +5,7 @@ let liveRoom = null;
 let liveLocalTracks = [];
 let liveSessionId = null;
 let liveRole = null;
+let liveHostUserId = null;
 let liveKitModule = null;
 let liveHeartbeat = null;
 let liveLastChatAt = 0;
@@ -118,7 +119,7 @@ async function liveGetToken(sessionId,role){
  return data;
 }
 async function liveShowRoom(session,title,role){
- liveSessionId=session.id;liveRole=role;
+ liveSessionId=session.id;liveRole=role;liveHostUserId=String(session.host_id||'');
  liveEl("gLiveHome").classList.add("hidden");
  liveEl("gLiveRoomView").classList.remove("hidden");
  liveEl("gLiveStage").replaceChildren();
@@ -171,8 +172,11 @@ function liveAddChat(name,message){
 }
 function liveUpdateViewerCount(){
  if(!liveRoom)return;
- const remote=liveRoom.remoteParticipants.size;
- liveEl("gLiveViewers").textContent="Daawadayaal: "+remote;
+ // The host is a remote participant for viewers, but is not a viewer.
+ // Count only remote participants whose identity is not the host identity.
+ const remote=[...liveRoom.remoteParticipants.values()];
+ const viewers=remote.filter(participant=>!liveHostUserId||!String(participant.identity||'').startsWith(liveHostUserId+'-')).length;
+ liveEl("gLiveViewers").textContent="Daawadayaal: "+viewers;
 }
 async function liveSendChat(event){
  event.preventDefault();
@@ -222,7 +226,7 @@ async function liveJoin(session){
 async function liveLeave(endSession=true){
  const sessionId=liveSessionId, role=liveRole;
  if(liveHeartbeat){clearInterval(liveHeartbeat);liveHeartbeat=null}
- liveRole=null;liveSessionId=null;
+ liveRole=null;liveSessionId=null;liveHostUserId=null;
  if(liveRoom){try{await liveRoom.disconnect()}catch{}liveRoom=null}
  for(const track of liveLocalTracks){try{track.stop()}catch{}}
  liveLocalTracks=[];
