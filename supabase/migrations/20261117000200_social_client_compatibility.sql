@@ -115,6 +115,9 @@ create index if not exists media_favorites_user_created_idx
   on public.media_favorites(user_id, created_at desc);
 
 -- Keep likes and comments from leaking metadata about private posts.
+drop policy if exists madal_likes_read on public.media_likes;
+drop policy if exists madal_likes_add on public.media_likes;
+drop policy if exists madal_likes_delete on public.media_likes;
 drop policy if exists "MADAL likes readable" on public.media_likes;
 create policy "MADAL likes readable" on public.media_likes
   for select to anon, authenticated
@@ -160,6 +163,13 @@ create policy "MADAL comment own" on public.media_comments
   );
 
 -- Enforce private-post visibility in both the database and media storage.
+grant update on table public.media_posts to authenticated;
+drop policy if exists "MADAL owner update own media" on public.media_posts;
+create policy "MADAL owner update own media" on public.media_posts
+  for update to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
 drop policy if exists "MADAL read published" on public.media_posts;
 create policy "MADAL read published" on public.media_posts
   for select to anon, authenticated
