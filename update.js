@@ -81,7 +81,8 @@ if (button) {
       }
     } catch (error) {
       console.error('GoGol update failed:', error);
-      if (message) message.textContent = 'Cusboonaysiintu way fashilantay. Internet-ka hubi oo mar kale isku day.';
+      const detail = error?.message ? String(error.message).slice(0, 180) : 'Sabab aan la aqoon';
+      if (message) message.textContent = 'Cusboonaysiintu way fashilantay: ' + detail + '. Hubi internet-ka, kadib mar kale isku day.';
       button.disabled = false;
       button.textContent = 'Mar kale isku day';
     }
