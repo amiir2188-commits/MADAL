@@ -15,17 +15,59 @@ const button = document.getElementById('applyUpdate');
 const message = document.getElementById('updateMessage');
 let latestBundle = null;
 let checking = false;
+let updating = false;
+
+const updateStyle = document.createElement('style');
+updateStyle.textContent = `
+.update-start.is-loading{display:inline-flex;align-items:center;justify-content:center;gap:11px;cursor:wait;transform:none!important}
+.update-start.is-loading::before{content:"";width:19px;height:19px;flex:none;border:3px solid #180d2544;border-top-color:#180d25;border-radius:50%;animation:gogol-update-spin .8s linear infinite}
+.update-progress{min-height:24px;margin:15px auto 0;color:#f0e5fa;font-size:13px;line-height:1.5;text-align:center}
+.update-progress:empty{display:none}
+@keyframes gogol-update-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.update-start.is-loading::before{animation-duration:2s}}
+`;
+document.head.appendChild(updateStyle);
+
+let progress = document.getElementById('updateProgress');
+if (!progress && button) {
+  progress = document.createElement('p');
+  progress.id = 'updateProgress';
+  progress.className = 'update-progress';
+  progress.setAttribute('role', 'status');
+  progress.setAttribute('aria-live', 'polite');
+  progress.setAttribute('aria-atomic', 'true');
+  button.insertAdjacentElement('afterend', progress);
+}
+
+function setProgress(text) {
+  if (progress) progress.textContent = text;
+}
+function setButtonLoading(text) {
+  if (!button) return;
+  button.disabled = true;
+  button.classList.add('is-loading');
+  button.setAttribute('aria-busy', 'true');
+  button.textContent = text;
+}
+function clearButtonLoading(text) {
+  if (!button) return;
+  button.disabled = false;
+  button.classList.remove('is-loading');
+  button.removeAttribute('aria-busy');
+  button.textContent = text;
+}
 
 function showUpdate(version) {
   if (!notice || !button) return;
   notice.classList.remove('hidden');
   if (message) message.textContent = 'GoGol ' + version + ' waa diyaar. Taabo Update App si aad u cusboonaysiiso ka hor intaadan gelin app-ka caadiga ah. APK kale looma baahna.';
   button.classList.remove('hidden');
-  button.textContent = 'Update App';
+  clearButtonLoading('Update App');
+  setProgress('');
 }
 
 async function checkNativeUpdate() {
-  if (checking || !notice || !button) return;
+  if (checking || updating || !notice || !button) return;
   checking = true;
   try {
     if (isNative && LiveUpdate) await LiveUpdate.ready();
@@ -49,29 +91,35 @@ async function checkNativeUpdate() {
 
 if (button) {
   button.addEventListener('click', async () => {
+    if (updating) return;
     if (!latestBundle) {
       if (!isNative) {
-        button.disabled = true;
-        button.textContent = 'Waa la cusboonaysiinayaa...';
+        updating = true;
+        setButtonLoading('Waa la cusboonaysiinayaa...');
+        setProgress('Fadlan sug inta GoGol dib isu furayo.');
         location.reload();
       }
       return;
     }
-    button.disabled = true;
-    button.textContent = isNative ? 'Update waa la soo dejinayaa...' : 'Waa la cusboonaysiinayaa...';
+    updating = true;
+    setButtonLoading('Update waa la soo dejinayaa...');
+    setProgress('GoGol wuxuu soo dejinayaa cusboonaysiinta. Fadlan ha xirin app-ka, hana taaban badhanka mar kale.');
     try {
       if (isNative && LiveUpdate) {
         await LiveUpdate.downloadBundle({
           url: latestBundle.url,
           bundleId: latestBundle.version
         });
+        setButtonLoading('Waa la rakibayaa...');
+        setProgress('Soo dejintu way dhammaatay. GoGol wuxuu diyaarinayaa cusboonaysiinta...');
         await LiveUpdate.setNextBundle({ bundleId: latestBundle.version });
-        button.textContent = 'Waa la dhammeeyey — dib ayaa loo furayaa...';
+        setButtonLoading('Waa la dhammeeyey...');
+        setProgress('GoGol dib ayuu u furmayaa. Hal daqiiqo sug...');
         await LiveUpdate.reload();
       } else if (isNative) {
-        throw new Error('Native update bundle is not published yet.');
+        throw new Error('Adeegga cusboonaysiinta Android lama heli karo. Hubi in app-ka asalka ah la rakibay.');
       } else {
-        // PWA/browser: the service worker fetches the newest web files.
+        setProgress('Waxaa la cusboonaysiinayaa faylasha app-ka...');
         if ('serviceWorker' in navigator) {
           const registration = await navigator.serviceWorker.getRegistration();
           await registration?.update();
@@ -81,10 +129,11 @@ if (button) {
       }
     } catch (error) {
       console.error('GoGol update failed:', error);
+      updating = false;
       const detail = error?.message ? String(error.message).slice(0, 180) : 'Sabab aan la aqoon';
       if (message) message.textContent = 'Cusboonaysiintu way fashilantay: ' + detail + '. Hubi internet-ka, kadib mar kale isku day.';
-      button.disabled = false;
-      button.textContent = 'Mar kale isku day';
+      setProgress('Cusboonaysiinta lama dhammaystirin. Mar kale isku day marka internet-ku hagaago.');
+      clearButtonLoading('Mar kale isku day');
     }
   });
 }
