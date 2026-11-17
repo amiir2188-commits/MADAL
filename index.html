@@ -407,6 +407,80 @@ body.photo-viewer-open{overflow:hidden!important}
 .profile-tabs{position:sticky;top:0;z-index:5;background:#000}
 .profile-grid{background:#000}
 
+
+/* GoGol 1.10.73 — consistent TikTok-inspired interaction language across every page */
+:root{--gg-accent:#fe2c55;--gg-cyan:#25f4ee;--gg-surface:#171719;--gg-muted:#9b9ba3}
+button,a,[role=button]{-webkit-tap-highlight-color:transparent}
+button{transition:background-color .16s ease,color .16s ease,border-color .16s ease,transform .16s ease,opacity .16s ease}
+button:active,[role=button]:active{transform:scale(.96)}
+button:disabled{opacity:.48;cursor:not-allowed;transform:none}
+:focus-visible{outline:2px solid var(--gg-cyan)!important;outline-offset:3px}
+.page{animation:ggPageIn .2s ease both}
+@keyframes ggPageIn{from{opacity:.75;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* Bottom navigation remains a stable four-destination app shell. */
+.bottom{z-index:80;padding-bottom:max(7px,env(safe-area-inset-bottom));background:rgba(10,10,12,.97);border-top:1px solid rgba(255,255,255,.1);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.bottom button{min-height:54px;gap:4px;color:#a5a5ad}
+.bottom button.active{color:#fff}
+.bottom button.active svg{stroke:var(--gg-accent);filter:drop-shadow(0 0 5px rgba(254,44,85,.28))}
+.bottom button span{font-size:10px;font-weight:650;letter-spacing:.1px}
+/* Home feed: persistent Following / For You selector and immersive vertical media. */
+#home{padding-left:0!important;padding-right:0!important;background:#000}
+#home .feed-tabs{position:sticky;top:0;z-index:35;min-height:48px;background:rgba(0,0,0,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0}
+#home .feed-tabs [data-feed-tab]{position:relative;color:rgba(255,255,255,.72)}
+#home .feed-tabs [data-feed-tab].active{color:#fff}
+#home .feed-tabs [data-feed-tab].active:after{content:"";position:absolute;left:30%;right:30%;bottom:3px;height:3px;border-radius:4px;background:#fff}
+#home .feed-tabs .home-create{font-size:27px;line-height:1}
+#videoSearch{margin:8px 12px;width:calc(100% - 24px);border-radius:24px;background:#171719;border:1px solid #34343a}
+#allFeed{background:#000;overscroll-behavior-y:contain;scroll-snap-type:y mandatory}
+.video-slide{scroll-snap-align:start;scroll-snap-stop:always;isolation:isolate}
+.video-slide .slide-media{background:#000}
+.video-slide .slide-shade{pointer-events:none}
+.video-slide .slide-actions button{touch-action:manipulation}
+.video-slide .slide-actions button.is-liked{color:var(--gg-accent)!important}
+.video-slide .slide-actions button.is-saved{color:#ffd84d!important}
+.video-slide .slide-actions button.is-reposted{color:var(--gg-cyan)!important}
+/* Friends / search: segmented controls and profile rows behave like native social discovery. */
+#discover .feed-card{border-radius:0 0 16px 16px}
+#discover .tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+#discover .tabs button{white-space:nowrap;border-radius:22px;padding:9px 14px;background:#202024;color:#ddd}
+#discover .tabs button.active{background:#fff;color:#111}
+.discover-user{transition:background .16s ease}
+.discover-user:active{background:#242429}
+/* Creator profile: sticky content tabs, clear ownership controls, compact TikTok-like grid. */
+.profile-masthead{position:sticky;top:0;z-index:30;background:rgba(0,0,0,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.profile-hero{border-radius:0 0 16px 16px}
+.profile-stats>div{cursor:default}
+.profile-buttons button,.profile-buttons a{min-height:38px}
+.profile-tabs{position:sticky;top:52px;z-index:25;display:flex;overflow-x:auto;scrollbar-width:none;background:#000;border-bottom:1px solid rgba(255,255,255,.12)}
+.profile-tabs button{flex:1 0 64px;min-width:58px;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#92929a;background:transparent;border:0}
+.profile-tabs button.active{color:#fff;border-bottom:2px solid #fff}
+.profile-tabs button svg{width:21px;height:21px}
+.profile-tabs button span{font-size:10px}
+.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+.profile-grid>*{min-width:0;aspect-ratio:3/4;overflow:hidden}
+.profile-grid img,.profile-grid video{width:100%;height:100%;object-fit:cover}
+/* Upload studio: separate creator workflow with clear selected media and preview states. */
+#upload{max-width:720px;margin:0 auto;padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+#upload .section-title{position:sticky;top:0;z-index:20;margin:0;padding:16px;background:rgba(0,0,0,.92);backdrop-filter:blur(14px)}
+#upload .feed-card{border-radius:18px;margin:12px}
+.upload-choice,.upload-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.upload-choice button,.upload-methods button{min-height:46px;border-radius:12px;background:#222228;color:#fff;border:1px solid #38383f}
+.upload-choice button.active{background:rgba(254,44,85,.16);border-color:var(--gg-accent);color:#fff}
+.upload-preview{display:block;width:100%;max-height:55dvh;object-fit:contain;background:#050505;border-radius:14px}
+#uploadButton{position:sticky;bottom:calc(66px + env(safe-area-inset-bottom));z-index:10;width:100%;min-height:48px;box-shadow:0 5px 22px rgba(0,0,0,.35)}
+/* Inbox and overlays use the same safe-area and motion conventions. */
+#conversationPanel{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+.chat-composer{padding-bottom:max(10px,env(safe-area-inset-bottom))}
+.comment-panel,.modal,.camera-studio{overscroll-behavior:contain}
+input,textarea,select{scroll-margin-top:90px}
+@media(prefers-reduced-motion:reduce){.page,button{animation:none!important;transition:none!important}#allFeed{scroll-behavior:auto}}
+@media(max-width:480px){
+ #home .feed-tabs{padding-top:max(4px,env(safe-area-inset-top))}
+ #discover,#profile{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+ .profile-tabs{top:48px}
+ #upload .feed-card{margin:8px;border-radius:14px}
+}
+
 </style>
 </head>
 <body>
@@ -495,7 +569,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.72';
+const MADAL_VERSION='1.10.73';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
