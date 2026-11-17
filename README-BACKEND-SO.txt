@@ -23,10 +23,10 @@ ADEEGYADA APP-KA EE HADDAN
 
 BADBAADO IYO XADIDAADO
 - Report/block waxay u baahan yihiin migration-ka user safety/moderation iyo RLS policies-kiisa in lagu rakibo database-ka. In faylka SQL uu repo-ga ku jiro macnaheedu ma aha in production database-ka lagu dabaqay.
-- Stories iyo Live streaming weli ma aha adeegyo dhamaystiran.
+- Stories iyo LIVE waxay leeyihiin migrations iyo client/Edge Function code, balse production ahaan waxay u baahan yihiin in migrations-ka la deploy-gareeyo, Cron la jadwaleeyo, LIVE-na la siiyo LiveKit credentials kadibna laba qalab lagu tijaabiyo.
 - Ma jiro admin moderation dashboard oo la xaqiijiyey inuu diyaar yahay.
-- APK-ga la qaybiyo waa beta/debug-signed, mana aha Play Store build.
+- APK-ga hadda jira ee v1.10.59 waa beta/debug-signed. Workflow-ga cusub wuxuu taageeraa persistent release keystore marka afarta ANDROID_KEYSTORE_* secrets lagu daro GitHub; ilaa markaas APK release lama daabacayo.
 - Kaydinta iyo bandwidth-ka fiidiyowyada waxay ku xiran yihiin qorshaha iyo dejinta Supabase/storage.
 - Hubi in qofka soo gelinaya uu xaq u leeyahay media-ga.
 
-DIGNIIN: SQL migrations-ka production-ka ha lagu dabaqin ilaa la hubiyo schema-ga hadda jira, la sameeyo backup, lana fahmo saameyntooda. Daabacaadda webka ama APK-gu iskood uma beddelaan database-ka.
+DIGNIIN: Deploy workflow-gu wuxuu leeyahay dry-run ka hor migrations-ka, balse taasi ma beddelayso backup dib loo soo celin karo. Samee backup database oo dhamaystiran iyo nuqul media ah kahor inta aan la dooran backup_completed. Supabase db dump wuxuu ka reebaa schemas-ka ay Supabase maamusho sida auth iyo storage; CSV-yada public tables keligood ma aha backup dhamaystiran. Daabacaadda webka ama APK-gu iskood uma beddelaan database-ka.
