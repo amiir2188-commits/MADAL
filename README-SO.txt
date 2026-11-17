@@ -1,7 +1,7 @@
 GOGOL — APP BULSHO FIIDIYOW IYO SAWIRRO AH
 
 APK-ga Android ee saldhigga ah: 1.10.59 (debug-signed build la xaqiijiyey)
-Web bundle-ka cusub: 1.10.62 (bogagga Terms/Privacy/Community waa lagu daray)
+Web bundle-ka cusub: 1.10.63 (astaanta saxda ah ee shaashadda soo dhaweynta iyo hagaajinta muuqaalka app-ka) (bogagga Terms/Privacy/Community waa lagu daray)
 GoGol (oo markii hore MADAL la oran jiray) waa app bulsho oo Soomaali-ku-horreeyo.
 
 SOO DEJINTA
@@ -9,7 +9,7 @@ APK Android:
 https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/app-debug.apk
 
 Web update bundle:
-https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.62/madal-web.zip
+https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.63/madal-web.zip
 
 Dhammaan sii-daymaha:
 https://github.com/amiir2188-commits/MADAL/releases
