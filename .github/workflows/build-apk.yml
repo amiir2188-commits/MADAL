@@ -170,7 +170,7 @@ jobs:
           for (const marker of ['madal-avatars', 'MADAL avatar upload own folder', 'MADAL avatar images public read']) {
             if (!profileMigration.includes(marker)) throw new Error('Profile/avatar migration is missing: ' + marker);
           }
-          for (const marker of ['create or replace function public.madal_create_profile()', 'when unique_violation', 'candidate_username', 'return new;']) {
+          for (const marker of ['create or replace function public.madal_create_profile()', 'when unique_violation', 'candidate_username', 'create trigger madal_auth_user_profile', 'return new;']) {
             if (!usernameMigration.includes(marker)) throw new Error('Username collision migration is missing safeguard: ' + marker);
           }
           for (const marker of ['add column if not exists is_private', 'add column if not exists is_verified', 'create table if not exists public.user_follows', 'create table if not exists public.media_reposts', 'create table if not exists public.media_favorites', 'create policy "MADAL read published"', 'create policy "MADAL play published"', 'madal_protect_verified_flag']) {
