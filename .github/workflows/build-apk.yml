@@ -151,6 +151,7 @@ jobs:
           if (unlabeled.length) throw new Error('Found form controls without explicit accessible labels: ' + unlabeled.join(' | '));
           const deletionMigration = fs.readFileSync('supabase/migrations/20261116000600_account_deletion_requests.sql', 'utf8');
           const profileMigration = fs.readFileSync('supabase/migrations/20261116000700_profile_storage.sql', 'utf8');
+          const usernameMigration = fs.readFileSync('supabase/migrations/20261117000100_profile_username_conflicts.sql', 'utf8');
           const storiesMigration = fs.readFileSync('supabase/migrations/20261116000800_stories.sql', 'utf8');
           const deletionFunction = fs.readFileSync('supabase/functions/delete-account/index.ts', 'utf8');
           const storyCleanupFunction = fs.readFileSync('supabase/functions/cleanup-expired-stories/index.ts', 'utf8');
@@ -167,6 +168,9 @@ jobs:
           if (html.includes('SUPABASE_SERVICE_ROLE_KEY') || account.includes('SUPABASE_SERVICE_ROLE_KEY')) throw new Error('Service-role secret must never be shipped to clients');
           for (const marker of ['madal-avatars', 'MADAL avatar upload own folder', 'MADAL avatar images public read']) {
             if (!profileMigration.includes(marker)) throw new Error('Profile/avatar migration is missing: ' + marker);
+          }
+          for (const marker of ['create or replace function public.madal_create_profile()', 'when unique_violation', 'candidate_username', 'return new;']) {
+            if (!usernameMigration.includes(marker)) throw new Error('Username collision migration is missing safeguard: ' + marker);
           }
           for (const marker of ['create table if not exists public.madal_stories', 'interval \'24 hours\'', 'GoGol active stories readable', 'GoGol users create own stories', 'GoGol users delete own stories', 'GoGol read active story media']) {
             if (!storiesMigration.includes(marker)) throw new Error('Stories migration is missing: ' + marker);
