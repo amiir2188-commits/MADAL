@@ -262,7 +262,7 @@ jobs:
             }
             gradle = gradle.replace(/release\s*\{/, 'release { signingConfig signingConfigs.release');
             fs.writeFileSync(file, gradle);
-            NODE
+          NODE
             echo "variant=release" >> "$GITHUB_OUTPUT"
             echo "apk_path=android/app/build/outputs/apk/release/app-release.apk" >> "$GITHUB_OUTPUT"
             echo "Persistent release signing configured."
