@@ -231,15 +231,66 @@ jobs:
           console.log('GoGol version, safety migrations, account deletion, Stories, LIVE, controls and accessibility labels are consistent.');
           NODE
 
+      - name: Configure persistent Android release signing
+        id: signing
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ] && [ -n "$ANDROID_KEY_PASSWORD" ]; then
+            printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/gogol-release.jks
+            test -s android/app/gogol-release.jks
+            export ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD
+            node <<'NODE'
+            const fs = require('fs');
+            const file = 'android/app/build.gradle';
+            let gradle = fs.readFileSync(file, 'utf8');
+            if (!gradle.includes('signingConfigs {')) {
+              gradle = gradle.replace(/buildTypes\s*\{/, `signingConfigs {
+                  release {
+                      storeFile file("gogol-release.jks")
+                      storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                      keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                      keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+                  }
+              }
+              buildTypes {`);
+            }
+            gradle = gradle.replace(/release\s*\{/, 'release { signingConfig signingConfigs.release');
+            fs.writeFileSync(file, gradle);
+            NODE
+            echo "variant=release" >> "$GITHUB_OUTPUT"
+            echo "apk_path=android/app/build/outputs/apk/release/app-release.apk" >> "$GITHUB_OUTPUT"
+            echo "Persistent release signing configured."
+          else
+            if [ "${{ inputs.publish_apk }}" = "true" ]; then
+              echo "APK publishing requires all four ANDROID_KEYSTORE_* GitHub secrets."
+              exit 1
+            fi
+            echo "variant=debug" >> "$GITHUB_OUTPUT"
+            echo "apk_path=android/app/build/outputs/apk/debug/app-debug.apk" >> "$GITHUB_OUTPUT"
+            echo "No release keystore configured; creating a CI debug artifact only."
+          fi
+
       - name: Build APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          if [ "${{ steps.signing.outputs.variant }}" = "release" ]; then
+            ./gradlew assembleRelease
+          else
+            ./gradlew assembleDebug
+          fi
 
       - name: Verify Android APK and web update bundle
+        env:
+          APK: ${{ steps.signing.outputs.apk_path }}
         run: |
-          APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$APK"
           AAPT="$(find "$ANDROID_HOME/build-tools" -name aapt | sort -V | tail -n 1)"
           APKSIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -n 1)"
           test -s "$APK"
@@ -279,11 +330,11 @@ jobs:
           generate_release_notes: true
           make_latest: true
           overwrite_files: true
-          files: android/app/build/outputs/apk/debug/app-debug.apk
+          files: ${{ steps.signing.outputs.apk_path }}
 
       - name: Upload GoGol APK
         uses: actions/upload-artifact@v7
         with:
           name: GoGol-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: ${{ steps.signing.outputs.apk_path }}
           if-no-files-found: error
