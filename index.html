@@ -32,7 +32,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 /* MADAL vertical short-video experience */
 #home{margin:0 -14px 0}
 #home>.section-title{display:none}
-#home .feed-tabs{height:calc(58px + env(safe-area-inset-top));display:grid;grid-template-columns:48px minmax(0,.78fr) minmax(0,1.05fr) minmax(0,1fr) minmax(0,1fr) 38px;align-items:end;justify-content:stretch;gap:2px;padding:env(safe-area-inset-top) 8px 0;margin:0;background:#100a19;overflow:visible}
+#home .feed-tabs{height:calc(58px + env(safe-area-inset-top));display:grid;grid-template-columns:42px minmax(0,1fr) minmax(0,1fr) 56px;align-items:end;justify-content:stretch;gap:2px;padding:env(safe-area-inset-top) 8px 0;margin:0;background:#100a19;overflow:visible}
 #home .feed-tabs .feed-search{width:36px;height:38px;min-width:36px;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;font-size:25px;display:grid;place-items:center;margin-left:0}
 #home .feed-tabs .feed-search:active{background:#38234d}
 #home .feed-tabs button{min-width:0;padding:8px 2px;border:0;border-radius:0;background:transparent;color:#a99bb7;font-size:12px;font-weight:750;position:relative;white-space:nowrap;overflow:hidden;text-overflow:clip}
@@ -422,6 +422,8 @@ button:disabled{opacity:.48;cursor:not-allowed;transform:none}
 .bottom button{min-height:54px;gap:4px;color:#a5a5ad}
 .bottom button.active{color:#fff}
 .bottom button.active svg{stroke:var(--gg-accent);filter:drop-shadow(0 0 5px rgba(254,44,85,.28))}
+.bottom button.create-tab svg{width:29px;height:27px;padding:4px;border-radius:8px;background:linear-gradient(135deg,#fe2c55,#ff6b81);stroke:#fff;stroke-width:2.8;filter:none}
+.bottom button.create-tab.active svg{background:linear-gradient(135deg,#fe2c55,#ff6b81);stroke:#fff;filter:drop-shadow(0 0 7px #fe2c5570)}
 .bottom button span{font-size:10px;font-weight:650;letter-spacing:.1px}
 /* Home feed: persistent Following / For You selector and immersive vertical media. */
 #home{padding-left:0!important;padding-right:0!important;background:#000}
@@ -429,7 +431,7 @@ button:disabled{opacity:.48;cursor:not-allowed;transform:none}
 #home .feed-tabs [data-feed-tab]{position:relative;color:rgba(255,255,255,.72)}
 #home .feed-tabs [data-feed-tab].active{color:#fff}
 #home .feed-tabs [data-feed-tab].active:after{content:"";position:absolute;left:30%;right:30%;bottom:3px;height:3px;border-radius:4px;background:#fff}
-#home .feed-tabs .home-create{font-size:27px;line-height:1}
+#home .feed-tabs .home-live{align-self:center;justify-self:end;min-width:48px;height:30px;padding:0 8px;border:0;border-radius:7px;background:#fe2c55;color:#fff;font-size:11px;font-weight:950;letter-spacing:.35px;box-shadow:0 2px 10px #fe2c5540}
 #videoSearch{margin:8px 12px;width:calc(100% - 24px);border-radius:24px;background:#171719;border:1px solid #34343a}
 #allFeed{background:#000;overscroll-behavior-y:contain;scroll-snap-type:y mandatory}
 .video-slide{scroll-snap-align:start;scroll-snap-stop:always;isolation:isolate}
@@ -561,7 +563,7 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
-<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button type="button" class="home-create" data-page="upload" aria-label="Create" title="Create">＋</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="GoGol LIVE">LIVE</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli GoGol</h2>
@@ -616,6 +618,7 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 <nav class="bottom" aria-label="GoGol navigation">
 <button class="active" data-page="home" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10.5 9-7.5 9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></svg><span>Home</span></button>
 <button data-page="discover" aria-label="Friends"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V21M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM17 4.2a4 4 0 0 1 0 7.6M18 15.5a4 4 0 0 1 3 3.9V21"/></svg><span>Friends</span></button>
+<button data-page="upload" class="create-tab" aria-label="Create" title="Create"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Create</span></button>
 <button data-page="messages" aria-label="Inbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg><span>Inbox</span></button>
 <button data-page="profile" aria-label="Profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg><span>Profile</span></button>
 </nav>
@@ -628,7 +631,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.76';
+const MADAL_VERSION='1.10.77';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1539,7 +1542,7 @@ $('storyFile').addEventListener('change',async()=>{
  finally{b.disabled=false}
 });
 
-const liveEntry=$("liveEntry");if(liveEntry)liveEntry.addEventListener("click",()=>{showPage("upload");notice("LIVE streaming wali waa la diyaarinayaa. Camera iyo Gallery waad isticmaali kartaa hadda.")});
+// LIVE button is handled by live.js; keep the real broadcast flow as the single click handler.
 $('profileCreate').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('storyFile').click()});
 $('profileFriends').addEventListener('click',()=>showPage('discover'));
 $('profileNotifications').addEventListener('click',()=>showPage('notifications'));
