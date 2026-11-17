@@ -32,6 +32,7 @@ HABAYNTA SUPABASE
 - Project ID: nxtnfdyksskofjbvface.
 - Ha gelin service-role key, database password ama secrets gudaha app-ka, GitHub code, ama chat.
 - Migrations-ka ku jira supabase/migrations waa in marka hore la eego, backup la xaqiijiyo, kadibna si sax ah loo dabaqo.
+- Workflow-ga backend-ka wuxuu leeyahay `preflight_only=true` oo hubiya secrets-ka isla markaana sameeya dry-run aan waxba ka beddelin production. Marka backup dib loo soo celin karo la xaqiijiyo oo keliya ayaa `preflight_only=false`, `confirm_production_deploy=true`, `backup_completed=true` la doortaa.
 - Migration 20261117000100 wuxuu hagaajiyaa samaynta profile-ka marka username hore loo qaatay.
 - Migration 20261117000200 wuxuu diyaariyaa user_follows, media_reposts, media_favorites, is_private iyo is_verified; wuxuu kaloo adkeeyaa RLS/private-post visibility.
 - Jadwalladii hore madal_follows iyo madal_shares lama tirtirayo, balse xogtooda si otomaatig ah looguma guurin jadwallada cusub.
