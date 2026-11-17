@@ -8,6 +8,9 @@ on:
     paths:
       - 'index.html'
       - 'account.html'
+      - 'privacy.html'
+      - 'community-guidelines.html'
+      - 'terms.html'
       - 'update.js'
       - 'live.js'
       - 'manifest.webmanifest'
@@ -44,7 +47,7 @@ jobs:
       - name: Build web update bundle
         run: |
           mkdir -p www
-          cp index.html account.html update.js live.js www/
+          cp index.html account.html privacy.html community-guidelines.html terms.html update.js live.js www/
           cp manifest.webmanifest version.json sw.js www/
           node --check live.js
           cp -r icons www/ 2>/dev/null || true
@@ -53,7 +56,7 @@ jobs:
           npm install --save-dev esbuild
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
           cd www && zip -r ../madal-web.zip . && cd ..
-          unzip -l madal-web.zip | grep -E 'index.html|update.js|version.json|live.js'
+          unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js'
 
       - name: Read MADAL version
         id: version
@@ -67,7 +70,7 @@ jobs:
           set -euo pipefail
           TAG="v${{ steps.version.outputs.version }}"
           if git rev-parse --verify "refs/tags/$TAG" >/dev/null 2>&1; then
-            if ! git diff --quiet "$TAG"...HEAD -- index.html account.html update.js live.js manifest.webmanifest sw.js gogol-logo.svg; then
+            if ! git diff --quiet "$TAG"...HEAD -- index.html account.html privacy.html community-guidelines.html terms.html update.js live.js manifest.webmanifest sw.js gogol-logo.svg; then
               echo "Client files changed but version.json was not bumped. Increase the app version before publishing."
               exit 1
             fi
