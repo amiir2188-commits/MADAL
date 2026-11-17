@@ -52,7 +52,7 @@ jobs:
           node --check live.js
           cp -r icons www/ 2>/dev/null || true
           npm init -y
-          npm install @capacitor/core @capawesome/capacitor-live-update
+          npm install @capacitor/core@8.6.2 @capawesome/capacitor-live-update@8.8.1
           npm install --save-dev esbuild@0.28.2
           npx esbuild update.js --bundle --format=esm --outfile=www/update.js
           cd www && zip -r ../madal-web.zip . && cd ..
