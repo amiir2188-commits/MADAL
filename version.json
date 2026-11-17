@@ -1,7 +1,7 @@
 {
-  "version": "1.10.75",
+  "version": "1.10.76",
   "name": "GoGol",
-  "message": "Fix profile Photos tab so creator photo posts load from their own published media collection",
+  "message": "Fix creator profile video and photo tabs so media-type filtering happens before pagination",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.75/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.76/madal-web.zip"
 }
