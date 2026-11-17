@@ -381,6 +381,32 @@ body.photo-viewer-open{overflow:hidden!important}
 #conversationPanel .chat-composer button:disabled{opacity:.55}
 @media(min-width:700px){#conversationPanel:not(.hidden){width:min(100%,720px)!important;left:50%!important;right:auto!important;transform:translateX(-50%);border-left:1px solid #292929!important;border-right:1px solid #292929!important;box-shadow:0 0 0 100vmax #000b}}
 
+
+/* GoGol creator feed refinement: inline playback, TikTok-like action rail and bookmark */
+#home{padding-top:0!important}
+#home .feed-tabs{grid-template-columns:42px 1fr 1fr 42px!important;gap:8px!important;padding-left:12px!important;padding-right:12px!important}
+#home .feed-tabs button{font-size:14px!important;font-weight:800!important}
+#home .feed-tabs .home-create{font-size:28px!important;color:#fff!important}
+#allFeed{scrollbar-width:none;overscroll-behavior-y:contain}
+.video-slide{border-radius:0!important}
+.video-slide .slide-actions{right:8px;bottom:78px;gap:8px;max-height:78%;overflow-y:auto;scrollbar-width:none}
+.video-slide .slide-actions button{min-width:48px;min-height:48px;padding:2px 0;background:transparent;text-shadow:0 1px 5px #000}
+.video-slide .slide-actions button span{display:grid;place-items:center;min-height:30px;font-size:29px;line-height:1}
+.video-slide .slide-actions button[data-favorite] span svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.video-slide .slide-actions button.is-saved,.video-slide .slide-actions button.is-saved span{color:#ffd84d!important}
+.video-slide .slide-actions button.is-reposted,.video-slide .slide-actions button.is-reposted span{color:#35d7a0!important}
+.video-slide .slide-actions button small{font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 4px #000}
+.video-slide .slide-actions .creator-avatar{width:46px;height:46px}
+.video-slide .slide-actions .creator-follow,.video-slide .slide-actions .creator-avatar-only{min-width:48px;min-height:55px}
+.video-slide .slide-info{bottom:24px;right:76px;left:14px}
+.video-slide .slide-media{object-fit:contain!important;background:#000}
+.video-slide .slide-media[poster]{object-fit:contain!important}
+.video-slide .comment-panel{max-height:58dvh;overflow-y:auto}
+@media(max-width:480px){#allFeed,.video-slide{height:calc(100dvh - 132px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;min-height:420px}.video-slide .slide-actions{bottom:70px;right:7px;gap:6px}.video-slide .slide-info{bottom:18px;right:72px}.video-slide .slide-actions button{min-height:46px}}
+/* Creator-owned tools remain separate from viewer actions on the profile. */
+.profile-tabs{position:sticky;top:0;z-index:5;background:#000}
+.profile-grid{background:#000}
+
 </style>
 </head>
 <body>
@@ -469,7 +495,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.71';
+const MADAL_VERSION='1.10.72';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -627,7 +653,7 @@ async function card(p){
   const followButton=currentUser && author && author!==currentUser.id?'<button type="button" class="creator-follow" data-follow="'+escapeHtml(author)+'" aria-label="'+(followsByUser.has(author)?'Jooji raacista':'Raac qofkan')+'"><span class="creator-avatar">'+avatar+'</span><span class="creator-plus">'+(followsByUser.has(author)?'✓':'+')+'</span></button>':'<span class="creator-avatar creator-avatar-only">'+avatar+'</span>';
   const commentItems=comments.map(c=>'<p class="comment-item"><strong>'+escapeHtml(String(c.user_id||'').slice(0,8))+'</strong> '+escapeHtml(c.body)+' <span class="muted small">'+(c.created_at?new Date(c.created_at).toLocaleDateString('so-SO'):'')+'</span></p>').join('')||'<p class="muted small">Weli faallo lama qorin.</p>';
   const safetyActions=currentUser&&author&&author!==currentUser.id?'<button type="button" data-report-post="'+escapeHtml(postId)+'" data-target-user="'+escapeHtml(author)+'" aria-label="Report"><span>⚑</span><small>Report</small></button><button type="button" data-block-user="'+escapeHtml(author)+'" aria-label="Block creator"><span>⊘</span><small>Block</small></button>':'';
-  social='<div class="slide-actions">'+followButton+'<button type="button" class="'+(liked?'is-liked':'')+'" data-like="'+escapeHtml(postId)+'" aria-label="Like"><span>'+(liked?'♥':'♡')+'</span><small>'+likes+'</small></button><button type="button" data-comments="'+escapeHtml(postId)+'" aria-label="Faallo"><span>💬</span><small>'+comments.length+'</small></button><button type="button" class="'+(favorite?'is-saved':'')+'" data-favorite="'+escapeHtml(postId)+'" aria-label="Save"><span>'+(favorite?'★':'☆')+'</span><small>'+(favoriteCountsByPost[postId]||0)+'</small></button><button type="button" class="share-action" data-share="'+escapeHtml(postId)+'" aria-label="Share"><span>➦</span><small>'+(p.share_count||'Share')+'</small></button>'+safetyActions+'</div><button type="button" class="repost-chip '+(reposted?'is-reposted':'')+'" data-repost="'+escapeHtml(postId)+'" aria-label="Repost"><span>⟳</span><b>'+(reposted?'Reposted':'Repost')+'</b><small>'+(repostCountsByPost[postId]||0)+'</small></button><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" rows="1" inputmode="text" enterkeyhint="send" maxlength="1000" placeholder="Faallo qor..." aria-label="Qor faallo" required></textarea><button class="primary" type="submit" aria-label="Dir faallada">➤</button></form></div>';
+  social='<div class="slide-actions">'+followButton+'<button type="button" class="'+(liked?'is-liked':'')+'" data-like="'+escapeHtml(postId)+'" aria-label="Like"><span>'+(liked?'♥':'♡')+'</span><small>'+likes+'</small></button><button type="button" data-comments="'+escapeHtml(postId)+'" aria-label="Faallo"><span>💬</span><small>'+comments.length+'</small></button><button type="button" class="'+(reposted?'is-reposted':'')+'" data-repost="'+escapeHtml(postId)+'" aria-label="Repost"><span>⟳</span><small>'+(repostCountsByPost[postId]||0)+'</small></button><button type="button" class="'+(favorite?'is-saved':'')+'" data-favorite="'+escapeHtml(postId)+'" aria-label="Ku dar Favorites"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h12v17l-6-4-6 4z"/></svg></span><small>'+(favorite?'Saved':'Save')+'</small></button><button type="button" class="share-action" data-share="'+escapeHtml(postId)+'" aria-label="Share"><span>➦</span><small>Share</small></button>'+safetyActions+'</div><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" rows="1" inputmode="text" enterkeyhint="send" maxlength="1000" placeholder="Faallo qor..." aria-label="Qor faallo" required></textarea><button class="primary" type="submit" aria-label="Dir faallada">➤</button></form></div>';
  }
  const authorName=escapeHtml(p.display_name||p.username||'GoGol Creator');
  const slidePlayer=player.replace('class="media"','class="slide-media"').replace('<video class="slide-media" controls playsinline','<video class="slide-media" autoplay loop playsinline').replace(' preload="metadata"',' preload="metadata"');
@@ -898,7 +924,7 @@ $('allFeed').addEventListener('click',async e=>{
     ?await db.from('media_reposts').delete().eq('post_id',postId).eq('user_id',currentUser.id)
     :await db.from('media_reposts').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});
    if(currentUser?.id!==actionUserId)return;
-   if(result.error)notice('Repost ma shaqayn: '+result.error.message);else await loadMedia();
+   if(result.error)notice('Repost ma shaqayn: '+result.error.message);else{const wasReposted=repostedPostIds.has(postId);if(wasReposted){repostedPostIds.delete(postId);repostCountsByPost[postId]=Math.max(0,(repostCountsByPost[postId]||1)-1)}else{repostedPostIds.add(postId);repostCountsByPost[postId]=(repostCountsByPost[postId]||0)+1}repost.classList.toggle('is-reposted',!wasReposted);repost.querySelector('small').textContent=repostCountsByPost[postId];notice(wasReposted?'Repost-ka waa laga noqday.':'Fiidiyowga waxaa lagu daray Reposts-ka profile-kaaga.');}
   }
   if(favorite){
    const postId=favorite.dataset.favorite;
@@ -907,7 +933,7 @@ $('allFeed').addEventListener('click',async e=>{
     ?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id)
     :await db.from('media_favorites').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});
    if(currentUser?.id!==actionUserId)return;
-   if(result.error)notice('Kaydintu ma shaqayn: '+result.error.message);else{if(wasSaved){favoritePostIds.delete(postId);favoriteCountsByPost[postId]=Math.max(0,(favoriteCountsByPost[postId]||1)-1)}else{favoritePostIds.add(postId);favoriteCountsByPost[postId]=(favoriteCountsByPost[postId]||0)+1}favorite.classList.toggle('is-saved',!wasSaved);favorite.querySelector('span').textContent=wasSaved?'☆':'★';favorite.querySelector('small').textContent=favoriteCountsByPost[postId];}
+   if(result.error)notice('Kaydintu ma shaqayn: '+result.error.message);else{if(wasSaved){favoritePostIds.delete(postId);favoriteCountsByPost[postId]=Math.max(0,(favoriteCountsByPost[postId]||1)-1)}else{favoritePostIds.add(postId);favoriteCountsByPost[postId]=(favoriteCountsByPost[postId]||0)+1}favorite.classList.toggle('is-saved',!wasSaved);favorite.querySelector('small').textContent=wasSaved?'Save':'Saved';}
   }
   if(privacy){
    const postId=privacy.dataset.private,post=allPosts.find(p=>String(p.id)===postId);
