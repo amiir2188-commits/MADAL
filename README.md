@@ -6,12 +6,12 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 **Android install baseline: GoGol 1.10.59** (verified debug-signed APK)
 
-**Latest web bundle: GoGol 1.10.61** (policy pages, bundled GoGol logo, and updater cache fix; CI verification successful)
+**Latest web bundle: GoGol 1.10.62** (policy pages, bundled GoGol logo, updater cache fix, and pinned LIVE SDKs; CI verification successful)
 
-**Current source: GoGol 1.10.61** (LIVE beta, social-schema compatibility, username-collision handling, and bundled terms/privacy/community pages; backend deployment and real-device testing still pending)
+**Current source: GoGol 1.10.62** (LIVE beta, social-schema compatibility, username-collision handling, and bundled terms/privacy/community pages; backend deployment and real-device testing still pending)
 
 - [Download GoGol 1.10.59 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/app-debug.apk)
-- [Download GoGol 1.10.61 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.61/madal-web.zip)
+- [Download GoGol 1.10.61 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.62/madal-web.zip)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
 The Android 1.10.59 APK is a beta/debug-signed build distributed directly; it is not a Play Store release. The build workflow now supports a persistent release keystore through four GitHub Actions secrets (`ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`). Without those secrets, CI creates debug artifacts only and refuses to publish an APK. Keep 1.10.59 as the install baseline for now; native APK upgrades need the same persistent keystore. If the signing key is changed, users must uninstall the previous debug-signed build before installing the release-signed build.
