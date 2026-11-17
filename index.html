@@ -264,6 +264,7 @@ html[dir="rtl"] .bottom{direction:rtl}
  transition:background .18s ease,color .18s ease,transform .18s ease;
 }
 .bottom button svg{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bottom button>span{display:block;font-size:10px;line-height:1.2;margin:0}
 .bottom button.active{background:linear-gradient(135deg,rgba(180,122,255,.18),rgba(241,139,212,.11));color:#e7ceff}
 .bottom button:active{transform:scale(.96)}
 .bottom .create-tab{background:transparent}
@@ -364,7 +365,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.64';
+const MADAL_VERSION='1.10.65';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
