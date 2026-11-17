@@ -14,7 +14,7 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 - [Download GoGol 1.10.60 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.60/madal-web.zip)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
-The Android APK is a beta/debug-signed build distributed directly; it is not a Play Store release. The build workflow publishes APKs only when manually dispatched with `publish_apk=true`; a persistent release-signing keystore is not configured yet. Keep the 1.10.59 APK as the install baseline while web-only updates are delivered in-app; native APK upgrades need stable signing first.
+The Android 1.10.59 APK is a beta/debug-signed build distributed directly; it is not a Play Store release. The build workflow now supports a persistent release keystore through four GitHub Actions secrets (`ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`). Without those secrets, CI creates debug artifacts only and refuses to publish an APK. Keep 1.10.59 as the install baseline for now; native APK upgrades need the same persistent keystore. If the signing key is changed, users must uninstall the previous debug-signed build before installing the release-signed build.
 
 ## Current beta capabilities
 
