@@ -4,12 +4,14 @@ GoGol (formerly MADAL) is a Somali-first, video-focused social app for Android a
 
 ## Latest verified release
 
-**Android and Web: GoGol 1.10.59** (Android build and web bundle verified by CI)
+**Android install baseline: GoGol 1.10.59** (verified debug-signed APK)
 
-**Current source: GoGol 1.10.59** (LIVE chat, corrected viewer count and stale-session recovery; backend deployment and real-device testing still pending)
+**Latest web bundle: GoGol 1.10.60** (policy pages included; web bundle CI verification pending)
+
+**Current source: GoGol 1.10.60** (LIVE beta, social-schema compatibility, username-collision handling, and bundled terms/privacy/community pages; backend deployment and real-device testing still pending)
 
 - [Download GoGol 1.10.59 for Android](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/app-debug.apk)
-- [Download GoGol 1.10.59 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.59/madal-web.zip)
+- [Download GoGol 1.10.60 web bundle](https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.60/madal-web.zip)
 - [All releases](https://github.com/amiir2188-commits/MADAL/releases)
 
 The Android APK is a beta/debug-signed build distributed directly; it is not a Play Store release.
