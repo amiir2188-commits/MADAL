@@ -76,7 +76,7 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 .welcome-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 20%,#452365 0%,#1b1029 42%,#090512 100%);text-align:center}
 .welcome-screen.hidden{display:none}
 .welcome-content{width:100%;max-width:420px;animation:welcome-rise .65s ease both}
-.welcome-mark{width:104px;height:104px;margin:0 auto 24px;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:#020b07;box-shadow:0 16px 55px #00ff8055}.welcome-mark img{width:100%;height:100%;object-fit:cover}
+.welcome-mark{width:104px;height:104px;margin:0 auto 24px;border:1px solid #ffffff2b;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#2b1940,#130d20);box-shadow:0 16px 55px #b47aff55, inset 0 1px #ffffff18}.welcome-mark img{width:100%;height:100%;padding:8px;object-fit:contain}
 .welcome-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin:0 0 9px}
 .welcome-content h1{font-size:34px;line-height:1.15;margin:0 0 14px;letter-spacing:-.7px}
 .welcome-copy{color:#d4c7e1;font-size:15px;line-height:1.75;margin:0 auto 30px;max-width:320px}
@@ -256,7 +256,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 <div id="updateNotice" class="update-screen hidden" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateMessage"><div class="update-content"><div class="update-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div><p class="update-kicker">GoGol • CUSBOONAYSIIN</p><h1 id="updateTitle">Update cusub ayaa diyaar ah!</h1><p id="updateMessage" class="update-copy">Nooc cusub oo GoGol ah ayaa diyaar ah.</p><div class="update-note">Cusboonaysii hadda si aad u hesho hagaajinta iyo muuqaalada cusub.</div><button id="applyUpdate" class="update-start" type="button">Update App</button></div></div>
 <div id="welcomeScreen" class="welcome-screen hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeCopy">
  <div class="welcome-content">
-  <div class="welcome-mark" aria-hidden="true">M</div>
+  <div class="welcome-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div>
   <p class="welcome-kicker">GoGol • BULSHO IYO MADADAALO</p>
   <h1 id="welcomeTitle">Ku soo dhawoow GoGol!</h1>
   <p id="welcomeCopy" class="welcome-copy">Meesha aad ka daawan karto fiidiyowyo, kula wadaagi karto fikradahaaga, kuna xiriiri karto bulshada.</p>
@@ -330,7 +330,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.62';
+const MADAL_VERSION='1.10.63';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
