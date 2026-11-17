@@ -543,6 +543,41 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 
 /* GoGol 1.10.76 — profile media tabs filter by media type before pagination. */
 </style>
+
+<style id="gogol-tiktok-reference-refresh">
+:root{--gg-accent:#fe2c55}
+html,body{background:#000!important;color:#fff}
+main{max-width:100%!important;margin:0!important;padding:0 0 calc(76px + env(safe-area-inset-bottom))!important;background:#000}
+.page{background:#000!important;color:#fff}
+#home .feed-tabs{position:sticky;top:0;z-index:35;height:calc(58px + env(safe-area-inset-top));display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,1fr) 46px;align-items:end;gap:2px;padding:env(safe-area-inset-top) 10px 0;margin:0;background:rgba(0,0,0,.88);backdrop-filter:blur(16px);border:0}
+#home .feed-tabs button{min-width:0;height:43px;padding:8px 2px;border:0;border-radius:0;background:transparent;color:rgba(255,255,255,.72);font-size:14px;font-weight:750;white-space:nowrap}
+#home .feed-tabs button.active{color:#fff}
+#home .feed-tabs button.active:after{left:25%;right:25%;bottom:3px;height:3px;background:#fff}
+#home .feed-tabs .home-live{align-self:center;justify-self:start;width:44px;min-width:44px;height:36px;padding:0;border-radius:8px;background:transparent;color:#fff;font-size:12px;font-weight:950;box-shadow:none}
+#home .feed-tabs .feed-search{width:40px;height:40px;min-width:40px;justify-self:end;margin:0;padding:0;background:transparent;color:#fff;font-size:30px}
+#home #videoSearch{display:none}
+#allFeed{background:#000!important}
+.bottom{z-index:80;left:0;right:0;bottom:0;display:flex;justify-content:space-around;align-items:center;gap:0;background:rgba(0,0,0,.96)!important;border-top:1px solid #242424!important;padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;backdrop-filter:blur(18px)}
+.bottom button{flex:1;min-width:0;min-height:49px;border:0!important;background:transparent!important;color:#aaa!important;font-size:11px!important;font-weight:650;line-height:1.2;padding:3px 1px!important}
+.bottom button span{display:block;font-size:0!important;line-height:1.2;margin:0!important}
+.bottom button span:before{display:block;font-family:system-ui,sans-serif;font-size:27px;line-height:30px;font-weight:400;color:inherit}
+.bottom button[data-page="home"] span:before{content:"⌂"}
+.bottom button[data-page="discover"] span:before{content:"♧"}
+.bottom button[data-page="upload"] span:before{content:"+";font-size:34px;font-weight:500;color:#fff;background:linear-gradient(90deg,#25f4ee 0 18%,#fe2c55 82%);border-radius:13px;width:58px;height:38px;line-height:36px;margin:0 auto 2px;box-shadow:inset 5px 0 #25f4ee,inset -5px 0 #fe2c55}
+.bottom button[data-page="messages"] span:before{content:"▢"}
+.bottom button[data-page="profile"] span:before{content:"♙"}
+.bottom button.active{color:#fff!important}
+.bottom button.active span:before{color:#fff}
+#messages,#discover,#profile{background:#000!important;color:#fff}
+#messages .inbox-heading{background:#000}
+#messages .inbox-filters button{border-radius:12px;background:#242424;color:#fff}
+#messages .inbox-filters button.active{background:#153d49;color:#28d5e8}
+#profile>.profile-hero{background:#000!important;border:0!important;box-shadow:none!important}
+#profile .profile-avatar{border-color:#fff!important;box-shadow:none!important}
+#profile .story-ring,#messages .story-ring{border-color:#25c7e8!important;box-shadow:0 0 0 2px #fe2c55}
+#discover .discover-user,#messages .inbox-item,#messages .feed-card{background:#111!important;border-color:#262626!important}
+@media(min-width:720px){main{max-width:520px!important;margin:0 auto!important}.bottom{left:50%;right:auto;width:min(520px,100%);transform:translateX(-50%)}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#allFeed">U gudub fiidiyowyada</a>
@@ -563,7 +598,7 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 <header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
-<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="GoGol LIVE">LIVE</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="GoGol LIVE">LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
 <section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
 <section id="upload" class="page hidden">
 <h2 class="section-title">➕ Soo geli GoGol</h2>
