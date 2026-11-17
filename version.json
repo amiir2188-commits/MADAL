@@ -1,7 +1,7 @@
 {
-  "version": "1.10.66",
+  "version": "1.10.67",
   "name": "GoGol",
-  "message": "Fix self-hosted Android update download using a version-pinned release asset URL",
+  "message": "Add a clear loading state and retry handling to in-app updates",
   "updated_at": "2026-11-17",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.66/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.67/madal-web.zip"
 }
