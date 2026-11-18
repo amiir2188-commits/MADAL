@@ -1,7 +1,7 @@
 {
-  "version": "1.10.90",
+  "version": "1.10.91",
   "name": "GoGol",
-  "message": "Fix saved favorites and comments; show commenter names and profile banner",
+  "message": "Fix profile banner accessibility; refresh app cache and release metadata",
   "updated_at": "2026-11-18",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.90/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.91/madal-web.zip"
 }
