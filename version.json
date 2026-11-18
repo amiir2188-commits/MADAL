@@ -1,7 +1,7 @@
 {
-  "version": "1.10.87",
+  "version": "1.10.88",
   "name": "GoGol",
-  "message": "Fix the doubled Create navigation icon",
+  "message": "Fix comments and favorites permissions; add profile banner",
   "updated_at": "2026-11-18",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.87/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.88/madal-web.zip"
 }
