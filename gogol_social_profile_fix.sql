@@ -2,6 +2,7 @@
 -- Safe to run more than once in Supabase SQL Editor. Does not delete or rewrite user data.
 
 -- PostgREST needs SQL table privileges in addition to RLS policies.
+grant usage on schema public to anon, authenticated;
 grant select on table public.madal_profiles to anon, authenticated;
 grant insert, update on table public.madal_profiles to authenticated;
 
