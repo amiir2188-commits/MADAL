@@ -1080,6 +1080,8 @@ async function loadSocialData(posts,renderToken=null){
  blockedUserIds=new Set((blocksResult.data||[]).map(row=>String(row.blocked_user_id)));
  if(blocksResult.error)console.warn('GoGol block list unavailable; apply 20261116000300_user_safety_moderation.sql:',blocksResult.error.message);
  authorProfiles={};for(const profile of profilesResult.data||[])authorProfiles[profile.id]=profile;
+ const commenterIds=[...new Set((commentsResult.data||[]).map(comment=>comment.user_id).filter(Boolean))].filter(id=>!authorProfiles[id]);
+ if(commenterIds.length){const commenterResult=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',commenterIds);if(token!==socialLoadToken||(renderToken!==null&&renderToken!==feedRenderToken))return;if(!commenterResult.error)for(const profile of commenterResult.data||[])authorProfiles[profile.id]=profile;else console.warn('GoGol commenter profiles unavailable:',commenterResult.error.message)}
  // Keep each social feature independent: a missing optional table must not disable
  // favorites, comments, likes, or follows that are otherwise healthy.
  for(const [feature,result] of [['likes',likesResult],['comments',commentsResult],['friends',followsResult],['reposts',repostsResult],['favorites',favoritesResult],['profiles',profilesResult]]){
