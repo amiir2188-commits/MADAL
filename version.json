@@ -1,7 +1,7 @@
 {
-  "version": "1.10.88",
+  "version": "1.10.89",
   "name": "GoGol",
-  "message": "Fix comments and favorites permissions; add profile banner",
+  "message": "Improve comment names and profile banner loading; repair social permissions",
   "updated_at": "2026-11-18",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.88/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.89/madal-web.zip"
 }
