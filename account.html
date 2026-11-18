@@ -66,6 +66,9 @@ function mode(value){
  document.getElementById("username").required=value==="signup";
  document.getElementById("password").autocomplete=value==="signup"?"new-password":"current-password";
 }
+const requestedMode=new URLSearchParams(location.search).get("mode");
+if(requestedMode==="login")mode("login");
+else mode("signup");
 function normalizeSomaliPhone(value){
  let phone=String(value||"").replace(/[\s()-]/g,"");
  if(phone.startsWith("00"))phone="+"+phone.slice(2);
