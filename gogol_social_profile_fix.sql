@@ -66,8 +66,6 @@ grant select on table public.media_likes to anon, authenticated;
 grant insert, delete on table public.media_likes to authenticated;
 grant select on table public.user_follows to anon, authenticated;
 grant insert, delete on table public.user_follows to authenticated;
-grant select on table public.media_reposts to anon, authenticated;
-grant insert, delete on table public.media_reposts to authenticated;
 
 -- Saved/Favorites table and owner-only access.
 create table if not exists public.media_favorites (
