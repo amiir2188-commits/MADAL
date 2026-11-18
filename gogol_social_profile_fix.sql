@@ -61,6 +61,14 @@ drop policy if exists "MADAL delete own comment" on public.media_comments;
 create policy "MADAL delete own comment" on public.media_comments
 for delete to authenticated using (auth.uid() = user_id);
 
+-- Likes and follows also need SQL grants in addition to their RLS policies.
+grant select on table public.media_likes to anon, authenticated;
+grant insert, delete on table public.media_likes to authenticated;
+grant select on table public.user_follows to anon, authenticated;
+grant insert, delete on table public.user_follows to authenticated;
+grant select on table public.media_reposts to anon, authenticated;
+grant insert, delete on table public.media_reposts to authenticated;
+
 -- Saved/Favorites table and owner-only access.
 create table if not exists public.media_favorites (
   post_id uuid not null references public.media_posts(id) on delete cascade,
