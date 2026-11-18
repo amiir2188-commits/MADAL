@@ -65,8 +65,30 @@ for delete to authenticated using (auth.uid() = user_id);
 -- Likes and follows also need SQL grants in addition to their RLS policies.
 grant select on table public.media_likes to anon, authenticated;
 grant insert, delete on table public.media_likes to authenticated;
-grant select on table public.user_follows to anon, authenticated;
-grant insert, delete on table public.user_follows to authenticated;
+
+-- The app uses public.user_follows. Create it if this project is missing it.
+-- This does not modify or delete the separate legacy madal_follows table.
+create table if not exists public.user_follows (
+  follower_id uuid not null references auth.users(id) on delete cascade,
+  following_id uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (follower_id, following_id),
+  constraint madal_no_self_follow check (follower_id <> following_id)
+);
+alter table public.user_follows enable row level security;
+grant select, insert, delete on table public.user_follows to anon, authenticated;
+drop policy if exists "MADAL follows readable" on public.user_follows;
+create policy "MADAL follows readable" on public.user_follows
+for select to anon, authenticated using (true);
+drop policy if exists "MADAL follow self" on public.user_follows;
+create policy "MADAL follow self" on public.user_follows
+for insert to authenticated
+with check (auth.uid() = follower_id and follower_id <> following_id);
+drop policy if exists "MADAL unfollow self" on public.user_follows;
+create policy "MADAL unfollow self" on public.user_follows
+for delete to authenticated using (auth.uid() = follower_id);
+create index if not exists user_follows_following_idx
+on public.user_follows(following_id);
 
 -- Saved/Favorites table and owner-only access.
 create table if not exists public.media_favorites (
