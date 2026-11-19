@@ -69,11 +69,11 @@ jobs:
 
       - name: Inspect local and remote migration history
         shell: bash
-        run: supabase migration list --linked
+        run: supabase migration list --db-url "$SUPABASE_DB_URL"
 
       - name: Preview database migrations
         shell: bash
-        run: supabase db push --linked --dry-run
+        run: supabase db push --db-url "$SUPABASE_DB_URL" --dry-run
 
       - name: Report preflight-only result
         if: inputs.preflight_only
@@ -84,7 +84,7 @@ jobs:
       - name: Apply reviewed database migrations
         if: ${{ !inputs.preflight_only && inputs.confirm_production_deploy && inputs.backup_completed }}
         shell: bash
-        run: supabase db push --linked --yes
+        run: supabase db push --db-url "$SUPABASE_DB_URL" --yes
 
       - name: Deploy secure Edge Functions
         if: ${{ !inputs.preflight_only && inputs.confirm_production_deploy && inputs.backup_completed }}
