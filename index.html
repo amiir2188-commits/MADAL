@@ -543,6 +543,29 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 #profile [data-profile-tab="photos"].active{color:#fff}
 
 /* GoGol 1.10.76 — profile media tabs filter by media type before pagination. */
+
+/* GoGol 1.10.93: stable mobile navigation and full-height portrait feed */
+:root{--gogol-bottom-nav-height:calc(64px + env(safe-area-inset-bottom))}
+body{padding-bottom:var(--gogol-bottom-nav-height)}
+.bottom{height:var(--gogol-bottom-nav-height);padding:5px 6px env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:space-around;gap:2px}
+.bottom button{display:flex;flex:1 1 20%;min-width:0;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:3px 0;font-size:10px;line-height:1.15;white-space:nowrap;overflow:hidden}
+.bottom button svg{display:block;flex:none;width:24px;height:24px;margin:0 auto 2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bottom button span{display:block;font-size:10px;line-height:1.15;margin:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.bottom .create-tab svg{width:27px;height:27px}
+#allFeed{height:calc(100dvh - 58px - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:280px}
+.video-slide{height:calc(100dvh - 58px - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:280px}
+.video-slide .slide-info{left:14px;right:68px;bottom:16px;max-height:34%;overflow:hidden}
+.video-slide .slide-info h3{margin:0 0 5px;font-size:15px}
+.video-slide .slide-actions{right:8px;bottom:14px;max-height:calc(100% - 28px);gap:6px}
+.video-slide .slide-actions button{min-height:38px;min-width:40px}
+.video-slide .slide-actions .creator-follow,.video-slide .slide-actions .creator-avatar-only{min-height:42px}
+@media(max-width:480px){
+ #allFeed,.video-slide{height:calc(100dvh - 58px - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:280px}
+ .video-slide .slide-info{left:12px;right:64px;bottom:14px}
+ .video-slide .slide-actions{right:6px;bottom:12px;gap:5px}
+ .bottom button svg{width:23px;height:23px}
+}
+
 </style>
 
 <style id="gogol-tiktok-reference-refresh">
@@ -759,7 +782,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.10.92';
+const MADAL_VERSION='1.10.93';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
