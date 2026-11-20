@@ -1050,6 +1050,7 @@ async function searchDiscover(){
  if(token===discoverSearchToken)host.innerHTML=html;
 }
 $('discoverResults').addEventListener('click',async e=>{
+ const profileTarget=e.target.closest('[data-open-profile]');if(profileTarget){openPublicProfile(profileTarget.dataset.openProfile);return}
  const follow=e.target.closest('[data-discover-follow]'),message=e.target.closest('[data-discover-message]'),post=e.target.closest('[data-open-post]');
  if(follow){if(!currentUser){location.href='./account.html';return}const id=follow.dataset.discoverFollow,userId=currentUser.id;const result=followsByUser.has(id)?await db.from('user_follows').delete().eq('follower_id',userId).eq('following_id',id):await db.from('user_follows').upsert({follower_id:userId,following_id:id},{onConflict:'follower_id,following_id',ignoreDuplicates:true});if(currentUser?.id!==userId)return;
    if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else{await loadSocialData(allPosts);searchDiscover()}return}
@@ -1135,6 +1136,7 @@ function showGoGolPhotoViewer(index){
  });
 })();
 $('allFeed').addEventListener('click',async e=>{
+ const profileTarget=e.target.closest('[data-open-profile]');if(profileTarget){openPublicProfile(profileTarget.dataset.openProfile);return}
  const loadMore=e.target.closest('[data-load-more]');if(loadMore){await loadMedia({append:true});return}
  const videoToggle=e.target.closest('[data-video-toggle]');
  if(videoToggle){const slide=videoToggle.closest('.video-slide'),video=slide?.querySelector('video');if(video){if(video.paused){await video.play().then(()=>{slide.classList.remove('is-paused');videoToggle.textContent="Ⅱ"}).catch(()=>{});}else{video.pause();slide.classList.add('is-paused');videoToggle.textContent="▶";}}return}
