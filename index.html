@@ -1552,15 +1552,20 @@ async function openPublicProfile(userId){
  $('publicProfileBanner').style.backgroundImage=profile.profile_banner_url?'url('+JSON.stringify(profile.profile_banner_url)+')':'';
  const me=currentUser?.id||null,button=$('publicProfileFollow');
  button.disabled=!me||me===publicProfileUserId;button.textContent=me===publicProfileUserId?'Your profile':(me?'Follow':'Log in to follow');button.dataset.following='no';
- const [followers,following,state]=await Promise.all([
+ const [followers,following,state,profilePosts]=await Promise.all([
   db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',publicProfileUserId),
   db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',publicProfileUserId),
-  me&&me!==publicProfileUserId?db.from('user_follows').select('following_id').eq('follower_id',me).eq('following_id',publicProfileUserId).maybeSingle():Promise.resolve({data:null,error:null})
+  me&&me!==publicProfileUserId?db.from('user_follows').select('following_id').eq('follower_id',me).eq('following_id',publicProfileUserId).maybeSingle():Promise.resolve({data:null,error:null}),
+  db.from('media_posts').select('id').eq('user_id',publicProfileUserId).eq('status','published').limit(60)
  ]);
  if(token!==publicProfileLoadToken||publicProfileUserId!==String(userId))return;
  $('publicFollowerCount').textContent=followers.count??0;$('publicFollowingCount').textContent=following.count??0;
  if(state.data){button.textContent='Following';button.dataset.following='yes'}
- if(followers.error||following.error||state.error)console.warn('GoGol public profile follow data:',followers.error?.message||following.error?.message||state.error?.message);
+ if(followers.error||following.error||state.error||profilePosts.error)console.warn('GoGol public profile data:',followers.error?.message||following.error?.message||state.error?.message||profilePosts.error?.message);
+ const postIds=(profilePosts.data||[]).map(post=>post.id);
+ const likeResult=postIds.length?await db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',postIds):{count:0,error:null};
+ if(token!==publicProfileLoadToken||publicProfileUserId!==String(userId))return;
+ $('publicLikeCount').textContent=likeResult.count??0;
  await renderPublicProfilePosts(token);
 }
 async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
@@ -1856,7 +1861,7 @@ $('galleryPick').addEventListener('click',()=>{clearUploadSelection();$('mediaFi
 $('cameraGallery').addEventListener('click',()=>{$('closeCamera').click();clearUploadSelection();$('mediaFile').value='';$('galleryFile').value='';$('galleryFile').click()});
 function selectedUploadFile(){return capturedUploadFile||$('mediaFile').files[0]||$('galleryFile').files[0]||null}
 function selectedUploadFiles(){const picked=[...($('galleryFile').files||[])];if(uploadKind==='image'&&picked.length>1)return picked;const one=selectedUploadFile();return one?[one]:[]}
-function uploadMimeType(file){if(file?.type)return file.type;const ext=String(file?.name||'').toLowerCase().split('.').pop();return ({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif',mp4:'video/mp4',m4v:'video/mp4',webm:'video/webm',mov:'video/quicktime'})[ext]||''}
+function uploadMimeType(file){const type=String(file?.type||'').toLowerCase();if(['image/jpeg','image/png','image/webp','image/gif','video/mp4','video/webm','video/quicktime'].includes(type))return type;const ext=String(file?.name||'').toLowerCase().split('.').pop();return ({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif',mp4:'video/mp4',m4v:'video/mp4',webm:'video/webm',mov:'video/quicktime'})[ext]||type}
 function previewUploadFile(file){
  if(!file)return;
  const inferredType=uploadMimeType(file);
