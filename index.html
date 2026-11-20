@@ -1585,6 +1585,87 @@ async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
   host.appendChild(tile);
  }
 }
+
+/* GoGol profile statistics: open the real people behind each count. */
+(function(){
+ const style=document.createElement('style');
+ style.textContent='.profile-stats [data-stat-kind]{cursor:pointer;min-width:0;border-radius:10px;padding:5px 2px;transition:background .15s}.profile-stats [data-stat-kind]:active{background:#ffffff16}.profile-stats [data-stat-kind]:focus-visible{outline:2px solid #d6b5ff;outline-offset:2px}.gogol-stat-modal{position:fixed;inset:0;z-index:2200;background:#000b;display:flex;align-items:flex-end;justify-content:center;padding:12px}.gogol-stat-sheet{width:min(100%,520px);max-height:min(78dvh,680px);overflow:hidden;background:#171020;border:1px solid #49345d;border-radius:20px 20px 12px 12px;display:flex;flex-direction:column}.gogol-stat-head{display:flex;align-items:center;justify-content:space-between;padding:15px;border-bottom:1px solid #38254a}.gogol-stat-head strong{font-size:16px}.gogol-stat-head button{border:0;background:transparent;color:white;font-size:24px;padding:2px 8px}.gogol-stat-list{overflow:auto;padding:6px 14px 18px}.gogol-stat-person{display:flex;align-items:center;gap:11px;width:100%;padding:10px 2px;border:0;border-bottom:1px solid #38254a;background:transparent;color:white;text-align:left}.gogol-stat-avatar{width:42px;height:42px;border-radius:50%;background:#493064;display:grid;place-items:center;overflow:hidden;flex:none;font-weight:800}.gogol-stat-avatar img{width:100%;height:100%;object-fit:cover}.gogol-stat-meta{min-width:0}.gogol-stat-meta strong,.gogol-stat-meta small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gogol-stat-meta small{color:#b9acc7;font-size:12px}.gogol-stat-empty{padding:24px 10px;text-align:center;color:#b9acc7}';
+ document.head.appendChild(style);
+ const modal=document.createElement('div');
+ modal.className='gogol-stat-modal hidden';
+ modal.innerHTML='<section class="gogol-stat-sheet" role="dialog" aria-modal="true" aria-labelledby="gogolStatTitle"><div class="gogol-stat-head"><strong id="gogolStatTitle">People</strong><button type="button" aria-label="Close">×</button></div><div class="gogol-stat-list" id="gogolStatList"><div class="gogol-stat-empty">Loading...</div></div></section>';
+ document.body.appendChild(modal);
+ const close=()=>modal.classList.add('hidden');
+ modal.querySelector('.gogol-stat-head button').addEventListener('click',close);
+ modal.addEventListener('click',event=>{if(event.target===modal)close()});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!modal.classList.contains('hidden'))close()});
+ function showPeople(title,people){
+  $('gogolStatTitle').textContent=title;
+  const host=$('gogolStatList');
+  if(!people.length){host.innerHTML='<div class="gogol-stat-empty">Weli qof kuma jiro liiskan.</div>';return}
+  host.innerHTML='';
+  for(const person of people){
+   const id=String(person.id||'');
+   const name=person.display_name||person.username||'GoGol User';
+   const item=document.createElement('button');item.type='button';item.className='gogol-stat-person';
+   const avatar=document.createElement('span');avatar.className='gogol-stat-avatar';
+   if(person.avatar_url){const img=document.createElement('img');img.src=person.avatar_url;img.alt='';avatar.appendChild(img)}
+   else avatar.textContent=(name[0]||'G').toUpperCase();
+   const meta=document.createElement('span');meta.className='gogol-stat-meta';
+   const strong=document.createElement('strong');strong.textContent=name;
+   const small=document.createElement('small');small.textContent='@'+(person.username||'user');
+   meta.append(strong,small);item.append(avatar,meta);
+   item.addEventListener('click',()=>{close();openPublicProfile(id)});
+   host.appendChild(item);
+  }
+ }
+ async function openStatList(userId,kind,isPublic){
+  const labels={following:'Following',followers:'Followers',likes:'Likes'};
+  $('gogolStatTitle').textContent=labels[kind]||'People';
+  $('gogolStatList').innerHTML='<div class="gogol-stat-empty">Liiska waa la soo rarayaa...</div>';
+  modal.classList.remove('hidden');
+  try{
+   let ids=[];
+   if(kind==='following'){
+    const {data,error}=await db.from('user_follows').select('following_id').eq('follower_id',userId).limit(500);
+    if(error)throw error;ids=(data||[]).map(row=>row.following_id);
+   }else if(kind==='followers'){
+    const {data,error}=await db.from('user_follows').select('follower_id').eq('following_id',userId).limit(500);
+    if(error)throw error;ids=(data||[]).map(row=>row.follower_id);
+   }else{
+    const {data:posts,error:postError}=await db.from('media_posts').select('id').eq('user_id',userId).eq('status','published').limit(500);
+    if(postError)throw postError;
+    const postIds=(posts||[]).map(row=>row.id).filter(Boolean);
+    if(postIds.length){
+     const {data,error}=await db.from('media_likes').select('user_id,created_at').in('post_id',postIds).order('created_at',{ascending:false}).limit(1000);
+     if(error)throw error;ids=(data||[]).map(row=>row.user_id);
+    }
+   }
+   ids=[...new Set(ids.filter(Boolean).map(String))];
+   if(!ids.length){showPeople(labels[kind],[]);return}
+   const {data,error}=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',ids);
+   if(error)throw error;
+   const byId=new Map((data||[]).map(person=>[String(person.id),person]));
+   showPeople(labels[kind],ids.map(id=>byId.get(id)).filter(Boolean));
+  }catch(error){
+   $('gogolStatList').innerHTML='<div class="gogol-stat-empty">Liiska lama soo heli karin: '+escapeHtml(error.message||'Hubi xiriirka iyo rukhsadaha.')+'</div>';
+  }
+ }
+ function wireStats(selector,userIdGetter,isPublic){
+  document.querySelectorAll(selector).forEach(stats=>{
+   const boxes=[...stats.children];
+   ['following','followers','likes'].forEach((kind,index)=>{
+    const box=boxes[index];if(!box)return;
+    box.dataset.statKind=kind;box.tabIndex=0;box.setAttribute('role','button');box.setAttribute('aria-label','Eeg '+({following:'dadka la raacayo',followers:'dadka raacaya',likes:'dadka sameeyay Like'}[kind]));
+    const activate=()=>{const id=userIdGetter();if(id)openStatList(String(id),kind,isPublic);else notice('Profile-ka lama helin.')};
+    box.addEventListener('click',activate);box.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();activate()}});
+   });
+  });
+ }
+ wireStats('#profile .profile-stats',()=>currentUser?.id,false);
+ wireStats('#publicProfile .profile-stats',()=>publicProfileUserId,true);
+})();
+
 $('publicProfileBack').addEventListener('click',()=>showPage(publicProfileReturnPage==='publicProfile'?'discover':publicProfileReturnPage));
 document.querySelectorAll('[data-public-tab]').forEach(b=>b.addEventListener('click',()=>{publicProfileTab=b.dataset.publicTab;document.querySelectorAll('[data-public-tab]').forEach(x=>x.classList.toggle('active',x===b));renderPublicProfilePosts()}));
 $('publicProfileFollow').addEventListener('click',async()=>{
