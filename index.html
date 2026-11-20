@@ -1620,7 +1620,7 @@ async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
   }
  }
  async function openStatList(userId,kind,isPublic){
-  const labels={following:'Following',followers:'Followers',likes:'Likes'};
+  const labels={following:'Following',followers:'Followers'};
   $('gogolStatTitle').textContent=labels[kind]||'People';
   $('gogolStatList').innerHTML='<div class="gogol-stat-empty">Liiska waa la soo rarayaa...</div>';
   modal.classList.remove('hidden');
@@ -1632,14 +1632,6 @@ async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
    }else if(kind==='followers'){
     const {data,error}=await db.from('user_follows').select('follower_id').eq('following_id',userId).limit(500);
     if(error)throw error;ids=(data||[]).map(row=>row.follower_id);
-   }else{
-    const {data:posts,error:postError}=await db.from('media_posts').select('id').eq('user_id',userId).eq('status','published').limit(500);
-    if(postError)throw postError;
-    const postIds=(posts||[]).map(row=>row.id).filter(Boolean);
-    if(postIds.length){
-     const {data,error}=await db.from('media_likes').select('user_id,created_at').in('post_id',postIds).order('created_at',{ascending:false}).limit(1000);
-     if(error)throw error;ids=(data||[]).map(row=>row.user_id);
-    }
    }
    ids=[...new Set(ids.filter(Boolean).map(String))];
    if(!ids.length){showPeople(labels[kind],[]);return}
@@ -1654,7 +1646,7 @@ async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
  function wireStats(selector,userIdGetter,isPublic){
   document.querySelectorAll(selector).forEach(stats=>{
    const boxes=[...stats.children];
-   ['following','followers','likes'].forEach((kind,index)=>{
+   ['following','followers'].forEach((kind,index)=>{
     const box=boxes[index];if(!box)return;
     box.dataset.statKind=kind;box.tabIndex=0;box.setAttribute('role','button');box.setAttribute('aria-label','Eeg '+({following:'dadka la raacayo',followers:'dadka raacaya',likes:'dadka sameeyay Like'}[kind]));
     const activate=()=>{const id=userIdGetter();if(id)openStatList(String(id),kind,isPublic);else notice('Profile-ka lama helin.')};
