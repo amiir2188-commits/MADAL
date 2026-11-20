@@ -1,7 +1,7 @@
 {
-  "version": "1.10.92",
+  "version": "1.10.93",
   "name": "GoGol",
-  "message": "Fix public profile navigation and Friends profile access",
+  "message": "Fix bottom navigation spacing and full-height portrait video feed",
   "updated_at": "2026-11-20",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.92/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.93/madal-web.zip"
 }
