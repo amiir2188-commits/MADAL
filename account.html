@@ -37,8 +37,8 @@ a{color:#c4a5ff}
 <input id="username" placeholder="Magaca isticmaalaha (tusaale: amiir01)" autocomplete="username" required aria-label="Magaca isticmaalaha">
 </div>
 <input id="identity" type="text" placeholder="Email ama telefoon (+252...)" autocomplete="username" required aria-label="Email ama lambarka telefoonka">
-<div id="emailVerify" style="display:none"><p>Koodh xaqiijin oo 6 lambar ah ayaa emailkaaga loo diray.</p><input id="emailCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Geli koodhka 6-da lambar ah ee emailka" aria-label="Koodhka xaqiijinta emailka"><button id="verifyEmail" type="button">Xaqiiji emailka</button></div>
-<div id="phoneVerify" style="display:none"><p>Koodh xaqiijin oo 6 lambar ah ayaa SMS lagugu soo diray.</p><input id="phoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Geli koodhka 6-da lambar ah ee SMS-ka" aria-label="Koodhka xaqiijinta SMS-ka"><button id="verifyPhone" type="button">Xaqiiji telefoonka</button></div>
+<div id="emailVerify" style="display:none"><p>Koodh xaqiijin oo 6 lambar ah ayaa emailkaaga loo diray.</p><input id="emailCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Geli koodhka 6-da lambar ah ee emailka" aria-label="Koodhka xaqiijinta emailka"><button id="verifyEmail" type="button">Xaqiiji emailka</button><button id="resendEmail" type="button" style="background:#352344">Mar kale dir koodhka</button></div>
+<div id="phoneVerify" style="display:none"><p>Koodh xaqiijin oo 6 lambar ah ayaa SMS lagugu soo diray.</p><input id="phoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="Geli koodhka 6-da lambar ah ee SMS-ka" aria-label="Koodhka xaqiijinta SMS-ka"><button id="verifyPhone" type="button">Xaqiiji telefoonka</button><button id="resendPhone" type="button" style="background:#352344">Mar kale dir SMS-ka</button></div>
 <input id="password" type="password" placeholder="Furaha sirta ah (ugu yaraan 8 xaraf)" minlength="8" autocomplete="new-password" required aria-label="Furaha sirta ah">
 <div id="policyConsentWrap" style="margin:12px 0;display:flex;align-items:flex-start;gap:10px;text-align:left"><input id="policyConsent" type="checkbox" required style="width:20px;min-width:20px;margin:3px 0" aria-label="Aqbal shuruudaha iyo siyaasadda asturnaanta"><label for="policyConsent" style="font-size:14px;line-height:1.5">Waxaan aqbalay <a href="./terms.html" target="_blank" rel="noopener">Shuruudaha Isticmaalka</a> iyo <a href="./privacy.html" target="_blank" rel="noopener">Siyaasadda Asturnaanta</a>.</label></div>
 <button id="submit" type="submit">Isdiiwaangeli</button>
@@ -77,6 +77,31 @@ function normalizeSomaliPhone(value){
  else if(/^6[0-9]{8}$/.test(phone))phone="+252"+phone;
  return /^\+252[0-9]{9}$/.test(phone)?phone:null;
 }
+async function resendVerification(channel){
+ const identity=document.getElementById("identity").value.trim();
+ const status=document.getElementById("status");
+ const button=document.getElementById(channel==="email"?"resendEmail":"resendPhone");
+ let payload;
+ if(channel==="email"){
+  if(!identity.includes("@")){status.textContent="Marka hore geli Gmail/email sax ah.";return}
+  payload={type:"signup",email:identity};
+ }else{
+  const phone=normalizeSomaliPhone(identity);
+  if(!phone){status.textContent="Marka hore geli SIM number sax ah, tusaale +252612345678.";return}
+  payload={type:"sms",phone};
+ }
+ button.disabled=true;status.textContent=channel==="email"?"Koodh cusub ayaa emailka loo dirayaa...":"Koodh cusub ayaa SMS ahaan loo dirayaa...";
+ try{
+  const {error}=await db.auth.resend(payload);
+  if(error)throw error;
+  status.textContent=channel==="email"?"Koodh cusub ayaa Gmail/emailkaaga loo diray.":"Koodh cusub ayaa SMS ahaan loogu diray SIM-kaaga.";
+ }catch(error){
+  status.textContent="Koodhka dib looma diri karin: "+(error.message||"Mar kale isku day.");
+ }finally{button.disabled=false}
+}
+document.getElementById("resendEmail").addEventListener("click",()=>resendVerification("email"));
+document.getElementById("resendPhone").addEventListener("click",()=>resendVerification("phone"));
+
 document.getElementById("verifyEmail").addEventListener("click",async()=>{
  const email=document.getElementById("identity").value.trim();
  const token=document.getElementById("emailCode").value.trim();
