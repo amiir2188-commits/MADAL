@@ -810,7 +810,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.1';
+const MADAL_VERSION='1.11.2';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -889,6 +889,9 @@ $('welcomeStart').addEventListener('click',()=>{
 });
 function preference(key,fallback){try{const value=localStorage.getItem("madal_"+key);return value===null?fallback:value==="true"}catch(_){return fallback}}
 function savePreference(key,value){try{localStorage.setItem("madal_"+key,String(value))}catch(_){}}
+// Enable feed-video sound on the first real user gesture; browsers may block audible autoplay before interaction.
+let gogolSoundGestureHandled=false;
+document.addEventListener('pointerdown',()=>{if(gogolSoundGestureHandled)return;gogolSoundGestureHandled=true;if(preference('video_sound',true)){const active=[...document.querySelectorAll('.video-slide')].find(slide=>{const r=slide.getBoundingClientRect();return r.top<innerHeight*.65&&r.bottom>innerHeight*.35});const video=active?.querySelector('video');if(video){video.muted=false;video.volume=1;video.play().then(()=>active.classList.remove('is-paused')).catch(()=>active.classList.add('is-paused'));}}},{capture:true,once:true});
 function notice(message){if(!preference("app_alerts",true))return;$('notice').textContent=message;$('notice').classList.remove('hidden')}
 function clearNotice(){$('notice').classList.add('hidden')}
 function showPage(page){
@@ -1041,7 +1044,7 @@ async function renderFeed(){
   else{video.pause();entry.target.classList.remove("is-paused");}
  }),{root:$('allFeed'),threshold:0.65});
  $('allFeed').querySelectorAll('.video-slide').forEach(slide=>feedVideoObserver.observe(slide));
- $('allFeed').querySelectorAll('.video-slide video').forEach(video=>{video.muted=!preference("video_sound",false);video.volume=1;const slide=video.closest('.video-slide');video.addEventListener('click',()=>{if(video.paused){video.play().then(()=>slide?.classList.remove('is-paused')).catch(()=>slide?.classList.add('is-paused'));}else{video.pause();slide?.classList.add('is-paused');}});video.addEventListener('play',()=>{slide?.classList.remove('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="Ⅱ"});video.addEventListener('pause',()=>{slide?.classList.add('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"});if(!shouldAutoplayVideos()){slide?.classList.add("is-paused");const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"}});
+ $('allFeed').querySelectorAll('.video-slide video').forEach(video=>{video.muted=!preference("video_sound",true);video.volume=1;const slide=video.closest('.video-slide');video.addEventListener('click',()=>{if(video.paused){video.play().then(()=>slide?.classList.remove('is-paused')).catch(()=>slide?.classList.add('is-paused'));}else{video.pause();slide?.classList.add('is-paused');}});video.addEventListener('play',()=>{slide?.classList.remove('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="Ⅱ"});video.addEventListener('pause',()=>{slide?.classList.add('is-paused');const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"});if(!shouldAutoplayVideos()){slide?.classList.add("is-paused");const toggle=slide?.querySelector("[data-video-toggle]");if(toggle)toggle.textContent="▶"}});
 }
 if($('videoSearch'))$('videoSearch').addEventListener('input',()=>renderFeed());
 let activeDiscoverTab='all',discoverTimer=null,discoverSearchToken=0,discoverVideoResults=[];
@@ -1778,7 +1781,7 @@ async function submitAccountDeletionRequest(){
  }
 }
 $('requestAccountDeletion').addEventListener('click',submitAccountDeletionRequest);
-function syncSettings(){$('dataSaverSetting').checked=preference("data_saver",false);$('appAlertsSetting').checked=preference("app_alerts",true);$('autoplaySetting').checked=preference("autoplay",true);$('videoSoundSetting').checked=preference("video_sound",false);$('settingsVersion').textContent=MADAL_VERSION;loadBlockedUsers();loadAccountDeletionRequest()}
+function syncSettings(){$('dataSaverSetting').checked=preference("data_saver",false);$('appAlertsSetting').checked=preference("app_alerts",true);$('autoplaySetting').checked=preference("autoplay",true);$('videoSoundSetting').checked=preference("video_sound",true);$('settingsVersion').textContent=MADAL_VERSION;loadBlockedUsers();loadAccountDeletionRequest()}
 $('dataSaverSetting').addEventListener('change',e=>{savePreference("data_saver",e.target.checked);document.querySelectorAll(".media,.slide-media").forEach(v=>v.preload=e.target.checked?"none":"metadata");notice(e.target.checked?"Keydinta xogta internetka waa la daaray.":"Keydinta xogta internetka waa la damiyey.")});
 $('autoplaySetting').addEventListener('change',e=>{savePreference("autoplay",e.target.checked);if(shouldAutoplayVideos()){const active=[...document.querySelectorAll(".video-slide")].find(slide=>{const r=slide.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4});const video=active?.querySelector("video");if(video)video.play().catch(()=>active.classList.add("is-paused"));}else document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")});notice(e.target.checked?"Ciyaar toos ah waa la daaray.":"Ciyaar toos ah waa la damiyey.")});
 reducedMotionQuery.addEventListener?.('change',()=>{if(reducedMotionQuery.matches)document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")})});
