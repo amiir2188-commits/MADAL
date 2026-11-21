@@ -1321,6 +1321,45 @@ $('closeConversation').addEventListener('click',()=>{
  if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}
 });
 
+/* GoGol conversation overflow menu: pin, report, block */
+(function(){
+ const style=document.createElement('style');
+ style.textContent='.gogol-chat-menu{position:absolute;right:12px;top:58px;z-index:80;min-width:176px;padding:7px;border:1px solid #3b3b42;border-radius:14px;background:#19191f;box-shadow:0 12px 32px #000b}.gogol-chat-menu button{display:flex;width:100%;align-items:center;gap:12px;padding:12px;border:0;border-radius:9px;background:transparent;color:#fff;text-align:left;font-weight:650}.gogol-chat-menu button:active{background:#ffffff18}.chat-topbar{position:relative}';
+ document.head.appendChild(style);
+ const menu=document.createElement('div');menu.className='gogol-chat-menu hidden';menu.innerHTML='<button type="button" data-chat-pin>📌 <span>Pin chat</span></button><button type="button" data-chat-report>⚑ <span>Report</span></button><button type="button" data-chat-block>⊘ <span>Block</span></button>';
+ $('conversationPanel').querySelector('.chat-topbar').appendChild(menu);
+ const more=$('conversationPanel').querySelector('.chat-more');
+ more.setAttribute('aria-label','Chat options');more.setAttribute('aria-expanded','false');
+ more.addEventListener('click',()=>{menu.classList.toggle('hidden');more.setAttribute('aria-expanded',String(!menu.classList.contains('hidden')))});
+ document.addEventListener('click',event=>{if(!menu.contains(event.target)&&!more.contains(event.target)){menu.classList.add('hidden');more.setAttribute('aria-expanded','false')}});
+ menu.addEventListener('click',async event=>{
+  const action=event.target.closest('button');if(!action||!activeChatUser||!currentUser)return;
+  const me=currentUser.id,target=String(activeChatUser.id);if(target===String(me))return;
+  action.disabled=true;
+  try{
+   if(action.hasAttribute('data-chat-pin')){
+    const stars=inboxStarIds();if(stars.has(target))stars.delete(target);else stars.add(target);
+    try{localStorage.setItem('gogol_inbox_stars_v1',JSON.stringify([...stars]))}catch(_){}
+    notice(stars.has(target)?'Wada sheekaysiga waa la pin-gareeyey.':'Pin-ka waa laga qaaday.');
+    loadInbox();
+   }else if(action.hasAttribute('data-chat-report')){
+    const reason=String(window.prompt('Sababta cabashada? Dooro: spam, harassment, hate, violence, nudity, misinformation, other','')||'').trim().toLowerCase();
+    const allowed=['spam','harassment','hate','violence','nudity','misinformation','other'];
+    if(!allowed.includes(reason)){if(reason)notice('Dooro sabab sax ah.');return}
+    const {error}=await db.from('madal_moderation_reports').insert({reporter_id:me,reported_user_id:target,reason});
+    if(currentUser?.id!==me)return;
+    if(error)notice('Report lama dirin: '+error.message);else{notice('Report-ka waa la gudbiyey.');menu.classList.add('hidden')}
+   }else if(action.hasAttribute('data-chat-block')){
+    if(!window.confirm('Ma hubtaa inaad qofkan block-gareynayso?'))return;
+    const {error}=await db.from('madal_user_blocks').upsert({blocker_id:me,blocked_user_id:target},{onConflict:'blocker_id,blocked_user_id',ignoreDuplicates:true});
+    if(currentUser?.id!==me)return;
+    if(error)notice('Block ma shaqayn: '+error.message);else{blockedUserIds.add(target);notice('Qofka waa la block-gareeyey.');menu.classList.add('hidden');$('closeConversation').click();await loadMedia()}
+   }
+  }finally{action.disabled=false}
+ });
+})();
+
+
 function inboxStarIds(){
  try{return new Set(JSON.parse(localStorage.getItem('gogol_inbox_stars_v1')||'[]'))}catch(_){return new Set()}
 }
