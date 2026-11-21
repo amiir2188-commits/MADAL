@@ -1,7 +1,7 @@
 {
-  "version": "1.10.96",
+  "version": "1.10.97",
   "name": "GoGol",
-  "message": "Profile lists now show Following and Followers only",
-  "updated_at": "2026-11-20",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.96/madal-web.zip"
+  "message": "Fix app version validation for Android build",
+  "updated_at": "2026-11-21",
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.97/madal-web.zip"
 }
