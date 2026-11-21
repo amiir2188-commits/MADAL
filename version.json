@@ -1,7 +1,7 @@
 {
-  "version": "1.10.97",
+  "version": "1.10.98",
   "name": "GoGol",
-  "message": "Fix app version validation for Android build",
+  "message": "Fix service worker cache version for Android build",
   "updated_at": "2026-11-21",
-  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.97/madal-web.zip"
+  "bundle_url": "https://github.com/amiir2188-commits/MADAL/releases/download/v1.10.98/madal-web.zip"
 }
