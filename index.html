@@ -810,7 +810,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.3';
+const MADAL_VERSION='1.11.4';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -2101,6 +2101,7 @@ $('uploadForm').addEventListener('submit',async e=>{
  }
  const button=$('uploadButton');button.disabled=true;button.textContent=isAlbum?'Album-ka waa la soo gelinayaa...':'Waa la soo gelinayaa...';
  const uploadedPaths=[];
+ let postsInserted=false;
  try{
   const albumId=isAlbum?crypto.randomUUID():null,records=[];
   const postTitle=$('title').value.trim()||(uploadKind==='image'?'Sawir GoGol':'Fiidiyow GoGol');
@@ -2121,11 +2122,12 @@ $('uploadForm').addEventListener('submit',async e=>{
   }
   const {error:insertError}=await db.from('media_posts').insert(records);
   if(insertError)throw insertError;
+  postsInserted=true;
   releaseUploadPreviewUrl();$('uploadImagePreview').removeAttribute('src');$('uploadVideoPreview').removeAttribute('src');$('uploadVideoPreview').load();$('uploadForm').reset();setUploadKind('video');capturedUploadFile=null;$('selectedMediaName').textContent='Weli waxba lama dooran.';
   notice(isAlbum?'Album-ka '+files.length+' sawir ah waa la soo geliyey!':'Waa lagu guulaystay soo gelinta!');
   await loadMedia();showPage('home');
  }catch(err){
-  if(uploadedPaths.length){const {error:cleanupError}=await db.storage.from('madal-media').remove(uploadedPaths);if(cleanupError)console.warn('GoGol album cleanup:',cleanupError.message)}
+  if(uploadedPaths.length&&!postsInserted){const {error:cleanupError}=await db.storage.from('madal-media').remove(uploadedPaths);if(cleanupError)console.warn('GoGol album cleanup:',cleanupError.message)}
   console.error(err);notice('Soo gelintu way fashilantay: '+(isAlbum&&String(err.message||'').includes('album_id')?'Album-ku wuxuu u baahan yahay migration-ka Supabase ee GoGol 1.10.46. ': '')+err.message);
  }finally{button.disabled=false;button.textContent='Soo geli GoGol'}
 });
