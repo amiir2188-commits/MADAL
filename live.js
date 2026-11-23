@@ -43,9 +43,9 @@ const liveDialog = document.createElement("section");
 liveDialog.id = "gogolLiveDialog";
 liveDialog.setAttribute("role","dialog");
 liveDialog.setAttribute("aria-modal","true");
-liveDialog.setAttribute("aria-label","GoGol LIVE");
+liveDialog.setAttribute("aria-label","DUNIQ LIVE");
 liveDialog.innerHTML = `
- <div class="g-live-head"><strong>🔴 GoGol LIVE</strong><button type="button" id="gLiveClose">Xir ✕</button></div>
+ <div class="g-live-head"><strong>🔴 DUNIQ LIVE</strong><button type="button" id="gLiveClose">Xir ✕</button></div>
  <div id="gLiveHome">
   <p class="muted">Daawo baahinta tooska ah ama bilow LIVE cusub.</p>
   <label for="gLiveTitle">Cinwaanka baahinta</label>
@@ -76,7 +76,7 @@ const liveEl = id => document.getElementById(id);
 const liveStatus = message => { liveEl("gLiveRoomStatus").textContent = message; };
 const liveUser = async () => {
  const {data,error}=await liveDb.auth.getUser();
- if(error || !data.user) throw new Error("Fadlan marka hore gal akoonkaaga GoGol.");
+ if(error || !data.user) throw new Error("Fadlan marka hore gal akoonkaaga DUNIQ.");
  return data.user;
 };
 const liveSDK = async () => {
@@ -155,7 +155,7 @@ async function liveShowRoom(session,title,role){
   }
   liveStatus("🔴 Waxaad si toos ah u baahinaysaa: "+title);
   liveEl("gLiveMic").classList.remove("hidden");liveEl("gLiveCamera").classList.remove("hidden");
-  liveHeartbeat=setInterval(()=>{liveDb.from("madal_live_sessions").update({last_heartbeat_at:new Date().toISOString()}).eq("id",session.id).then(({error})=>{if(error)console.warn("GoGol LIVE heartbeat:",error.message)})},20000);
+  liveHeartbeat=setInterval(()=>{liveDb.from("madal_live_sessions").update({last_heartbeat_at:new Date().toISOString()}).eq("id",session.id).then(({error})=>{if(error)console.warn("DUNIQ LIVE heartbeat:",error.message)})},20000);
  }else{
   liveStatus("🔴 LIVE: "+title+" • Waad daawanaysaa");
   liveEl("gLiveMic").classList.add("hidden");liveEl("gLiveCamera").classList.add("hidden");
@@ -210,7 +210,7 @@ async function liveStart(){
  const button=liveEl("gLiveStart");button.disabled=true;
  try{
   const user=await liveUser();
-  const title=liveEl("gLiveTitle").value.trim()||"GoGol LIVE";
+  const title=liveEl("gLiveTitle").value.trim()||"DUNIQ LIVE";
   const {data:previous,error:previousError}=await liveDb.from("madal_live_sessions")
    .select("id,last_heartbeat_at").eq("host_id",user.id).eq("status","live").maybeSingle();
   if(previousError) throw new Error("Xaaladda LIVE hore lama hubin karin.");
@@ -257,7 +257,7 @@ async function liveLeave(endSession=true){
 async function liveLoadChatHistory(sessionId){
  const {data,error}=await liveDb.from("madal_live_comments").select("id,user_id,message,created_at")
   .eq("session_id",sessionId).order("created_at",{ascending:false}).limit(50);
- if(error){console.warn("GoGol LIVE chat history:",error.message);return}
+ if(error){console.warn("DUNIQ LIVE chat history:",error.message);return}
  const rows=(data||[]).reverse(),ids=[...new Set(rows.map(row=>row.user_id))];
  const {data:profiles}=ids.length?await liveDb.from("madal_profiles").select("id,username,display_name").in("id",ids):{data:[]};
  const names=new Map((profiles||[]).map(profile=>[profile.id,profile.display_name||profile.username||"Qof"]));
@@ -284,7 +284,7 @@ function liveSubscribeRoom(sessionId){
 }
 async function liveLoadWallet(){
  const {data,error}=await liveDb.rpc("madal_get_live_wallet");
- if(error){liveEl("gLiveWallet").textContent="Wallet lama heli karo";console.warn("GoGol LIVE wallet:",error.message);return}
+ if(error){liveEl("gLiveWallet").textContent="Wallet lama heli karo";console.warn("DUNIQ LIVE wallet:",error.message);return}
  const wallet=Array.isArray(data)?data[0]:data;
  liveEl("gLiveWallet").textContent="🪙 "+Number(wallet?.coins||0)+" Coins • 💎 "+Number(wallet?.diamonds||0)+" Diamonds";
 }
@@ -307,7 +307,7 @@ async function liveLoadGiftShop(){
   panel.append(button);
  }
  const topup=document.createElement("button");topup.type="button";topup.className="g-live-btn";topup.textContent="➕ Ku shubo Coins";
- topup.addEventListener("click",()=>alert("Wallet-ka GoGol waa diyaar, laakiin lacag-bixinta iyo shubashada Coins weli lama xirin. Lacag lagaa qaadi maayo hadda."));
+ topup.addEventListener("click",()=>alert("Wallet-ka DUNIQ waa diyaar, laakiin lacag-bixinta iyo shubashada Coins weli lama xirin. Lacag lagaa qaadi maayo hadda."));
  panel.append(topup);
 }
 function liveShowGift(emoji,message){
