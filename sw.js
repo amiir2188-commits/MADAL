@@ -1,11 +1,11 @@
-const CACHE_NAME = 'gogol-app-v1.11.7';
+const CACHE_NAME = 'duniq-app-v1.11.8';
 const APP_FILES = ['./','./index.html','./account.html','./privacy.html','./community-guidelines.html','./terms.html','./manifest.webmanifest','./version.json','./gogol-logo.svg','./icons/icon-192.svg','./icons/icon-512.svg','./live.js','./update.js'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES)).catch(error=>console.warn('MADAL cache install:',error)));
  self.skipWaiting();
 });
 self.addEventListener('activate',event=>{
- event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>(key.startsWith('madal-shell-')||key.startsWith('madal-app-')||key.startsWith('gogol-app-'))&&key!==CACHE_NAME).map(key=>caches.delete(key)))));
+ event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>(key.startsWith('madal-shell-')||key.startsWith('madal-app-')||key.startsWith('gogol-app-')||key.startsWith('duniq-app-'))&&key!==CACHE_NAME).map(key=>caches.delete(key)))));
  self.clients.claim();
 });
 self.addEventListener('fetch',event=>{
