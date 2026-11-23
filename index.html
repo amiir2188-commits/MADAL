@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07122f">
-<meta name="description" content="GoGol — madasha sawirrada, fiidiyowyada iyo bulshada.">
+<meta name="description" content="DUNIQ — madasha sawirrada, fiidiyowyada iyo bulshada.">
 <link rel="manifest" href="./manifest.webmanifest">
-<title>GoGol — Videos, Photos &amp; Community</title>
+<title>DUNIQ — Videos, Photos &amp; Community</title>
 <style>
 :root{color-scheme:dark;--bg:#071020;--panel:#101a30;--panel2:#17243d;--line:#293d61;--purple:#19c9ed;--pink:#ff5c83;--muted:#aab9d3}
 /* Accessibility and resilient connectivity */
@@ -30,7 +30,7 @@ h1{font-size:21px;margin:0 0 5px}.settings-row{display:flex;align-items:center;j
 .album-strip img{display:block;width:100%;height:100%;object-fit:contain}
 .album-strip figcaption{position:absolute;right:10px;bottom:10px;padding:4px 9px;border-radius:20px;background:#090512cc;color:#fff;font-size:12px}
 .album-hint{font-size:12px;color:var(--muted);text-align:center;margin:-4px 0 8px}
-/* MADAL vertical short-video experience */
+/* DUNIQ vertical short-video experience */
 #home{margin:0 -14px 0}
 #home>.section-title{display:none}
 #home .feed-tabs{height:calc(58px + env(safe-area-inset-top));display:grid;grid-template-columns:42px minmax(0,1fr) minmax(0,1fr) 56px;align-items:end;justify-content:stretch;gap:2px;padding:env(safe-area-inset-top) 8px 0;margin:0;background:#100a19;overflow:visible}
@@ -73,7 +73,7 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.small{font-size:12px}
 @media(min-width:650px){main{padding:22px}.feed-card{padding:18px}}
 
-/* MADAL first-launch welcome */
+/* DUNIQ first-launch welcome */
 .welcome-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 20%,#123a67 0%,#0c1936 46%,#050a1c 100%);text-align:center}
 .welcome-screen.hidden{display:none}
 .welcome-content{width:100%;max-width:420px;animation:welcome-rise .65s ease both}
@@ -88,11 +88,11 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 @keyframes welcome-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.welcome-content{animation:none}}
 
-/* Qari gabi ahaanba madaxa hore ee MADAL */
+/* Qari gabi ahaanba madaxa hore ee DUNIQ */
 header{display:none!important;height:0!important;min-height:0!important;padding:0!important;border:0!important;visibility:hidden!important}
 
 .video-slide .slide-actions{right:8px;bottom:24px;gap:12px;max-height:82%;overflow-y:auto}.video-slide .slide-actions button{min-width:52px;min-height:54px;gap:3px;font-size:11px}.video-slide .slide-actions button span{font-size:30px;line-height:1}.video-slide .slide-actions button small{font-size:11px;font-weight:800}.video-slide .slide-actions .creator-follow,.video-slide .slide-actions .creator-avatar-only{min-width:54px;min-height:58px}.creator-avatar{width:48px;height:48px;border-width:2px}.creator-plus{width:20px;height:20px;font-size:15px;bottom:-4px}.video-slide .slide-info{left:14px;right:74px;bottom:22px}.video-slide .slide-info h3{font-size:18px}.video-slide .slide-info p{font-size:14px;line-height:1.35}.video-slide .slide-info .hashtags{font-size:13px}
-/* MADAL action rail: liked state and share control */
+/* DUNIQ action rail: liked state and share control */
 .video-slide .slide-actions button.is-liked{color:#39a5ff}
 .video-slide .slide-actions button.is-liked span{color:#39a5ff;text-shadow:0 0 12px #168bff88;font-size:23px}
 .video-slide .slide-actions button[data-like] span{transition:color .18s,transform .18s}
@@ -114,17 +114,17 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 /* Separate update first screen; shown only when a newer version is detected */
 .update-screen{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 18%,#123a67 0%,#0c1936 46%,#050a1c 100%);text-align:center;overflow:auto}.update-screen.hidden{display:none!important}.update-content{width:100%;max-width:420px}.update-mark{width:104px;height:104px;margin:0 auto 24px;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:#07122f;box-shadow:0 16px 55px #12c8ed55}.update-mark img{width:100%;height:100%;object-fit:cover}.update-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;margin:0 0 10px}.update-content h1{font-size:30px;line-height:1.2;margin:0 0 14px}.update-copy{color:#e1d5ec;font-size:15px;line-height:1.7;margin:0 auto 18px;max-width:340px}.update-note{color:#b9acc7;font-size:13px;margin:0 auto 28px;max-width:320px}.update-start{width:100%;max-width:320px;min-height:56px;border:0;border-radius:16px;background:linear-gradient(105deg,#a66be8,#e17ac5);color:#180d25;font-size:16px;font-weight:900;box-shadow:0 10px 32px #bd83ff44;cursor:pointer}.update-start:disabled{opacity:.7;cursor:wait}.update-start:active{transform:scale(.98)}
 
-/* MADAL profile refresh: reference-inspired purple social profile */
+/* DUNIQ profile refresh: reference-inspired purple social profile */
 #profile{padding-top:0;background:radial-gradient(ellipse at 95% 0%,#35106d66,transparent 34%),#090512;min-height:calc(100dvh - 70px)}
 #profile>.profile-masthead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 6px 16px;margin:0 -6px}
 .profile-brand{display:flex;align-items:center;gap:11px}.profile-brand-mark{width:48px;height:48px;flex:none;object-fit:cover;border-radius:15px;box-shadow:0 0 22px #00ff8066}.profile-brand strong{display:block;font-size:25px;line-height:1.05;letter-spacing:1px}.profile-brand small{display:block;color:#c9a7ff;font-size:12px;margin-top:4px}.profile-head-actions{display:flex;gap:8px}.profile-head-actions button{width:42px;height:42px;border-radius:50%;border:1px solid #4a2676;background:#160b2a;color:#fff;font-size:24px}
 #profile>.profile-story-row{display:flex;gap:14px;overflow-x:auto;padding:6px 0 14px;margin:0 -2px;scrollbar-width:none}#profile>.profile-story-row::-webkit-scrollbar{display:none}.profile-story{flex:0 0 88px;border:0;background:transparent;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0}.profile-story strong{font-size:12px;font-weight:700}.story-ring{position:relative;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;border:3px solid #9c4cff;padding:4px;background:linear-gradient(145deg,#35115d,#120a20);box-shadow:inset 0 0 12px #7c2cff66,0 0 10px #7c2cff33;font-size:30px}.story-ring #storyAvatar{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:#28133e;overflow:hidden}.story-ring #storyAvatar img{width:100%;height:100%;object-fit:cover}.story-ring b{position:absolute;right:-3px;bottom:-2px;width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#9b18ff;border:2px solid #090512;font-size:21px}.friends-ring{font-size:35px;color:#eee}.notify-ring{font-size:36px;color:#f6d8ff}
 #profile>.profile-hero{margin:0 -2px 14px;padding:8px 8px 16px;background:transparent;border:0;border-radius:0;text-align:left;box-shadow:none}#profile .profile-edit-pencil{top:8px;right:8px;left:auto;width:auto;height:38px;padding:0 14px;border-radius:12px;background:linear-gradient(110deg,#5422b5,#8b26ee);border:0;font-size:13px}#profile .profile-top{justify-content:flex-start;max-width:none;margin:0 0 12px;gap:14px}#profile .profile-avatar{width:112px;height:112px;border:4px solid #9c4cff;box-shadow:0 0 0 3px #2a1250,0 0 20px #8a31ff55}#profile .profile-main h2{font-size:23px;line-height:1.25;margin:0 0 4px}#profile .profile-main .muted.small{display:none}#profile .profile-main .muted{font-size:15px;margin:0}#profile .profile-bio{max-width:none;margin:10px 0 14px;font-size:15px;line-height:1.55}#profile .profile-stats{justify-content:flex-start;gap:34px;border:0;padding:0;margin:0 0 14px}#profile .profile-stats div{min-width:66px}#profile .profile-stats strong{font-size:21px}#profile .profile-stats span{font-size:12px}#profile .profile-buttons{justify-content:flex-start;margin:0}#profile .profile-buttons>*{max-width:none;flex:0 1 180px;min-height:42px;border-radius:12px}#profile .profile-tabs{margin:6px -14px 0;background:#10091c}#profile .profile-grid{margin:0 -14px}
 #profile .profile-activity-shortcuts{display:grid;gap:9px;margin:8px 0 14px}.profile-activity-shortcuts button{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:12px 14px;border-radius:18px;border:1px solid #4b2b70;background:linear-gradient(110deg,#241044,#170b2a);color:#fff}.profile-activity-shortcuts .shortcut-icon{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#e326bd,#6e22ff);font-size:22px}.profile-activity-shortcuts strong,.profile-activity-shortcuts small{display:block}.profile-activity-shortcuts small{color:#c6b2dc;font-size:12px;margin-top:2px}
-/* MADAL comment composer, stays reachable above the mobile keyboard */
+/* DUNIQ comment composer, stays reachable above the mobile keyboard */
 .video-slide .comment-panel{max-height:min(68dvh,620px);padding:16px 14px calc(12px + env(safe-area-inset-bottom));overscroll-behavior:contain}.video-slide .comment-panel>div{max-height:calc(68dvh - 100px);overflow:auto}.video-slide .comment-form{display:flex;align-items:center;gap:9px;position:sticky;bottom:0;padding:9px 0 0;background:#100a19}.video-slide .comment-form textarea{flex:1;min-width:0;min-height:42px;max-height:110px;height:42px;resize:none;border-radius:24px;background:#251833;border:1px solid #54356f;padding:10px 14px;margin:0;font-size:14px;line-height:20px}.video-slide .comment-form button{flex:none;width:43px;height:43px;padding:0;border:0;border-radius:50%;background:linear-gradient(135deg,#a72aff,#6824ef);font-size:20px}.video-slide .comment-form textarea:focus{outline:2px solid #a45bff;outline-offset:1px}
 @media(max-width:480px){#profile{padding-left:10px;padding-right:10px}#profile .profile-hero{padding-left:4px;padding-right:4px}#profile .profile-avatar{width:104px;height:104px}#profile .profile-stats{gap:24px}}
-/* GoGol TikTok-inspired Inbox, profile and persistent navigation */
+/* DUNIQ TikTok-inspired Inbox, profile and persistent navigation */
 #messages{padding:0 0 18px}
 .inbox-heading{display:flex;align-items:center;gap:14px;padding:12px 4px 14px}
 .inbox-heading h2{font-size:24px;margin:0 auto 0 0;font-weight:850}
@@ -159,9 +159,9 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 .bottom button.active span{color:#fff;text-shadow:0 0 12px #b82cff}
 .bottom button.create-tab span{width:54px;height:42px;margin:0 auto 2px;border-radius:14px;background:linear-gradient(100deg,#26d9e9 0 12%,#fff 12% 88%,#ff2b87 88%);color:#100817!important;font-size:31px!important;display:grid;place-items:center;text-shadow:none}
 @media(max-width:380px){#home .feed-tabs{gap:3px;padding:0 7px}#home .feed-tabs button{font-size:12px;padding:8px 4px}}
-/* MADAL English navigation, matching the supplied reference */\n#home .feed-tabs{display:flex!important;align-items:center;justify-content:space-between;gap:8px;height:58px;padding:0 12px;background:#08070b!important}\n#home .feed-tabs button{flex:0 1 auto;white-space:nowrap;font-size:14px;padding:9px 7px;color:#c9c4d0}\n#home .feed-tabs button.active:after{background:#fff;left:20%;right:20%;bottom:1px}\n#home .feed-tabs .live-entry{font-size:12px;font-weight:950;color:#fff;border:0;border-radius:8px;background:linear-gradient(135deg,#a22bff,#f52e85);padding:7px 9px}\n#home .feed-tabs .feed-search{flex:0 0 38px;font-size:26px;color:#fff}\n.bottom{background:#050505f5!important;border-top:1px solid #ffffff22!important;padding:7px 3px calc(7px + env(safe-area-inset-bottom))!important}\n.bottom button{color:#f4f1f7!important;font-size:11px!important;font-weight:750;min-height:54px}\n.bottom button span{font-size:25px!important;line-height:1.15!important}\n.bottom button.active{color:#fff!important}\n.bottom button.active span{color:#fff;text-shadow:0 0 12px #b82cff}\n.bottom button.create-tab span{width:54px;height:42px;margin:0 auto 2px;border-radius:14px;background:linear-gradient(100deg,#26d9e9 0 12%,#fff 12% 88%,#ff2b87 88%);color:#100817!important;font-size:31px!important;display:grid;place-items:center;text-shadow:none}\n@media(max-width:380px){#home .feed-tabs{gap:3px;padding:0 7px}#home .feed-tabs button{font-size:12px;padding:8px 4px}}\n
+/* DUNIQ English navigation, matching the supplied reference */\n#home .feed-tabs{display:flex!important;align-items:center;justify-content:space-between;gap:8px;height:58px;padding:0 12px;background:#08070b!important}\n#home .feed-tabs button{flex:0 1 auto;white-space:nowrap;font-size:14px;padding:9px 7px;color:#c9c4d0}\n#home .feed-tabs button.active:after{background:#fff;left:20%;right:20%;bottom:1px}\n#home .feed-tabs .live-entry{font-size:12px;font-weight:950;color:#fff;border:0;border-radius:8px;background:linear-gradient(135deg,#a22bff,#f52e85);padding:7px 9px}\n#home .feed-tabs .feed-search{flex:0 0 38px;font-size:26px;color:#fff}\n.bottom{background:#050505f5!important;border-top:1px solid #ffffff22!important;padding:7px 3px calc(7px + env(safe-area-inset-bottom))!important}\n.bottom button{color:#f4f1f7!important;font-size:11px!important;font-weight:750;min-height:54px}\n.bottom button span{font-size:25px!important;line-height:1.15!important}\n.bottom button.active{color:#fff!important}\n.bottom button.active span{color:#fff;text-shadow:0 0 12px #b82cff}\n.bottom button.create-tab span{width:54px;height:42px;margin:0 auto 2px;border-radius:14px;background:linear-gradient(100deg,#26d9e9 0 12%,#fff 12% 88%,#ff2b87 88%);color:#100817!important;font-size:31px!important;display:grid;place-items:center;text-shadow:none}\n@media(max-width:380px){#home .feed-tabs{gap:3px;padding:0 7px}#home .feed-tabs button{font-size:12px;padding:8px 4px}}\n
 
-/* GoGol For You controls aligned to the requested creator-feed reference */
+/* DUNIQ For You controls aligned to the requested creator-feed reference */
 #home .feed-tabs{background:linear-gradient(180deg,#090909e8,#09090988);position:relative;z-index:6}
 #home .feed-tabs .live-entry{font-size:23px!important;color:#fff!important}
 #home .feed-tabs button.active:after{bottom:1px;left:20%;right:20%}
@@ -196,7 +196,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 #home .video-slide{isolation:isolate}.video-slide .slide-actions button.is-saved{color:#ffd45c}.video-slide .slide-actions button.is-saved span{color:#ffd45c}.video-slide .slide-actions button[data-comments] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-actions button[data-favorite] span{filter:drop-shadow(0 1px 3px #000)}.video-slide .slide-info{max-width:calc(100% - 92px);padding:0 0 4px}.video-slide .slide-info h3{font-weight:900;letter-spacing:.1px}.video-slide .slide-info p{line-height:1.35;text-shadow:0 1px 4px #000,0 1px 9px #000}
 @media(max-width:480px){#allFeed{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide{height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.video-slide .slide-actions{right:9px;bottom:22px;gap:10px}.video-slide .slide-actions button{min-height:48px}.video-slide .slide-info{left:14px;right:78px;bottom:18px}}
 
-/* GoGol pure-black finish and native-feeling startup loader */
+/* DUNIQ pure-black finish and native-feeling startup loader */
 :root{--bg:#000;--panel:#111;--panel2:#1b1b1b;--line:#292929;--muted:#aaa;color-scheme:dark}
 html,body{background:#000!important}
 main,.page,#profile,#discover,#upload,#messages,#notifications,#settings{background-color:#000!important}
@@ -211,7 +211,7 @@ main,.page,#profile,#discover,#upload,#messages,#notifications,#settings{backgro
 @keyframes gogolSpin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){#appBoot .boot-track{animation-duration:2.5s}}
 
-/* GoGol 1.9.9: consistent black surfaces and polished profile */
+/* DUNIQ 1.9.9: consistent black surfaces and polished profile */
 :root{--bg:#000!important;--panel:#101010!important;--panel2:#191919!important;--line:#292929!important;--muted:#aaa!important;color-scheme:dark}
 html,body,main,.page,#home,#profile,#discover,#upload,#messages,#notifications,#settings{background:#000!important}
 #home .feed-tabs,.profile-tabs,#profile .profile-tabs,.video-slide .comment-panel,.video-slide .comment-form,.photo-editor,.upload-choice button,.upload-methods button{background:#000!important}
@@ -240,16 +240,16 @@ html,body,main,.page,#home,#profile,#discover,#upload,#messages,#notifications,#
 .inbox-star{border:0;background:transparent;color:#888;font-size:20px;padding:5px}
 .inbox-star.is-starred{color:#ffd34f}
 .inbox-empty{padding:20px 8px;text-align:center;color:#999}
-/* GoGol 1.10.0 — native language settings */
+/* DUNIQ 1.10.0 — native language settings */
 .language-card select{min-width:145px;max-width:52%;background:#171717;color:#fff;border:1px solid #444;border-radius:12px;padding:11px;font:inherit}
 .language-card .settings-row{align-items:center}
 html[dir="rtl"] body{text-align:initial}
 html[dir="rtl"] .bottom{direction:rtl}
 
-/* GoGol Stories */
+/* DUNIQ Stories */
 .story-tray{display:flex;gap:12px;overflow-x:auto;padding:10px 2px 14px;scrollbar-width:none}.story-tray::-webkit-scrollbar{display:none}.story-chip{flex:0 0 76px;min-width:76px;border:0;background:transparent;color:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0}.story-chip .story-ring{width:66px;height:66px;border-radius:50%;padding:3px;border:2px solid #a855f7;display:grid;place-items:center;overflow:hidden}.story-chip img{width:100%;height:100%;border-radius:50%;object-fit:cover}.story-chip strong{font-size:11px;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.story-viewer{position:fixed;inset:0;z-index:1000;background:#050505f5;display:flex;align-items:center;justify-content:center;padding:16px}.story-viewer.hidden{display:none}.story-viewer-panel{position:relative;width:min(100%,460px);height:min(88dvh,820px);background:#151515;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}.story-viewer-head{display:flex;align-items:center;justify-content:space-between;padding:12px;color:#fff;gap:10px}.story-viewer-head button{background:#333;color:#fff;border:0;border-radius:9px;padding:8px 12px}.story-viewer-media{flex:1;min-height:0;width:100%;height:100%;object-fit:contain;background:#000}.story-viewer-caption{color:#fff;padding:12px;margin:0}.story-viewer-actions{display:flex;justify-content:flex-end;padding:8px}
 
-/* GoGol 1.10.64 — refined glass navigation and accessible touch targets */
+/* DUNIQ 1.10.64 — refined glass navigation and accessible touch targets */
 .bottom{
  background:linear-gradient(180deg,rgba(27,17,39,.95),rgba(10,6,18,.985));
  border-top:1px solid rgba(255,255,255,.12);
@@ -278,7 +278,7 @@ html[dir="rtl"] .bottom{direction:rtl}
 @media(hover:hover){.bottom button:not(.active):hover{background:#ffffff0c;color:#fff}}
 @media(prefers-reduced-motion:reduce){.bottom button{transition:none}}
 
-/* GoGol TikTok-style four-tab navigation and compact For You header */
+/* DUNIQ TikTok-style four-tab navigation and compact For You header */
 .bottom{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-content:stretch;gap:0;padding:6px 8px calc(6px + env(safe-area-inset-bottom))!important;background:#080808f7!important;border-top:1px solid #ffffff24!important}
 .bottom button{display:flex;min-width:0;min-height:54px;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:3px 0;font-size:11px!important;font-weight:750;color:#a9a9ad!important}
 .bottom button svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -345,7 +345,7 @@ body.photo-viewer-open{overflow:hidden!important}
 #allFeed .album-strip img,#allFeed .video-slide>.slide-media:not(video),#myVideos .profile-tile img{cursor:zoom-in}
 @media(prefers-reduced-motion:no-preference){.gogol-photo-viewer.is-open .gogol-photo-main{animation:gogolPhotoIn .16s ease-out}@keyframes gogolPhotoIn{from{opacity:.7;transform:scale(.985)}to{opacity:1;transform:scale(1)}}}
 
-/* GoGol 1.10.71 — immersive TikTok-style direct messages */
+/* DUNIQ 1.10.71 — immersive TikTok-style direct messages */
 #messages{padding-left:12px!important;padding-right:12px!important}
 #messages .inbox-heading{position:sticky;top:0;z-index:5;background:#000f;padding:12px 2px 14px;backdrop-filter:blur(16px)}
 #messages .inbox-heading h2{font-size:25px;letter-spacing:-.5px}
@@ -383,7 +383,7 @@ body.photo-viewer-open{overflow:hidden!important}
 @media(min-width:700px){#conversationPanel:not(.hidden){width:min(100%,720px)!important;left:50%!important;right:auto!important;transform:translateX(-50%);border-left:1px solid #292929!important;border-right:1px solid #292929!important;box-shadow:0 0 0 100vmax #000b}}
 
 
-/* GoGol creator feed refinement: inline playback, TikTok-like action rail and bookmark */
+/* DUNIQ creator feed refinement: inline playback, TikTok-like action rail and bookmark */
 #home{padding-top:0!important}
 #home .feed-tabs{grid-template-columns:42px 1fr 1fr 42px!important;gap:8px!important;padding-left:12px!important;padding-right:12px!important}
 #home .feed-tabs button{font-size:14px!important;font-weight:800!important}
@@ -409,7 +409,7 @@ body.photo-viewer-open{overflow:hidden!important}
 .profile-grid{background:#000}
 
 
-/* GoGol 1.10.73 — consistent TikTok-inspired interaction language across every page */
+/* DUNIQ 1.10.73 — consistent TikTok-inspired interaction language across every page */
 :root{--gg-accent:#fe2c55;--gg-cyan:#25f4ee;--gg-surface:#171719;--gg-muted:#9b9ba3}
 button,a,[role=button]{-webkit-tap-highlight-color:transparent}
 button{transition:background-color .16s ease,color .16s ease,border-color .16s ease,transform .16s ease,opacity .16s ease}
@@ -485,7 +485,7 @@ input,textarea,select{scroll-margin-top:90px}
 }
 
 
-/* GoGol 1.10.74 — consistent TikTok-inspired interaction states across every screen. */
+/* DUNIQ 1.10.74 — consistent TikTok-inspired interaction states across every screen. */
 :root{--gg-tap:scale(.965);--gg-surface:#17171c;--gg-surface-2:#222228;--gg-line:#ffffff18}
 button,[role="button"],a{ -webkit-tap-highlight-color:transparent; touch-action:manipulation}
 button{transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .16s ease,opacity .16s ease}
@@ -539,12 +539,12 @@ button:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.55)}
 @media(prefers-reduced-motion:reduce){.page,.share-sheet-card{animation:none!important}button{transition:none!important}}
 
 
-/* GoGol 1.10.75 — keep profile Photos in the creator's own media collection. */
+/* DUNIQ 1.10.75 — keep profile Photos in the creator's own media collection. */
 #profile [data-profile-tab="photos"].active{color:#fff}
 
-/* GoGol 1.10.76 — profile media tabs filter by media type before pagination. */
+/* DUNIQ 1.10.76 — profile media tabs filter by media type before pagination. */
 
-/* GoGol 1.10.93: stable mobile navigation and full-height portrait feed */
+/* DUNIQ 1.10.93: stable mobile navigation and full-height portrait feed */
 :root{--gogol-bottom-nav-height:calc(64px + env(safe-area-inset-bottom))}
 body{padding-bottom:var(--gogol-bottom-nav-height)}
 .bottom{height:var(--gogol-bottom-nav-height);padding:5px 6px env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:space-around;gap:2px}
@@ -565,6 +565,40 @@ body{padding-bottom:var(--gogol-bottom-nav-height)}
  .video-slide .slide-actions{right:6px;bottom:12px;gap:5px}
  .bottom button svg{width:23px;height:23px}
 }
+
+
+/* DUNIQ — unified native-feeling social interface */
+:root{--duniq-accent:#8b5cf6;--duniq-cyan:#22d3ee;--duniq-pink:#f43f8e;--duniq-surface:#111114;--duniq-border:#29292f}
+html,body{background:#000!important}
+#upload{padding:calc(10px + env(safe-area-inset-top)) 12px 24px!important;background:#000}
+#upload>.section-title{display:flex;align-items:center;gap:9px;margin:8px 4px 20px;font-size:23px;font-weight:850;letter-spacing:-.5px}
+#upload .feed-card{margin:0!important;padding:18px 16px 22px!important;border:1px solid #29292f!important;border-radius:24px!important;background:linear-gradient(160deg,#17171b,#0c0c0f 72%)!important;box-shadow:0 18px 50px #0008}
+#upload .feed-card>p:first-child{font-size:14px;line-height:1.6;color:#b8b8c2;margin:2px 0 16px}
+#upload .upload-choice,#upload .upload-methods{gap:10px;margin:12px 0 16px}
+#upload .upload-choice button,#upload .upload-methods button{min-height:58px;border-radius:16px;border:1px solid #35353d;background:#09090c;color:#f7f7fb;font-size:14px;font-weight:800;box-shadow:inset 0 1px #ffffff08}
+#upload .upload-choice button.active{border:1.5px solid var(--duniq-pink);background:linear-gradient(135deg,#f43f8e20,#8b5cf620);box-shadow:0 0 0 1px #f43f8e22}
+#upload .upload-methods button:active{border-color:var(--duniq-cyan)}
+#upload form>label{display:block;margin:16px 0 7px;color:#c8c8d0;font-size:13px;font-weight:700}
+#upload form>input:not([type=file]),#upload form>textarea{width:100%;min-height:54px;border:1px solid #303039;border-radius:16px;background:#111116;color:#fff;padding:14px 15px;font:inherit}
+#upload form>textarea{min-height:104px;resize:vertical}
+#upload #uploadButton{position:static;margin-top:18px;min-height:56px;border-radius:17px;background:linear-gradient(110deg,#7c3aed,#c044b7);color:#fff;font-size:15px;font-weight:850;box-shadow:0 8px 24px #7c3aed30}
+#upload .upload-preview{max-height:52dvh;border-radius:18px;margin:12px 0}
+#messages{padding:8px 2px 24px!important}
+#messages .inbox-heading{padding:10px 6px 18px}
+#messages .inbox-heading h2{font-size:27px;letter-spacing:-.7px}
+#messages .inbox-story-row{padding:6px 2px 18px;gap:16px}
+#messages .inbox-filters{padding:12px 0 16px;border-bottom:1px solid #ffffff18}
+#messages .inbox-filters button{min-height:48px;border-radius:17px;background:#1b1b20;padding:11px 18px}
+#messages .inbox-filters button.active{background:#fff;color:#111}
+#messages .inbox-conversations{min-height:88px;padding:12px 4px}
+#messages .inbox-activity{border-radius:16px;padding:14px 10px;background:#101014;border:1px solid #24242a}
+#messages .inbox-search-card{border-radius:20px;background:#111114;border:1px solid #29292f;padding:16px}
+#messages .inbox-search-card .row{gap:10px}
+#messages .inbox-search-card input{min-width:0;border-radius:14px;background:#09090d;border:1px solid #303039}
+.bottom{background:rgba(5,8,18,.97)!important;border-top:1px solid #ffffff18!important;backdrop-filter:blur(18px)}
+.bottom button.active{background:#102a3a!important;border-radius:18px}
+.bottom button.create-tab span{background:linear-gradient(135deg,#16c8e8,#4265ff 58%,#e04ca8)!important;color:#fff!important;border-radius:15px!important}
+@media(max-width:380px){#upload .feed-card{padding:15px 12px 18px!important}#upload .upload-choice button,#upload .upload-methods button{min-height:52px;font-size:13px}}
 
 </style>
 
@@ -604,7 +638,7 @@ main{max-width:100%!important;margin:0!important;padding:0 0 calc(76px + env(saf
 </style>
 
 <style id="gogol-layout-polish-11085">
-/* GoGol vertical feed: true portrait viewing area and separated controls */
+/* DUNIQ vertical feed: true portrait viewing area and separated controls */
 #home{margin:0!important;padding:0!important;background:#000!important}
 #home .feed-tabs{height:calc(54px + env(safe-area-inset-top))!important;min-height:54px!important}
 #allFeed{height:calc(100dvh - 54px - 66px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;min-height:320px!important;overflow-y:auto!important;overscroll-behavior-y:contain!important}
@@ -718,7 +752,7 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 @media(min-width:720px){.bottom{left:50%!important;right:auto!important;width:min(520px,100%)!important;transform:translateX(-50%)!important}}
 </style>
 <style id="gogol-bottom-nav-final-1116">
-/* GoGol 1.11.6: use the actual accessible SVG icons and readable labels. */
+/* DUNIQ 1.11.6: use the actual accessible SVG icons and readable labels. */
 :root{--gogol-bottom-nav-height:calc(68px + env(safe-area-inset-bottom))}
 body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 .bottom{position:fixed!important;z-index:100!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:var(--gogol-bottom-nav-height)!important;min-height:var(--gogol-bottom-nav-height)!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:space-around!important;gap:2px!important;padding:5px 7px env(safe-area-inset-bottom)!important;background:rgba(5,12,31,.97)!important;border-top:1px solid rgba(93,179,235,.22)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
@@ -737,26 +771,26 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 <body>
 <a class="skip-link" href="#allFeed">U gudub fiidiyowyada</a>
 <div id="offlineNotice" class="hidden" role="status" aria-live="polite" aria-atomic="true"></div>
-<div id="appBoot" role="status" aria-live="polite"><img class="boot-logo" src="./gogol-logo.svg" alt="GoGol"><div class="boot-name">GoGol</div><div class="boot-track" aria-hidden="true"></div><div class="boot-caption">Loading your community…</div></div>
-<div id="updateNotice" class="update-screen hidden" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateMessage"><div class="update-content"><div class="update-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div><p class="update-kicker">GoGol • CUSBOONAYSIIN</p><h1 id="updateTitle">Update cusub ayaa diyaar ah!</h1><p id="updateMessage" class="update-copy">Nooc cusub oo GoGol ah ayaa diyaar ah.</p><div class="update-note">Cusboonaysii hadda si aad u hesho hagaajinta iyo muuqaalada cusub.</div><button id="applyUpdate" class="update-start" type="button">Update App</button></div></div>
+<div id="appBoot" role="status" aria-live="polite"><img class="boot-logo" src="./gogol-logo.svg" alt="DUNIQ"><div class="boot-name">DUNIQ</div><div class="boot-track" aria-hidden="true"></div><div class="boot-caption">Loading your community…</div></div>
+<div id="updateNotice" class="update-screen hidden" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateMessage"><div class="update-content"><div class="update-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div><p class="update-kicker">DUNIQ • CUSBOONAYSIIN</p><h1 id="updateTitle">Update cusub ayaa diyaar ah!</h1><p id="updateMessage" class="update-copy">Nooc cusub oo DUNIQ ah ayaa diyaar ah.</p><div class="update-note">Cusboonaysii hadda si aad u hesho hagaajinta iyo muuqaalada cusub.</div><button id="applyUpdate" class="update-start" type="button">Update App</button></div></div>
 <div id="welcomeScreen" class="welcome-screen hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeCopy">
  <div class="welcome-content">
   <div class="welcome-mark" aria-hidden="true"><img src="./gogol-logo.svg" alt=""></div>
-  <p class="welcome-kicker">GoGol • BULSHO IYO MADADAALO</p>
-  <h1 id="welcomeTitle">Ku soo dhawoow GoGol!</h1>
+  <p class="welcome-kicker">DUNIQ • BULSHO IYO MADADAALO</p>
+  <h1 id="welcomeTitle">Ku soo dhawoow DUNIQ!</h1>
   <p id="welcomeCopy" class="welcome-copy">Meesha aad ka daawan karto fiidiyowyo, kula wadaagi karto fikradahaaga, kuna xiriiri karto bulshada.</p>
   <div class="welcome-points"><span>▶ Fiidiyowyo</span><span>♥ Bulsho</span><span>✦ Madadaalo</span></div>
-  <button id="welcomeStart" class="welcome-start" type="button">Bilow GoGol</button>
+  <button id="welcomeStart" class="welcome-start" type="button">Bilow DUNIQ</button>
  </div>
 </div>
-<div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera GoGol"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">KAMARADDA GoGol</span><button type="button" id="switchCamera">🔄 Beddel kamarad</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Weji Qurux</button><button type="button" data-camera-filter="warm">Diirran</button><button type="button" data-camera-filter="cool">Qabow</button><button type="button" data-camera-filter="mono">Madow/Caddaan</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Daar iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Sawirrada</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
-<header><div class="brand">GoGol</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
+<div id="cameraStudio" class="camera-studio hidden" role="dialog" aria-modal="true" aria-label="Camera DUNIQ"><div class="camera-toolbar"><button type="button" id="closeCamera">✕ Xir</button><span style="font-weight:900;letter-spacing:2px;color:#d9baff">KAMARADDA DUNIQ</span><button type="button" id="switchCamera">🔄 Beddel kamarad</button></div><div class="camera-stage"><video id="cameraPreview" autoplay muted playsinline></video><div class="camera-hint" id="cameraHint">Diyaar u ah sawir qurux badan 📸</div></div><div class="camera-filters" id="cameraFilters"><button type="button" class="active" data-camera-filter="none">Asal</button><button type="button" data-camera-filter="vivid">Vivid</button><button type="button" data-camera-filter="portrait">Weji Qurux</button><button type="button" data-camera-filter="warm">Diirran</button><button type="button" data-camera-filter="cool">Qabow</button><button type="button" data-camera-filter="mono">Madow/Caddaan</button></div><div class="camera-top-note" id="cameraNote">Flash/iftiinka wuxuu ku xiran yahay taageerada telefoonka.</div><div class="camera-toolbar"><button type="button" id="torchToggle">⚡ Daar iftiin</button><button type="button" class="camera-capture" id="captureMediaButton">SAWIR</button><button type="button" id="cameraGallery">🖼️ Sawirrada</button></div></div><div id="cameraFlashOverlay" class="camera-flash-overlay"></div>
+<header><div class="brand">DUNIQ</div><div class="row" style="flex:0 0 auto;gap:6px"><button id="shareButton" class="secondary" type="button">La wadaag</button><button id="installButton" class="secondary hidden" type="button">Ku rakib</button><a class="secondary" href="./account.html" style="text-decoration:none">Soo gal</a></div></header>
 <main>
 <div id="notice" class="status hidden" role="status"></div>
-<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="GoGol LIVE">LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
-<section id="discover" class="page hidden"><h2 class="section-title">Raadi GoGol</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta GoGol.</div></div></section>
+<section id="home" class="page"><div class="tabs feed-tabs" aria-label="Home feed"><button id="liveEntry" type="button" class="home-live" aria-label="LIVE" title="DUNIQ LIVE">LIVE</button><button type="button" data-feed-tab="following">Following</button><button type="button" class="active" data-feed-tab="for_you">For You</button><button id="headerSearch" class="feed-search" type="button" aria-label="Search" title="Search">⌕</button></div><input id="videoSearch" type="search" placeholder="Raadi fiidiyow ama sawir..." aria-label="Raadi fiidiyow ama sawir"><div id="allFeed" class="empty">Waa la soo rarayaa...</div></section>
+<section id="discover" class="page hidden"><h2 class="section-title">Raadi DUNIQ</h2><div class="feed-card"><label for="discoverSearch">Raadi dad, username-yo, sawirro iyo fiidiyowyo</label><input id="discoverSearch" type="search" placeholder="Qor magac ama cinwaan..." aria-label="Raadi akoon ama cinwaan"><div class="tabs"><button type="button" class="active" data-discover-tab="all">Dhammaan</button><button type="button" data-discover-tab="people">Dadka</button><button type="button" data-discover-tab="videos">Sawirro &amp; Fiidiyowyo</button></div></div><div id="discoverResults"><div class="empty">Bilow raadinta DUNIQ.</div></div></section>
 <section id="upload" class="page hidden">
-<h2 class="section-title">➕ Soo geli GoGol</h2>
+<h2 class="section-title">➕ Soo geli DUNIQ</h2>
 <div class="feed-card"><p class="muted">Dooro sawir ama fiidiyow aad bulshada la wadaagto.</p>
 <div class="upload-choice"><button type="button" class="active" data-upload-kind="video">🎬 Fiidiyow</button><button type="button" data-upload-kind="image">🖼️ Sawir</button></div>
 <div class="upload-methods"><button type="button" id="cameraPick">📷 Camera</button><button type="button" id="galleryPick">🖼️ Gallery</button></div>
@@ -765,19 +799,19 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 <input id="galleryFile" class="upload-file-input" type="file" accept="video/*" aria-label="Ka dooro fiidiyow gallery-ga">
 <img id="uploadImagePreview" class="upload-preview hidden" alt="Hordhaca sawirka">
 <video id="uploadVideoPreview" class="upload-preview hidden" controls playsinline></video>
-<div id="photoEditor" class="photo-editor hidden"><strong>✨ Istuudiyaha Qurxinta Sawirka</strong><p class="muted small">Taabo shaandheeye ama hagaaji iftiinka, midabka iyo cabbirka. Isbeddellada waxaa lagu kaydinayaa sawirka aad GoGol soo gelinayso.</p><label>Shaandheeyeyaasha</label><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Nadiif</button><button type="button" data-photo-filter="portrait">Weji Qurux</button><button type="button" data-photo-filter="warm">Diirran</button><button type="button" data-photo-filter="cool">Qabow</button><button type="button" data-photo-filter="mono">Madow iyo Caddaan</button><button type="button" data-photo-filter="soft">Jilicsan</button><button type="button" data-photo-filter="night">Habeen</button><button type="button" data-photo-filter="gold">Dahab</button></div><div class="editor-tools"><label for="editBrightness">☀ Iftiin <output id="brightnessValue">100%</output></label><input id="editBrightness" type="range" min="50" max="160" value="100" aria-label="Iftiinka sawirka"><label for="editContrast">Kala duwanaanshaha <output id="contrastValue">100%</output></label><input id="editContrast" type="range" min="60" max="160" value="100" aria-label="Kala duwanaanshaha iftiinka"><label for="editSaturation">Xoojinta midabka <output id="saturationValue">100%</output></label><input id="editSaturation" type="range" min="0" max="180" value="100" aria-label="Dheregga midabka"><label for="editWarmth">Diirimaadka <output id="warmthValue">0</output></label><input id="editWarmth" type="range" min="-40" max="40" value="0" aria-label="Diirimaadka midabka"><div class="row editor-actions"><button type="button" id="rotatePhoto">↻ Wareeji</button><button type="button" id="resetPhotoEdit">Dib u celi</button><label for="editCrop">Qaabka sawirka</label><select id="editCrop" aria-label="Qaabka jarista sawirka"><option value="original">Asalka</option><option value="square">Labajibbaaran</option><option value="portrait">Dheer (4:5)</option></select></div><label for="photoCaption">Qoraal sawirka saar (ikhtiyaari)</label><input id="photoCaption" maxlength="80" placeholder="Qor eray ama fariin..." aria-label="Qoraalka sawirka"></div><p class="muted small">Talo: HD Nadiif wuxuu hagaajiyaa muuqaalka; tayada ugu dambaysa waxay ku xiran tahay sawirka asalka ah.</p></div>
+<div id="photoEditor" class="photo-editor hidden"><strong>✨ Istuudiyaha Qurxinta Sawirka</strong><p class="muted small">Taabo shaandheeye ama hagaaji iftiinka, midabka iyo cabbirka. Isbeddellada waxaa lagu kaydinayaa sawirka aad DUNIQ soo gelinayso.</p><label>Shaandheeyeyaasha</label><div class="photo-filters"><button type="button" class="active" data-photo-filter="none">Asal</button><button type="button" data-photo-filter="vivid">HD Nadiif</button><button type="button" data-photo-filter="portrait">Weji Qurux</button><button type="button" data-photo-filter="warm">Diirran</button><button type="button" data-photo-filter="cool">Qabow</button><button type="button" data-photo-filter="mono">Madow iyo Caddaan</button><button type="button" data-photo-filter="soft">Jilicsan</button><button type="button" data-photo-filter="night">Habeen</button><button type="button" data-photo-filter="gold">Dahab</button></div><div class="editor-tools"><label for="editBrightness">☀ Iftiin <output id="brightnessValue">100%</output></label><input id="editBrightness" type="range" min="50" max="160" value="100" aria-label="Iftiinka sawirka"><label for="editContrast">Kala duwanaanshaha <output id="contrastValue">100%</output></label><input id="editContrast" type="range" min="60" max="160" value="100" aria-label="Kala duwanaanshaha iftiinka"><label for="editSaturation">Xoojinta midabka <output id="saturationValue">100%</output></label><input id="editSaturation" type="range" min="0" max="180" value="100" aria-label="Dheregga midabka"><label for="editWarmth">Diirimaadka <output id="warmthValue">0</output></label><input id="editWarmth" type="range" min="-40" max="40" value="0" aria-label="Diirimaadka midabka"><div class="row editor-actions"><button type="button" id="rotatePhoto">↻ Wareeji</button><button type="button" id="resetPhotoEdit">Dib u celi</button><label for="editCrop">Qaabka sawirka</label><select id="editCrop" aria-label="Qaabka jarista sawirka"><option value="original">Asalka</option><option value="square">Labajibbaaran</option><option value="portrait">Dheer (4:5)</option></select></div><label for="photoCaption">Qoraal sawirka saar (ikhtiyaari)</label><input id="photoCaption" maxlength="80" placeholder="Qor eray ama fariin..." aria-label="Qoraalka sawirka"></div><p class="muted small">Talo: HD Nadiif wuxuu hagaajiyaa muuqaalka; tayada ugu dambaysa waxay ku xiran tahay sawirka asalka ah.</p></div>
 <p id="selectedMediaName" class="muted small">Weli waxba lama dooran.</p>
 <label for="title">Cinwaanka qoraalka</label><input id="title" maxlength="120" placeholder="Cinwaanka ama qoraalka (ikhtiyaari)" aria-label="Cinwaanka ama qoraalka muuqaalka">
 <label for="description">Faahfaahin dheeraad ah</label><textarea id="description" maxlength="1000" placeholder="Wax yar nooga sheeg..." aria-label="Faahfaahinta muuqaalka"></textarea>
 <p class="muted small" id="uploadLimit">Fiidiyow: ugu badnaan 250 MB.</p>
-<button class="primary" id="uploadButton" type="submit">Soo geli GoGol</button>
+<button class="primary" id="uploadButton" type="submit">Soo geli DUNIQ</button>
 </form></div></section>
 <section id="profile" class="page hidden">
 <div class="profile-masthead profile-tiktok-head"><div class="profile-head-spacer"></div><div class="profile-current-handle" id="profileTopHandle">Profile</div><div class="profile-head-actions"><button type="button" id="profileSearch" aria-label="Raadi">⌕</button><button type="button" id="profileMenu" aria-label="Dejinta profile-ka">☰</button></div></div>
 <div class="feed-card profile-hero"><div id="profileBanner" class="profile-banner" aria-label="Profile banner"></div>
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
-<div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">GoGol User <span id="profileVerified" class="verified hidden" title="GoGol Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small profile-creator-label">GoGol Creator</p></div></div>
-<p id="profileBio" class="profile-bio">Ku soo biir bulshada GoGol.</p>
+<div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">DUNIQ User <span id="profileVerified" class="verified hidden" title="DUNIQ Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small profile-creator-label">DUNIQ Creator</p></div></div>
+<p id="profileBio" class="profile-bio">Ku soo biir bulshada DUNIQ.</p>
 <div class="profile-stats" aria-label="Profile statistics"><div><strong id="myFollowingCount">0</strong><span>Following</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div></div>
 <div class="row profile-buttons"><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html?mode=signup" id="profileSignup" style="text-align:center;text-decoration:none">Sign-up</a><a class="primary" href="./account.html?mode=login" id="profileLogin" style="text-align:center;text-decoration:none">Log in</a><button id="profileShare" class="secondary" type="button">Share profile</button></div>
 </div>
@@ -787,14 +821,14 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 </section>
 <section id="publicProfile" class="page hidden">
  <div class="settings-head"><button class="secondary" type="button" id="publicProfileBack">← Back</button><h2 class="section-title">Profile</h2></div>
- <div class="feed-card profile-hero"><div id="publicProfileBanner" class="profile-banner"></div><div class="profile-top"><div class="profile-avatar" id="publicProfileAvatar">G</div><div class="profile-main"><h2 id="publicProfileName">GoGol User</h2><p class="muted" id="publicProfileHandle">@user</p></div></div><p class="profile-bio" id="publicProfileBio"></p><div class="profile-stats"><div><strong id="publicFollowingCount">0</strong><span>Following</span></div><div><strong id="publicFollowerCount">0</strong><span>Followers</span></div><div><strong id="publicLikeCount">0</strong><span>Likes</span></div></div><div class="row profile-buttons"><button class="primary" id="publicProfileFollow" type="button">Follow</button><button class="secondary" id="publicProfileMessage" type="button">Message</button></div></div>
+ <div class="feed-card profile-hero"><div id="publicProfileBanner" class="profile-banner"></div><div class="profile-top"><div class="profile-avatar" id="publicProfileAvatar">G</div><div class="profile-main"><h2 id="publicProfileName">DUNIQ User</h2><p class="muted" id="publicProfileHandle">@user</p></div></div><p class="profile-bio" id="publicProfileBio"></p><div class="profile-stats"><div><strong id="publicFollowingCount">0</strong><span>Following</span></div><div><strong id="publicFollowerCount">0</strong><span>Followers</span></div><div><strong id="publicLikeCount">0</strong><span>Likes</span></div></div><div class="row profile-buttons"><button class="primary" id="publicProfileFollow" type="button">Follow</button><button class="secondary" id="publicProfileMessage" type="button">Message</button></div></div>
  <div class="profile-tabs"><button type="button" class="active" data-public-tab="videos">Videos</button><button type="button" data-public-tab="photos">Photos</button></div><div id="publicProfilePosts" class="profile-grid"><div class="empty">Loading profile...</div></div>
  </section>
- <section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card language-card"><h3>🌐 Language / Luqadda</h3><p class="muted" id="languageHelp">Choose the language used across GoGol. You can change it anytime.</p><label class="settings-row" for="languageSetting"><span><strong id="languageLabel">App language</strong><small id="languageCurrent">Somali</small></span><select id="languageSetting" aria-label="Choose app language"><option value="so">Soomaali</option><option value="en">English</option><option value="ar">العربية</option><option value="om">Afaan Oromoo</option><option value="sw">Kiswahili</option><option value="fr">Français</option></select></label></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax GoGol qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card" id="accountDeletionCard"><h3>Tirtir akoonkaaga</h3><p class="muted">Waxaad si joogto ah u tirtiri kartaa akoonkaaga, fariimahaaga, sawirradaada, fiidiyowyadaada iyo faylasha profile-ka. Tallaabadani lama soo celin karo.</p><button class="secondary" id="requestAccountDeletion" type="button">Tirtir akoonkayga</button><p id="accountDeletionStatus" class="muted small" role="status" aria-live="polite">Gal akoonkaaga si aad codsi u dirto.</p></div><div class="feed-card" id="privacySafetyCard"><h3>Amniga iyo asturnaanta</h3><p class="muted">Maamul dadka aad xannibtay. Waxaad dib u fasixi kartaa wakhti kasta.</p><div id="blockedUsersList" class="muted" aria-live="polite">Liiska waa la soo rarayaa...</div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox" aria-label="Daar ama dami ciyaarta tooska ah"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox" aria-label="Daar ama dami codka fiidiyowyada"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox" aria-label="Daar ama dami keydinta xogta internetka"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha GoGol</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox" aria-label="Daar ama dami ogeysiisyada"></label></div><div class="feed-card"><h3>Ku saabsan GoGol</h3><p class="muted">Nooca GoGol: <strong id="settingsVersion">1.10.88</strong></p><p class="muted">GoGol — madasha sawirrada, fiidiyowyada iyo bulshada.</p><p class="muted"><a href="./privacy.html">Siyaasadda asturnaanta</a> · <a href="./community-guidelines.html">Xeerarka bulshada</a> · <a href="./terms.html">Shuruudaha isticmaalka</a></p></div></section>
+ <section id="settings" class="page hidden"><div class="settings-head"><button class="secondary" type="button" id="settingsBack">← Dib u noqo</button><h2 class="section-title">Dejinta</h2></div><div class="feed-card language-card"><h3>🌐 Language / Luqadda</h3><p class="muted" id="languageHelp">Choose the language used across DUNIQ. You can change it anytime.</p><label class="settings-row" for="languageSetting"><span><strong id="languageLabel">App language</strong><small id="languageCurrent">Somali</small></span><select id="languageSetting" aria-label="Choose app language"><option value="so">Soomaali</option><option value="en">English</option><option value="ar">العربية</option><option value="om">Afaan Oromoo</option><option value="sw">Kiswahili</option><option value="fr">Français</option></select></label></div><div class="feed-card"><h3>Akoonka</h3><div class="settings-row"><div><strong>Wax ka beddel profile-ka</strong><small>Magaca, username-ka, isbarashada iyo sawirkaaga.</small></div><button class="secondary" id="settingsEditProfile" type="button">Fur</button></div><div class="settings-row"><div><strong>Ka bax akoonka</strong><small>Ka bax DUNIQ qalabkan.</small></div><button class="secondary" id="settingsLogout" type="button">Ka bax</button></div></div><div class="feed-card" id="accountDeletionCard"><h3>Tirtir akoonkaaga</h3><p class="muted">Waxaad si joogto ah u tirtiri kartaa akoonkaaga, fariimahaaga, sawirradaada, fiidiyowyadaada iyo faylasha profile-ka. Tallaabadani lama soo celin karo.</p><button class="secondary" id="requestAccountDeletion" type="button">Tirtir akoonkayga</button><p id="accountDeletionStatus" class="muted small" role="status" aria-live="polite">Gal akoonkaaga si aad codsi u dirto.</p></div><div class="feed-card" id="privacySafetyCard"><h3>Amniga iyo asturnaanta</h3><p class="muted">Maamul dadka aad xannibtay. Waxaad dib u fasixi kartaa wakhti kasta.</p><div id="blockedUsersList" class="muted" aria-live="polite">Liiska waa la soo rarayaa...</div></div><div class="feed-card"><h3>Fiidiyowga iyo codka</h3><label class="settings-row"><span><strong>Si toos ah u ciyaar</strong><small>Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.</small></span><input id="autoplaySetting" type="checkbox" aria-label="Daar ama dami ciyaarta tooska ah"></label><label class="settings-row"><span><strong>Codka fiidiyowyada</strong><small>Codka ha furnaado marka fiidiyow la ciyaarayo.</small></span><input id="videoSoundSetting" type="checkbox" aria-label="Daar ama dami codka fiidiyowyada"></label><label class="settings-row"><span><strong>Keydi xogta internetka</strong><small>Yaree rarista fiidiyowyada marka ay suurtagal tahay.</small></span><input id="dataSaverSetting" type="checkbox" aria-label="Daar ama dami keydinta xogta internetka"></label></div><div class="feed-card"><h3>Ogeysiisyada</h3><label class="settings-row"><span><strong>Ogeysiisyada gudaha DUNIQ</strong><small>Daar ama dami fariimaha ogeysiiska ee app-ka.</small></span><input id="appAlertsSetting" type="checkbox" aria-label="Daar ama dami ogeysiisyada"></label></div><div class="feed-card"><h3>Ku saabsan DUNIQ</h3><p class="muted">Nooca DUNIQ: <strong id="settingsVersion">1.10.88</strong></p><p class="muted">DUNIQ — madasha sawirrada, fiidiyowyada iyo bulshada.</p><p class="muted"><a href="./privacy.html">Siyaasadda asturnaanta</a> · <a href="./community-guidelines.html">Xeerarka bulshada</a> · <a href="./terms.html">Shuruudaha isticmaalka</a></p></div></section>
 <section id="notifications" class="page hidden"><h2 class="section-title">Ogeysiisyada</h2><div class="feed-card"><p class="muted">Likes, faallooyinka, followers-ka cusub, repost-yada iyo fariimaha cusub.</p><div id="activityList" class="muted">Waa la soo rarayaa...</div></div></section>
 <section id="messages" class="page hidden">
 <div class="inbox-heading"><h2>Inbox</h2><button type="button" id="inboxSearchFocus" aria-label="Search messages">⌕</button><button type="button" id="inboxMenu" aria-label="More options">•••</button></div>
-<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div><div id="storyTray" class="story-tray" aria-label="Stories" aria-live="polite"></div><input id="storyFile" aria-label="Dooro sawir ama fiidiyow Story-ga" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" hidden><div id="storyViewer" class="story-viewer hidden" role="dialog" aria-modal="true" aria-label="Daawo Story"><div class="story-viewer-panel"><div class="story-viewer-head"><strong id="storyViewerAuthor">GoGol</strong><button type="button" id="storyViewerClose">Xir ✕</button></div><div id="storyViewerContent" style="display:flex;flex:1;min-height:0"></div><p id="storyViewerCaption" class="story-viewer-caption"></p><div class="story-viewer-actions" style="justify-content:space-between;gap:8px"><div><button type="button" id="storyViewerPrev" class="secondary">‹ Hore</button> <button type="button" id="storyViewerNext" class="secondary">Xiga ›</button></div><button type="button" id="storyViewerDelete" class="secondary hidden">Tirtir Story</button></div></div></div>
+<div class="profile-story-row inbox-story-row"><button type="button" class="profile-story create-story" id="profileCreate"><span class="story-ring"><span id="storyAvatar">M</span><b>＋</b></span><strong>Create</strong></button><button type="button" class="profile-story" id="profileFriends"><span class="story-ring friends-ring">♟</span><strong>Friends</strong></button><button type="button" class="profile-story" id="profileNotifications"><span class="story-ring notify-ring">♧</span><strong>Activity</strong></button></div><div id="storyTray" class="story-tray" aria-label="Stories" aria-live="polite"></div><input id="storyFile" aria-label="Dooro sawir ama fiidiyow Story-ga" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" hidden><div id="storyViewer" class="story-viewer hidden" role="dialog" aria-modal="true" aria-label="Daawo Story"><div class="story-viewer-panel"><div class="story-viewer-head"><strong id="storyViewerAuthor">DUNIQ</strong><button type="button" id="storyViewerClose">Xir ✕</button></div><div id="storyViewerContent" style="display:flex;flex:1;min-height:0"></div><p id="storyViewerCaption" class="story-viewer-caption"></p><div class="story-viewer-actions" style="justify-content:space-between;gap:8px"><div><button type="button" id="storyViewerPrev" class="secondary">‹ Hore</button> <button type="button" id="storyViewerNext" class="secondary">Xiga ›</button></div><button type="button" id="storyViewerDelete" class="secondary hidden">Tirtir Story</button></div></div></div>
 <div class="inbox-filters" role="group" aria-label="Inbox filters"><button class="active" type="button" data-inbox-filter="main">Main</button><button type="button" data-inbox-filter="requests">Requests</button><button type="button" data-inbox-filter="unread">Unread</button><button type="button" data-inbox-filter="starred">Starred</button></div>
 <div id="inboxConversations" class="inbox-conversations" aria-live="polite"><p class="muted">Your conversations will appear here.</p></div>
 <button type="button" class="inbox-activity" id="inboxActivity"><span class="inbox-activity-icon">ϟ</span><span><strong>Activity &amp; new followers</strong><small>Likes, comments, follows and updates</small></span><span class="inbox-chevron">›</span></button>
@@ -803,14 +837,14 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 <div class="row"><input id="messageSearch" placeholder="Tusaale: amiir01" aria-label="Raadi fariimaha ama dadka"><button id="searchUsers" class="secondary" type="button">Raadi</button></div>
 <div id="userResults" class="muted small">Search for someone to start a conversation.</div>
 <div id="conversationPanel" class="hidden" role="dialog" aria-modal="true" aria-label="Wada sheekaysi">
-<div class="chat-topbar"><button id="closeConversation" type="button" aria-label="Ku noqo Inbox">‹</button><div class="chat-contact-mark">G</div><div class="chat-contact-copy"><strong id="conversationTitle">Wada sheekaysi</strong><small>GoGol messages</small></div><button class="chat-more" type="button" aria-label="Faahfaahin">•••</button></div>
+<div class="chat-topbar"><button id="closeConversation" type="button" aria-label="Ku noqo Inbox">‹</button><div class="chat-contact-mark">G</div><div class="chat-contact-copy"><strong id="conversationTitle">Wada sheekaysi</strong><small>DUNIQ messages</small></div><button class="chat-more" type="button" aria-label="Faahfaahin">•••</button></div>
 <div id="messageList" class="message-list" aria-live="polite"></div>
 <form id="messageForm" class="comment-form chat-composer"><textarea id="messageBody" maxlength="2000" placeholder="Fariin qor..." required aria-label="Qor fariinta" rows="1"></textarea><button class="primary" type="submit" aria-label="Dir fariinta">➤</button></form>
 </div>
 </div>
 </section>
 </main>
-<nav class="bottom" aria-label="GoGol navigation">
+<nav class="bottom" aria-label="DUNIQ navigation">
 <button class="active" data-page="home" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10.5 9-7.5 9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></svg><span>Home</span></button>
 <button data-page="discover" aria-label="Friends"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V21M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM17 4.2a4 4 0 0 1 0 7.6M18 15.5a4 4 0 0 1 3 3.9V21"/></svg><span>Friends</span></button>
 <button data-page="upload" class="create-tab" aria-label="Create" title="Create"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Create</span></button>
@@ -826,31 +860,31 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.7';
+const DUNIQ_VERSION='1.11.7';
 
-/* GoGol language preferences and live interface translation */
+/* DUNIQ language preferences and live interface translation */
 const GOGOL_LANGUAGES={
  so:{name:'Soomaali',dir:'ltr',t:{}},
  en:{name:'English',dir:'ltr',t:{
- 'Dejinta':'Settings','Dib u noqo':'Back','Akoonka':'Account','Wax ka beddel profile-ka':'Edit profile','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Your name, username, bio and profile photo.','Fur':'Open','Ka bax akoonka':'Log out','Ka bax GoGol qalabkan.':'Log out of GoGol on this device.','Ka bax':'Log out','Fiidiyowga iyo codka':'Video and audio','Si toos ah u ciyaar':'Autoplay','Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.':'Play videos automatically when they appear on screen.','Codka fiidiyowyada':'Video sound','Codka ha furnaado marka fiidiyow la ciyaarayo.':'Keep video sound on during playback.','Keydi xogta internetka':'Data saver','Yaree rarista fiidiyowyada marka ay suurtagal tahay.':'Reduce video data usage when possible.','Ogeysiisyada':'Notifications','Ogeysiisyada gudaha GoGol':'GoGol notifications','Daar ama dami fariimaha ogeysiiska ee app-ka.':'Turn in-app notifications on or off.','Ku saabsan MADAL':'About GoGol','Language / Luqadda':'Language','Choose the language used across GoGol. You can change it anytime.':'Choose the language used across GoGol. You can change it anytime.','App language':'App language','Home':'Home','Friends':'Friends','Inbox':'Inbox','Profile':'Profile','Search':'Search','Create':'Create','Activity':'Activity','Main':'Main','Requests':'Requests','Unread':'Unread','Starred':'Starred','Sign up':'Sign up','Log in':'Log in','Your conversations will appear here.':'Your conversations will appear here.','Find people by username':'Find people by username','Raadi':'Search','Close':'Close','Send':'Send','Write a message...':'Write a message...'
+ 'Dejinta':'Settings','Dib u noqo':'Back','Akoonka':'Account','Wax ka beddel profile-ka':'Edit profile','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Your name, username, bio and profile photo.','Fur':'Open','Ka bax akoonka':'Log out','Ka bax DUNIQ qalabkan.':'Log out of DUNIQ on this device.','Ka bax':'Log out','Fiidiyowga iyo codka':'Video and audio','Si toos ah u ciyaar':'Autoplay','Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.':'Play videos automatically when they appear on screen.','Codka fiidiyowyada':'Video sound','Codka ha furnaado marka fiidiyow la ciyaarayo.':'Keep video sound on during playback.','Keydi xogta internetka':'Data saver','Yaree rarista fiidiyowyada marka ay suurtagal tahay.':'Reduce video data usage when possible.','Ogeysiisyada':'Notifications','Ogeysiisyada gudaha DUNIQ':'DUNIQ notifications','Daar ama dami fariimaha ogeysiiska ee app-ka.':'Turn in-app notifications on or off.','Ku saabsan DUNIQ':'About DUNIQ','Language / Luqadda':'Language','Choose the language used across DUNIQ. You can change it anytime.':'Choose the language used across DUNIQ. You can change it anytime.','App language':'App language','Home':'Home','Friends':'Friends','Inbox':'Inbox','Profile':'Profile','Search':'Search','Create':'Create','Activity':'Activity','Main':'Main','Requests':'Requests','Unread':'Unread','Starred':'Starred','Sign up':'Sign up','Log in':'Log in','Your conversations will appear here.':'Your conversations will appear here.','Find people by username':'Find people by username','Raadi':'Search','Close':'Close','Send':'Send','Write a message...':'Write a message...'
  }},
  ar:{name:'العربية',dir:'rtl',t:{
- 'Dejinta':'الإعدادات','Dib u noqo':'رجوع','Akoonka':'الحساب','Wax ka beddel profile-ka':'تعديل الملف الشخصي','Magaca, username-ka, isbarashada iyo sawirkaaga.':'اسمك واسم المستخدم والنبذة والصورة الشخصية.','Fur':'فتح','Ka bax akoonka':'تسجيل الخروج','Ka bax GoGol qalabkan.':'تسجيل الخروج من هذا الجهاز.','Ka bax':'تسجيل الخروج','Fiidiyowga iyo codka':'الفيديو والصوت','Si toos ah u ciyaar':'التشغيل التلقائي','Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.':'تشغيل الفيديو تلقائياً عند ظهوره على الشاشة.','Codka fiidiyowyada':'صوت الفيديو','Codka ha furnaado marka fiidiyow la ciyaarayo.':'إبقاء صوت الفيديو قيد التشغيل.','Keydi xogta internetka':'توفير البيانات','Yaree rarista fiidiyowyada marka ay suurtagal tahay.':'تقليل استهلاك بيانات الفيديو قدر الإمكان.','Ogeysiisyada':'الإشعارات','Ogeysiisyada gudaha GoGol':'إشعارات GoGol','Daar ama dami fariimaha ogeysiiska ee app-ka.':'تشغيل إشعارات التطبيق أو إيقافها.','Ku saabsan MADAL':'حول GoGol','Language / Luqadda':'اللغة','Choose the language used across GoGol. You can change it anytime.':'اختر اللغة المستخدمة في GoGol. يمكنك تغييرها في أي وقت.','App language':'لغة التطبيق','Home':'الرئيسية','Friends':'الأصدقاء','Inbox':'الرسائل','Profile':'الملف الشخصي','Search':'بحث','Create':'إنشاء','Activity':'النشاط','Main':'الرئيسية','Requests':'الطلبات','Unread':'غير مقروء','Starred':'المميزة','Close':'إغلاق','Send':'إرسال','Write a message...':'اكتب رسالة...'
+ 'Dejinta':'الإعدادات','Dib u noqo':'رجوع','Akoonka':'الحساب','Wax ka beddel profile-ka':'تعديل الملف الشخصي','Magaca, username-ka, isbarashada iyo sawirkaaga.':'اسمك واسم المستخدم والنبذة والصورة الشخصية.','Fur':'فتح','Ka bax akoonka':'تسجيل الخروج','Ka bax DUNIQ qalabkan.':'تسجيل الخروج من هذا الجهاز.','Ka bax':'تسجيل الخروج','Fiidiyowga iyo codka':'الفيديو والصوت','Si toos ah u ciyaar':'التشغيل التلقائي','Fiidiyowgu ha bilaabmo marka uu shaashadda soo galo.':'تشغيل الفيديو تلقائياً عند ظهوره على الشاشة.','Codka fiidiyowyada':'صوت الفيديو','Codka ha furnaado marka fiidiyow la ciyaarayo.':'إبقاء صوت الفيديو قيد التشغيل.','Keydi xogta internetka':'توفير البيانات','Yaree rarista fiidiyowyada marka ay suurtagal tahay.':'تقليل استهلاك بيانات الفيديو قدر الإمكان.','Ogeysiisyada':'الإشعارات','Ogeysiisyada gudaha DUNIQ':'إشعارات DUNIQ','Daar ama dami fariimaha ogeysiiska ee app-ka.':'تشغيل إشعارات التطبيق أو إيقافها.','Ku saabsan DUNIQ':'حول DUNIQ','Language / Luqadda':'اللغة','Choose the language used across DUNIQ. You can change it anytime.':'اختر اللغة المستخدمة في DUNIQ. يمكنك تغييرها في أي وقت.','App language':'لغة التطبيق','Home':'الرئيسية','Friends':'الأصدقاء','Inbox':'الرسائل','Profile':'الملف الشخصي','Search':'بحث','Create':'إنشاء','Activity':'النشاط','Main':'الرئيسية','Requests':'الطلبات','Unread':'غير مقروء','Starred':'المميزة','Close':'إغلاق','Send':'إرسال','Write a message...':'اكتب رسالة...'
  }},
  om:{name:'Afaan Oromoo',dir:'ltr',t:{
- 'Dejinta':'Qindaa’ina','Dib u noqo':'Duubatti','Akoonka':'Herrega','Wax ka beddel profile-ka':'Piroofaayilii gulaali','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Maqaa, maqaa fayyadamaa, ibsa fi suuraa kee.','Fur':'Bani','Ka bax akoonka':'Herrega keessaa ba’i','Ka bax GoGol qalabkan.':'Meesha kana irraa GoGol keessaa ba’i.','Ka bax':'Ba’i','Fiidiyowga iyo codka':'Viidiyoo fi sagalee','Si toos ah u ciyaar':'Ofumaan taphachiisi','Codka fiidiyowyada':'Sagalee viidiyoo','Keydi xogta internetka':'Daataa qusadhu','Ogeysiisyada':'Beeksisa','Ku saabsan MADAL':'Waa’ee GoGol','Language / Luqadda':'Afaan','App language':'Afaan appii','Home':'Mana','Friends':'Hiriyoota','Inbox':'Ergaa','Profile':'Piroofaayilii','Search':'Barbaadi','Create':'Uumi','Activity':'Sochii','Main':'Ijoo','Requests':'Gaaffii','Unread':'Hin dubbifamne','Starred':'Urjii'
+ 'Dejinta':'Qindaa’ina','Dib u noqo':'Duubatti','Akoonka':'Herrega','Wax ka beddel profile-ka':'Piroofaayilii gulaali','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Maqaa, maqaa fayyadamaa, ibsa fi suuraa kee.','Fur':'Bani','Ka bax akoonka':'Herrega keessaa ba’i','Ka bax DUNIQ qalabkan.':'Meesha kana irraa DUNIQ keessaa ba’i.','Ka bax':'Ba’i','Fiidiyowga iyo codka':'Viidiyoo fi sagalee','Si toos ah u ciyaar':'Ofumaan taphachiisi','Codka fiidiyowyada':'Sagalee viidiyoo','Keydi xogta internetka':'Daataa qusadhu','Ogeysiisyada':'Beeksisa','Ku saabsan DUNIQ':'Waa’ee DUNIQ','Language / Luqadda':'Afaan','App language':'Afaan appii','Home':'Mana','Friends':'Hiriyoota','Inbox':'Ergaa','Profile':'Piroofaayilii','Search':'Barbaadi','Create':'Uumi','Activity':'Sochii','Main':'Ijoo','Requests':'Gaaffii','Unread':'Hin dubbifamne','Starred':'Urjii'
  }},
  sw:{name:'Kiswahili',dir:'ltr',t:{
- 'Dejinta':'Mipangilio','Dib u noqo':'Rudi nyuma','Akoonka':'Akaunti','Wax ka beddel profile-ka':'Hariri wasifu','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Jina lako, jina la mtumiaji, wasifu na picha.','Fur':'Fungua','Ka bax akoonka':'Ondoka kwenye akaunti','Ka bax GoGol qalabkan.':'Ondoka kwenye GoGol kwenye kifaa hiki.','Ka bax':'Ondoka','Fiidiyowga iyo codka':'Video na sauti','Si toos ah u ciyaar':'Cheza kiotomatiki','Codka fiidiyowyada':'Sauti ya video','Keydi xogta internetka':'Hifadhi data','Ogeysiisyada':'Arifa','Ogeysiisyada gudaha GoGol':'Arifa za GoGol','Ku saabsan MADAL':'Kuhusu GoGol','Language / Luqadda':'Lugha','App language':'Lugha ya programu','Home':'Nyumbani','Friends':'Marafiki','Inbox':'Ujumbe','Profile':'Wasifu','Search':'Tafuta','Create':'Unda','Activity':'Shughuli','Main':'Kuu','Requests':'Maombi','Unread':'Haijasomwa','Starred':'Zilizowekwa alama','Close':'Funga','Send':'Tuma'
+ 'Dejinta':'Mipangilio','Dib u noqo':'Rudi nyuma','Akoonka':'Akaunti','Wax ka beddel profile-ka':'Hariri wasifu','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Jina lako, jina la mtumiaji, wasifu na picha.','Fur':'Fungua','Ka bax akoonka':'Ondoka kwenye akaunti','Ka bax DUNIQ qalabkan.':'Ondoka kwenye DUNIQ kwenye kifaa hiki.','Ka bax':'Ondoka','Fiidiyowga iyo codka':'Video na sauti','Si toos ah u ciyaar':'Cheza kiotomatiki','Codka fiidiyowyada':'Sauti ya video','Keydi xogta internetka':'Hifadhi data','Ogeysiisyada':'Arifa','Ogeysiisyada gudaha DUNIQ':'Arifa za DUNIQ','Ku saabsan DUNIQ':'Kuhusu DUNIQ','Language / Luqadda':'Lugha','App language':'Lugha ya programu','Home':'Nyumbani','Friends':'Marafiki','Inbox':'Ujumbe','Profile':'Wasifu','Search':'Tafuta','Create':'Unda','Activity':'Shughuli','Main':'Kuu','Requests':'Maombi','Unread':'Haijasomwa','Starred':'Zilizowekwa alama','Close':'Funga','Send':'Tuma'
  }},
  fr:{name:'Français',dir:'ltr',t:{
- 'Dejinta':'Paramètres','Dib u noqo':'Retour','Akoonka':'Compte','Wax ka beddel profile-ka':'Modifier le profil','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Votre nom, identifiant, bio et photo de profil.','Fur':'Ouvrir','Ka bax akoonka':'Se déconnecter','Ka bax GoGol qalabkan.':'Se déconnecter de GoGol sur cet appareil.','Ka bax':'Déconnexion','Fiidiyowga iyo codka':'Vidéo et audio','Si toos ah u ciyaar':'Lecture automatique','Codka fiidiyowyada':'Son des vidéos','Keydi xogta internetka':'Économiseur de données','Ogeysiisyada':'Notifications','Ogeysiisyada gudaha GoGol':'Notifications GoGol','Ku saabsan MADAL':'À propos de GoGol','Language / Luqadda':'Langue','App language':'Langue de l’application','Home':'Accueil','Friends':'Amis','Inbox':'Messages','Profile':'Profil','Search':'Rechercher','Create':'Créer','Activity':'Activité','Main':'Principal','Requests':'Demandes','Unread':'Non lus','Starred':'Favoris','Close':'Fermer','Send':'Envoyer'
+ 'Dejinta':'Paramètres','Dib u noqo':'Retour','Akoonka':'Compte','Wax ka beddel profile-ka':'Modifier le profil','Magaca, username-ka, isbarashada iyo sawirkaaga.':'Votre nom, identifiant, bio et photo de profil.','Fur':'Ouvrir','Ka bax akoonka':'Se déconnecter','Ka bax DUNIQ qalabkan.':'Se déconnecter de DUNIQ sur cet appareil.','Ka bax':'Déconnexion','Fiidiyowga iyo codka':'Vidéo et audio','Si toos ah u ciyaar':'Lecture automatique','Codka fiidiyowyada':'Son des vidéos','Keydi xogta internetka':'Économiseur de données','Ogeysiisyada':'Notifications','Ogeysiisyada gudaha DUNIQ':'Notifications DUNIQ','Ku saabsan DUNIQ':'À propos de DUNIQ','Language / Luqadda':'Langue','App language':'Langue de l’application','Home':'Accueil','Friends':'Amis','Inbox':'Messages','Profile':'Profil','Search':'Rechercher','Create':'Créer','Activity':'Activité','Main':'Principal','Requests':'Demandes','Unread':'Non lus','Starred':'Favoris','Close':'Fermer','Send':'Envoyer'
  }}
 };
 let gogolLanguage='so';
 try{const saved=localStorage.getItem('gogol_language');if(GOGOL_LANGUAGES[saved])gogolLanguage=saved}catch(_){}
 const gogolOriginalText=new WeakMap();
-function translateGoGolText(root=document.body){
+function translateDUNIQText(root=document.body){
  const dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
@@ -865,36 +899,36 @@ function translateGoGolText(root=document.body){
   el.placeholder=dict[original]||original;
  });
 }
-function applyGoGolLanguage(){
+function applyDUNIQLanguage(){
  const lang=GOGOL_LANGUAGES[gogolLanguage]||GOGOL_LANGUAGES.so;
  document.documentElement.lang=gogolLanguage;
  document.documentElement.dir=lang.dir;
  const picker=$('languageSetting');if(picker)picker.value=gogolLanguage;
  const label=$('languageCurrent');if(label)label.textContent=lang.name;
- translateGoGolText();
+ translateDUNIQText();
 }
 const languagePicker=$('languageSetting');
 if(languagePicker)languagePicker.addEventListener('change',()=>{
  const next=languagePicker.value;if(!GOGOL_LANGUAGES[next])return;
  gogolLanguage=next;
  try{localStorage.setItem('gogol_language',next)}catch(_){}
- applyGoGolLanguage();
- const msg={so:'Luqadda GoGol waa la beddelay.',en:'GoGol language updated.',ar:'تم تغيير لغة GoGol.',om:'Afaan GoGol jijjiirameera.',sw:'Lugha ya GoGol imebadilishwa.',fr:'La langue de GoGol a été modifiée.'};
+ applyDUNIQLanguage();
+ const msg={so:'Luqadda DUNIQ waa la beddelay.',en:'DUNIQ language updated.',ar:'تم تغيير لغة DUNIQ.',om:'Afaan DUNIQ jijjiirameera.',sw:'Lugha ya DUNIQ imebadilishwa.',fr:'La langue de DUNIQ a été modifiée.'};
  if(typeof notice==='function'){const old=preference('app_alerts',true);if(old){$('notice').textContent=msg[next];$('notice').classList.remove('hidden')}}
 });
-applyGoGolLanguage();
+applyDUNIQLanguage();
 const languageObserver=new MutationObserver(records=>{
  for(const record of records)for(const node of record.addedNodes){
   if(node.nodeType===Node.TEXT_NODE){
    if(!gogolOriginalText.has(node))gogolOriginalText.set(node,node.nodeValue);
    const original=gogolOriginalText.get(node),trim=original.trim(),dict=GOGOL_LANGUAGES[gogolLanguage]?.t||{};
    node.nodeValue=dict[trim]?original.replace(trim,dict[trim]):original;
-  }else if(node.nodeType===Node.ELEMENT_NODE)translateGoGolText(node);
+  }else if(node.nodeType===Node.ELEMENT_NODE)translateDUNIQText(node);
  }
 });
 languageObserver.observe(document.body,{childList:true,subtree:true});
 
-window.MADAL_VERSION=MADAL_VERSION;
+window.DUNIQ_VERSION=DUNIQ_VERSION;
 const welcomeScreen=$('welcomeScreen');
 let welcomeSeen=false;
 try{welcomeSeen=localStorage.getItem('madal_welcome_seen_v1')==='true'}catch(_){welcomeSeen=true}
@@ -945,11 +979,11 @@ async function mediaUrl(p){
  const request=(async()=>{
   try{
    const {data,error}=await db.storage.from('madal-media').createSignedUrl(path,3600);
-   if(error){console.warn('GoGol media URL:',error.message);return ''}
+   if(error){console.warn('DUNIQ media URL:',error.message);return ''}
    const url=data?.signedUrl||'';
    if(url&&generation===mediaUrlGeneration){mediaUrlCache.set(key,{url,expiresAt:Date.now()+50*60*1000});if(mediaUrlCache.size>250)mediaUrlCache.delete(mediaUrlCache.keys().next().value)}
    return url;
-  }catch(error){console.warn('GoGol media URL:',error?.message||error);return ''}
+  }catch(error){console.warn('DUNIQ media URL:',error?.message||error);return ''}
   finally{if(mediaUrlPending.get(key)===request)mediaUrlPending.delete(key)}
  })();
  mediaUrlPending.set(key,request);
@@ -962,7 +996,7 @@ function isVideo(p){
  return /\.(mp4|webm|mov|m4v)$/i.test(path) || postType(p)==='video';
 }
 async function card(p){
- const url=await mediaUrl(p),title=escapeHtml(p.title||p.name||'GoGol'),desc=escapeHtml(p.description||p.caption||''),date=p.created_at?new Date(p.created_at).toLocaleDateString('so-SO'):'';
+ const url=await mediaUrl(p),title=escapeHtml(p.title||p.name||'DUNIQ'),desc=escapeHtml(p.description||p.caption||''),date=p.created_at?new Date(p.created_at).toLocaleDateString('so-SO'):'';
  const postId=String(p.id||''),author=String(p.user_id||''),liked=likedPostIds.has(postId),likes=likesByPost[postId]||0,comments=commentsByPost[postId]||[],reposted=repostedPostIds.has(postId),favorite=favoritePostIds.has(postId);
  let player='';
  if(url && isVideo(p)){player='<video class="media" controls playsinline preload="'+(preference("data_saver",false)?"none":"metadata")+'" src="'+escapeHtml(url)+'"></video>'}
@@ -974,7 +1008,7 @@ async function card(p){
     const {data,error}=await db.from('media_posts').select('*').eq('album_id',p.album_id).eq('status','published').order('created_at',{ascending:true}).order('id',{ascending:true});
     if(!error&&data?.length)album=data;
     else if(cached.length>1)album=cached;
-   }catch(error){if(cached.length>1)album=cached;console.warn('GoGol album viewer:',error?.message)}
+   }catch(error){if(cached.length>1)album=cached;console.warn('DUNIQ album viewer:',error?.message)}
   }
   const albumImages=await Promise.all(album.map(async(item)=>({item,url:await mediaUrl(item)})));
   const usable=albumImages.filter(item=>item.url);
@@ -985,11 +1019,11 @@ async function card(p){
  {
   const authorProfile=authorProfiles[author]||{},avatar=authorProfile.avatar_url?'<img src="'+escapeHtml(authorProfile.avatar_url)+'" alt="">':escapeHtml((authorProfile.display_name||authorProfile.username||'M').trim()[0].toUpperCase());
   const followButton=currentUser && author && author!==currentUser.id?'<button type="button" class="creator-follow" data-follow="'+escapeHtml(author)+'" aria-label="'+(followsByUser.has(author)?'Jooji raacista':'Raac qofkan')+'"><span class="creator-avatar">'+avatar+'</span><span class="creator-plus">'+(followsByUser.has(author)?'✓':'+')+'</span></button>':'<span class="creator-avatar creator-avatar-only">'+avatar+'</span>';
-  const commentItems=comments.map(c=>{const commenter=authorProfiles[c.user_id]||{};const commenterName=commenter.display_name||(commenter.username?'@'+commenter.username:'GoGol User');return '<p class="comment-item"><strong>'+escapeHtml(commenterName)+'</strong> '+escapeHtml(c.body)+' <span class="muted small">'+(c.created_at?new Date(c.created_at).toLocaleDateString('so-SO'):'')+'</span></p>'}).join('')||'<p class="muted small">Weli faallo lama qorin.</p>';
+  const commentItems=comments.map(c=>{const commenter=authorProfiles[c.user_id]||{};const commenterName=commenter.display_name||(commenter.username?'@'+commenter.username:'DUNIQ User');return '<p class="comment-item"><strong>'+escapeHtml(commenterName)+'</strong> '+escapeHtml(c.body)+' <span class="muted small">'+(c.created_at?new Date(c.created_at).toLocaleDateString('so-SO'):'')+'</span></p>'}).join('')||'<p class="muted small">Weli faallo lama qorin.</p>';
   const repostButton=currentUser&&author===currentUser.id?'':'<button type="button" class="'+(reposted?'is-reposted':'')+'" data-repost="'+escapeHtml(postId)+'" aria-label="Repost"><span>⟳</span><small>'+(repostCountsByPost[postId]||0)+'</small></button>';
   social='<div class="slide-actions">'+followButton+'<button type="button" class="'+(liked?'is-liked':'')+'" data-like="'+escapeHtml(postId)+'" aria-label="Like"><span>'+(liked?'♥':'♡')+'</span><small>'+likes+'</small></button><button type="button" data-comments="'+escapeHtml(postId)+'" aria-label="Faallo"><span>💬</span><small>'+comments.length+'</small></button>'+repostButton+'<button type="button" class="share-action" data-share="'+escapeHtml(postId)+'" aria-label="Share"><span>➦</span><small>Share</small></button></div><div id="comments-'+escapeHtml(postId)+'" class="comment-panel hidden"><div>'+commentItems+'</div><form class="comment-form" data-comment-form="'+escapeHtml(postId)+'"><textarea name="body" rows="1" inputmode="text" enterkeyhint="send" maxlength="1000" placeholder="Faallo qor..." aria-label="Qor faallo" required></textarea><button class="primary" type="submit" aria-label="Dir faallada">➤</button></form></div>';
  }
- const authorName=escapeHtml(p.display_name||p.username||'GoGol Creator');
+ const authorName=escapeHtml(p.display_name||p.username||'DUNIQ Creator');
  const slidePlayer=player.replace('class="media"','class="slide-media"').replace('<video class="slide-media" controls playsinline','<video class="slide-media" autoplay loop playsinline').replace(' preload="metadata"',' preload="metadata"');
  const actionMarkup=social;
 
@@ -1006,7 +1040,7 @@ async function recordMadalView(postId){
  madalViewedPosts.add(id);
  try{localStorage.setItem('madal_viewed_posts',JSON.stringify([...madalViewedPosts].slice(-500)))}catch(_){}
  const {data,error}=await db.rpc('madal_record_post_view',{p_post_id:id});
- if(error){console.warn('MADAL view count:',error.message);return}
+ if(error){console.warn('DUNIQ view count:',error.message);return}
  const post=allPosts.find(item=>String(item.id)===id);
  if(post&&typeof data==='number')post.view_count=data;
 }
@@ -1044,7 +1078,7 @@ async function renderFeed(){
  if(activeFeedTab==='community')posts=posts.filter(p=>!p.is_private);
  const seenAlbums=new Set();
  posts=posts.filter(post=>{const albumId=String(post.album_id||'');if(!albumId)return true;if(seenAlbums.has(albumId))return false;seenAlbums.add(albumId);return true});
- if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan wax cusub oo dadka aad raacdo soo geliyeen.':activeFeedTab==='photos'?'Weli sawirro lama soo gelin. Soo geli sawirkaaga koowaad!':activeFeedTab==='videos'?'Weli fiidiyowyo lama soo gelin. Soo geli fiidiyowgaaga koowaad!':mediaHasMore?'Qaybtan weli wax muuqaal ah kama muuqdaan. Soo rar qaybta xigta.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee GoGol wax soo geliya!')+'</div>'+(mediaHasMore?feedLoadMoreButton():'');return}
+ if(!posts.length){$('allFeed').innerHTML='<div class="empty">'+(query?'Wax muuqaal ah oo raadintaas la jaanqaadaya lama helin.':activeFeedTab==='following'?'Ma jiraan wax cusub oo dadka aad raacdo soo geliyeen.':activeFeedTab==='photos'?'Weli sawirro lama soo gelin. Soo geli sawirkaaga koowaad!':activeFeedTab==='videos'?'Weli fiidiyowyo lama soo gelin. Soo geli fiidiyowgaaga koowaad!':mediaHasMore?'Qaybtan weli wax muuqaal ah kama muuqdaan. Soo rar qaybta xigta.':'Weli muuqaal lama soo gelin. Noqo qofka ugu horreeya ee DUNIQ wax soo geliya!')+'</div>'+(mediaHasMore?feedLoadMoreButton():'');return}
  $('allFeed').innerHTML='';
  for(let start=0;start<posts.length;start+=8){
   const batch=await Promise.all(posts.slice(start,start+8).map(post=>card(post)));
@@ -1068,7 +1102,7 @@ document.querySelectorAll('[data-discover-tab]').forEach(button=>button.addEvent
 async function loadFriends(token=++discoverSearchToken){
  const host=$('discoverResults');
  if(!host||$('discoverSearch').value.trim().length>=2)return;
- host.innerHTML='<div class="empty">Dadka GoGol waa la soo raadinayaa...</div>';
+ host.innerHTML='<div class="empty">Dadka DUNIQ waa la soo raadinayaa...</div>';
  const me=currentUser?.id||null;
  const {data,error}=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,profile_banner_url,is_verified').limit(40);
  if(token!==discoverSearchToken)return;
@@ -1081,9 +1115,9 @@ async function loadFriends(token=++discoverSearchToken){
   const result=await db.from('user_follows').select('following_id').eq('follower_id',me).in('following_id',ids);
   if(token!==discoverSearchToken||currentUser?.id!==me)return;
   if(!result.error)followed=new Set((result.data||[]).map(row=>row.following_id));
-  else console.warn('GoGol Friends follow status:',result.error.message);
+  else console.warn('DUNIQ Friends follow status:',result.error.message);
  }
- host.innerHTML='<h3 class="section-title">Dadka aad la xiriiri karto</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar" data-open-profile="'+escapeHtml(person.id)+'" role="button" tabindex="0">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'G')[0].toUpperCase()))+'</div><div class="user-meta" data-open-profile="'+escapeHtml(person.id)+'" role="button" tabindex="0"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small><small>'+escapeHtml(person.bio||'Ku soo biir bulshada GoGol.')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followed.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
+ host.innerHTML='<h3 class="section-title">Dadka aad la xiriiri karto</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar" data-open-profile="'+escapeHtml(person.id)+'" role="button" tabindex="0">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'G')[0].toUpperCase()))+'</div><div class="user-meta" data-open-profile="'+escapeHtml(person.id)+'" role="button" tabindex="0"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small><small>'+escapeHtml(person.bio||'Ku soo biir bulshada DUNIQ.')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followed.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
 }
 function safeLikeTerm(value){return String(value||'').slice(0,64).replace(/[\\%_]/g,char=>'\\'+char)}
 $('discoverSearch').addEventListener('input',()=>{clearTimeout(discoverTimer);discoverTimer=setTimeout(searchDiscover,250)});
@@ -1115,7 +1149,7 @@ async function searchDiscover(){
  if(peopleError)html+='<p class="muted">Raadinta dadka: '+escapeHtml(peopleError.message)+'</p>';
  if(videoError)html+='<p class="muted">Raadinta fiidiyowyada: '+escapeHtml(videoError.message)+'</p>';
  if(people.length)html+='<h3 class="section-title">Dadka</h3>'+people.map(person=>'<div class="discover-user"><div class="user-avatar" data-open-profile="'+escapeHtml(person.id)+'" role="button" tabindex="0">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</div><div class="user-meta" data-open-profile="'+escapeHtml(person.id)+'" role="button" tabindex="0"><strong>'+escapeHtml(person.display_name||person.username)+(person.is_verified?' <span class="verified">✓</span>':'')+'</strong><small>@'+escapeHtml(person.username||'user')+'</small></div><button class="secondary" type="button" data-discover-follow="'+escapeHtml(person.id)+'">'+(followsByUser.has(person.id)?'La raacayo':'Raac')+'</button><button class="secondary" type="button" data-discover-message="'+escapeHtml(person.id)+'">Fariin</button></div>').join('');
- if(videos.length)html+='<h3 class="section-title">Fiidiyowyada</h3>'+videos.map(post=>'<div class="discover-post" data-open-post="'+escapeHtml(post.id)+'"><strong>'+escapeHtml(post.title||'GoGol')+'</strong><small>' + escapeHtml(post.description||'Fiidiyow GoGol')+'</small></div>').join('');
+ if(videos.length)html+='<h3 class="section-title">Fiidiyowyada</h3>'+videos.map(post=>'<div class="discover-post" data-open-post="'+escapeHtml(post.id)+'"><strong>'+escapeHtml(post.title||'DUNIQ')+'</strong><small>' + escapeHtml(post.description||'Fiidiyow DUNIQ')+'</small></div>').join('');
  if(!html)html+='<div class="empty">Wax natiijo ah lama helin.</div>';
  if(token===discoverSearchToken)host.innerHTML=html;
 }
@@ -1154,14 +1188,14 @@ async function loadSocialData(posts,renderToken=null){
  ]);
  if(token!==socialLoadToken||(renderToken!==null&&renderToken!==feedRenderToken)||String(currentUser?.id||'')!==String(socialUserId||''))return;
  blockedUserIds=new Set((blocksResult.data||[]).map(row=>String(row.blocked_user_id)));
- if(blocksResult.error)console.warn('GoGol block list unavailable; apply 20261116000300_user_safety_moderation.sql:',blocksResult.error.message);
+ if(blocksResult.error)console.warn('DUNIQ block list unavailable; apply 20261116000300_user_safety_moderation.sql:',blocksResult.error.message);
  authorProfiles={};for(const profile of profilesResult.data||[])authorProfiles[profile.id]=profile;
  const commenterIds=[...new Set((commentsResult.data||[]).map(comment=>comment.user_id).filter(Boolean))].filter(id=>!authorProfiles[id]);
- if(commenterIds.length){const commenterResult=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',commenterIds);if(token!==socialLoadToken||(renderToken!==null&&renderToken!==feedRenderToken))return;if(!commenterResult.error)for(const profile of commenterResult.data||[])authorProfiles[profile.id]=profile;else console.warn('GoGol commenter profiles unavailable:',commenterResult.error.message)}
+ if(commenterIds.length){const commenterResult=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',commenterIds);if(token!==socialLoadToken||(renderToken!==null&&renderToken!==feedRenderToken))return;if(!commenterResult.error)for(const profile of commenterResult.data||[])authorProfiles[profile.id]=profile;else console.warn('DUNIQ commenter profiles unavailable:',commenterResult.error.message)}
  // Keep each social feature independent: a missing optional table must not disable
  // favorites, comments, likes, or follows that are otherwise healthy.
  for(const [feature,result] of [['likes',likesResult],['comments',commentsResult],['friends',followsResult],['reposts',repostsResult],['favorites',favoritesResult],['profiles',profilesResult]]){
-  if(result?.error)console.warn('GoGol '+feature+' data unavailable:',result.error.message);
+  if(result?.error)console.warn('DUNIQ '+feature+' data unavailable:',result.error.message);
  }
  socialReady=true;
  if(!likesResult.error)for(const like of likesResult.data||[]){likesByPost[like.post_id]=(likesByPost[like.post_id]||0)+1;if(socialUserId&&like.user_id===socialUserId)likedPostIds.add(like.post_id)}
@@ -1173,28 +1207,28 @@ async function loadSocialData(posts,renderToken=null){
 
 /* TikTok-style full-screen photo viewer */
 let gogolPhotoViewerIndex=0,gogolPhotoViewerItems=[];
-function closeGoGolPhotoViewer(){const viewer=document.getElementById('gogolPhotoViewer');if(viewer){viewer.classList.remove('is-open');viewer.setAttribute('aria-hidden','true');document.body.classList.remove('photo-viewer-open');}}
-function showGoGolPhotoViewer(index){
+function closeDUNIQPhotoViewer(){const viewer=document.getElementById('gogolPhotoViewer');if(viewer){viewer.classList.remove('is-open');viewer.setAttribute('aria-hidden','true');document.body.classList.remove('photo-viewer-open');}}
+function showDUNIQPhotoViewer(index){
  const viewer=document.getElementById('gogolPhotoViewer');if(!viewer||!gogolPhotoViewerItems.length)return;
  gogolPhotoViewerIndex=(index+gogolPhotoViewerItems.length)%gogolPhotoViewerItems.length;
  const item=gogolPhotoViewerItems[gogolPhotoViewerIndex];
- const image=viewer.querySelector('.gogol-photo-main');image.src=item.src;image.alt=item.alt||'Sawir GoGol';
+ const image=viewer.querySelector('.gogol-photo-main');image.src=item.src;image.alt=item.alt||'Sawir DUNIQ';
  viewer.querySelector('.gogol-photo-count').textContent=(gogolPhotoViewerIndex+1)+' / '+gogolPhotoViewerItems.length;
  viewer.querySelector('.gogol-photo-caption').textContent=item.caption||'';
  viewer.querySelector('.gogol-photo-prev').hidden=gogolPhotoViewerItems.length<2;
  viewer.querySelector('.gogol-photo-next').hidden=gogolPhotoViewerItems.length<2;
  viewer.classList.add('is-open');viewer.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');
 }
-(function setupGoGolPhotoViewer(){
+(function setupDUNIQPhotoViewer(){
  if(document.getElementById('gogolPhotoViewer'))return;
  const viewer=document.createElement('div');viewer.id='gogolPhotoViewer';viewer.className='gogol-photo-viewer';viewer.setAttribute('aria-hidden','true');
- viewer.innerHTML='<button type="button" class="gogol-photo-close" aria-label="Xir sawirka">×</button><div class="gogol-photo-top"><span class="gogol-photo-count"></span><span class="gogol-photo-caption"></span></div><button type="button" class="gogol-photo-arrow gogol-photo-prev" aria-label="Sawirkii hore">‹</button><img class="gogol-photo-main" alt="Sawir GoGol" draggable="false"><button type="button" class="gogol-photo-arrow gogol-photo-next" aria-label="Sawirka xiga">›</button>';
+ viewer.innerHTML='<button type="button" class="gogol-photo-close" aria-label="Xir sawirka">×</button><div class="gogol-photo-top"><span class="gogol-photo-count"></span><span class="gogol-photo-caption"></span></div><button type="button" class="gogol-photo-arrow gogol-photo-prev" aria-label="Sawirkii hore">‹</button><img class="gogol-photo-main" alt="Sawir DUNIQ" draggable="false"><button type="button" class="gogol-photo-arrow gogol-photo-next" aria-label="Sawirka xiga">›</button>';
  document.body.appendChild(viewer);
- viewer.addEventListener('click',event=>{if(event.target===viewer||event.target.closest('.gogol-photo-close'))closeGoGolPhotoViewer();else if(event.target.closest('.gogol-photo-prev'))showGoGolPhotoViewer(gogolPhotoViewerIndex-1);else if(event.target.closest('.gogol-photo-next'))showGoGolPhotoViewer(gogolPhotoViewerIndex+1)});
+ viewer.addEventListener('click',event=>{if(event.target===viewer||event.target.closest('.gogol-photo-close'))closeDUNIQPhotoViewer();else if(event.target.closest('.gogol-photo-prev'))showDUNIQPhotoViewer(gogolPhotoViewerIndex-1);else if(event.target.closest('.gogol-photo-next'))showDUNIQPhotoViewer(gogolPhotoViewerIndex+1)});
  let touchStartX=0,touchStartY=0;
  viewer.addEventListener('touchstart',event=>{touchStartX=event.changedTouches[0].clientX;touchStartY=event.changedTouches[0].clientY},{passive:true});
- viewer.addEventListener('touchend',event=>{const dx=event.changedTouches[0].clientX-touchStartX,dy=event.changedTouches[0].clientY-touchStartY;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.25)showGoGolPhotoViewer(gogolPhotoViewerIndex+(dx<0?1:-1));else if(dy>110&&Math.abs(dy)>Math.abs(dx))closeGoGolPhotoViewer()},{passive:true});
- document.addEventListener('keydown',event=>{if(!viewer.classList.contains('is-open'))return;if(event.key==='Escape')closeGoGolPhotoViewer();if(event.key==='ArrowRight')showGoGolPhotoViewer(gogolPhotoViewerIndex+1);if(event.key==='ArrowLeft')showGoGolPhotoViewer(gogolPhotoViewerIndex-1)});
+ viewer.addEventListener('touchend',event=>{const dx=event.changedTouches[0].clientX-touchStartX,dy=event.changedTouches[0].clientY-touchStartY;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.25)showDUNIQPhotoViewer(gogolPhotoViewerIndex+(dx<0?1:-1));else if(dy>110&&Math.abs(dy)>Math.abs(dx))closeDUNIQPhotoViewer()},{passive:true});
+ document.addEventListener('keydown',event=>{if(!viewer.classList.contains('is-open'))return;if(event.key==='Escape')closeDUNIQPhotoViewer();if(event.key==='ArrowRight')showDUNIQPhotoViewer(gogolPhotoViewerIndex+1);if(event.key==='ArrowLeft')showDUNIQPhotoViewer(gogolPhotoViewerIndex-1)});
  document.addEventListener('click',event=>{
   const img=event.target.closest('#allFeed .video-slide .album-strip img, #allFeed .video-slide > .slide-media:not(video), #myVideos .profile-tile img');
   if(!img)return;
@@ -1202,7 +1236,7 @@ function showGoGolPhotoViewer(index){
   const album=img.closest('.album-strip');
   const images=album?[...album.querySelectorAll('img')]:[img];
   gogolPhotoViewerItems=images.map(node=>({src:node.currentSrc||node.src,alt:node.alt,caption:node.alt||''})).filter(item=>item.src);
-  showGoGolPhotoViewer(Math.max(0,images.indexOf(img)));
+  showDUNIQPhotoViewer(Math.max(0,images.indexOf(img)));
  });
 })();
 $('allFeed').addEventListener('keydown',e=>{const t=e.target.closest('[data-open-profile]');if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openPublicProfile(t.dataset.openProfile)}});
@@ -1221,7 +1255,7 @@ $('allFeed').addEventListener('click',async e=>{
  const privacy=e.target.closest('[data-private]');
  const report=e.target.closest('[data-report-post]'),block=e.target.closest('[data-block-user]');
  if(comments){$('comments-'+comments.dataset.comments)?.classList.toggle('hidden');return}
- if(share){const post=allPosts.find(p=>String(p.id)===share.dataset.share),postId=share.dataset.share,shareUrl=location.href.split('#')[0]+'#post-'+encodeURIComponent(postId);document.querySelector('.share-sheet')?.remove();const sheet=document.createElement('div');sheet.className='share-sheet';sheet.innerHTML='<div class="share-sheet-card"><div class="share-sheet-head"><strong>La wadaag GoGol</strong><button type="button" class="secondary" data-share-close>Xir</button></div><div class="share-sheet-actions"><button type="button" data-copy-link>🔗<br>Copy link</button><button type="button" data-share-save>☆<br>Save</button><button type="button" data-system-share>↗<br>Share</button>'+(currentUser&&post&&String(post.user_id)!==String(currentUser.id)?'<button type="button" data-share-report>⚑<br>Report</button>':'')+'</div>'+(currentUser?'<input type="search" placeholder="Raadi akoon aad u dirto..." aria-label="Raadi qof aad muuqaalka u dirto" data-share-search><div class="share-sheet-list" data-share-users>Waa la soo raadinayaa...</div>':'<p class="muted">Linkiga waad koobiyeeyn kartaa ama waxaad kula wadaagi kartaa app kale.</p>')+'</div>';document.body.appendChild(sheet);const list=sheet.querySelector('[data-share-users]');const search=sheet.querySelector('[data-share-search]');let people=[];const copyLink=async()=>{try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(shareUrl)}else{const field=document.createElement('textarea');field.value=shareUrl;field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();const ok=document.execCommand('copy');field.remove();if(!ok)throw new Error('copy failed')}/* Copy completed silently: no toast message. */}catch(_){notice('Copy link ma shaqayn. Isku day inaad browser-ka ku furto.')}};const loadPeople=async q=>{if(!currentUser||!list)return;const {data,error}=await db.from('madal_profiles').select('id,username,display_name,avatar_url').neq('id',currentUser.id).or('username.ilike.%'+q+'%,display_name.ilike.%'+q+'%').limit(25);if(error){list.textContent='Akoonada lama soo heli karin.';return}people=data||[];list.innerHTML=people.map(person=>'<div class="share-person"><span class="creator-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</span><span><strong>'+escapeHtml(person.display_name||person.username||'GoGol User')+'</strong><br><small>@'+escapeHtml(person.username||'user')+'</small></span><button type="button" data-send-to="'+escapeHtml(person.id)+'">Dir</button></div>').join('')||'Akoon lama helin.'};if(currentUser)await loadPeople('');search?.addEventListener('input',()=>loadPeople(search.value.trim()));sheet.addEventListener('click',async ev=>{if(ev.target===sheet||ev.target.closest('[data-share-close]')){sheet.remove();return}if(ev.target.closest('[data-copy-link]')){await copyLink();return}if(ev.target.closest('[data-share-report]')){if(!currentUser||!post||String(post.user_id)===String(currentUser.id)){notice('Warbixintan lama aqbali karo.');return}const reason=String(window.prompt('Sababta cabashada? Geli mid ka mid ah: spam, harassment, hate, violence, nudity, misinformation, other','')||'').trim().toLowerCase();const allowed=['spam','harassment','hate','violence','nudity','misinformation','other'];if(!allowed.includes(reason)){if(reason)notice('Dooro sabab sax ah.');return}const {error}=await db.from('madal_moderation_reports').insert({reporter_id:currentUser.id,reported_user_id:post.user_id,post_id:post.id,reason});if(error)notice('Warbixinta lama dirin. Hubi migration-ka amniga: '+error.message);else{notice('Mahadsanid. Warbixintaada waa la gudbiyey.');sheet.remove()}return}if(ev.target.closest('[data-share-save]')){if(!currentUser){notice('Marka hore soo gal si aad u kaydsato.');location.href='./account.html';return}const wasSaved=favoritePostIds.has(postId);const result=wasSaved?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id):await db.from('media_favorites').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});if(result.error){notice('Save lama suurtagelin: '+result.error.message)}else{wasSaved?favoritePostIds.delete(postId):favoritePostIds.add(postId);notice(wasSaved?'Waa laga saaray Saved.':'Muuqaalka waa la kaydiyey.');sheet.querySelector('[data-share-save]').textContent=wasSaved?'☆ Save':'★ Saved'}return}if(ev.target.closest('[data-system-share]')){try{if(navigator.share)await navigator.share({title:post?.title||'GoGol',text:post?.description||'Fiiri muuqaalkan GoGol',url:shareUrl});else{await navigator.clipboard.writeText(shareUrl);notice('Linkiga waa la koobiyeeyay.')}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu ma shaqayn.')}return}const send=ev.target.closest('[data-send-to]');if(send){send.disabled=true;const {error}=await db.from('madal_messages').insert({sender_id:currentUser.id,recipient_id:send.dataset.sendTo,body:'Fiiri muuqaalkan GoGol: '+shareUrl});if(error){notice('Muuqaalka lama dirin: '+error.message);send.disabled=false}else{notice('Muuqaalka waa loo diray akoonka.');send.textContent='La diray'}}});return}
+ if(share){const post=allPosts.find(p=>String(p.id)===share.dataset.share),postId=share.dataset.share,shareUrl=location.href.split('#')[0]+'#post-'+encodeURIComponent(postId);document.querySelector('.share-sheet')?.remove();const sheet=document.createElement('div');sheet.className='share-sheet';sheet.innerHTML='<div class="share-sheet-card"><div class="share-sheet-head"><strong>La wadaag DUNIQ</strong><button type="button" class="secondary" data-share-close>Xir</button></div><div class="share-sheet-actions"><button type="button" data-copy-link>🔗<br>Copy link</button><button type="button" data-share-save>☆<br>Save</button><button type="button" data-system-share>↗<br>Share</button>'+(currentUser&&post&&String(post.user_id)!==String(currentUser.id)?'<button type="button" data-share-report>⚑<br>Report</button>':'')+'</div>'+(currentUser?'<input type="search" placeholder="Raadi akoon aad u dirto..." aria-label="Raadi qof aad muuqaalka u dirto" data-share-search><div class="share-sheet-list" data-share-users>Waa la soo raadinayaa...</div>':'<p class="muted">Linkiga waad koobiyeeyn kartaa ama waxaad kula wadaagi kartaa app kale.</p>')+'</div>';document.body.appendChild(sheet);const list=sheet.querySelector('[data-share-users]');const search=sheet.querySelector('[data-share-search]');let people=[];const copyLink=async()=>{try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(shareUrl)}else{const field=document.createElement('textarea');field.value=shareUrl;field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();const ok=document.execCommand('copy');field.remove();if(!ok)throw new Error('copy failed')}/* Copy completed silently: no toast message. */}catch(_){notice('Copy link ma shaqayn. Isku day inaad browser-ka ku furto.')}};const loadPeople=async q=>{if(!currentUser||!list)return;const {data,error}=await db.from('madal_profiles').select('id,username,display_name,avatar_url').neq('id',currentUser.id).or('username.ilike.%'+q+'%,display_name.ilike.%'+q+'%').limit(25);if(error){list.textContent='Akoonada lama soo heli karin.';return}people=data||[];list.innerHTML=people.map(person=>'<div class="share-person"><span class="creator-avatar">'+(person.avatar_url?'<img src="'+escapeHtml(person.avatar_url)+'" alt="">':escapeHtml((person.display_name||person.username||'M')[0].toUpperCase()))+'</span><span><strong>'+escapeHtml(person.display_name||person.username||'DUNIQ User')+'</strong><br><small>@'+escapeHtml(person.username||'user')+'</small></span><button type="button" data-send-to="'+escapeHtml(person.id)+'">Dir</button></div>').join('')||'Akoon lama helin.'};if(currentUser)await loadPeople('');search?.addEventListener('input',()=>loadPeople(search.value.trim()));sheet.addEventListener('click',async ev=>{if(ev.target===sheet||ev.target.closest('[data-share-close]')){sheet.remove();return}if(ev.target.closest('[data-copy-link]')){await copyLink();return}if(ev.target.closest('[data-share-report]')){if(!currentUser||!post||String(post.user_id)===String(currentUser.id)){notice('Warbixintan lama aqbali karo.');return}const reason=String(window.prompt('Sababta cabashada? Geli mid ka mid ah: spam, harassment, hate, violence, nudity, misinformation, other','')||'').trim().toLowerCase();const allowed=['spam','harassment','hate','violence','nudity','misinformation','other'];if(!allowed.includes(reason)){if(reason)notice('Dooro sabab sax ah.');return}const {error}=await db.from('madal_moderation_reports').insert({reporter_id:currentUser.id,reported_user_id:post.user_id,post_id:post.id,reason});if(error)notice('Warbixinta lama dirin. Hubi migration-ka amniga: '+error.message);else{notice('Mahadsanid. Warbixintaada waa la gudbiyey.');sheet.remove()}return}if(ev.target.closest('[data-share-save]')){if(!currentUser){notice('Marka hore soo gal si aad u kaydsato.');location.href='./account.html';return}const wasSaved=favoritePostIds.has(postId);const result=wasSaved?await db.from('media_favorites').delete().eq('post_id',postId).eq('user_id',currentUser.id):await db.from('media_favorites').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true});if(result.error){notice('Save lama suurtagelin: '+result.error.message)}else{wasSaved?favoritePostIds.delete(postId):favoritePostIds.add(postId);notice(wasSaved?'Waa laga saaray Saved.':'Muuqaalka waa la kaydiyey.');sheet.querySelector('[data-share-save]').textContent=wasSaved?'☆ Save':'★ Saved'}return}if(ev.target.closest('[data-system-share]')){try{if(navigator.share)await navigator.share({title:post?.title||'DUNIQ',text:post?.description||'Fiiri muuqaalkan DUNIQ',url:shareUrl});else{await navigator.clipboard.writeText(shareUrl);notice('Linkiga waa la koobiyeeyay.')}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu ma shaqayn.')}return}const send=ev.target.closest('[data-send-to]');if(send){send.disabled=true;const {error}=await db.from('madal_messages').insert({sender_id:currentUser.id,recipient_id:send.dataset.sendTo,body:'Fiiri muuqaalkan DUNIQ: '+shareUrl});if(error){notice('Muuqaalka lama dirin: '+error.message);send.disabled=false}else{notice('Muuqaalka waa loo diray akoonka.');send.textContent='La diray'}}});return}
  if(!like&&!follow&&!repost&&!favorite&&!privacy&&!report&&!block)return;
  if(!currentUser){location.href='./account.html';return}
  const actionButton=like||follow||repost||favorite||privacy||report||block;
@@ -1256,7 +1290,7 @@ $('allFeed').addEventListener('click',async e=>{
     ?await db.from('media_likes').delete().eq('post_id',postId).eq('user_id',currentUser.id)
     :await db.from('media_likes').upsert({post_id:postId,user_id:currentUser.id},{onConflict:'post_id,user_id',ignoreDuplicates:true}).select('post_id');
    if(currentUser?.id!==actionUserId)return;
-   if(result.error){console.warn('GoGol like request failed:',result.error);notice('Like-ga lama kaydin: '+(result.error.message||'Fadlan mar kale isku day.'))}else{if(wasLiked){likedPostIds.delete(postId);likesByPost[postId]=Math.max(0,(likesByPost[postId]||1)-1)}else{likedPostIds.add(postId);if((result.data||[]).length)likesByPost[postId]=(likesByPost[postId]||0)+1}like.classList.toggle('is-liked',!wasLiked);like.querySelector('span').textContent=wasLiked?'♡':'♥';like.querySelector('small').textContent=likesByPost[postId]||0;}
+   if(result.error){console.warn('DUNIQ like request failed:',result.error);notice('Like-ga lama kaydin: '+(result.error.message||'Fadlan mar kale isku day.'))}else{if(wasLiked){likedPostIds.delete(postId);likesByPost[postId]=Math.max(0,(likesByPost[postId]||1)-1)}else{likedPostIds.add(postId);if((result.data||[]).length)likesByPost[postId]=(likesByPost[postId]||0)+1}like.classList.toggle('is-liked',!wasLiked);like.querySelector('span').textContent=wasLiked?'♡':'♥';like.querySelector('small').textContent=likesByPost[postId]||0;}
   }
   if(repost){
    const postId=repost.dataset.repost;
@@ -1291,7 +1325,7 @@ $('allFeed').addEventListener('click',async e=>{
    if(currentUser?.id!==actionUserId)return;
    if(result.error)notice('Raacistu ma shaqayn: '+result.error.message);else await loadMedia();
   }
- }catch(error){console.warn('GoGol social action failed:',error);notice('Ficilka lama dhamaystirin: '+(error.message||'Fadlan mar kale isku day.'))}
+ }catch(error){console.warn('DUNIQ social action failed:',error);notice('Ficilka lama dhamaystirin: '+(error.message||'Fadlan mar kale isku day.'))}
  finally{actionButton.disabled=false}
 });
 let commentSubmitToken=0;
@@ -1312,7 +1346,7 @@ $('allFeed').addEventListener('submit',async e=>{
   $('comments-'+postId)?.classList.remove('hidden');
   const updatedComposer=$('comments-'+form.dataset.commentForm)?.querySelector('textarea');
   if(updatedComposer)updatedComposer.focus({preventScroll:true});
- }catch(error){console.warn('GoGol comment send:',error);notice('Faallada lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
+ }catch(error){console.warn('DUNIQ comment send:',error);notice('Faallada lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
  finally{if(token===commentSubmitToken){submit.disabled=false;submit.textContent=originalLabel}}
 });
 
@@ -1340,7 +1374,7 @@ $('closeConversation').addEventListener('click',()=>{
  if(chatChannel){db.removeChannel(chatChannel);chatChannel=null}
 });
 
-/* GoGol conversation overflow menu: pin, report, block */
+/* DUNIQ conversation overflow menu: pin, report, block */
 (function(){
  const style=document.createElement('style');
  style.textContent='.gogol-chat-menu{position:absolute;right:12px;top:58px;z-index:80;min-width:176px;padding:7px;border:1px solid #3b3b42;border-radius:14px;background:#19191f;box-shadow:0 12px 32px #000b}.gogol-chat-menu button{display:flex;width:100%;align-items:center;gap:12px;padding:12px;border:0;border-radius:9px;background:transparent;color:#fff;text-align:left;font-weight:650}.gogol-chat-menu button:active{background:#ffffff18}.chat-topbar{position:relative}';
@@ -1399,7 +1433,7 @@ async function loadInbox(){
   .or('sender_id.eq.'+me+',recipient_id.eq.'+me)
   .order('created_at',{ascending:false}).limit(250);
  if(token!==inboxLoadToken||currentUser?.id!==me)return;
- if(error){host.innerHTML='<p class="inbox-empty">Fariimaha hadda lama soo rari karo. Fadlan mar dambe isku day.</p>';console.warn('GoGol inbox:',error.message);return}
+ if(error){host.innerHTML='<p class="inbox-empty">Fariimaha hadda lama soo rari karo. Fadlan mar dambe isku day.</p>';console.warn('DUNIQ inbox:',error.message);return}
  const latest=new Map(),unreadPeople=new Set();
   for(const message of messages||[]){
    const other=message.sender_id===me?message.recipient_id:message.sender_id;
@@ -1416,7 +1450,7 @@ async function loadInbox(){
  if(token!==inboxLoadToken||currentUser?.id!==me)return;
  if(profilesResult.error){host.innerHTML='<p class="inbox-empty">People in your conversations could not be loaded.</p>';return}
  const profiles=new Map((profilesResult.data||[]).map(profile=>[profile.id,profile]));
- if(followsResult.error){host.innerHTML='<p class="inbox-empty">Inbox filters could not be loaded. Please try again.</p>';console.warn('GoGol inbox follows:',followsResult.error.message);return}
+ if(followsResult.error){host.innerHTML='<p class="inbox-empty">Inbox filters could not be loaded. Please try again.</p>';console.warn('DUNIQ inbox follows:',followsResult.error.message);return}
  const followed=new Set((followsResult.data||[]).map(row=>row.following_id));
  const stars=inboxStarIds();
  const isRequest=row=>row.message.sender_id===row.id&&!followed.has(row.id);
@@ -1466,7 +1500,7 @@ async function loadConversation(){
  if((data||[]).some(message=>message.recipient_id===me&&!message.read_at)){
   const {error:readError}=await db.from('madal_messages').update({read_at:new Date().toISOString()}).eq('sender_id',other).eq('recipient_id',me).is('read_at',null);
   if(token!==conversationLoadToken||activeChatUser?.id!==other||currentUser?.id!==me)return;
-  if(readError)console.warn('GoGol read receipt:',readError.message);
+  if(readError)console.warn('DUNIQ read receipt:',readError.message);
   else loadInbox();
  }
 }
@@ -1483,7 +1517,7 @@ $('messageForm').addEventListener('submit',async e=>{
   if(currentUser?.id!==senderId||activeChatUser?.id!==recipientId)return;
   $('messageBody').value='';
   await loadConversation();
- }catch(error){console.warn('GoGol message send:',error);notice('Fariinta lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
+ }catch(error){console.warn('DUNIQ message send:',error);notice('Fariinta lama dirin: '+(error.message||'Hubi internetka kadibna mar kale isku day.'))}
  finally{button.disabled=false}
 });
 
@@ -1502,7 +1536,7 @@ async function loadMedia({append=false}={}){
   console.error(error);mediaLoadingMore=false;
   if(!append)$('allFeed').innerHTML='<div class="empty">Weli lama soo rari karin waxyaabaha. Hubi isku xirka Supabase iyo rukhsadaha akhriska.</div>';
   else await renderFeed();
-  notice('Xogta GoGol lama soo rari karin: '+error.message);return
+  notice('Xogta DUNIQ lama soo rari karin: '+error.message);return
  }
  const page=data||[];
  mediaOffset=from+page.length;
@@ -1524,12 +1558,12 @@ async function loadMyProfile(){
  if(error&&/profile_banner_url|column/i.test(error.message||'')){const fallback=await db.from('madal_profiles').select('id,username,display_name,bio,avatar_url,is_verified').eq('id',userId).maybeSingle();if(!fallback.error){profile=fallback.data;error=null}}
  if(token!==profileLoadToken||currentUser?.id!==userId)return;
  if(error){console.warn('Profile load:',error.message)}
- const name=profile?.display_name||user.user_metadata?.display_name||'GoGol User';
+ const name=profile?.display_name||user.user_metadata?.display_name||'DUNIQ User';
  const username=profile?.username||user.user_metadata?.username||'user';
  $('profileName').textContent=name;
- if(profile?.is_verified){const badge=document.createElement('span');badge.className='verified';badge.title='GoGol Verified';badge.textContent='✓';$('profileName').appendChild(badge)}
+ if(profile?.is_verified){const badge=document.createElement('span');badge.className='verified';badge.title='DUNIQ Verified';badge.textContent='✓';$('profileName').appendChild(badge)}
  $('profileHandle').textContent='@'+username;$('profileTopHandle').textContent='@'+username;
- $('profileBio').textContent=profile?.bio||'Ku soo biir bulshada GoGol.';$('profileBanner').style.backgroundImage=profile?.profile_banner_url?'url('+JSON.stringify(profile.profile_banner_url)+')':'';$('bannerPreview').src=profile?.profile_banner_url||'';$('editBannerUrl').value=profile?.profile_banner_url||'';
+ $('profileBio').textContent=profile?.bio||'Ku soo biir bulshada DUNIQ.';$('profileBanner').style.backgroundImage=profile?.profile_banner_url?'url('+JSON.stringify(profile.profile_banner_url)+')':'';$('bannerPreview').src=profile?.profile_banner_url||'';$('editBannerUrl').value=profile?.profile_banner_url||'';
  $('profileAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="Sawirka profile-ka">':escapeHtml((name.trim()[0]||'M').toUpperCase());
  $('storyAvatar').innerHTML=profile?.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((name.trim()[0]||'M').toUpperCase());
  $('editDisplayName').value=name;$('editUsername').value=username;$('editBio').value=profile?.bio||'';$('editAvatarUrl').value=profile?.avatar_url||'';$('avatarPreview').src=profile?.avatar_url||'';
@@ -1579,7 +1613,7 @@ async function loadMyProfile(){
   const url=await mediaUrl(post);
   if(token!==profileLoadToken||currentUser?.id!==userId)return;
   const tile=document.createElement('div');tile.className='profile-tile';
-  tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'" style="width:100%;height:100%;object-fit:cover">'):'<div class="empty">Muuqaal</div>')+'<span class="tile-views">▶ '+Number(post.view_count||0).toLocaleString('en-US')+'</span><span class="tile-title">'+escapeHtml(post.title||'Muuqaal GoGol')+'</span>';
+  tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'" style="width:100%;height:100%;object-fit:cover">'):'<div class="empty">Muuqaal</div>')+'<span class="tile-views">▶ '+Number(post.view_count||0).toLocaleString('en-US')+'</span><span class="tile-title">'+escapeHtml(post.title||'Muuqaal DUNIQ')+'</span>';
   $('myVideos').appendChild(tile);
  }
 }
@@ -1598,10 +1632,10 @@ async function openPublicProfile(userId){
  if(token!==publicProfileLoadToken||publicProfileUserId!==String(userId))return;
  const profile=result.data;
  if(result.error||!profile){$('publicProfilePosts').innerHTML='<div class="empty">Profile-kan lama heli karo: '+escapeHtml(result.error?.message||'Akoonka lama helin.')+'</div>';return}
- $('publicProfileName').textContent=profile.display_name||profile.username||'GoGol User';
- if(profile.is_verified){const badge=document.createElement('span');badge.className='verified';badge.textContent=' ✓';badge.title='GoGol Verified';$('publicProfileName').appendChild(badge)}
+ $('publicProfileName').textContent=profile.display_name||profile.username||'DUNIQ User';
+ if(profile.is_verified){const badge=document.createElement('span');badge.className='verified';badge.textContent=' ✓';badge.title='DUNIQ Verified';$('publicProfileName').appendChild(badge)}
  $('publicProfileHandle').textContent='@'+(profile.username||'user');
- $('publicProfileBio').textContent=profile.bio||'Ku soo biir bulshada GoGol.';
+ $('publicProfileBio').textContent=profile.bio||'Ku soo biir bulshada DUNIQ.';
  $('publicProfileAvatar').innerHTML=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((profile.display_name||profile.username||'G')[0].toUpperCase());
  $('publicProfileBanner').style.backgroundImage=profile.profile_banner_url?'url('+JSON.stringify(profile.profile_banner_url)+')':'';
  const me=currentUser?.id||null,button=$('publicProfileFollow');
@@ -1615,7 +1649,7 @@ async function openPublicProfile(userId){
  if(token!==publicProfileLoadToken||publicProfileUserId!==String(userId))return;
  $('publicFollowerCount').textContent=followers.count??0;$('publicFollowingCount').textContent=following.count??0;
  if(state.data){button.textContent='Following';button.dataset.following='yes'}
- if(followers.error||following.error||state.error||profilePosts.error)console.warn('GoGol public profile data:',followers.error?.message||following.error?.message||state.error?.message||profilePosts.error?.message);
+ if(followers.error||following.error||state.error||profilePosts.error)console.warn('DUNIQ public profile data:',followers.error?.message||following.error?.message||state.error?.message||profilePosts.error?.message);
  const postIds=(profilePosts.data||[]).map(post=>post.id);
  const likeResult=postIds.length?await db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',postIds):{count:0,error:null};
  if(token!==publicProfileLoadToken||publicProfileUserId!==String(userId))return;
@@ -1635,12 +1669,12 @@ async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
  for(const post of rows){
   const url=await mediaUrl(post);if(expectedToken!==publicProfileLoadToken||id!==publicProfileUserId)return;
   const tile=document.createElement('div');tile.className='profile-tile';
-  tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'">'):'<div class="empty">Media</div>')+'<span class="tile-title">'+escapeHtml(post.title||'GoGol')+'</span>';
+  tile.innerHTML=(url?(isVideo(post)?'<video muted playsinline preload="metadata" src="'+escapeHtml(url)+'"></video>':'<img alt="" src="'+escapeHtml(url)+'">'):'<div class="empty">Media</div>')+'<span class="tile-title">'+escapeHtml(post.title||'DUNIQ')+'</span>';
   host.appendChild(tile);
  }
 }
 
-/* GoGol profile statistics: open the real people behind each count. */
+/* DUNIQ profile statistics: open the real people behind each count. */
 (function(){
  const style=document.createElement('style');
  style.textContent='.profile-stats [data-stat-kind]{cursor:pointer;min-width:0;border-radius:10px;padding:5px 2px;transition:background .15s}.profile-stats [data-stat-kind]:active{background:#ffffff16}.profile-stats [data-stat-kind]:focus-visible{outline:2px solid #d6b5ff;outline-offset:2px}.gogol-stat-modal{position:fixed;inset:0;z-index:2200;background:#000b;display:flex;align-items:flex-end;justify-content:center;padding:12px}.gogol-stat-sheet{width:min(100%,520px);max-height:min(78dvh,680px);overflow:hidden;background:#171020;border:1px solid #49345d;border-radius:20px 20px 12px 12px;display:flex;flex-direction:column}.gogol-stat-head{display:flex;align-items:center;justify-content:space-between;padding:15px;border-bottom:1px solid #38254a}.gogol-stat-head strong{font-size:16px}.gogol-stat-head button{border:0;background:transparent;color:white;font-size:24px;padding:2px 8px}.gogol-stat-list{overflow:auto;padding:6px 14px 18px}.gogol-stat-person{display:flex;align-items:center;gap:11px;width:100%;padding:10px 2px;border:0;border-bottom:1px solid #38254a;background:transparent;color:white;text-align:left}.gogol-stat-avatar{width:42px;height:42px;border-radius:50%;background:#493064;display:grid;place-items:center;overflow:hidden;flex:none;font-weight:800}.gogol-stat-avatar img{width:100%;height:100%;object-fit:cover}.gogol-stat-meta{min-width:0}.gogol-stat-meta strong,.gogol-stat-meta small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gogol-stat-meta small{color:#b9acc7;font-size:12px}.gogol-stat-empty{padding:24px 10px;text-align:center;color:#b9acc7}';
@@ -1660,7 +1694,7 @@ async function renderPublicProfilePosts(expectedToken=publicProfileLoadToken){
   host.innerHTML='';
   for(const person of people){
    const id=String(person.id||'');
-   const name=person.display_name||person.username||'GoGol User';
+   const name=person.display_name||person.username||'DUNIQ User';
    const item=document.createElement('button');item.type='button';item.className='gogol-stat-person';
    const avatar=document.createElement('span');avatar.className='gogol-stat-avatar';
    if(person.avatar_url){const img=document.createElement('img');img.src=person.avatar_url;img.alt='';avatar.appendChild(img)}
@@ -1731,7 +1765,7 @@ $('publicProfileMessage').addEventListener('click',()=>{if(!currentUser){locatio
 
 $('editProfile').addEventListener('click',()=>{$('profileEditor').classList.toggle('hidden')});
 $('profileMenu').addEventListener('click',()=>{syncSettings();showPage("settings")});
-$('profileShare').addEventListener('click',async()=>{const username=$('profileHandle').textContent||'GoGol';const url=location.origin+location.pathname+'#profile';const shareData={title:'GoGol '+username,text:'Iga raac '+username+' gudaha GoGol',url};try{if(navigator.share)await navigator.share(shareData);else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);notice('Linkiga profile-ka waa la koobiyeeyay.')}else notice('Linkiga profile-ka: '+url)}catch(error){if(error?.name!=='AbortError')notice('Profile-ka lama wadaagi karin. Mar kale isku day.')}});
+$('profileShare').addEventListener('click',async()=>{const username=$('profileHandle').textContent||'DUNIQ';const url=location.origin+location.pathname+'#profile';const shareData={title:'DUNIQ '+username,text:'Iga raac '+username+' gudaha DUNIQ',url};try{if(navigator.share)await navigator.share(shareData);else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);notice('Linkiga profile-ka waa la koobiyeeyay.')}else notice('Linkiga profile-ka: '+url)}catch(error){if(error?.name!=='AbortError')notice('Profile-ka lama wadaagi karin. Mar kale isku day.')}});
 $('settingsBack').addEventListener('click',()=>showPage("profile"));
 $('settingsEditProfile').addEventListener('click',()=>{showPage("profile");$('profileEditor').classList.remove("hidden")});
 $('settingsLogout').addEventListener('click',()=>$('logout').click());
@@ -1749,7 +1783,7 @@ async function loadBlockedUsers(){
  if(currentUser?.id!==userId)return;
  if(profileError){list.textContent='Magacyada dadka xanniban lama soo heli karin.';return}
  const byId=new Map((profiles||[]).map(profile=>[String(profile.id),profile]));
- list.innerHTML=ids.map(id=>{const person=byId.get(id),name=person?.display_name||person?.username||'Akoon GoGol';return '<div class="settings-row"><span><strong>'+escapeHtml(name)+'</strong><small>@'+escapeHtml(person?.username||'user')+'</small></span><button type="button" class="secondary" data-unblock-user="'+escapeHtml(id)+'">Ka fur</button></div>'}).join('');
+ list.innerHTML=ids.map(id=>{const person=byId.get(id),name=person?.display_name||person?.username||'Akoon DUNIQ';return '<div class="settings-row"><span><strong>'+escapeHtml(name)+'</strong><small>@'+escapeHtml(person?.username||'user')+'</small></span><button type="button" class="secondary" data-unblock-user="'+escapeHtml(id)+'">Ka fur</button></div>'}).join('');
 }
 $('blockedUsersList').addEventListener('click',async e=>{
  const button=e.target.closest('[data-unblock-user]');if(!button||!currentUser||button.disabled)return;
@@ -1785,7 +1819,7 @@ async function submitAccountDeletionRequest(){
   const {data,error}=await db.functions.invoke('delete-account');
   if(error)throw error;
   if(currentUser?.id!==userId)return;
-  status.textContent='Akoonkaaga iyo xogta la xiriirta waa la tirtiray. GoGol ayaa kaa saaraya...';
+  status.textContent='Akoonkaaga iyo xogta la xiriirta waa la tirtiray. DUNIQ ayaa kaa saaraya...';
   await db.auth.signOut();
   location.replace('./account.html');
  }catch(error){
@@ -1793,12 +1827,12 @@ async function submitAccountDeletionRequest(){
  }
 }
 $('requestAccountDeletion').addEventListener('click',submitAccountDeletionRequest);
-function syncSettings(){$('dataSaverSetting').checked=preference("data_saver",false);$('appAlertsSetting').checked=preference("app_alerts",true);$('autoplaySetting').checked=preference("autoplay",true);$('videoSoundSetting').checked=preference("video_sound",true);$('settingsVersion').textContent=MADAL_VERSION;loadBlockedUsers();loadAccountDeletionRequest()}
+function syncSettings(){$('dataSaverSetting').checked=preference("data_saver",false);$('appAlertsSetting').checked=preference("app_alerts",true);$('autoplaySetting').checked=preference("autoplay",true);$('videoSoundSetting').checked=preference("video_sound",true);$('settingsVersion').textContent=DUNIQ_VERSION;loadBlockedUsers();loadAccountDeletionRequest()}
 $('dataSaverSetting').addEventListener('change',e=>{savePreference("data_saver",e.target.checked);document.querySelectorAll(".media,.slide-media").forEach(v=>v.preload=e.target.checked?"none":"metadata");notice(e.target.checked?"Keydinta xogta internetka waa la daaray.":"Keydinta xogta internetka waa la damiyey.")});
 $('autoplaySetting').addEventListener('change',e=>{savePreference("autoplay",e.target.checked);if(shouldAutoplayVideos()){const active=[...document.querySelectorAll(".video-slide")].find(slide=>{const r=slide.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4});const video=active?.querySelector("video");if(video)video.play().catch(()=>active.classList.add("is-paused"));}else document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")});notice(e.target.checked?"Ciyaar toos ah waa la daaray.":"Ciyaar toos ah waa la damiyey.")});
 reducedMotionQuery.addEventListener?.('change',()=>{if(reducedMotionQuery.matches)document.querySelectorAll(".video-slide video").forEach(video=>{video.pause();video.closest(".video-slide")?.classList.add("is-paused")})});
 $('videoSoundSetting').addEventListener('change',e=>{savePreference("video_sound",e.target.checked);document.querySelectorAll(".video-slide video").forEach(video=>video.muted=!e.target.checked);notice(e.target.checked?"Codka fiidiyowyada waa la daaray.":"Codka fiidiyowyada waa la damiyey.")});
-$('appAlertsSetting').addEventListener('change',e=>{savePreference("app_alerts",e.target.checked);if(e.target.checked)notice("Ogeysiisyada gudaha GoGol waa la daaray.");});
+$('appAlertsSetting').addEventListener('change',e=>{savePreference("app_alerts",e.target.checked);if(e.target.checked)notice("Ogeysiisyada gudaha DUNIQ waa la daaray.");});
 $('editAvatarFile').addEventListener('change',()=>{const file=$('editAvatarFile').files[0];if(!file)return;if(!file.type.startsWith('image/')){notice('Fadlan dooro sawir sax ah.');$('editAvatarFile').value='';return}if(file.size>5*1024*1024){notice('Sawirku ha ka weynaan 5 MB.');$('editAvatarFile').value='';return}const preview=URL.createObjectURL(file);$('avatarPreview').src=preview;$('editAvatarUrl').value=''});
 $('removeAvatar').addEventListener('click',()=>{$('editAvatarFile').value='';$('editAvatarUrl').value='';$('avatarPreview').removeAttribute('src');$('avatarPreview').alt='Sawir lama dooran';notice('Sawirka waa laga saaray hordhaca. Riix Kaydi profile-ka si isbeddelku u hirgalo.')});
 $('editBannerFile').addEventListener('change',()=>{const file=$('editBannerFile').files[0];if(!file)return;if(!file.type.startsWith('image/')){notice('Fadlan dooro sawir banner sax ah.');$('editBannerFile').value='';return}if(file.size>10*1024*1024){notice('Banner-ku ha ka weynaan 10 MB.');$('editBannerFile').value='';return}const preview=URL.createObjectURL(file);$('bannerPreview').src=preview});
@@ -1855,7 +1889,7 @@ async function loadActivity(){
  let profiles={};
  if(ids.length){const p=await db.from('madal_profiles').select('id,username,display_name').in('id',ids);if(token!==activityLoadToken||currentUser?.id!==userId)return;for(const row of p.data||[])profiles[row.id]=row}
  const events=[...(likes.data||[]).map(x=>({...x,kind:'like',actor:x.user_id})),...(followers.data||[]).map(x=>({...x,kind:'follow',actor:x.follower_id})),...(comments.data||[]).map(x=>({...x,kind:'comment',actor:x.user_id})),...(reposts.data||[]).map(x=>({...x,kind:'repost',actor:x.user_id})),...(incomingMessages.data||[]).map(x=>({...x,kind:'message',actor:x.sender_id}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
- host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'GoGol User',display_name:'Qof GoGol ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':ev.kind==='follow'?'＋':ev.kind==='comment'?'💬':ev.kind==='repost'?'↗':'✉')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa Like saaray muuqaalkaaga':ev.kind==='follow'?'ayaa ku Follow gareeyay':ev.kind==='comment'?'ayaa faallo ka bixiyey muuqaalkaaga':ev.kind==='repost'?'ayaa Repost gareeyey muuqaalkaaga':'wuxuu kuu soo diray fariin')+(post?' · '+escapeHtml(post.title):ev.kind==='message'?' · '+escapeHtml(ev.body):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
+ host.innerHTML=events.map(ev=>{const person=profiles[ev.actor]||{username:'DUNIQ User',display_name:'Qof DUNIQ ah'};const post=allPosts.find(p=>p.id===ev.post_id);return '<div class="activity-item"><span class="activity-icon">'+(ev.kind==='like'?'♥':ev.kind==='follow'?'＋':ev.kind==='comment'?'💬':ev.kind==='repost'?'↗':'✉')+'</span><div><strong>'+escapeHtml(person.display_name||('@'+person.username))+'</strong> '+(ev.kind==='like'?'ayaa Like saaray muuqaalkaaga':ev.kind==='follow'?'ayaa ku Follow gareeyay':ev.kind==='comment'?'ayaa faallo ka bixiyey muuqaalkaaga':ev.kind==='repost'?'ayaa Repost gareeyey muuqaalkaaga':'wuxuu kuu soo diray fariin')+(post?' · '+escapeHtml(post.title):ev.kind==='message'?' · '+escapeHtml(ev.body):'')+'<p class="muted small">'+new Date(ev.created_at).toLocaleString('so-SO')+'</p></div></div>'}).join('')||'<p class="empty">Weli ogeysiis cusub ma jiro.</p>';
 }
 let profileRefreshToken=0;
 async function refreshProfile(){
@@ -1872,9 +1906,9 @@ async function refreshProfile(){
   profileLoadToken++;
   $('profileLogin').classList.remove('hidden');
   $('logout').classList.add('hidden');
-  $('profileName').textContent='GoGol User';
+  $('profileName').textContent='DUNIQ User';
   $('profileHandle').textContent='@username';
-  $('profileBio').textContent='Ku soo biir bulshada GoGol.';
+  $('profileBio').textContent='Ku soo biir bulshada DUNIQ.';
   $('profileAvatar').textContent='M';
   $('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">Soo gal si aad u aragto profile-kaaga.</div>';
   await loadStories();
@@ -1882,17 +1916,17 @@ async function refreshProfile(){
 }
 
 let activeStories=[],activeStoryGroup=[],activeStoryIndex=0;
-function storyName(story){return story.storyProfile?.display_name||story.storyProfile?.username||'GoGol User'}
+function storyName(story){return story.storyProfile?.display_name||story.storyProfile?.username||'DUNIQ User'}
 async function loadStories(){
  const tray=$('storyTray');if(!tray)return;
  const {data,error}=await db.from('madal_stories').select('id,user_id,storage_path,mime_type,caption,created_at,expires_at').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(80);
- if(error){console.warn('GoGol Stories:',error.message);tray.innerHTML='<span class="muted small">Stories hadda lama soo rari karo. Fadlan mar dambe isku day.</span>';return}
+ if(error){console.warn('DUNIQ Stories:',error.message);tray.innerHTML='<span class="muted small">Stories hadda lama soo rari karo. Fadlan mar dambe isku day.</span>';return}
  const rows=data||[],ids=[...new Set(rows.map(x=>x.user_id))];let profiles=[];
  if(ids.length){const result=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',ids);if(!result.error)profiles=result.data||[]}
  const byId=Object.fromEntries(profiles.map(p=>[p.id,p]));activeStories=rows.map(story=>({...story,storyProfile:byId[story.user_id]||{}}));
  const groups=new Map();for(const story of activeStories){if(!groups.has(story.user_id))groups.set(story.user_id,[]);groups.get(story.user_id).push(story)}
  const ownId=currentUser?.id;
- tray.innerHTML=[...groups.entries()].map(([userId,items])=>{const profile=items[0].storyProfile,name=escapeHtml(profile.display_name||profile.username||'GoGol User'),avatar=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((name[0]||'G').toUpperCase());return '<button type="button" class="story-chip" data-story-user="'+escapeHtml(userId)+'"><span class="story-ring">'+avatar+'</span><strong>'+(userId===ownId?'Story-gaaga':name)+'</strong></button>'}).join('');
+ tray.innerHTML=[...groups.entries()].map(([userId,items])=>{const profile=items[0].storyProfile,name=escapeHtml(profile.display_name||profile.username||'DUNIQ User'),avatar=profile.avatar_url?'<img src="'+escapeHtml(profile.avatar_url)+'" alt="">':escapeHtml((name[0]||'G').toUpperCase());return '<button type="button" class="story-chip" data-story-user="'+escapeHtml(userId)+'"><span class="story-ring">'+avatar+'</span><strong>'+(userId===ownId?'Story-gaaga':name)+'</strong></button>'}).join('');
 }
 async function showStory(story){
  const url=await mediaUrl(story);if(!url){notice('Story-ga lama furi karin. Hubi migration-ka Supabase 008.');return}
@@ -1952,7 +1986,7 @@ $('inboxConversations').addEventListener('click',event=>{
 });
 $('profileSearch').addEventListener('click',()=>{showPage('discover');$('discoverSearch').focus()});
 $('profileAvatar').addEventListener('click',()=>{if(!currentUser){location.href='./account.html';return}$('profileEditor').classList.remove('hidden');$('profileEditor').scrollIntoView({behavior:'smooth',block:'start'})});
-$('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday GoGol.')}});
+$('logout').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)notice(error.message);else{await refreshProfile();notice('Waad ka baxday DUNIQ.')}});
 let uploadKind='video',capturedUploadFile=null,activePhotoFilter='none',uploadPreviewUrl=null;
 function releaseUploadPreviewUrl(){if(uploadPreviewUrl){URL.revokeObjectURL(uploadPreviewUrl);uploadPreviewUrl=null}}
 const PHOTO_FILTERS={none:'none',vivid:'contrast(1.18) saturate(1.28) brightness(1.04)',portrait:'contrast(1.06) saturate(1.12) brightness(1.08)',warm:'sepia(.18) saturate(1.2) contrast(1.04)',cool:'saturate(1.08) hue-rotate(9deg) brightness(1.04)',mono:'grayscale(1) contrast(1.12)',soft:'brightness(1.08) saturate(.88) contrast(.94)',night:'brightness(1.22) contrast(1.12) saturate(1.12)',gold:'sepia(.28) saturate(1.3) contrast(1.08)'};
@@ -2040,7 +2074,7 @@ $('switchCamera').addEventListener('click',async()=>{
 });
 $('torchToggle').addEventListener('click',async()=>{
  const track=cameraStream?.getVideoTracks()[0];let supported=false;
- try{const caps=track?.getCapabilities?.();supported=!!caps?.torch;if(supported){cameraTorchOn=!cameraTorchOn;await track.applyConstraints({advanced:[{torch:cameraTorchOn}]});$('torchToggle').textContent=cameraTorchOn?'⚡ Iftiin ON':'⚡ Iftiin OFF';return}}catch(error){console.warn('MADAL torch:',error)}
+ try{const caps=track?.getCapabilities?.();supported=!!caps?.torch;if(supported){cameraTorchOn=!cameraTorchOn;await track.applyConstraints({advanced:[{torch:cameraTorchOn}]});$('torchToggle').textContent=cameraTorchOn?'⚡ Iftiin ON':'⚡ Iftiin OFF';return}}catch(error){console.warn('DUNIQ torch:',error)}
  screenFlashOn=!screenFlashOn;$('cameraPreview').style.filter=screenFlashOn?'brightness(1.55)':'none';
  $('torchToggle').textContent=screenFlashOn?'☀️ Iftiin ON':'⚡ Iftiin';
  $('cameraNote').textContent='Flash-ka dambe telefoonkaagu ma taageerin; iftiinka shaashadda ayaa la isticmaalayaa.';
@@ -2093,11 +2127,11 @@ async function applyPhotoFilter(file){
   const caption=$('photoCaption').value.trim();if(caption){ctx.filter='none';const size=Math.max(22,Math.round(outW*.055));ctx.font='bold '+size+'px system-ui, sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.lineWidth=Math.max(3,size*.12);ctx.strokeStyle='#000b';ctx.fillStyle='#fff';ctx.strokeText(caption,outW/2,outH-size*.8);ctx.fillText(caption,outW/2,outH-size*.8)}
   const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.96));
   if(!blob)throw new Error('Sawirka lama kaydin karin. Isku day mar kale.');
-  return new File([blob],(file.name.replace(/\.[^.]+$/,'')||'sawir')+'-MADAL.jpg',{type:'image/jpeg',lastModified:Date.now()});
+  return new File([blob],(file.name.replace(/\.[^.]+$/,'')||'sawir')+'-DUNIQ.jpg',{type:'image/jpeg',lastModified:Date.now()});
  }finally{URL.revokeObjectURL(url)}
 }
 $('uploadForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!currentUser){notice('Marka hore fadlan GoGol ku soo gal.');location.href='./account.html';return}
+ e.preventDefault();if(!currentUser){notice('Marka hore fadlan DUNIQ ku soo gal.');location.href='./account.html';return}
  const uploaderId=currentUser.id,files=selectedUploadFiles();
  if(!files.length){notice('Marka hore Camera ama Gallery ka dooro fayl.');return}
  const isAlbum=uploadKind==='image'&&files.length>1;
@@ -2116,7 +2150,7 @@ $('uploadForm').addEventListener('submit',async e=>{
  let postsInserted=false;
  try{
   const albumId=isAlbum?crypto.randomUUID():null,records=[];
-  const postTitle=$('title').value.trim()||(uploadKind==='image'?'Sawir GoGol':'Fiidiyow GoGol');
+  const postTitle=$('title').value.trim()||(uploadKind==='image'?'Sawir DUNIQ':'Fiidiyow DUNIQ');
   const postDescription=$('description').value.trim();
   for(let index=0;index<files.length;index++){
    let file=files[index];
@@ -2139,9 +2173,9 @@ $('uploadForm').addEventListener('submit',async e=>{
   notice(isAlbum?'Album-ka '+files.length+' sawir ah waa la soo geliyey!':'Waa lagu guulaystay soo gelinta!');
   await loadMedia();showPage('home');
  }catch(err){
-  if(uploadedPaths.length&&!postsInserted){const {error:cleanupError}=await db.storage.from('madal-media').remove(uploadedPaths);if(cleanupError)console.warn('GoGol album cleanup:',cleanupError.message)}
-  console.error(err);notice('Soo gelintu way fashilantay: '+(isAlbum&&String(err.message||'').includes('album_id')?'Album-ku wuxuu u baahan yahay migration-ka Supabase ee GoGol 1.10.46. ': '')+err.message);
- }finally{button.disabled=false;button.textContent='Soo geli GoGol'}
+  if(uploadedPaths.length&&!postsInserted){const {error:cleanupError}=await db.storage.from('madal-media').remove(uploadedPaths);if(cleanupError)console.warn('DUNIQ album cleanup:',cleanupError.message)}
+  console.error(err);notice('Soo gelintu way fashilantay: '+(isAlbum&&String(err.message||'').includes('album_id')?'Album-ku wuxuu u baahan yahay migration-ka Supabase ee DUNIQ 1.10.46. ': '')+err.message);
+ }finally{button.disabled=false;button.textContent='Soo geli DUNIQ'}
 });
 db.auth.onAuthStateChange((event,session)=>{
  const nextUserId=session?.user?.id||null,previousUserId=currentUser?.id||null;
@@ -2157,8 +2191,8 @@ db.auth.onAuthStateChange((event,session)=>{
  refreshProfile();
 });
 $('shareButton').addEventListener('click',async()=>{
- const shareData={title:'GoGol — Fiidiyowyo',text:'Ku soo biir GoGol: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
- try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga GoGol waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
+ const shareData={title:'DUNIQ — Fiidiyowyo',text:'Ku soo biir DUNIQ: daawo fiidiyowyo, lana wadaag bulshada.',url:location.href};
+ try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(location.href);notice('Linkiga DUNIQ waa la koobiyeeyay. La wadaag asxaabtaada.')}else{notice('Linkiga app-ka: '+location.href)}}catch(err){if(err.name!=='AbortError')notice('Wadaagistu hadda ma shaqayn. Linkiga: '+location.href)}
 });
 // Connectivity status: clearly explain offline state without interrupting drafts or playback.
 const offlineNotice=$('offlineNotice');
@@ -2168,13 +2202,13 @@ function updateConnectivityStatus(){
  if(connectivityNoticeTimer){clearTimeout(connectivityNoticeTimer);connectivityNoticeTimer=null}
  if(!navigator.onLine){
   offlineNotice.dataset.state='offline';
-  offlineNotice.textContent='Internet ma jiro. Qaar ka mid ah adeegyada GoGol ma shaqayn karaan; isku day marka xiriirku soo noqdo.';
+  offlineNotice.textContent='Internet ma jiro. Qaar ka mid ah adeegyada DUNIQ ma shaqayn karaan; isku day marka xiriirku soo noqdo.';
   offlineNotice.classList.remove('hidden');
   return;
  }
  if(offlineNotice.dataset.state==='offline'){
   offlineNotice.dataset.state='online';
-  offlineNotice.textContent='Internet-ku wuu soo noqday. GoGol hadda wuu isku dayi karaa inuu xogta cusboonaysiiyo.';
+  offlineNotice.textContent='Internet-ku wuu soo noqday. DUNIQ hadda wuu isku dayi karaa inuu xogta cusboonaysiiyo.';
   offlineNotice.classList.remove('hidden');
   connectivityNoticeTimer=setTimeout(()=>offlineNotice.classList.add('hidden'),4500);
  }else{
@@ -2189,10 +2223,10 @@ setInterval(()=>{if(document.visibilityState==='visible')loadMedia()},5*60*1000)
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadMedia()});
 try{
  db.channel('madal-live-posts').on('postgres_changes',{event:'INSERT',schema:'public',table:'media_posts',filter:'status=eq.published'},payload=>{
-  if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa GoGol lagu soo daray!')}
+  if(payload.new?.status==='published'){loadMedia();notice('Wax cusub ayaa DUNIQ lagu soo daray!')}
  }).subscribe();
-}catch(err){console.warn('MADAL live feed:',err)}
-/* GoGol startup loading indicator */
+}catch(err){console.warn('DUNIQ live feed:',err)}
+/* DUNIQ startup loading indicator */
 const appBoot=$('appBoot');
 let appBootHidden=false;
 function finishAppBoot(){if(appBootHidden)return;appBootHidden=true;appBoot?.classList.add('boot-hidden');setTimeout(()=>appBoot?.remove(),350)}
@@ -2211,28 +2245,28 @@ if(isStandalone)pwaInstallGuide?.classList.add('hidden');
 window.addEventListener('beforeinstallprompt',event=>{
  event.preventDefault();installPrompt=event;
  if(pwaInstallAction)pwaInstallAction.textContent='Ku rakib hadda';
- if(pwaInstallNote)pwaInstallNote.textContent='Taabo badhanka kore si GoGol loogu rakibo telefoonkaaga.';
+ if(pwaInstallNote)pwaInstallNote.textContent='Taabo badhanka kore si DUNIQ loogu rakibo telefoonkaaga.';
 });
-async function startGoGolInstall(){
+async function startDUNIQInstall(){
  if(installPrompt){
   const promptEvent=installPrompt;installPrompt=null;
   await promptEvent.prompt();
   const choice=await promptEvent.userChoice;
-  if(choice?.outcome==='accepted'){pwaInstallGuide?.classList.add('hidden');installButton?.classList.add('hidden');notice('GoGol rakibidda waa la bilaabay.');}
+  if(choice?.outcome==='accepted'){pwaInstallGuide?.classList.add('hidden');installButton?.classList.add('hidden');notice('DUNIQ rakibidda waa la bilaabay.');}
   else if(pwaInstallAction)pwaInstallAction.textContent='Mar kale isku day';
   return;
  }
  if(isIOS){
-  notice('Safari ka fur GoGol, taabo Share, kadib dooro Add to Home Screen.');
+  notice('Safari ka fur DUNIQ, taabo Share, kadib dooro Add to Home Screen.');
  }else{
   notice('Chrome ka fur menu-ga ⋮ ee kore, dooro Install app ama Add to Home screen, kadib taabo Install.');
  }
 }
-pwaInstallAction?.addEventListener('click',startGoGolInstall);
-installButton?.addEventListener('click',startGoGolInstall);
+pwaInstallAction?.addEventListener('click',startDUNIQInstall);
+installButton?.addEventListener('click',startDUNIQInstall);
 window.addEventListener('appinstalled',()=>{
  pwaInstallGuide?.classList.add('hidden');installButton?.classList.add('hidden');
- notice('GoGol waa lagu rakibay telefoonkaaga!');
+ notice('DUNIQ waa lagu rakibay telefoonkaaga!');
 });
 if('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker:',err)))}
 
@@ -2259,7 +2293,7 @@ if('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()){wind
  },true);
  db.auth.onAuthStateChange(()=>{Promise.resolve().then(syncAnonProfileGate);});
  syncAnonProfileGate();
- refreshProfile().then(syncAnonProfileGate).catch(error=>console.warn('GoGol profile gate:',error));
+ refreshProfile().then(syncAnonProfileGate).catch(error=>console.warn('DUNIQ profile gate:',error));
 })();
 </script>
 
