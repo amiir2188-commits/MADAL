@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090512">
+<meta name="theme-color" content="#07122f">
 <meta name="description" content="GoGol — madasha sawirrada, fiidiyowyada iyo bulshada.">
 <link rel="manifest" href="./manifest.webmanifest">
 <title>GoGol — Videos, Photos &amp; Community</title>
 <style>
-:root{color-scheme:dark;--bg:#090512;--panel:#171020;--panel2:#21152f;--line:#38254a;--purple:#b47aff;--pink:#f18bd4;--muted:#b9acc7}
+:root{color-scheme:dark;--bg:#071020;--panel:#101a30;--panel2:#17243d;--line:#293d61;--purple:#19c9ed;--pink:#ff5c83;--muted:#aab9d3}
 /* Accessibility and resilient connectivity */
 :focus-visible{outline:3px solid #d6b5ff!important;outline-offset:3px!important}
 .skip-link{position:fixed;z-index:10001;top:8px;left:8px;padding:12px 16px;border-radius:10px;background:#fff;color:#170d22;font-weight:800;transform:translateY(-160%);transition:transform .15s}
@@ -74,10 +74,10 @@ input,textarea,select{width:100%;padding:12px;border-radius:11px;border:1px soli
 @media(min-width:650px){main{padding:22px}.feed-card{padding:18px}}
 
 /* MADAL first-launch welcome */
-.welcome-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 20%,#452365 0%,#1b1029 42%,#090512 100%);text-align:center}
+.welcome-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 20%,#123a67 0%,#0c1936 46%,#050a1c 100%);text-align:center}
 .welcome-screen.hidden{display:none}
 .welcome-content{width:100%;max-width:420px;animation:welcome-rise .65s ease both}
-.welcome-mark{width:104px;height:104px;margin:0 auto 24px;border:1px solid #ffffff2b;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#2b1940,#130d20);box-shadow:0 16px 55px #b47aff55, inset 0 1px #ffffff18}.welcome-mark img{width:100%;height:100%;padding:8px;object-fit:contain}
+.welcome-mark{width:104px;height:104px;margin:0 auto 24px;border:1px solid #ffffff2b;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#102b56,#07122f);box-shadow:0 16px 55px #12c8ed55, inset 0 1px #ffffff18}.welcome-mark img{width:100%;height:100%;padding:8px;object-fit:contain}
 .welcome-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin:0 0 9px}
 .welcome-content h1{font-size:34px;line-height:1.15;margin:0 0 14px;letter-spacing:-.7px}
 .welcome-copy{color:#d4c7e1;font-size:15px;line-height:1.75;margin:0 auto 30px;max-width:320px}
@@ -112,7 +112,7 @@ header{display:none!important;height:0!important;min-height:0!important;padding:
 
 
 /* Separate update first screen; shown only when a newer version is detected */
-.update-screen{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 18%,#452365 0%,#1b1029 45%,#090512 100%);text-align:center;overflow:auto}.update-screen.hidden{display:none!important}.update-content{width:100%;max-width:420px}.update-mark{width:104px;height:104px;margin:0 auto 24px;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:#020b07;box-shadow:0 16px 55px #00ff8055}.update-mark img{width:100%;height:100%;object-fit:cover}.update-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;margin:0 0 10px}.update-content h1{font-size:30px;line-height:1.2;margin:0 0 14px}.update-copy{color:#e1d5ec;font-size:15px;line-height:1.7;margin:0 auto 18px;max-width:340px}.update-note{color:#b9acc7;font-size:13px;margin:0 auto 28px;max-width:320px}.update-start{width:100%;max-width:320px;min-height:56px;border:0;border-radius:16px;background:linear-gradient(105deg,#a66be8,#e17ac5);color:#180d25;font-size:16px;font-weight:900;box-shadow:0 10px 32px #bd83ff44;cursor:pointer}.update-start:disabled{opacity:.7;cursor:wait}.update-start:active{transform:scale(.98)}
+.update-screen{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:28px 22px;background:radial-gradient(ellipse at 50% 18%,#123a67 0%,#0c1936 46%,#050a1c 100%);text-align:center;overflow:auto}.update-screen.hidden{display:none!important}.update-content{width:100%;max-width:420px}.update-mark{width:104px;height:104px;margin:0 auto 24px;border-radius:32px;display:grid;place-items:center;overflow:hidden;background:#07122f;box-shadow:0 16px 55px #12c8ed55}.update-mark img{width:100%;height:100%;object-fit:cover}.update-kicker{color:#d9baff;font-size:12px;font-weight:800;letter-spacing:3px;margin:0 0 10px}.update-content h1{font-size:30px;line-height:1.2;margin:0 0 14px}.update-copy{color:#e1d5ec;font-size:15px;line-height:1.7;margin:0 auto 18px;max-width:340px}.update-note{color:#b9acc7;font-size:13px;margin:0 auto 28px;max-width:320px}.update-start{width:100%;max-width:320px;min-height:56px;border:0;border-radius:16px;background:linear-gradient(105deg,#a66be8,#e17ac5);color:#180d25;font-size:16px;font-weight:900;box-shadow:0 10px 32px #bd83ff44;cursor:pointer}.update-start:disabled{opacity:.7;cursor:wait}.update-start:active{transform:scale(.98)}
 
 /* MADAL profile refresh: reference-inspired purple social profile */
 #profile{padding-top:0;background:radial-gradient(ellipse at 95% 0%,#35106d66,transparent 34%),#090512;min-height:calc(100dvh - 70px)}
@@ -810,7 +810,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.4';
+const MADAL_VERSION='1.11.5';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
