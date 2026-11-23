@@ -1,4 +1,4 @@
-name: Build GoGol Android APK
+name: Build DUNIQ Android APK
 
 on:
   workflow_dispatch:
@@ -8,6 +8,9 @@ on:
         required: true
         type: boolean
         default: false
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -37,11 +40,11 @@ concurrency:
 
 jobs:
   build:
-    name: Build GoGol APK
+    name: Build DUNIQ APK
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout GoGol
+      - name: Checkout DUNIQ
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
@@ -58,7 +61,7 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Prepare GoGol
+      - name: Prepare DUNIQ
         run: |
           test -f index.html
           test -f account.html
@@ -79,7 +82,7 @@ jobs:
           npm install @capacitor/core@8.6.2 @capacitor/android@8.6.2 @capawesome/capacitor-live-update@8.8.1
           npm install --save-dev esbuild@0.28.2
           npm install --save-dev @capacitor/cli@8.6.2 @capacitor/assets@4.0.0 sharp
-          npx cap init GoGol com.madal.app --web-dir www
+          npx cap init DUNIQ com.madal.app --web-dir www
           node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
           node <<'NODE'
@@ -139,10 +142,10 @@ jobs:
           }
           if (!fs.readFileSync('account.html', 'utf8').includes('href="./terms.html"')) throw new Error('Account sign-up must link to the terms page');
           if (!fs.readFileSync('account.html', 'utf8').includes('href="./privacy.html"')) throw new Error('Account sign-up must link to the privacy page');
-          console.log('GoGol inline JavaScript and policy pages are valid.');
+          console.log('DUNIQ inline JavaScript and policy pages are valid.');
           NODE
 
-      - name: Validate GoGol release metadata and safety controls
+      - name: Validate DUNIQ release metadata and safety controls
         run: |
           node <<'NODE'
           const fs = require('fs');
@@ -306,7 +309,7 @@ jobs:
           "$APKSIGNER" verify --verbose "$APK"
           unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js|gogol-logo.svg'
 
-      - name: Read MADAL version
+      - name: Read DUNIQ version
         id: version
         run: |
           VERSION=$(node -e "console.log(require('./version.json').version)")
@@ -340,9 +343,9 @@ jobs:
           overwrite_files: true
           files: ${{ steps.signing.outputs.apk_path }}
 
-      - name: Upload GoGol APK
+      - name: Upload DUNIQ APK
         uses: actions/upload-artifact@v7
         with:
-          name: GoGol-Android-APK
+          name: DUNIQ-Android-APK
           path: ${{ steps.signing.outputs.apk_path }}
           if-no-files-found: error
