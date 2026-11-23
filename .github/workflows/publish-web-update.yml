@@ -1,4 +1,4 @@
-name: Publish MADAL in-app update bundle
+name: Publish DUNIQ in-app update bundle
 
 on:
   workflow_dispatch:
@@ -30,10 +30,10 @@ concurrency:
 
 jobs:
   bundle:
-    name: Build and publish MADAL web update
+    name: Build and publish DUNIQ web update
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout MADAL
+      - name: Checkout DUNIQ
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
@@ -58,7 +58,7 @@ jobs:
           cd www && zip -r ../madal-web.zip . && cd ..
           unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js|gogol-logo.svg'
 
-      - name: Read MADAL version
+      - name: Read DUNIQ version
         id: version
         run: |
           VERSION=$(node -e "console.log(require('./version.json').version)")
@@ -85,7 +85,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          name: MADAL ${{ steps.version.outputs.version }}
+          name: DUNIQ ${{ steps.version.outputs.version }}
           target_commitish: main
           make_latest: true
           overwrite_files: true
