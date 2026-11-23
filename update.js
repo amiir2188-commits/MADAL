@@ -4,12 +4,12 @@ if (isNative) {
   try {
     ({ LiveUpdate } = await import('@capawesome/capacitor-live-update'));
   } catch (error) {
-    console.warn('GoGol live update plugin is unavailable:', error);
+    console.warn('DUNIQ live update plugin is unavailable:', error);
   }
 }
 
-const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/MADAL/main/version.json';
-const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/MADAL/releases/latest/download/madal-web.zip';
+const VERSION_URL = 'https://raw.githubusercontent.com/amiir2188-commits/DUNIQ/main/version.json';
+const FALLBACK_BUNDLE_URL = 'https://github.com/amiir2188-commits/DUNIQ/releases/latest/download/madal-web.zip';
 const notice = document.getElementById('updateNotice');
 const button = document.getElementById('applyUpdate');
 const message = document.getElementById('updateMessage');
@@ -60,7 +60,7 @@ function clearButtonLoading(text) {
 function showUpdate(version) {
   if (!notice || !button) return;
   notice.classList.remove('hidden');
-  if (message) message.textContent = 'GoGol ' + version + ' waa diyaar. Taabo Update App si aad u cusboonaysiiso ka hor intaadan gelin app-ka caadiga ah. APK kale looma baahna.';
+  if (message) message.textContent = 'DUNIQ ' + version + ' waa diyaar. Taabo Update App si aad u cusboonaysiiso ka hor intaadan gelin app-ka caadiga ah. APK kale looma baahna.';
   button.classList.remove('hidden');
   clearButtonLoading('Update App');
   setProgress('');
@@ -74,7 +74,7 @@ async function checkNativeUpdate() {
     const response = await fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' });
     if (!response.ok) return;
     const latest = await response.json();
-    const current = window.MADAL_VERSION || '0.0.0';
+    const current = window.DUNIQ_VERSION || '0.0.0';
     if (!latest.version || latest.version === current) return;
     if (isNative && !latest.bundle_url) return;
     latestBundle = {
@@ -83,7 +83,7 @@ async function checkNativeUpdate() {
     };
     showUpdate(latestBundle.version);
   } catch (error) {
-    console.warn('GoGol live update check:', error);
+    console.warn('DUNIQ live update check:', error);
   } finally {
     checking = false;
   }
@@ -96,14 +96,14 @@ if (button) {
       if (!isNative) {
         updating = true;
         setButtonLoading('Waa la cusboonaysiinayaa...');
-        setProgress('Fadlan sug inta GoGol dib isu furayo.');
+        setProgress('Fadlan sug inta DUNIQ dib isu furayo.');
         location.reload();
       }
       return;
     }
     updating = true;
     setButtonLoading('Update waa la soo dejinayaa...');
-    setProgress('GoGol wuxuu soo dejinayaa cusboonaysiinta. Fadlan ha xirin app-ka, hana taaban badhanka mar kale.');
+    setProgress('DUNIQ wuxuu soo dejinayaa cusboonaysiinta. Fadlan ha xirin app-ka, hana taaban badhanka mar kale.');
     try {
       if (isNative && LiveUpdate) {
         await LiveUpdate.downloadBundle({
@@ -111,10 +111,10 @@ if (button) {
           bundleId: latestBundle.version
         });
         setButtonLoading('Waa la rakibayaa...');
-        setProgress('Soo dejintu way dhammaatay. GoGol wuxuu diyaarinayaa cusboonaysiinta...');
+        setProgress('Soo dejintu way dhammaatay. DUNIQ wuxuu diyaarinayaa cusboonaysiinta...');
         await LiveUpdate.setNextBundle({ bundleId: latestBundle.version });
         setButtonLoading('Waa la dhammeeyey...');
-        setProgress('GoGol dib ayuu u furmayaa. Hal daqiiqo sug...');
+        setProgress('DUNIQ dib ayuu u furmayaa. Hal daqiiqo sug...');
         await LiveUpdate.reload();
       } else if (isNative) {
         throw new Error('Adeegga cusboonaysiinta Android lama heli karo. Hubi in app-ka asalka ah la rakibay.');
@@ -128,7 +128,7 @@ if (button) {
         location.reload();
       }
     } catch (error) {
-      console.error('GoGol update failed:', error);
+      console.error('DUNIQ update failed:', error);
       updating = false;
       const detail = error?.message ? String(error.message).slice(0, 180) : 'Sabab aan la aqoon';
       if (message) message.textContent = 'Cusboonaysiintu way fashilantay: ' + detail + '. Hubi internet-ka, kadib mar kale isku day.';
