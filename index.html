@@ -717,6 +717,22 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 #publicProfile .profile-tile img,#publicProfile .profile-tile video{width:100%!important;height:100%!important;object-fit:cover!important}
 @media(min-width:720px){.bottom{left:50%!important;right:auto!important;width:min(520px,100%)!important;transform:translateX(-50%)!important}}
 </style>
+<style id="gogol-bottom-nav-final-1116">
+/* GoGol 1.11.6: use the actual accessible SVG icons and readable labels. */
+:root{--gogol-bottom-nav-height:calc(68px + env(safe-area-inset-bottom))}
+body{padding-bottom:var(--gogol-bottom-nav-height)!important}
+.bottom{position:fixed!important;z-index:100!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:var(--gogol-bottom-nav-height)!important;min-height:var(--gogol-bottom-nav-height)!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:space-around!important;gap:2px!important;padding:5px 7px env(safe-area-inset-bottom)!important;background:rgba(5,12,31,.97)!important;border-top:1px solid rgba(93,179,235,.22)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+.bottom button{position:relative!important;display:flex!important;flex:1 1 20%!important;min-width:0!important;height:100%!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;padding:2px 0!important;margin:0!important;border:0!important;border-radius:12px!important;background:transparent!important;color:#91a5c4!important;font-size:10px!important;font-weight:600!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important}
+.bottom button svg{display:block!important;visibility:visible!important;opacity:1!important;flex:none!important;width:23px!important;height:23px!important;margin:0!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.bottom button span{display:block!important;visibility:visible!important;opacity:1!important;font-size:10px!important;line-height:1.15!important;margin:0!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.bottom button span:before{content:none!important;display:none!important}
+.bottom button.active{color:#fff!important;background:rgba(30,194,230,.11)!important}
+.bottom button.active:after{content:"";position:absolute;top:0;left:27%;right:27%;height:2px;border-radius:0 0 3px 3px;background:#20d4ed}
+.bottom button[data-page="upload"]{color:#fff!important}
+.bottom button[data-page="upload"] svg{width:25px!important;height:25px!important;padding:5px!important;box-sizing:content-box!important;border-radius:11px!important;background:linear-gradient(135deg,#18d8e8,#2675ff 58%,#ff547d)!important;stroke:#fff!important;stroke-width:2.2!important}
+.bottom button[data-page="upload"] span{color:#dcecff!important}
+@media(max-width:360px){.bottom{gap:0!important;padding-left:3px!important;padding-right:3px!important}.bottom button{font-size:9px!important}.bottom button span{font-size:9px!important}.bottom button svg{width:21px!important;height:21px!important}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#allFeed">U gudub fiidiyowyada</a>
@@ -810,7 +826,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.5';
+const MADAL_VERSION='1.11.6';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
