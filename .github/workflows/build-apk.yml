@@ -79,7 +79,7 @@ jobs:
           npm install @capacitor/core@8.6.2 @capacitor/android@8.6.2 @capawesome/capacitor-live-update@8.8.1
           npm install --save-dev esbuild@0.28.2
           npm install --save-dev @capacitor/cli@8.6.2 @capacitor/assets@4.0.0 sharp
-          npx cap init GoGol com.madal.app --web-dir www
+          npx cap init DUNIQ com.madal.app --web-dir www
           node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8'));p.plugins={...(p.plugins||{}),LiveUpdate:{autoUpdateStrategy:'none',readyTimeout:10000}};fs.writeFileSync('capacitor.config.json',JSON.stringify(p,null,2));"
           npx cap add android
           node <<'NODE'
