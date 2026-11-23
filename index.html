@@ -778,7 +778,7 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 <button id="editProfile" class="profile-edit-pencil" type="button" aria-label="Wax ka beddel profile-ka" title="Wax ka beddel profile-ka">✎</button>
 <div class="profile-top"><div class="profile-avatar" id="profileAvatar">M</div><div class="profile-main"><h2 id="profileName">GoGol User <span id="profileVerified" class="verified hidden" title="GoGol Verified">✓</span></h2><p class="muted" id="profileHandle">@username</p><p class="muted small profile-creator-label">GoGol Creator</p></div></div>
 <p id="profileBio" class="profile-bio">Ku soo biir bulshada GoGol.</p>
-<div class="profile-stats"><div><strong id="myFollowingCount">0</strong><span>Following</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div><div><strong id="myLikeCount">0</strong><span>Likes</span></div></div>
+<div class="profile-stats" aria-label="Profile statistics"><div><strong id="myFollowingCount">0</strong><span>Following</span></div><div><strong id="myFollowerCount">0</strong><span>Followers</span></div></div>
 <div class="row profile-buttons"><button id="logout" class="secondary hidden" type="button">Ka bax</button><a class="primary" href="./account.html?mode=signup" id="profileSignup" style="text-align:center;text-decoration:none">Sign-up</a><a class="primary" href="./account.html?mode=login" id="profileLogin" style="text-align:center;text-decoration:none">Log in</a><button id="profileShare" class="secondary" type="button">Share profile</button></div>
 </div>
 <div id="profileEditor" class="feed-card hidden"><h3>Wax ka beddel profile-ka</h3><form id="profileForm"><label>Magaca muuqda</label><input id="editDisplayName" maxlength="60" required aria-label="Magaca muuqda"><label>Username</label><input id="editUsername" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" required aria-label="Magaca isticmaalaha"><label>Bio / Isbarasho</label><textarea id="editBio" maxlength="160" placeholder="Naftaada wax yar ka sheeg..." aria-label="Isbarashada profile-ka"></textarea><label>Sawirka profile-ka</label><div class="avatar-picker"><img id="avatarPreview" class="avatar-preview" alt="Hordhaca sawirka profile-ka"><input id="editAvatarFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Dooro sawirka profile-ka"></div><p class="muted small">Ka dooro sawir Gallery-ga telefoonkaaga (PNG, JPG ama WebP; ugu badnaan 5 MB).</p><button id="removeAvatar" class="secondary" type="button">Ka saar sawirka profile-ka</button><input id="editAvatarUrl" type="url" placeholder="Ama geli link sawir (ikhtiyaari)" aria-label="Linkiga sawirka profile-ka"><label>Sawirka kore ee profile-ka (Banner)</label><div class="avatar-picker"><img id="bannerPreview" class="banner-preview" alt="Hordhaca banner-ka"><input id="editBannerFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Dooro banner-ka profile-ka"></div><p class="muted small">Banner-ka wuxuu ka muuqanayaa kore ee profile-kaaga (ugu badnaan 10 MB).</p><button id="removeBanner" class="secondary" type="button">Ka saar banner-ka</button><input id="editBannerUrl" type="hidden" aria-label="Profile banner image URL"><button class="primary" type="submit">Kaydi profile-ka</button></form></div>
@@ -826,7 +826,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.6';
+const MADAL_VERSION='1.11.7';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1565,16 +1565,12 @@ async function loadMyProfile(){
    }
   }
  }
- const {data:countRows,error:countRowsError}=await db.from('media_posts').select('id').eq('user_id',userId).eq('status','published').order('created_at',{ascending:false}).limit(500);
- if(token!==profileLoadToken||currentUser?.id!==userId)return;
- const countPostIds=(countRowsError?allPosts.filter(p=>String(p.user_id)===userId):countRows||[]).map(p=>p.id).filter(Boolean);
- const [followers,following,likes]=await Promise.all([
+ const [followers,following]=await Promise.all([
   db.from('user_follows').select('follower_id',{count:'exact',head:true}).eq('following_id',userId),
-  db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',userId),
-  countPostIds.length?db.from('media_likes').select('post_id',{count:'exact',head:true}).in('post_id',countPostIds):Promise.resolve({count:0,error:null})
+  db.from('user_follows').select('following_id',{count:'exact',head:true}).eq('follower_id',userId)
  ]);
  if(token!==profileLoadToken||currentUser?.id!==userId)return;
- $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;$('myLikeCount').textContent=likes.count??0;
+ $('myFollowerCount').textContent=followers.count??0;$('myFollowingCount').textContent=following.count??0;
  if(!own.length){$('profileLoadMore').classList.add('hidden');$('profileLoadMore').style.display='none';$('myVideos').innerHTML='<div class="empty" style="grid-column:1/-1">'+(activeProfileTab==='videos'?'Weli fiidiyow ma aadan soo gelin.':activeProfileTab==='photos'?'Weli sawir ma aadan soo gelin.':activeProfileTab==='reposts'?'Weli waxba ma aadan Repost gareyn.':activeProfileTab==='liked'?'Weli muuqaal Like ah ma jiro.':activeProfileTab==='favorites'?'Weli Favorites ma jiraan.':'Weli muuqaal Private ah ma jiro.')+'</div>';return}
  $('myVideos').innerHTML='';
  $('profileLoadMore').classList.toggle('hidden',!profileHasMore);$('profileLoadMore').style.display=profileHasMore?'block':'none';
