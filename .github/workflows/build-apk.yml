@@ -1,4 +1,4 @@
-name: Build GoGol Android APK
+name: Build DUNIQ Android APK
 
 on:
   workflow_dispatch:
@@ -8,6 +8,9 @@ on:
         required: true
         type: boolean
         default: false
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -37,11 +40,11 @@ concurrency:
 
 jobs:
   build:
-    name: Build GoGol APK
+    name: Build DUNIQ APK
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout GoGol
+      - name: Checkout DUNIQ
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
@@ -58,7 +61,7 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Prepare GoGol
+      - name: Prepare DUNIQ
         run: |
           test -f index.html
           test -f account.html
@@ -139,10 +142,10 @@ jobs:
           }
           if (!fs.readFileSync('account.html', 'utf8').includes('href="./terms.html"')) throw new Error('Account sign-up must link to the terms page');
           if (!fs.readFileSync('account.html', 'utf8').includes('href="./privacy.html"')) throw new Error('Account sign-up must link to the privacy page');
-          console.log('GoGol inline JavaScript and policy pages are valid.');
+          console.log('DUNIQ inline JavaScript and policy pages are valid.');
           NODE
 
-      - name: Validate GoGol release metadata and safety controls
+      - name: Validate DUNIQ release metadata and safety controls
         run: |
           node <<'NODE'
           const fs = require('fs');
