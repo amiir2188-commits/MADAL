@@ -309,7 +309,7 @@ jobs:
           "$APKSIGNER" verify --verbose "$APK"
           unzip -l madal-web.zip | grep -E 'index.html|account.html|privacy.html|community-guidelines.html|terms.html|update.js|version.json|live.js|gogol-logo.svg'
 
-      - name: Read MADAL version
+      - name: Read DUNIQ version
         id: version
         run: |
           VERSION=$(node -e "console.log(require('./version.json').version)")
@@ -343,9 +343,9 @@ jobs:
           overwrite_files: true
           files: ${{ steps.signing.outputs.apk_path }}
 
-      - name: Upload GoGol APK
+      - name: Upload DUNIQ APK
         uses: actions/upload-artifact@v7
         with:
-          name: GoGol-Android-APK
+          name: DUNIQ-Android-APK
           path: ${{ steps.signing.outputs.apk_path }}
           if-no-files-found: error
