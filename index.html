@@ -802,7 +802,7 @@ body{padding-bottom:var(--gogol-bottom-nav-height)!important}
 <label for="messageSearch">Find people by username</label>
 <div class="row"><input id="messageSearch" placeholder="Tusaale: amiir01" aria-label="Raadi fariimaha ama dadka"><button id="searchUsers" class="secondary" type="button">Raadi</button></div>
 <div id="userResults" class="muted small">Search for someone to start a conversation.</div>
-\n<div id="conversationPanel" class="hidden" role="dialog" aria-modal="true" aria-label="Wada sheekaysi">
+<div id="conversationPanel" class="hidden" role="dialog" aria-modal="true" aria-label="Wada sheekaysi">
 <div class="chat-topbar"><button id="closeConversation" type="button" aria-label="Ku noqo Inbox">‹</button><div class="chat-contact-mark">G</div><div class="chat-contact-copy"><strong id="conversationTitle">Wada sheekaysi</strong><small>GoGol messages</small></div><button class="chat-more" type="button" aria-label="Faahfaahin">•••</button></div>
 <div id="messageList" class="message-list" aria-live="polite"></div>
 <form id="messageForm" class="comment-form chat-composer"><textarea id="messageBody" maxlength="2000" placeholder="Fariin qor..." required aria-label="Qor fariinta" rows="1"></textarea><button class="primary" type="submit" aria-label="Dir fariinta">➤</button></form>
@@ -826,7 +826,7 @@ window.gogolSupabase=db;
 let currentUser=null, allPosts=[], activeChatUser=null, chatChannel=null, activeFeedTab='for_you', activeProfileTab='videos';
 let likesByPost={}, likedPostIds=new Set(), commentsByPost={}, followsByUser=new Set(), followerCounts={}, repostedPostIds=new Set(), repostCountsByPost={}, favoritePostIds=new Set(), favoriteCountsByPost={}, authorProfiles={}, socialReady=false;
 const $=id=>document.getElementById(id);
-const MADAL_VERSION='1.11.7';
+const MADAL_VERSION='1.11.8';
 
 /* GoGol language preferences and live interface translation */
 const GOGOL_LANGUAGES={
@@ -1399,7 +1399,7 @@ async function loadInbox(){
   .or('sender_id.eq.'+me+',recipient_id.eq.'+me)
   .order('created_at',{ascending:false}).limit(250);
  if(token!==inboxLoadToken||currentUser?.id!==me)return;
- if(error){host.innerHTML='<p class="inbox-empty">Messages could not be loaded. Check your connection and try again.</p>';console.warn('GoGol inbox:',error.message);return}
+ if(error){host.innerHTML='<p class="inbox-empty">Fariimaha hadda lama soo rari karo. Fadlan mar dambe isku day.</p>';console.warn('GoGol inbox:',error.message);return}
  const latest=new Map(),unreadPeople=new Set();
   for(const message of messages||[]){
    const other=message.sender_id===me?message.recipient_id:message.sender_id;
@@ -1886,7 +1886,7 @@ function storyName(story){return story.storyProfile?.display_name||story.storyPr
 async function loadStories(){
  const tray=$('storyTray');if(!tray)return;
  const {data,error}=await db.from('madal_stories').select('id,user_id,storage_path,mime_type,caption,created_at,expires_at').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(80);
- if(error){console.warn('GoGol Stories:',error.message);tray.innerHTML='<span class="muted small">Stories waxay u baahan yihiin migration-ka Supabase 008.</span>';return}
+ if(error){console.warn('GoGol Stories:',error.message);tray.innerHTML='<span class="muted small">Stories hadda lama soo rari karo. Fadlan mar dambe isku day.</span>';return}
  const rows=data||[],ids=[...new Set(rows.map(x=>x.user_id))];let profiles=[];
  if(ids.length){const result=await db.from('madal_profiles').select('id,username,display_name,avatar_url').in('id',ids);if(!result.error)profiles=result.data||[]}
  const byId=Object.fromEntries(profiles.map(p=>[p.id,p]));activeStories=rows.map(story=>({...story,storyProfile:byId[story.user_id]||{}}));
